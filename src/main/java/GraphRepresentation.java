@@ -1,44 +1,37 @@
-import java.util.*;
-public class GraphRepresentation {
+public class GraphRepresentation{
 
-    private class Graph {
-        int numberOfCountries;
-        ArrayList<Integer> adjListArray[];
+    public void performOperations_bkp(){
+        // create the graph given in above figure
+        int V = 5;
+        Graph graph = new Graph(V);
+        graph.addEdge(graph, 0, 1);
+        graph.addEdge(graph, 0, 4);
+        graph.addEdge(graph, 1, 2);
+        graph.addEdge(graph, 1, 3);
+        graph.addEdge(graph, 1, 4);
+        graph.addEdge(graph, 2, 3);
+        graph.addEdge(graph, 3, 4);
 
-        Graph(int numberOfCountries) {
-            this.numberOfCountries = numberOfCountries;
+        // print the adjacency list representation of
+        // the above graph
+        graph.printGraph(graph);
+    }
+    public void performOperations(){
+        // create the graph given in above figure
+        int V = 5;
+        Graph graph = new Graph(V);
+        graph.addEdge(graph, 0, 1);
+        graph.addEdge(graph, 0, 4);
+        graph.addEdge(graph, 1, 2);
+        graph.addEdge(graph, 1, 3);
+        graph.addEdge(graph, 1, 4);
+        graph.addEdge(graph, 2, 3);
+        graph.addEdge(graph, 3, 4);
 
-            adjListArray = new ArrayList[numberOfCountries];
-
-            // Create a new list for each node
-            // such that adjacent nodes can be stored
-            for (int i = 0; i < numberOfCountries; i++) {
-                adjListArray[i] = new ArrayList<>();
-            }
-        }
-
+        // print the adjacency list representation of
+        // the above graph
+        graph.printGraph(graph);
     }
 
-//Add Edge
-    static void addEdge(Graph graph, int src, int dest)
-    {
-        // Add an edge from src to dest and vice versa.
-        graph.adjListArray[src].add(dest);
-        graph.adjListArray[dest].add(src);
-    }
-
-//Print Graph
-    static void printGraph(Graph graph)
-    {
-        for(int v = 0; v < graph.numberOfCountries; v++)
-        {
-            System.out.println("Adjacency list of vertex "+ v);
-            System.out.print("head");
-            for(Integer pCrawl: graph.adjListArray[v]){
-                System.out.print(" -> "+pCrawl);
-            }
-            System.out.println("\n");
-        }
-    }
 
 }
