@@ -4,7 +4,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Map {
-    public static void main(String ar[]) throws FileNotFoundException {
+    private String continents, countries, borders;
+    Map()
+    {
+        continents=countries=borders="";
+    }
+    private void loadMap() throws FileNotFoundException {
 
         try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
             StringBuilder sb = new StringBuilder();
@@ -26,7 +31,7 @@ public class Map {
                 line = br.readLine();
             }
 
-            String continents = sb.toString();
+            continents = sb.toString();
             continents=continents.trim();
             System.out.println(continents);
         } catch (FileNotFoundException e) {
@@ -58,7 +63,7 @@ public class Map {
                 line = br.readLine();
             }
 
-            String countries = sb.toString();
+            countries = sb.toString();
             countries=countries.trim();
             System.out.println(countries);
         } catch (FileNotFoundException e) {
@@ -88,7 +93,7 @@ public class Map {
                 line = br.readLine();
             }
 
-            String borders = sb.toString();
+            borders = sb.toString();
             borders=borders.trim();
             System.out.println(borders);
         } catch (FileNotFoundException e) {
@@ -96,8 +101,22 @@ public class Map {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Graph GraphRepresentation()
+    {
+        try
+        {
+            loadMap();
+        }
+        catch (FileNotFoundException f)
+        {
+            System.out.println(f.getMessage());
+        }
 
 
 
+
+        return new Graph(42);
     }
 }
