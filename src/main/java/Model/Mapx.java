@@ -44,7 +44,7 @@ public class Mapx {
 
 
         //Read countries
-        try(BufferedReader br = new BufferedReader(new FileReader("src/map.map"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             int countriesEncountered=0;
@@ -75,7 +75,7 @@ public class Mapx {
         }
 
         //Read Borders
-        try(BufferedReader br = new BufferedReader(new FileReader("src/map.map"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             int bordersEncountered=0;

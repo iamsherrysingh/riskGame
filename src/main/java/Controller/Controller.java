@@ -5,6 +5,6 @@ public class Controller {
     public static void main(String[] args) {
         Mapx map= new Mapx();
 //        Model.Graph.printGraph(map.createGameGraph("map.map"));
-        map.createGameGraph("src/map.map").printGraph();
+        map.createGameGraph("src/main/resources/map.map").printGraph();
     }
 }
