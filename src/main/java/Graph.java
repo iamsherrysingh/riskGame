@@ -16,7 +16,7 @@ public class Graph {
     }
 
     //Add Country
-    void addCountry(Country newCountry)
+    void addCountryToMap(Country newCountry)
     {
         // Add new Country
         this.adjList.add(newCountry);
