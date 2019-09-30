@@ -3,10 +3,10 @@ package Model;
 import java.util.*;
 
 public class Graph {
-        static private ArrayList<Country> adjList;
+    static private ArrayList<Country> adjList;
 
-    public Graph(ArrayList<Country> adjlist) {
-        this.adjList = new ArrayList<Country>();
+    public Graph() {
+        adjList= new ArrayList<Country>();
     }
 
     public ArrayList<Country> getAdjList() {

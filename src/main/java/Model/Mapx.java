@@ -116,7 +116,7 @@ public class Mapx {
             System.out.println(f.getMessage());
         }
 
-        Graph gameGraph= new Graph(new ArrayList<Country>());
+        Graph gameGraph= new Graph();
 
         Scanner countryScanner= new Scanner(this.countries);
         countryScanner.nextLine(); //Ignoring first line of this.countries
