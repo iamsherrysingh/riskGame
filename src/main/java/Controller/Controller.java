@@ -13,7 +13,7 @@ public class Controller {
         map.createGameGraph("src/main/resources/map.map").printGraph();
         Scanner commandScanner= new Scanner(System.in);
         System.out.print ("Enter number of Players: ");
-        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine());
+        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
 
     }
 }
