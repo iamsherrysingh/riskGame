@@ -12,7 +12,6 @@ public class Mapx {
         continents=countries= borders ="";
     }
     private void loadMap() throws FileNotFoundException {
-
         try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -126,10 +125,10 @@ public class Mapx {
             String lineCountry= countryScanner.nextLine();
             lineCountry= lineCountry.trim();
             String countryLineSubstrings[]= lineCountry.split(" ");
-            System.out.println(countryLineSubstrings[0]+"*"+countryLineSubstrings[4]);
+            //System.out.println(countryLineSubstrings[0]+"*"+countryLineSubstrings[4]);
             ArrayList<Integer> neighbours= new ArrayList<Integer>();
             Scanner borderScanner= new Scanner(this.borders);
-            borderScanner.nextLine();
+            borderScanner.nextLine(); //Ignoring first line of this.borders
             while(borderScanner.hasNext())
             {
                 String lineBorder= borderScanner.nextLine();
@@ -139,17 +138,15 @@ public class Mapx {
                     for(int i=1;i<borderLineSubstrings.length;i++){
                         neighbours.add(Integer.parseInt(borderLineSubstrings[i]));
                     }
-
+                    //System.out.println(neighbours);
+                    break;
                 }
-
             }
-
             Country country= new Country(Integer.parseInt(countryLineSubstrings[0]), countryLineSubstrings[1] ,Integer.parseInt(countryLineSubstrings[2]) ,null ,null ,Integer.parseInt(countryLineSubstrings[3]) ,Integer.parseInt(countryLineSubstrings[4]) ,neighbours);
-
+            gameGraph.getAdjList().add(country);
         }
-
+        gameGraph.printGraph();
         return null;
-
     }
 
     public static void main(String[] args) {

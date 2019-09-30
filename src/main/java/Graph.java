@@ -1,17 +1,25 @@
 import java.util.*;
 
 public class Graph {
-        ArrayList<Country> adjList;
+        private ArrayList<Country> adjList;
 
     public Graph(ArrayList<Country> adjlist) {
         this.adjList = new ArrayList<Country>();
     }
 
+    public ArrayList<Country> getAdjList() {
+        return adjList;
+    }
+
+    public void setAdjList(ArrayList<Country> adjList) {
+        this.adjList = adjList;
+    }
+
     //Add Country
-    void addCountry(Graph graph, Country newCountry)
+    void addCountry(Country newCountry)
     {
         // Add new Country
-        graph.adjList.add(newCountry);
+        this.adjList.add(newCountry);
 
         //Add new Country as a border country to the countries it borders
         Integer newCountryNumber= newCountry.getNumber();
@@ -23,20 +31,12 @@ public class Graph {
             }
         }
     }
-/*
 
 //Print Graph
-    static void printGraph(Graph graph)
+    void printGraph()
     {
-        for(int v = 0; v < graph.numberOfCountries; v++)
-        {
-            System.out.println("Adjacency list of vertex "+ v);
-            System.out.print("head");
-            for(Integer pCrawl: graph.adjListArray[v]){
-                System.out.print(" -> "+pCrawl);
-            }
-            System.out.println("\n");
+        for(Country country: adjList){
+            System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
         }
     }
-*/
 }
