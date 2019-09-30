@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Mapx<C, T> {
+public class Mapx {
     private String continents, countries, borders;
     Mapx()
     {
