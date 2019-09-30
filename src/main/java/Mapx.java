@@ -3,9 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Map {
+public class Mapx<C, T> {
     private String continents, countries, borders;
-    Map()
+    Mapx()
     {
         continents=countries=borders="";
     }
@@ -113,10 +113,10 @@ public class Map {
         {
             System.out.println(f.getMessage());
         }
+//        Graph gameGraph=new Graph();
 
 
+        return null;
 
-
-        return new Graph(42);
     }
 }

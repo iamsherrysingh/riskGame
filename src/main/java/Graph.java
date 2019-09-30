@@ -1,28 +1,29 @@
 import java.util.*;
 
 public class Graph {
-        int numberOfCountries;
-        ArrayList<Integer> adjListArray[];
+        ArrayList<Country> adjList;
 
-        Graph(int numberOfCountries) {
-            this.numberOfCountries = numberOfCountries;
+    public Graph(ArrayList<Country> adjlist) {
+        this.adjList = new ArrayList<Country>();
+    }
 
-            adjListArray = new ArrayList[numberOfCountries];
+    //Add Country
+    void addCountry(Graph graph, Country newCountry)
+    {
+        // Add new Country
+        graph.adjList.add(newCountry);
 
-            // Create a new list for each node
-            // such that adjacent nodes can be stored
-            for (int i = 0; i < numberOfCountries; i++) {
-                adjListArray[i] = new ArrayList<>();
+        //Add new Country as a border country to the countries it borders
+        Integer newCountryNumber= newCountry.getNumber();
+        for(Integer newCountryBorders: newCountry.getBorders()){
+            for(Country existingCountry: adjList){
+                if(existingCountry.getNumber()==newCountryBorders){
+                    existingCountry.getBorders().add(newCountryNumber);
+                }
             }
         }
-
-//Add Edge
-    static void addEdge(Graph graph, int src, int dest)
-    {
-        // Add an edge from src to dest and vice versa.
-        graph.adjListArray[src].add(dest);
-        graph.adjListArray[dest].add(src);
     }
+/*
 
 //Print Graph
     static void printGraph(Graph graph)
@@ -37,5 +38,5 @@ public class Graph {
             System.out.println("\n");
         }
     }
-
+*/
 }
