@@ -11,8 +11,10 @@ public class Mapx {
     {
         continents=countries= borders ="";
     }
-    private void loadMap() throws FileNotFoundException {
-        try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
+    private void loadMap(String mapFile) throws FileNotFoundException {
+
+        //Read Continents
+        try(BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             int continentsEncountered=0;
@@ -41,8 +43,8 @@ public class Mapx {
             e.printStackTrace();
         }
 
-///////////////////////////////
 
+        //Read countries
         try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -73,8 +75,7 @@ public class Mapx {
             e.printStackTrace();
         }
 
-///////////////////////////
-
+        //Read Borders
         try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -104,11 +105,12 @@ public class Mapx {
         }
     }
 
-    public Graph graphRepresentation()
+    //Create the main gameGraph
+    public Graph createGameGraph(String mapFile)
     {
         try
         {
-            loadMap();
+            loadMap(mapFile);
         }
         catch (FileNotFoundException f)
         {
@@ -117,15 +119,13 @@ public class Mapx {
 
         Graph gameGraph= new Graph(new ArrayList<Country>());
 
-        //Scan countries and add
-        //Create country object and borders from this.neighbours
         Scanner countryScanner= new Scanner(this.countries);
         countryScanner.nextLine(); //Ignoring first line of this.countries
         while(countryScanner.hasNext()) {
             String lineCountry= countryScanner.nextLine();
             lineCountry= lineCountry.trim();
             String countryLineSubstrings[]= lineCountry.split(" ");
-            //System.out.println(countryLineSubstrings[0]+"*"+countryLineSubstrings[4]);
+
             ArrayList<Integer> neighbours= new ArrayList<Integer>();
             Scanner borderScanner= new Scanner(this.borders);
             borderScanner.nextLine(); //Ignoring first line of this.borders
@@ -138,19 +138,12 @@ public class Mapx {
                     for(int i=1;i<borderLineSubstrings.length;i++){
                         neighbours.add(Integer.parseInt(borderLineSubstrings[i]));
                     }
-                    //System.out.println(neighbours);
                     break;
                 }
             }
             Country country= new Country(Integer.parseInt(countryLineSubstrings[0]), countryLineSubstrings[1] ,Integer.parseInt(countryLineSubstrings[2]) ,null ,null ,Integer.parseInt(countryLineSubstrings[3]) ,Integer.parseInt(countryLineSubstrings[4]) ,neighbours);
             gameGraph.getAdjList().add(country);
         }
-        gameGraph.printGraph();
-        return null;
-    }
-
-    public static void main(String[] args) {
-        Mapx m= new Mapx();
-        m.graphRepresentation();
+        return gameGraph;
     }
 }
