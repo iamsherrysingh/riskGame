@@ -16,11 +16,12 @@ public class Graph {
     }
 
     //Add Country
+    //The object passed to this function can have anything as country.number
     void addCountryToMap(Country newCountry)
     {
         // Add new Country
+        newCountry.setNumber(this.getAdjList().size() +1); //Generate the serial number for the new country
         this.adjList.add(newCountry);
-
         //Add new Country as a border country to the countries it borders
         Integer newCountryNumber= newCountry.getNumber();
         for(Integer newCountryBorders: newCountry.getNeighbours()){
