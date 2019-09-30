@@ -15,10 +15,10 @@ public class Graph {
 
         //Add new Country as a border country to the countries it borders
         Integer newCountryNumber= newCountry.getNumber();
-        for(Integer newCountryBorders: newCountry.getBorders()){
+        for(Integer newCountryBorders: newCountry.getNeighbours()){
             for(Country existingCountry: adjList){
                 if(existingCountry.getNumber()==newCountryBorders){
-                    existingCountry.getBorders().add(newCountryNumber);
+                    existingCountry.addNeighbour(newCountryNumber);
                 }
             }
         }

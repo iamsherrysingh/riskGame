@@ -3,18 +3,27 @@ import java.util.*;
 public class Country {
     Integer number,coOrdinate1,getCoOrdinate2,inContinent;
     String name;
-    ArrayList<Integer> borders;
+    ArrayList<Integer> neighbours;
 
-    public Country(Integer number, Integer coOrdinate1, Integer getCoOrdinate2, String name, Integer inContinent, ArrayList<Integer> borders) {
+    public Country(Integer number, Integer coOrdinate1, Integer getCoOrdinate2, String name, Integer inContinent, ArrayList<Integer> neighbours) {
         this.number = number;
         this.coOrdinate1 = coOrdinate1;
         this.getCoOrdinate2 = getCoOrdinate2;
         this.name = name;
         this.inContinent = inContinent;
-        this.borders = borders;
+        this.neighbours = neighbours;
     }
 
+    void addNeighbour(Integer newNeighbour){
+        this.neighbours.add(newNeighbour);
+    }
+
+    void removeNeighbour(Integer deletedNeighbour){
+        this.neighbours.remove(deletedNeighbour);
+    }
+    
     //Getters
+
     public Integer getNumber() {
         return number;
     }
@@ -35,8 +44,8 @@ public class Country {
         return name;
     }
 
-    public ArrayList<Integer> getBorders() {
-        return borders;
+    public ArrayList<Integer> getNeighbours() {
+        return neighbours;
     }
 
 
@@ -62,7 +71,9 @@ public class Country {
         this.name = name;
     }
 
-    public void setBorders(ArrayList<Integer> borders) {
-        this.borders = borders;
+    public void setneighbours(ArrayList<Integer> neighbours) {
+        this.neighbours = neighbours;
     }
+    
+    
 }
