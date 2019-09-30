@@ -1,16 +1,18 @@
 import java.util.*;
 
 public class Country {
-    Integer number,coOrdinate1,getCoOrdinate2,inContinent;
-    String name;
+    Integer number,coOrdinate1,getCoOrdinate2,inContinent,numberOfArmies;
+    String name,owner;
     ArrayList<Integer> neighbours;
 
-    public Country(Integer number, Integer coOrdinate1, Integer getCoOrdinate2, String name, Integer inContinent, ArrayList<Integer> neighbours) {
+    public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies, Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
         this.number = number;
         this.coOrdinate1 = coOrdinate1;
         this.getCoOrdinate2 = getCoOrdinate2;
-        this.name = name;
         this.inContinent = inContinent;
+        this.numberOfArmies = numberOfArmies;
+        this.name = name;
+        this.owner = owner;
         this.neighbours = neighbours;
     }
 
@@ -23,6 +25,14 @@ public class Country {
     }
     
     //Getters
+
+    public Integer getNumberOfArmies() {
+        return numberOfArmies;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
 
     public Integer getNumber() {
         return number;
@@ -51,6 +61,18 @@ public class Country {
 
     //Setters
 
+    public void setNumberOfArmies(Integer numberOfArmies) {
+        this.numberOfArmies = numberOfArmies;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setNeighbours(ArrayList<Integer> neighbours) {
+        this.neighbours = neighbours;
+    }
+
     public void setNumber(Integer number) {
         this.number = number;
     }
@@ -71,9 +93,6 @@ public class Country {
         this.name = name;
     }
 
-    public void setneighbours(ArrayList<Integer> neighbours) {
-        this.neighbours = neighbours;
-    }
     
     
 }
