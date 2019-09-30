@@ -7,10 +7,7 @@ import java.util.Scanner;
 
 public class Mapx {
     private String continents, countries, borders;
-    Mapx()
-    {
-        continents=countries= borders ="";
-    }
+
     private void loadMap(String mapFile) throws FileNotFoundException {
 
         //Read Continents
@@ -146,4 +143,12 @@ public class Mapx {
         }
         return gameGraph;
     }
+
+    //For Birjot
+    void saveMap(Graph graph){
+        //TO DO
+        //Save Graph to .map file
+
+    }
+
 }
