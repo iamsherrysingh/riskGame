@@ -1,3 +1,5 @@
+package Model;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -42,7 +44,7 @@ public class Mapx {
 
 
         //Read countries
-        try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("src/map.map"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             int countriesEncountered=0;
@@ -73,7 +75,7 @@ public class Mapx {
         }
 
         //Read Borders
-        try(BufferedReader br = new BufferedReader(new FileReader("map.map"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("src/map.map"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             int bordersEncountered=0;
@@ -147,7 +149,7 @@ public class Mapx {
     //For Birjot
     void saveMap(Graph graph){
         //TO DO
-        //Save Graph to .map file
+        //Save Model.Graph to .map file
 
     }
 
