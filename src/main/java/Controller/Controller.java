@@ -3,7 +3,7 @@ import Model.Mapx;
 import java.util.Scanner;
 
 public class Controller {
-	enum States {mapEditor,gamePlay,StartupPhase,ReinForcement,Attack,Fortification }
+	enum States {mapEditor,gamePlay,startupPhase,reinforcementPhase,attackPhase,fortificationPhase }
 	enum Tasks {addContinent,removeContinent,addCountry,removeCountry,addNeighbor,removeNeighbor,saveMap,editMap,validateMap,showMap}
 	States currentState = States.mapEditor;
 	Tasks currentTask;
@@ -144,7 +144,7 @@ public class Controller {
 						break;
 					case validateMap:
 					//  if(map.checkValidityOfMap())   return true or false
-					//	controller.currentState = States.gamePlay;
+						controller.currentState = States.gamePlay;
 						break;
 					
 					default: System.out.println("Invalid Command. Please Enter Map Editor Command");
@@ -155,12 +155,12 @@ public class Controller {
 				switch (controller.currentTask){
 					case showMap:
 					//	map.showMap();
-					//	controller.currentState = States.gamePlay;
+						controller.currentState = States.gamePlay;
 						break;
 					default: System.out.println("Invalid Command. Please Enter Game Play Command");
 				}
 			}
-		/*	else if(CurrentState == ReinForcement)
+		/*	else if( controller.currentState == States.gamePlay )
 			{
 			}
 			else if(CurrentState == Attack)
