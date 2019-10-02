@@ -1,8 +1,10 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -146,8 +148,68 @@ public class Mapx {
         return gameGraph;
     }
 
-    //For Birjot
-    void saveMap(Graph graph){
+    // Birjot
+
+public static File createfile(String mapName) throws IOException {
+		
+		Scanner sc1 = new Scanner(System.in);
+		File file = new File("\\src\\main\\resources\\"+mapName);
+
+		if (file.createNewFile()) {
+			System.out.println("map saved");
+		} else {
+			System.out.println("File with same name already exists!!");
+			System.out.println("press 1 to overwrite");
+			System.out.println("press any other number to cancel");
+			Integer in = sc1.nextInt();
+
+			if (in == 1) {
+				if (file.delete()) {
+					//delete file to make new one with same name 
+				} else {
+					System.out.println("something went wrong");
+				}
+				
+				createfile(mapName);
+				
+			} else {
+				System.out.println("cancelled");
+			}
+
+			
+		}
+		return file;
+	}
+
+    void saveMap(Graph graph)throws IOException {
+    	
+    	
+    	Scanner scCreate = new Scanner(System.in);
+		System.out.println("Enter new map name");
+
+		String mapName = scCreate.nextLine();
+		mapName = mapName + ".map";
+		// Create the file
+		File f = createfile(mapName);
+
+		FileWriter writer = new FileWriter(f);
+		writer.write("[files]" + System.getProperty( "line.separator" ));
+		writer.write( System.getProperty( "line.separator" ));
+		
+		writer.write("[continents]" + System.getProperty( "line.separator" ));
+		writer.write( System.getProperty( "line.separator" ));
+		
+		
+		writer.write("[countries] " + System.getProperty( "line.separator") );
+		writer.write( System.getProperty( "line.separator" ));
+		
+		
+		writer.write("[borders] " + System.getProperty( "line.separator"));
+		for (int num = 1; num < 11; num++) {
+		    writer.write("This is line " + num + System.getProperty( "line.separator" ));
+		}
+		
+		writer.close();
         //TO DO
         //Save Model.Graph to .map file
 
