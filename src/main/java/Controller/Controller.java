@@ -160,10 +160,10 @@ public class Controller {
 					default: System.out.println("Invalid Command. Please Enter Game Play Command");
 				}
 			}
-		/*	else if( controller.currentState == States.gamePlay )
+			else if( controller.currentState == States.startupPhase )
 			{
 			}
-			else if(CurrentState == Attack)
+		/*	else if(CurrentState == Attack)
 			{
 			}
 			else if(CurrentState == Fortification)
