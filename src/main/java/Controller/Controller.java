@@ -3,20 +3,20 @@ import Model.Mapx;
 import java.util.Scanner;
 
 public class Controller {
-	enum States {EditMap,StartupPhase,ReinForcement,Attack,Fortification }
-	enum Tasks {addContinent,removeContinent,addCountry,removeCountry,addNeighbor,ShowMap }
-	States currentState = States.EditMap;
-	
+	enum States {mapEditor,gamePlay,StartupPhase,ReinForcement,Attack,Fortification }
+	enum Tasks {addContinent,removeContinent,addCountry,removeCountry,addNeighbor,removeNeighbor,saveMap,editMap,validateMap,showMap}
+	States currentState = States.mapEditor;
 	Tasks currentTask;
 	String continentName;
 	Integer controlValue;
 	String countryName;
 	String neighborCountryName;
+	String mapFile;
 	// parse input Instruction -> Command , Switch, Data
 	boolean GetCommand(){
 		System.out.println("Enter Command");
 		Scanner scan = new Scanner(System.in);
-		String instruction = scan.nextLine();
+		String instruction = scan.nextLine().trim();
 		String[] command = instruction.split(" ");
 
 		if(command[0].equals("editcontinent")){
@@ -54,23 +54,53 @@ public class Controller {
 				return false;
 			}
 		}
-		if(command[0].equals("editneighbor")){
+		else if(command[0].equals("editneighbor")){
 			if(command[1].equals("-add")){
 				countryName = command[2];
 				neighborCountryName = command[3];	
-				currentTask = Tasks.addCountry;
+				currentTask = Tasks.addNeighbor;
 				return true;
 			}
 			else if(command[1].equals("-remove")){
 				countryName = command[2];
 				neighborCountryName = command[3];
-				currentTask = Tasks.removeCountry;
+				currentTask = Tasks.removeNeighbor;
 				return true;
 			}
 			else{
 				System.out.println("wrong Command");
 				return false;
 			}
+		}
+		else if(command[0].equals("savemap")){
+			if( command.length == 2 ) {
+				mapFile = command[1] + ".map";
+				currentTask = Tasks.saveMap;
+				return true;
+			}
+			else {
+				System.out.println("wrong Command ---> savemap filename");
+				return false;
+			}
+		}
+		else if(command[0].equals("editmap")){
+			if( command.length == 2 ) {
+				mapFile = command[1] + ".map";
+				currentTask = Tasks.editMap;
+				return true;
+			}
+			else {
+				System.out.println("wrong Command ---> editmap filename");
+				return false;
+			}
+		}
+		else if(command[0].equals("validatemap")){
+			currentTask = Tasks.validateMap;
+			return true;
+		}
+		else if(command[0].equals("showmap")){
+			currentTask = Tasks.showMap;
+			return true;
 		}
 		else {
 			System.out.println("wrong Command");
@@ -80,45 +110,57 @@ public class Controller {
 	
     public static void main(String[] args) {
         Controller controller= new Controller();
-        controller.startGame();
+    //    controller.startGame();
     	boolean gameFinished = false;
     	
 		while(!gameFinished){
 			if(!controller.GetCommand())
 				continue;	
-			if( controller.currentState == States.EditMap){
+			if( controller.currentState == States.mapEditor){
 				switch (controller.currentTask){
 					case addContinent:	
-						gameFinished= true;
-					//	map.AddContinent(continentName, controlValue); // ContinentName and ContinentValue extracted form User command
-					//	System.out.println("continentName="+controller.continentName+" controlValue="+controller.controlValue);
+					//	map.addContinent(continentName,controlValue);
 						break;
-				//	case RemoveContinet:
+					case removeContinent:		
+					//	map.removeContinent(continentName);
+						break;
+					case addCountry:
+					//	map.addCountry(countryName,continentName);
+						break;
+					case removeCountry:
+					//	map.removeCountry(countryName);
+						break;
+					case addNeighbor:
+					//	map.addNeighbor(countryName,neighborCountryName);
+						break;
+					case removeNeighbor:
+					//	map.addNeighbor(countryName,neighborCountryName);
+						break;
+					case saveMap:
+					//	map.saveMap(mapFile);
+						break;
+					case editMap:
+					//	map.editMap(mapFile);
+						break;
+					case validateMap:
+					//  if(map.checkValidityOfMap())   return true or false
+					//	controller.currentState = States.gamePlay;
+						break;
 					
-			//			map.RemoveContinent(ConrinentNAme);
-					//	break;
-				//	case AddCountry:
-					
-				//		break;
-				//	case RemoveCountry:
-					
-				//		break;
-				//	case ValidateMap:
-				//		break;
-					//	if(map.CheckvalidityOfMap())
-						//Currenttate = StartupPhase;
-					
-					default: System.out.println("Invalid Command");
+					default: System.out.println("Invalid Command. Please Enter Map Editor Command");
 				}
 			}
-		/*	else if(CurrentState == StartupPhase)
+			else if( controller.currentState == States.gamePlay )
 			{
-				switch CurrentTask
-				{
-					case
+				switch (controller.currentTask){
+					case showMap:
+					//	map.showMap();
+					//	controller.currentState = States.gamePlay;
+						break;
+					default: System.out.println("Invalid Command. Please Enter Game Play Command");
 				}
 			}
-			else if(CurrentState == ReinForcement)
+		/*	else if(CurrentState == ReinForcement)
 			{
 			}
 			else if(CurrentState == Attack)
