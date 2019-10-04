@@ -164,7 +164,14 @@ public class Mapx {
 			System.out.println("File with same name already exists!!");
 			System.out.println("press 1 to overwrite");
 			System.out.println("press any other number to cancel");
-			Integer in = sc1.nextInt();
+			Integer in= 0;
+
+			try{
+				in= sc1.nextInt();
+			}catch (Exception e)
+			{
+				System.out.println("Number Expected "+e.getMessage());
+			}
 
 			if (in == 1) {
 				if (file.delete()) {
