@@ -45,7 +45,6 @@ public class Mapx {
 			// System.out.println("Continents::::"+ continents);
 			continents = continents.trim();
 			addContinenttodb(continents);
-			System.out.println("vfhgc" + db.getInstance().getcontinentNames());
 			
 //            System.out.println(continents);
 		} catch (FileNotFoundException e) {
@@ -185,32 +184,29 @@ public class Mapx {
 	}
 
 	public void addContinenttodb(String continame) {
-		
 
 		String[] tempContinent = continame.split("\n");
-		System.out.println("lenght" + tempContinent.length);
+		//System.out.println("lenght" + tempContinent.length);
 		String[] tosaveConti = new String[tempContinent.length];
-		for(int i=1;i<tempContinent.length;i++) {
-			
+		for (int i = 1; i < tempContinent.length; i++) {
+
 			String[] tempConti = tempContinent[i].split(" ");
-		//	System.out.println(tempConti[0]);
-			tosaveConti[i]=tempConti[0];
-			//System.out.println("tosave" + tosaveConti[i]);
-			
+			// System.out.println(tempConti[0]);
+			tosaveConti[i] = tempConti[0];
+			// System.out.println("tosave" + tosaveConti[i]);
+
 		}
-	
+
 		ArrayList<String> tosavec = new ArrayList<String>(Arrays.asList(tosaveConti));
 		tosavec.remove(0);
 		db.setcontinentNames(tosavec);
 
 	}
 
-	public void saveMap(Graph graph) throws IOException {
+	public void saveMap() throws IOException {
 
-		ArrayList<Country> ct = graph.adjList;
+		ArrayList<Country> ct = Graph.adjList;
 		Iterator itr = ct.iterator();
-
-		System.out.println(ct);
 
 		Scanner scCreate = new Scanner(System.in);
 		System.out.println("Enter new map name");
@@ -225,32 +221,47 @@ public class Mapx {
 		writer.write(System.getProperty("line.separator"));
 
 		writer.write("[continents]" + System.getProperty("line.separator"));
-		
-		for(int i=0;i<db.getcontinentNames().size();i++) {
-			writer.write( db.getcontinentNames().get(i) + System.getProperty("line.separator"));
+
+		for (int i = 0; i < db.getcontinentNames().size(); i++) {
+			writer.write(db.getcontinentNames().get(i) + System.getProperty("line.separator"));
 		}
 		writer.write(System.getProperty("line.separator"));
-		
+
 		writer.write("[countries] " + System.getProperty("line.separator"));
-		writer.write(System.getProperty("line.separator"));
 		Integer countitr = 0;
 		while (itr.hasNext()) {
 			Country country = (Country) itr.next();
 			countitr++;
 			String CountryName = country.name;
-			Integer ContiNumber = country.inContinent ;
+			Integer ContiNumber = country.inContinent;
 			Integer coordinateOne = country.coOrdinate1;
 			Integer coordinateTwo = country.getCoOrdinate2;
-			
-			writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " " + coordinateTwo + System.getProperty("line.separator"));
-			
-			
-		}
-		
 
+			writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " " + coordinateTwo
+					+ System.getProperty("line.separator"));
+
+		}
+
+		writer.write(System.getProperty("line.separator"));
+
+		itr = ct.iterator();
 		writer.write("[borders] " + System.getProperty("line.separator"));
-		for (int num = 1; num < 2; num++) {
-			writer.write("This is line " + num + System.getProperty("line.separator"));
+
+		Integer countIterator =0 ;
+		while (itr.hasNext()) {
+			countIterator++;
+			Country country = (Country) itr.next();
+			ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
+			NeighbourList = country.neighbours;
+			String borderString = "";
+			for (int i = 0; i < NeighbourList.size(); i++) {
+				
+				
+				borderString = borderString + " " + NeighbourList.get(i);
+				
+			}
+			
+			writer.write(countIterator + borderString + System.getProperty("line.separator"));
 		}
 
 		writer.close();

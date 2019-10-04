@@ -141,8 +141,7 @@ public class Controller {
     void startGame() throws IOException{
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
-    	Graph gp = new Graph();
-    	map.saveMap(gp);
+    	map.saveMap();
         Scanner commandScanner= new Scanner(System.in);
         System.out.print ("Enter number of Players: ");
         Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
