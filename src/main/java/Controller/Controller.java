@@ -142,9 +142,9 @@ public class Controller {
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
     	map.saveMap();
-        Scanner commandScanner= new Scanner(System.in);
-        System.out.print ("Enter number of Players: ");
-        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
+//        Scanner commandScanner= new Scanner(System.in);
+//        System.out.print ("Enter number of Players: ");
+//        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
        
     }
     

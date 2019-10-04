@@ -153,7 +153,7 @@ public class Mapx {
 
 	// Birjot
 
-	public static File createfile(String mapName) throws IOException {
+	public static File createFile(String mapName) throws IOException {
 
 		Scanner sc1 = new Scanner(System.in);
 		File file = new File("src/main/resources/" + mapName);
@@ -164,8 +164,11 @@ public class Mapx {
 			System.out.println("File with same name already exists!!");
 			System.out.println("press 1 to overwrite");
 			System.out.println("press any other number to cancel");
-			Integer in = sc1.nextInt();
-
+			Integer in=0;
+			try {in = sc1.nextInt();
+			}catch (Exception e){
+				System.out.println("Number was expected");
+			}
 			if (in == 1) {
 				if (file.delete()) {
 					// delete file to make new one with same name
@@ -173,7 +176,7 @@ public class Mapx {
 					System.out.println("something went wrong");
 				}
 
-				createfile(mapName);
+				createFile(mapName);
 
 			} else {
 				System.out.println("cancelled");
@@ -214,7 +217,7 @@ public class Mapx {
 		String mapName = scCreate.nextLine();
 		mapName = mapName + ".map";
 		// Create the file
-		File f = createfile(mapName);
+		File f = createFile(mapName);
 
 		FileWriter writer = new FileWriter(f);
 		writer.write("[files]" + System.getProperty("line.separator"));
