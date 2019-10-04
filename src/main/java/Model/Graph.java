@@ -3,7 +3,7 @@ package Model;
 import java.util.*;
 
 public class Graph {
-    static private ArrayList<Country> adjList;
+    static public ArrayList<Country> adjList;
 
     public Graph() {
         adjList= new ArrayList<Country>();
@@ -49,6 +49,7 @@ public class Graph {
 //Print Model.Graph
     public static void printGraph()
     {
+    	
         for(Country country: adjList){
             System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
         }

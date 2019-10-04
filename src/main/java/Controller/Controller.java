@@ -1,8 +1,11 @@
 package Controller;
-import Model.Mapx;
+import java.io.IOException;
 import java.util.Scanner;
 
+import Model.*;
+
 public class Controller {
+	 
 	enum States {EditMap,StartupPhase,ReinForcement,Attack,Fortification }
 	enum Tasks {addContinent,removeContinent,addCountry,removeCountry,addNeighbor,ShowMap }
 	States currentState = States.EditMap;
@@ -12,6 +15,7 @@ public class Controller {
 	Integer controlValue;
 	String countryName;
 	String neighborCountryName;
+	
 	// parse input Instruction -> Command , Switch, Data
 	boolean GetCommand(){
 		System.out.println("Enter Command");
@@ -78,7 +82,12 @@ public class Controller {
 		}
 	}
 	
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+    	
+    	
+    	
+    	
+    	
         Controller controller= new Controller();
         controller.startGame();
     	boolean gameFinished = false;
@@ -129,12 +138,17 @@ public class Controller {
 			} */
 		}
     }
-    void startGame(){
+    void startGame() throws IOException{
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
+    	map.saveMap();
         Scanner commandScanner= new Scanner(System.in);
         System.out.print ("Enter number of Players: ");
         Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
-
+       
     }
+    
+   
+    
+    
 }
