@@ -3,7 +3,7 @@ package Model;
 import java.util.*;
 
 public class Graph {
-    static private ArrayList<Country> adjList;
+    static public ArrayList<Country> adjList;
 
     public Graph() {
         adjList= new ArrayList<Country>();
