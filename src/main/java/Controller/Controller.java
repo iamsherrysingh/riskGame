@@ -83,43 +83,41 @@ public class Controller {
 	}
 	
     public static void main(String[] args) throws IOException {
-    	
-    	
-    	
-    	
-    	
-        Controller controller= new Controller();
-        controller.startGame();
-    	boolean gameFinished = false;
-    	
-		while(!gameFinished){
-			if(!controller.GetCommand())
-				continue;	
-			if( controller.currentState == States.EditMap){
-				switch (controller.currentTask){
-					case addContinent:	
-						gameFinished= true;
-					//	map.AddContinent(continentName, controlValue); // ContinentName and ContinentValue extracted form User command
-					//	System.out.println("continentName="+controller.continentName+" controlValue="+controller.controlValue);
-						break;
-				//	case RemoveContinet:
-					
-			//			map.RemoveContinent(ConrinentNAme);
-					//	break;
-				//	case AddCountry:
-					
-				//		break;
-				//	case RemoveCountry:
-					
-				//		break;
-				//	case ValidateMap:
-				//		break;
-					//	if(map.CheckvalidityOfMap())
+		try {
+			Controller controller = new Controller();
+			controller.startGame();
+
+			boolean gameFinished = false;
+
+			while (!gameFinished) {
+				if (!controller.GetCommand())
+					continue;
+				if (controller.currentState == States.EditMap) {
+					switch (controller.currentTask) {
+						case addContinent:
+							gameFinished = true;
+							//	map.AddContinent(continentName, controlValue); // ContinentName and ContinentValue extracted form User command
+							//	System.out.println("continentName="+controller.continentName+" controlValue="+controller.controlValue);
+							break;
+						//	case RemoveContinet:
+
+						//			map.RemoveContinent(ConrinentNAme);
+						//	break;
+						//	case AddCountry:
+
+						//		break;
+						//	case RemoveCountry:
+
+						//		break;
+						//	case ValidateMap:
+						//		break;
+						//	if(map.CheckvalidityOfMap())
 						//Currenttate = StartupPhase;
-					
-					default: System.out.println("Invalid Command");
+
+						default:
+							System.out.println("Invalid Command");
+					}
 				}
-			}
 		/*	else if(CurrentState == StartupPhase)
 			{
 				switch CurrentTask
@@ -136,9 +134,14 @@ public class Controller {
 			else if(CurrentState == Fortification)
 			{
 			} */
+			}
+		}catch (Exception e)
+		{
+			System.out.println("An error occured: "+e.getMessage());
 		}
     }
     void startGame() throws IOException{
+
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
     	map.saveMap();
