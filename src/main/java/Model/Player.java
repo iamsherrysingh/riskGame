@@ -1,8 +1,11 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Player {
     String name;
     Integer id, numberOfArmies;
+    ArrayList<Integer> myCountries = new ArrayList<Integer>();;
 
     public String getName() {
         return name;
@@ -26,5 +29,12 @@ public class Player {
 
     public void setNumberOfArmies(Integer numberOfArmies) {
         this.numberOfArmies = numberOfArmies;
+    }
+    public ArrayList<Integer> getMyCountries() {
+        return myCountries;
+    }
+
+    public void setMyCountries(Integer number) {
+    	myCountries.add(number); 
     }
 }
