@@ -156,7 +156,7 @@ public class Mapx {
 	public static File createfile(String mapName) throws IOException {
 
 		Scanner sc1 = new Scanner(System.in);
-		File file = new File("C:\\Users\\birjotsingh17\\Documents\\APP\\riskGame\\src\\main\\resources\\" + mapName);
+		File file = new File("src/main/resources/" + mapName);
 
 		if (file.createNewFile()) {
 			System.out.println("map saved");

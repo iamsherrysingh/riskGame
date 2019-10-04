@@ -17,6 +17,7 @@ public class Database {
 		return dbobj;
 	}
 
+	//Holds continent names
 	ArrayList<String> continentNames;
 
 	public ArrayList<String> getcontinentNames() {
