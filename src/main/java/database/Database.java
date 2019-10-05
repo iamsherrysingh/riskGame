@@ -19,7 +19,16 @@ public class Database {
 
 	//Holds continent names
 	ArrayList<String> continentNames;
+	ArrayList<String> continentDetails;
 
+	public ArrayList<String> getcontinentDetails() {
+		return continentDetails;
+	}
+
+	public void setcontinentDetails(ArrayList<String> continentDetails) {
+		this.continentDetails = continentDetails;
+	}
+	
 	public ArrayList<String> getcontinentNames() {
 		return continentNames;
 	}
