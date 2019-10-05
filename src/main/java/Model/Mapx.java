@@ -236,7 +236,7 @@ public class Mapx {
 		writer.write("[continents]" + System.getProperty("line.separator"));
 
 		for (int i = 0; i < db.getcontinentDetails().size(); i++) {
-			writer.write(db.getcontinentDetails().get(i) );
+			writer.write(db.getcontinentDetails().get(i) + System.getProperty("line.separator"));
 		}
 		
 		writer.write(System.getProperty("line.separator"));
