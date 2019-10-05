@@ -1,10 +1,14 @@
 package Controller;
 import Model.Mapx;
 import Model.Player;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import Model.*;
+
 public class Controller {
+
 	enum States {mapEditor,gamePlay,startupPhase,editPlayer,troopArmies,reinforcementPhase,attackPhase,fortificationPhase }
 	enum Tasks {addcontinent,removecontinent,addcountry,removecountry,addneighbor,removeneighbor,savemap,editmap,validatemap,showmap,loadmap,addplayer,removeplayer,populatecountries}
 	States currentState = States.mapEditor;
@@ -145,57 +149,58 @@ public class Controller {
 			return false;
 		}
 	}
-	
-    public static void main(String[] args) {
-        Controller controller= new Controller();
-        controller.playerObjs = new ArrayList<Player>();
-    //    controller.startGame();
-    	boolean gameFinished = false;
-    	
-		while(!gameFinished){
-			if(!controller.getCommand())
-				continue;	
-		/*	if( controller.currentState == States.mapEditor){
-				switch (controller.currentTask){
-					case addcontinent:	
-					//	map.addcontinent(continentName,controlValue);
-						break;
-					case removecontinent:		
-					//	map.removecontinent(continentName);
-						break;
-					case addcountry:
-					//	map.addcountry(countryName,continentName);
-						break;
-					case removecountry:
-					//	map.removecountry(countryName);
-						break;
-					case addneighbor:
-					//	map.addneighbor(countryName,neighborCountryName);
-						break;
-					case removeneighbor:
-					//	map.addneighbor(countryName,neighborCountryName);
-						break;
-					case savemap:
-					//	map.savemap(mapFile);
-						break;
-					case editmap:
-					//	map.editmap(mapFile);
-						break;
-					case validatemap:
-					//  if(map.checkValidityOfMap())   return true or false
-						controller.currentState = States.gamePlay;
-						break;
-					
-					default: System.out.println("Invalid Command. Please Enter Map Editor Command");
+    public static void main(String[] args) throws IOException {
+		try {
+			Controller controller = new Controller();
+			controller.playerObjs = new ArrayList<Player>();
+		//	controller.startGame();
+
+	    	boolean gameFinished = false;
+	    	
+			while(!gameFinished){
+				if(!controller.getCommand())
+					continue;	
+			/*	if( controller.currentState == States.mapEditor){
+					switch (controller.currentTask){
+						case addcontinent:	
+						//	map.addcontinent(continentName,controlValue);
+							break;
+						case removecontinent:		
+						//	map.removecontinent(continentName);
+							break;
+						case addcountry:
+						//	map.addcountry(countryName,continentName);
+							break;
+						case removecountry:
+						//	map.removecountry(countryName);
+							break;
+						case addneighbor:
+						//	map.addneighbor(countryName,neighborCountryName);
+							break;
+						case removeneighbor:
+						//	map.addneighbor(countryName,neighborCountryName);
+							break;
+						case savemap:
+						//	map.savemap(mapFile);
+							break;
+						case editmap:
+						//	map.editmap(mapFile);
+							break;
+						case validatemap:
+						//  if(map.checkValidityOfMap())   return true or false
+							controller.currentState = States.gamePlay;
+							break;
+						
+						default: System.out.println("Invalid Command. Please Enter Map Editor Command");
+					}
 				}
-			}
-			else if( controller.currentState == States.gamePlay ){
-				switch (controller.currentTask){
-					case showmap:
-					//	map.showmap();
-						controller.currentState = States.startupPhase;
-						break;
-					default: System.out.println("Invalid Command. Please Enter Game Play Command");
+				else if( controller.currentState == States.gamePlay ){
+					switch (controller.currentTask){
+						case showmap:
+						//	map.showmap();
+							controller.currentState = States.startupPhase;
+							break;
+						default: System.out.println("Invalid Command. Please Enter Game Play Command");
 				}
 			}
 			else if( controller.currentState == States.startupPhase ){
@@ -248,14 +253,20 @@ public class Controller {
 			else if(CurrentState == Fortification)
 			{
 			} */
+			}
+		}catch (Exception e)
+		{
+			System.out.println("An error occured: "+e.getMessage());
 		}
     }
-    void startGame(){
+    void startGame() throws IOException{
+
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
-        Scanner commandScanner= new Scanner(System.in);
-        System.out.print ("Enter number of Players: ");
-        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
-
-    }
+    	map.saveMap();
+//        Scanner commandScanner= new Scanner(System.in);
+//        System.out.print ("Enter number of Players: ");
+//        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
+       
+    }   
 }
