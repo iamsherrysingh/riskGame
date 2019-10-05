@@ -53,7 +53,7 @@ public class Controller {
 					eTask.name = tasksEnum.addcontinent;
 					
 					//get data related to addContinent task
-					for(int i=0;i<1;i++) {
+					for(int i=0;i<2;i++) {
 						if(!cmdItr.hasNext()) {
 							System.out.println("wrong Command");
 							return false;
@@ -96,7 +96,7 @@ public class Controller {
 					eTask.name = tasksEnum.addcountry;
 					
 					//get data related to addCountry task
-					for(int i=0;i<1;i++) {
+					for(int i=0;i<2;i++) {
 						if(!cmdItr.hasNext()) {
 							System.out.println("wrong Command");
 							return false;
