@@ -193,6 +193,11 @@ public class Mapx {
 	public void addContinenttodb(String continame) {
 
 		String[] tempContinent = continame.split("\n");
+		
+		ArrayList<String> tosaveContinentDetails = new ArrayList<String>(Arrays.asList(tempContinent));
+			tosaveContinentDetails.remove(0);
+		//System.out.println(tosaveContinentDetails);
+		
 		//System.out.println("lenght" + tempContinent.length);
 		String[] tosaveConti = new String[tempContinent.length];
 		for (int i = 1; i < tempContinent.length; i++) {
@@ -206,6 +211,7 @@ public class Mapx {
 
 		ArrayList<String> tosavec = new ArrayList<String>(Arrays.asList(tosaveConti));
 		tosavec.remove(0);
+		db.setcontinentDetails(tosaveContinentDetails);
 		db.setcontinentNames(tosavec);
 
 	}
@@ -229,11 +235,17 @@ public class Mapx {
 
 		writer.write("[continents]" + System.getProperty("line.separator"));
 
-		for (int i = 0; i < db.getcontinentNames().size(); i++) {
-			writer.write(db.getcontinentNames().get(i) + System.getProperty("line.separator"));
+		for (int i = 0; i < db.getcontinentDetails().size(); i++) {
+			writer.write(db.getcontinentDetails().get(i) );
+			if(i<db.getcontinentDetails().size() -1){
+				writer.write(System.getProperty("line.separator"));
+			}
 		}
+		
+		writer.write(System.getProperty("line.separator"));
 		writer.write(System.getProperty("line.separator"));
 
+		
 		writer.write("[countries] " + System.getProperty("line.separator"));
 		Integer countitr = 0;
 		while (itr.hasNext()) {
