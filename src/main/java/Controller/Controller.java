@@ -19,6 +19,7 @@ public class Controller {
 	private Mapx mapObj;
 	private ArrayList<Player> playerObjs;
 	boolean editPlayerFinished = false;
+	boolean gameFinished = false;
 	
 	// parse input Instruction -> Command , Switch, Data
 	boolean getCommand(ArrayList<extractedTasks> tasksList){
@@ -275,116 +276,130 @@ public class Controller {
 		
 		return true;
 	}
+	boolean stateController(ArrayList<extractedTasks> tasksList){
+		if( currentState == States.mapEditor){
+			for(extractedTasks itr:tasksList) {
+				switch (itr.name){
+					case addcontinent:	
+						continentName = itr.taskData.get(0);
+						String controlValueStr = itr.taskData.get(1);
+						for(int i=0; i<controlValueStr.length(); i++) {
+							if(!Character.isDigit(controlValueStr.charAt(i))){
+								System.out.println("Wrong Control Value");
+								return false;
+							}
+						}
+						controlValue = Integer.parseInt(itr.taskData.get(1));
+						System.out.println("continentName:" + continentName);
+						System.out.println("controlValue:" + controlValue);
+				//		map.addcontinent(continentName,controlValue);
+						break;
+					case removecontinent:		
+				//		map.removecontinent(continentName);
+						break;
+					case addcountry:
+				//		map.addcountry(countryName,continentName);
+						break;
+					case removecountry:
+				//		map.removecountry(countryName);
+						break;
+					case addneighbor:
+				//		map.addneighbor(countryName,neighborCountryName);
+						break;
+					case removeneighbor:
+				//		map.addneighbor(countryName,neighborCountryName);
+						break;
+					case savemap:
+				//		map.savemap(mapFile);
+						break;
+					case editmap:
+				//		map.editmap(mapFile);
+						break;
+					case validatemap:
+				//		if(map.checkValidityOfMap())   return true or false
+						currentState = States.gamePlay;
+						break;			
+					default: System.out.println("Invalid Command. Please Enter Map Editor Command");
+				}
+			}
+		}
+	/*	else if( currentState == States.gamePlay ){
+			switch (currentTask){
+				case showmap:
+			//		map.showmap();
+					currentState = States.startupPhase;
+					break;
+				default: System.out.println("Invalid Command. Please Enter Game Play Command");
+			}
+		}
+		else if(currentState == States.startupPhase){
+			switch (currentTask){
+				case loadmap:
+				//	map.loadmap();
+					currentState = States.editPlayer;
+					break;
+				default: System.out.println("Invalid Command. Please Enter Startup Phase Command");
+			}
+		} 
+		else if( controller.currentState == States.mapEditor ){
+			while(!controller.editPlayerFinished) {
+				switch (controller.currentTask){
+					case addplayer:{	
+						Player playerobj = new Player();
+						playerobj.setName(controller.playerName);
+						playerobj.setId(controller.playerId);
+						controller.playerObjs.add(playerobj);
+						controller.playerId++;
+						controller.getCommand();
+						break;
+					}
+					case removeplayer:{
+						for(Player itr : controller.playerObjs){
+							if(itr.getName().equals(controller.playerName)) {
+								playerObjs.remove(itr);
+							}
+							else {
+								System.out.println("This Player does not exist. Please enter the correct Player");
+							}
+							controller.getCommand();
+						}
+					}
+					case populatecountries:{
+						controller.currentState = States.troopArmies;
+						controller.editPlayerFinished= true;
+						for(Player name:controller.playerObjs) {
+							System.out.println(name.getName());
+						} 
+						break;
+					}		
+					default: {
+						System.out.println("Invalid Command. Please Enter Startup Phase Command");
+						controller.getCommand();
+					}		
+				}
+			}
+		}
+		else if(CurrentState == Attack){
+		}
+		else if(CurrentState == Fortification){
+		} */
+		return true;
+	}
 		
     public static void main(String[] args) throws IOException {
 		try {
 			Controller controller = new Controller();
 			controller.playerObjs = new ArrayList<Player>();
 		//	controller.startGame();
-
-	    	boolean gameFinished = false;
 	    	
-			while(!gameFinished){
-				if(!controller.getCommand())
-					continue;	
-			/*	if( controller.currentState == States.mapEditor){
-					switch (controller.currentTask){
-						case addcontinent:	
-						//	map.addcontinent(continentName,controlValue);
-							break;
-						case removecontinent:		
-						//	map.removecontinent(continentName);
-							break;
-						case addcountry:
-						//	map.addcountry(countryName,continentName);
-							break;
-						case removecountry:
-						//	map.removecountry(countryName);
-							break;
-						case addneighbor:
-						//	map.addneighbor(countryName,neighborCountryName);
-							break;
-						case removeneighbor:
-						//	map.addneighbor(countryName,neighborCountryName);
-							break;
-						case savemap:
-						//	map.savemap(mapFile);
-							break;
-						case editmap:
-						//	map.editmap(mapFile);
-							break;
-						case validatemap:
-						//  if(map.checkValidityOfMap())   return true or false
-							controller.currentState = States.gamePlay;
-							break;
-						
-						default: System.out.println("Invalid Command. Please Enter Map Editor Command");
-					}
+			while(!controller.gameFinished){
+				ArrayList<extractedTasks> tasksList = new ArrayList<extractedTasks>();
+				if(!controller.getCommand(tasksList))
+					continue;
+				if(!controller.stateController(tasksList)) {
+					continue;
 				}
-				else if( controller.currentState == States.gamePlay ){
-					switch (controller.currentTask){
-						case showmap:
-						//	map.showmap();
-							controller.currentState = States.startupPhase;
-							break;
-						default: System.out.println("Invalid Command. Please Enter Game Play Command");
-				}
-			}
-			else if( controller.currentState == States.startupPhase ){
-				switch (controller.currentTask){
-					case loadmap:
-					//	map.loadmap();
-						controller.currentState = States.editPlayer;
-						break;
-					default: System.out.println("Invalid Command. Please Enter Startup Phase Command");
-				}
-			} */
-			if( controller.currentState == States.mapEditor ){
-				while(!controller.editPlayerFinished) {
-					switch (controller.currentTask){
-						case addplayer:{	
-								Player playerobj = new Player();
-								playerobj.setName(controller.playerName);
-								playerobj.setId(controller.playerId);
-								controller.playerObjs.add(playerobj);
-								controller.playerId++;
-								controller.getCommand();
-								break;
-						}
-						case removeplayer:{
-							for(Player itr : controller.playerObjs){
-								if(itr.getName().equals(controller.playerName)) {
-									controller.playerObjs.remove(itr);
-							    }
-								else {
-									System.out.println("This Player does not exist. Please enter the correct Player");
-								}
-								controller.getCommand();
-							}
-						}
-						case populatecountries:{
-							controller.currentState = States.troopArmies;
-							controller.editPlayerFinished= true;
-							for(Player name:controller.playerObjs) {
-					            System.out.println(name.getName());
-					        } 
-							break;
-						}		
-						default: {
-							System.out.println("Invalid Command. Please Enter Startup Phase Command");
-							controller.getCommand();
-						}
-						
-					}
-				}
-			}
-		/*	else if(CurrentState == Attack)
-			{
-			}
-			else if(CurrentState == Fortification)
-			{
-			} */
-			}
+			}		
 		}catch (Exception e)
 		{
 			System.out.println("An error occured: "+e.getMessage());
