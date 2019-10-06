@@ -12,17 +12,14 @@ import database.Database;
 
 public class Mapx {
 	private String continents, countries, borders;
-
 	Database database = Database.getInstance();
 
 	private void loadMap(String mapFile) throws FileNotFoundException {
-
 		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			int continentsEncountered = 0;
-
 			while (line != null) {
 				if (line.equals("[countries]"))
 					break;
@@ -37,12 +34,8 @@ public class Mapx {
 				}
 				line = br.readLine();
 			}
-
 			continents = sb.toString();
-			// System.out.println("Continents::::"+ continents);
 			continents = continents.trim();
-//			addContinenttodb(continents);
-
 			String continentLine[]= continents.split("\n");
 			for(int i=1; i<continentLine.length;i++){
 				continentLine[i]=continentLine[i].trim();
@@ -50,8 +43,6 @@ public class Mapx {
 				Continent continent= new Continent(database.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
 				database.getContinentList().add(continent);
 			}
-			
-//            System.out.println(continents);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -63,7 +54,6 @@ public class Mapx {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			int countriesEncountered = 0;
-
 			while (line != null) {
 				if (line.equals("[borders]"))
 					break;
@@ -78,10 +68,8 @@ public class Mapx {
 				}
 				line = br.readLine();
 			}
-
 			countries = sb.toString();
 			countries = countries.trim();
-//            System.out.println(countries);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -93,7 +81,6 @@ public class Mapx {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			int bordersEncountered = 0;
-
 			while (line != null) {
 				if (bordersEncountered == 1) {
 					sb.append(line);
@@ -106,10 +93,8 @@ public class Mapx {
 				}
 				line = br.readLine();
 			}
-
 			borders = sb.toString();
 			borders = borders.trim();
-//            System.out.println(neighbours);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -124,9 +109,7 @@ public class Mapx {
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 		}
-
 		Graph gameGraph = Graph.getInstance();
-
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
 		while (countryScanner.hasNext()) {
@@ -157,12 +140,9 @@ public class Mapx {
 	}
 
 	// Birjot
-
 	public static File createFile(String mapName) throws IOException {
-
 		Scanner sc1 = new Scanner(System.in);
 		File file = new File("src/main/resources/" + mapName);
-
 		if (file.createNewFile()) {
 			System.out.println("map saved");
 		} else {
@@ -177,43 +157,33 @@ public class Mapx {
 			{
 				System.out.println("Number Expected "+e.getMessage());
 			}
-
 			if (in == 1) {
 				if (file.delete()) {
 					// delete file to make new one with same name
 				} else {
 					System.out.println("something went wrong");
 				}
-
 				createFile(mapName);
-
 			} else {
 				System.out.println("cancelled");
 			}
-
 		}
 		return file;
 	}
 
 	public void saveMap() throws IOException {
-
 		ArrayList<Country> ct = Graph.adjList;
 		Iterator itr = ct.iterator();
-
 		Scanner scCreate = new Scanner(System.in);
 		System.out.println("Enter new map name");
-
 		String mapName = scCreate.nextLine();
 		mapName = mapName + ".map";
 		// Create the file
 		File f = createFile(mapName);
-
 		FileWriter writer = new FileWriter(f);
 		writer.write("[files]" + System.getProperty("line.separator"));
 		writer.write(System.getProperty("line.separator"));
-
 		writer.write("[continents]" + System.getProperty("line.separator"));
-
 		for (int i = 0; i < database.getContinentList().size(); i++) {
 			Continent continent= database.getContinentList().get(i);
 			writer.write(continent.getName()+" "+continent.getControlValue()+" "+continent.getColor() );
@@ -221,11 +191,8 @@ public class Mapx {
 				writer.write(System.getProperty("line.separator"));
 			}
 		}
-		
 		writer.write(System.getProperty("line.separator"));
 		writer.write(System.getProperty("line.separator"));
-
-		
 		writer.write("[countries] " + System.getProperty("line.separator"));
 		Integer countitr = 0;
 		while (itr.hasNext()) {
@@ -235,14 +202,10 @@ public class Mapx {
 			Integer ContiNumber = country.inContinent;
 			Integer coordinateOne = country.coOrdinate1;
 			Integer coordinateTwo = country.getCoOrdinate2;
-
 			writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " " + coordinateTwo
 					+ System.getProperty("line.separator"));
-
 		}
-
 		writer.write(System.getProperty("line.separator"));
-
 		itr = ct.iterator();
 		writer.write("[borders] " + System.getProperty("line.separator"));
 
@@ -254,19 +217,11 @@ public class Mapx {
 			NeighbourList = country.neighbours;
 			String borderString = "";
 			for (int i = 0; i < NeighbourList.size(); i++) {
-				
-				
 				borderString = borderString + " " + NeighbourList.get(i);
-				
 			}
-			
 			writer.write(countIterator + borderString + System.getProperty("line.separator"));
 		}
-
 		writer.close();
-		// TO DO
-		// Save Model.Graph to .map file
-
 	}
 
 	public boolean validateMap(Graph gameGraph){
@@ -324,7 +279,6 @@ public class Mapx {
                 numberOfNeighbour= country.getNumber();
             }
         }
-
 	    gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour-1).getNeighbours().add(numberOfNeighbour); //Added new neighbour for this country
         gameGraph.getAdjList().get(numberOfNeighbour-1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
     }

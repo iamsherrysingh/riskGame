@@ -3,14 +3,12 @@ package Model;
 public class Continent {
     String name, color;
     Integer number,controlValue;
-
     public Continent(Integer number, String name, Integer controlValue, String color) {
         this.number= number;
         this.name = name;
         this.color = color;
         this.controlValue = controlValue;
     }
-
     public String getName() {
         return name;
     }
