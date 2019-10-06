@@ -145,7 +145,7 @@ public class Controller {
     }
     void startGame() throws IOException{
         Mapx map= new Mapx();
-        map.createGameGraph("src/main/resources/map.map").printGraph();
+/*        map.createGameGraph("src/main/resources/map.map").printGraph();
         Graph g=map.createGameGraph("src/main/resources/map.map");
         ArrayList<Integer> a=new ArrayList<Integer>();
         a.add(1);
@@ -158,8 +158,10 @@ public class Controller {
         g.printGraph();
         map.addNeighbour("Indiana","India",g);
         g.printGraph();
-    	//map.saveMap();
+    	//map.saveMap();*/
+		Graph g=map.createGameGraph("src/main/resources/map.map");
 
+		map.saveMap();
 		System.out.println("======");
 		for(Continent c: Database.getInstance().getContinentList()){
 			System.out.println(c.getName());

@@ -10,8 +10,6 @@ import java.util.*;
 
 import database.Database;
 
-import javax.xml.crypto.Data;
-
 public class Mapx {
 	private String continents, countries, borders;
 
@@ -43,7 +41,15 @@ public class Mapx {
 			continents = sb.toString();
 			// System.out.println("Continents::::"+ continents);
 			continents = continents.trim();
-			addContinenttodb(continents);
+//			addContinenttodb(continents);
+
+			String continentLine[]= continents.split("\n");
+			for(int i=1; i<continentLine.length;i++){
+				continentLine[i]=continentLine[i].trim();
+				String split[]=continentLine[i].split(" ");
+				Continent continent= new Continent(db.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
+				db.getContinentList().add(continent);
+			}
 			
 //            System.out.println(continents);
 		} catch (FileNotFoundException e) {
@@ -119,7 +125,7 @@ public class Mapx {
 			System.out.println(f.getMessage());
 		}
 
-		Graph gameGraph = new Graph();
+		Graph gameGraph = Graph.getInstance();
 
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
@@ -189,40 +195,6 @@ public class Mapx {
 		return file;
 	}
 
-	public void addContinenttodb(String continents) {
-
-		String[] tempContinent = continents.split("\n");
-		
-		ArrayList<String> tosaveContinentDetails = new ArrayList<String>(Arrays.asList(tempContinent));
-			tosaveContinentDetails.remove(0);
-		//System.out.println(tosaveContinentDetails);
-		
-		//System.out.println("lenght" + tempContinent.length);
-		String[] tosaveConti = new String[tempContinent.length];
-		for (int i = 1; i < tempContinent.length; i++) {
-
-			String[] tempConti = tempContinent[i].split(" ");
-			// System.out.println(tempConti[0]);
-			tosaveConti[i] = tempConti[0];
-			// System.out.println("tosave" + tosaveConti[i]);
-
-		}
-
-		ArrayList<String> tosavec = new ArrayList<String>(Arrays.asList(tosaveConti));
-		tosavec.remove(0);
-		db.setcontinentDetails(tosaveContinentDetails);
-
-		//Code below this point is added by sehaj
-
-		for(String continentLine: tosaveContinentDetails){
-			continentLine=continentLine.trim();
-			String split[]=continentLine.split(" ");
-			Continent continent= new Continent(db.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
-			db.getContinentList().add(continent);
-		}
-
-	}
-
 	public void saveMap() throws IOException {
 
 		ArrayList<Country> ct = Graph.adjList;
@@ -242,9 +214,10 @@ public class Mapx {
 
 		writer.write("[continents]" + System.getProperty("line.separator"));
 
-		for (int i = 0; i < db.getcontinentDetails().size(); i++) {
-			writer.write(db.getcontinentDetails().get(i) );
-			if(i<db.getcontinentDetails().size() -1){
+		for (int i = 0; i < db.getContinentList().size(); i++) {
+			Continent continent= db.getContinentList().get(i);
+			writer.write(continent.getName()+" "+continent.getControlValue()+" "+continent.getColor() );
+			if(i<db.getContinentList().size() -1){
 				writer.write(System.getProperty("line.separator"));
 			}
 		}
