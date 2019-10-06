@@ -170,6 +170,8 @@ public class Controller {
 
 		map.removeNeighbour("Congo", "North-africa",g);
         g.printGraph();
+        map.addArmiesToCountry("Egypt",100,g);
+        System.out.println(g.getAdjList().get(21).getNumberOfArmies());
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());

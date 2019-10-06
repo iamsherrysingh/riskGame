@@ -132,7 +132,7 @@ public class Mapx {
                 }
             }
             Country country = new Country(Integer.parseInt(countryLineSubstrings[0]), countryLineSubstrings[1],
-                    Integer.parseInt(countryLineSubstrings[2]), null, null, Integer.parseInt(countryLineSubstrings[3]),
+                    Integer.parseInt(countryLineSubstrings[2]), null, 0, Integer.parseInt(countryLineSubstrings[3]),
                     Integer.parseInt(countryLineSubstrings[4]), neighbours);
             gameGraph.getAdjList().add(country);
         }
@@ -401,6 +401,38 @@ public class Mapx {
         }
     }
 
+    public void addArmiesToCountry(String countryName, Integer numberOfArmies, Graph gameGraph){
+        Country countryToReinforce = null;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.getName().equalsIgnoreCase(countryName)) {
+                countryToReinforce = country;
+            }
+        }
+        if (countryToReinforce == null) {
+            System.out.println("Country: " + countryName + " not in the map!");
+            return;
+        }
+        countryToReinforce.setNumberOfArmies(countryToReinforce.getNumberOfArmies() + numberOfArmies);
+    }
+
+    public void removeArmiesFromCountry(String countryName, Integer numberOfArmies, Graph gameGraph){
+        Country countryToWeaken = null;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.getName().equalsIgnoreCase(countryName)) {
+                countryToWeaken = country;
+            }
+        }
+        if (countryToWeaken == null) {
+            System.out.println("Country: " + countryName + " not in the map!");
+            return;
+        }
+        if((countryToWeaken.getNumberOfArmies() - numberOfArmies) <=0) {
+            countryToWeaken.setNumberOfArmies(countryToWeaken.getNumberOfArmies() - numberOfArmies);
+        }
+        else{
+            System.out.println("Cannot have less than 1 army in a country!");
+        }
+    }
 
 }
 
