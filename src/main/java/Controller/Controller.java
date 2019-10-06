@@ -2,7 +2,7 @@ package Controller;
 import java.io.IOException;
 import java.util.*;
 import Model.*;
-import database.Database;
+import Database.Database;
 
 public class Controller {
 	 
@@ -158,6 +158,8 @@ public class Controller {
 		map.addNeighbour("Havanna","India", g);
 		g.printGraph();
 		map.addNeighbour("Swarg","Pataal",g);
+		map.removeCountry("japafn",g);
+		g.printGraph();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());

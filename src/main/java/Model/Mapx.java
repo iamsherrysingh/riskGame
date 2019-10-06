@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import database.Database;
+import Database.Database;
 
 public class Mapx {
 	private String continents, countries, borders;
@@ -296,4 +296,27 @@ public class Mapx {
 	    gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour-1).getNeighbours().add(neighbourNumber); //Added new neighbour for this country
         gameGraph.getAdjList().get(neighbourNumber-1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
     }
+
+    public void removeCountry(String NameOfCountryToRemove, Graph gameGraph){
+		Country countryToRemove=null;
+		for(Country country: gameGraph.getAdjList()){
+			if(country.getName().equalsIgnoreCase(NameOfCountryToRemove)){
+				countryToRemove= country;
+			}
+		}
+		if(countryToRemove == null){
+			System.out.println("Country: "+NameOfCountryToRemove+" not in the map!");
+			return;
+		}
+		for(Integer neighbour: countryToRemove.getNeighbours()){
+			ArrayList<Integer> neighbourListOfNeighbour= gameGraph.getAdjList().get(neighbour-1).getNeighbours();
+			for(int i=0;i<neighbourListOfNeighbour.size();i++){
+				if(neighbourListOfNeighbour.get(i) == countryToRemove.getNumber()){
+					neighbourListOfNeighbour.remove(i);
+				}
+			}
+		}
+		gameGraph.getAdjList().remove(countryToRemove.getNumber()-1);
+
+	}
 }
