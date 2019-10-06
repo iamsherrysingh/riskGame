@@ -1,10 +1,22 @@
 package database;
 
+import Model.Continent;
+
 import java.util.ArrayList;
 
 public class Database {
 
 	private static Database dbobj;
+
+	static ArrayList<Continent> continentList= new ArrayList<Continent>();
+
+	public ArrayList<Continent> getContinentList() {
+		return continentList;
+	}
+
+	public void setContinentList(ArrayList<Continent> continentList) {
+		this.continentList = continentList;
+	}
 
 	// private constructor to force use of
 	// getInstance() to create Singleton object
@@ -28,7 +40,7 @@ public class Database {
 	public void setcontinentDetails(ArrayList<String> continentDetails) {
 		this.continentDetails = continentDetails;
 	}
-	
+
 	public ArrayList<String> getcontinentNames() {
 		return continentNames;
 	}
@@ -36,5 +48,7 @@ public class Database {
 	public void setcontinentNames(ArrayList<String> continentNames) {
 		this.continentNames = continentNames;
 	}
+
+
 
 }

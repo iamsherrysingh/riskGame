@@ -10,6 +10,8 @@ import java.util.*;
 
 import database.Database;
 
+import javax.xml.crypto.Data;
+
 public class Mapx {
 	private String continents, countries, borders;
 
@@ -211,6 +213,15 @@ public class Mapx {
 		db.setcontinentDetails(tosaveContinentDetails);
 		db.setcontinentNames(tosavec);
 
+		//Code below this point is added by sehaj
+
+		for(String continentLine: tosaveContinentDetails){
+			continentLine=continentLine.trim();
+			String split[]=continentLine.split(" ");
+			Continent continent= new Continent(db.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
+			db.getContinentList().add(continent);
+		}
+
 	}
 
 	public void saveMap() throws IOException {
@@ -318,11 +329,12 @@ public class Mapx {
 	}
 
 	public void addCountry(String newCountry, Integer inContinent, Graph gameGraph){
+
 		Country country= new Country(gameGraph.getAdjList().size()+1, newCountry, inContinent, null, null, 0, 0,new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
 	}
 
-    public void addNeightbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph){
+    public void addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph){
 	    Integer numberOfCountryWithNewNeighbour=0;
 	    for(Country country: gameGraph.getAdjList()){
 	        if(country.getName().equalsIgnoreCase(countryWithNewNeighbour)){

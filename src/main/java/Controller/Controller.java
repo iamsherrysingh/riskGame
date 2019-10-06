@@ -1,9 +1,11 @@
 package Controller;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import Model.*;
+import database.Database;
 
 public class Controller {
 	 
@@ -154,9 +156,16 @@ public class Controller {
         System.out.println(map.validateMap(g));
         map.addCountry("Indiana",2,g);
         g.printGraph();
-        map.addNeightbour("Indiana","India",g);
+        map.addNeighbour("Indiana","India",g);
         g.printGraph();
-    	map.saveMap();
+    	//map.saveMap();
+
+		System.out.println("======");
+		for(Continent c: Database.getInstance().getContinentList()){
+			System.out.println(c.getName());
+		}
+		System.out.println("====");
+		System.out.println(Database.getInstance().getContinentList().size());
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
