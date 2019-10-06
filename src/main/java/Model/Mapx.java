@@ -262,24 +262,38 @@ public class Mapx {
 				continentNumber= continent.getNumber();
 			}
 		}
+		if(continentNumber==-1){
+			System.out.println("Continent: "+inContinent+" not found!");
+			System.out.println("Perhaps add one first");
+			return;
+		}
 		Country country= new Country(gameGraph.getAdjList().size()+1, newCountry, continentNumber, null, null, 0, 0,new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
 	}
 
     public void addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph){
-	    Integer numberOfCountryWithNewNeighbour=0;
+	    Integer numberOfCountryWithNewNeighbour=-1;
 	    for(Country country: gameGraph.getAdjList()){
 	        if(country.getName().equalsIgnoreCase(countryWithNewNeighbour)){
 	            numberOfCountryWithNewNeighbour= country.getNumber();
             }
         }
-        Integer numberOfNeighbour=0;
+		if(numberOfCountryWithNewNeighbour==-1){
+			System.out.println("Country: "+countryWithNewNeighbour+" not in the map!");
+			System.out.println("Perhaps add one first.");
+			return;
+		}
+        Integer neighbourNumber=-1;
         for(Country country: gameGraph.getAdjList()){
             if(country.getName().equalsIgnoreCase(neighbour)){
-                numberOfNeighbour= country.getNumber();
+                neighbourNumber= country.getNumber();
             }
         }
-	    gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour-1).getNeighbours().add(numberOfNeighbour); //Added new neighbour for this country
-        gameGraph.getAdjList().get(numberOfNeighbour-1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
+		if(neighbourNumber==-1){
+			System.out.println("Neighbour Country: "+neighbour+" not in the map!");
+			return;
+		}
+	    gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour-1).getNeighbours().add(neighbourNumber); //Added new neighbour for this country
+        gameGraph.getAdjList().get(neighbourNumber-1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
     }
 }

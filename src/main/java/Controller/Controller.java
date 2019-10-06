@@ -157,6 +157,7 @@ public class Controller {
 		System.out.println(g.getAdjList().get(42).getInContinent());
 		map.addNeighbour("Havanna","India", g);
 		g.printGraph();
+		map.addNeighbour("Swarg","Pataal",g);
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
