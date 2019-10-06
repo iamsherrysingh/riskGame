@@ -211,7 +211,6 @@ public class Mapx {
 		ArrayList<String> tosavec = new ArrayList<String>(Arrays.asList(tosaveConti));
 		tosavec.remove(0);
 		db.setcontinentDetails(tosaveContinentDetails);
-		db.setcontinentNames(tosavec);
 
 		//Code below this point is added by sehaj
 
