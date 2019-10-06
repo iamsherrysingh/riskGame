@@ -13,7 +13,7 @@ import database.Database;
 public class Mapx {
 	private String continents, countries, borders;
 
-	Database db = Database.getInstance();
+	Database database = Database.getInstance();
 
 	private void loadMap(String mapFile) throws FileNotFoundException {
 
@@ -47,8 +47,8 @@ public class Mapx {
 			for(int i=1; i<continentLine.length;i++){
 				continentLine[i]=continentLine[i].trim();
 				String split[]=continentLine[i].split(" ");
-				Continent continent= new Continent(db.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
-				db.getContinentList().add(continent);
+				Continent continent= new Continent(database.getInstance().getContinentList().size()+1, split[0], Integer.parseInt(split[1]), split[2]);
+				database.getContinentList().add(continent);
 			}
 			
 //            System.out.println(continents);
@@ -214,10 +214,10 @@ public class Mapx {
 
 		writer.write("[continents]" + System.getProperty("line.separator"));
 
-		for (int i = 0; i < db.getContinentList().size(); i++) {
-			Continent continent= db.getContinentList().get(i);
+		for (int i = 0; i < database.getContinentList().size(); i++) {
+			Continent continent= database.getContinentList().get(i);
 			writer.write(continent.getName()+" "+continent.getControlValue()+" "+continent.getColor() );
-			if(i<db.getContinentList().size() -1){
+			if(i< database.getContinentList().size() -1){
 				writer.write(System.getProperty("line.separator"));
 			}
 		}
@@ -300,9 +300,14 @@ public class Mapx {
 		return false;
 	}
 
-	public void addCountry(String newCountry, Integer inContinent, Graph gameGraph){
-
-		Country country= new Country(gameGraph.getAdjList().size()+1, newCountry, inContinent, null, null, 0, 0,new ArrayList<Integer>());
+	public void addCountry(String newCountry, String inContinent, Graph gameGraph){
+		Integer continentNumber=-1;
+		for(Continent continent: database.getContinentList()){
+			if(continent.getName().equalsIgnoreCase(inContinent)){
+				continentNumber= continent.getNumber();
+			}
+		}
+		Country country= new Country(gameGraph.getAdjList().size()+1, newCountry, continentNumber, null, null, 0, 0,new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
 	}
 

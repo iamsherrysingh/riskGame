@@ -160,7 +160,7 @@ public class Controller {
         g.printGraph();
     	//map.saveMap();*/
 		Graph g=map.createGameGraph("src/main/resources/map.map");
-
+		g.printGraph();
 		map.saveMap();
 		System.out.println("======");
 		for(Continent c: Database.getInstance().getContinentList()){
@@ -168,6 +168,10 @@ public class Controller {
 		}
 		System.out.println("====");
 		System.out.println(Database.getInstance().getContinentList().size());
+
+		map.addCountry("Havanna","Australia",g);
+		g.printGraph();
+		System.out.println(g.getAdjList().get(42).getInContinent());
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
