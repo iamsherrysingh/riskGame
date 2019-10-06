@@ -171,8 +171,8 @@ public class Mapx {
 		return file;
 	}
 
-	public void saveMap() throws IOException {
-		ArrayList<Country> ct = Graph.adjList;
+	public void saveMap(Graph gameGraph) throws IOException {
+		ArrayList<Country> ct = gameGraph.adjList;
 		Iterator itr = ct.iterator();
 		Scanner scCreate = new Scanner(System.in);
 		System.out.println("Enter new map name");

@@ -144,7 +144,7 @@ public class Controller {
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
 		g.printGraph();
-		map.saveMap();
+		map.saveMap(g);
 		System.out.println("======");
 		for(Continent c: Database.getInstance().getContinentList()){
 			System.out.println(c.getName());
@@ -158,7 +158,7 @@ public class Controller {
 		map.addNeighbour("Havanna","India", g);
 		g.printGraph();
 		map.addNeighbour("Swarg","Pataal",g);
-		map.removeCountry("japafn",g);
+		map.removeCountry("japan",g);
 		g.printGraph();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
