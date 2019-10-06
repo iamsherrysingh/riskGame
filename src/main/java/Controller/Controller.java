@@ -154,11 +154,13 @@ public class Controller {
         System.out.println(map.validateMap(g));
         map.addCountry("Indiana",2,g);
         g.printGraph();
+        map.addNeightbour("Indiana","India",g);
+        g.printGraph();
     	map.saveMap();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
-       
+
     }
     
    

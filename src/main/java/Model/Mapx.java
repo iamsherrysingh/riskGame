@@ -187,9 +187,9 @@ public class Mapx {
 		return file;
 	}
 
-	public void addContinenttodb(String continame) {
+	public void addContinenttodb(String continents) {
 
-		String[] tempContinent = continame.split("\n");
+		String[] tempContinent = continents.split("\n");
 		
 		ArrayList<String> tosaveContinentDetails = new ArrayList<String>(Arrays.asList(tempContinent));
 			tosaveContinentDetails.remove(0);
@@ -317,33 +317,26 @@ public class Mapx {
 		return false;
 	}
 
-/*	public void addCountryToMap(Country newCountry)
-	{
-		//TO DO
-		//Add validations here
-		// Add new Model.Country
-		newCountry.setNumber(this.getAdjList().size() +1); //Generate the serial number for the new country
-		this.adjList.add(newCountry);
-
-		//Add new Model.Country as a border country to the countries it borders
-		Integer newCountryNumber= newCountry.getNumber();
-		for(Integer newCountryBorders: newCountry.getNeighbours()){
-			for(Country existingCountry: adjList){
-				if(existingCountry.getNumber()==newCountryBorders){
-					existingCountry.addNeighbour(newCountryNumber);
-				}
-			}
-		}
-	}*/
-//	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
-//				   Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
-//		this.number = number;
 	public void addCountry(String newCountry, Integer inContinent, Graph gameGraph){
 		Country country= new Country(gameGraph.getAdjList().size()+1, newCountry, inContinent, null, null, 0, 0,new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
 	}
 
+    public void addNeightbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph){
+	    Integer numberOfCountryWithNewNeighbour=0;
+	    for(Country country: gameGraph.getAdjList()){
+	        if(country.getName().equalsIgnoreCase(countryWithNewNeighbour)){
+	            numberOfCountryWithNewNeighbour= country.getNumber();
+            }
+        }
+        Integer numberOfNeighbour=0;
+        for(Country country: gameGraph.getAdjList()){
+            if(country.getName().equalsIgnoreCase(neighbour)){
+                numberOfNeighbour= country.getNumber();
+            }
+        }
 
-
-
+	    gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour-1).getNeighbours().add(numberOfNeighbour); //Added new neighbour for this country
+        gameGraph.getAdjList().get(numberOfNeighbour-1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
+    }
 }
