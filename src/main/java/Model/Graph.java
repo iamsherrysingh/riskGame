@@ -19,7 +19,7 @@ public class Graph {
 
     //Add new Model.Country to the map
     //The object passed to this function can have anything as country.number
-    void addCountryToMap(Country newCountry)
+    public void addCountryToMap(Country newCountry)
     {
         //TO DO
         //Add validations here
@@ -40,7 +40,7 @@ public class Graph {
     }
 
 //Print Model.Graph
-    public static void printGraph(Graph graph)
+    public void printGraph(Graph graph)
     {
         for(Country country: graph.adjList){
             System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());

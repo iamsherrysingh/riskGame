@@ -6,10 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 import database.Database;
 
@@ -287,6 +284,37 @@ public class Mapx {
 		// TO DO
 		// Save Model.Graph to .map file
 
+	}
+
+	public boolean validateMap(Graph gameGraph){
+		Integer startPosition=1;
+		int count = 0;
+		boolean visited[]= new boolean[gameGraph.getAdjList().size()+1];
+		Stack<Integer> stack= new Stack<Integer>();
+		stack.push(startPosition);
+
+		while(stack.empty() == false){
+			Integer topElement= stack.peek();
+			stack.pop();
+			if(visited[topElement]==false){
+				count++;
+				visited[topElement]=true;
+			}
+
+			Iterator<Integer> itr= gameGraph.getAdjList().get(topElement-1).getNeighbours().iterator();
+			while(itr.hasNext()){
+				Integer next= itr.next();
+				if(visited[next] == false){
+					stack.push(next);
+				}
+			}
+		}
+		System.out.println(count);
+		System.out.println(gameGraph.getAdjList().size());
+		if(count==gameGraph.getAdjList().size()) {// if count==no. of countries return true;
+			return true;
+		}
+		return false;
 	}
 
 }
