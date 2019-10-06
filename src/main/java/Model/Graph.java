@@ -33,7 +33,7 @@ public class Graph {
 //Print Model.Graph
     public static void printGraph()
     {
-    	
+
         for(Country country: adjList){
             System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
         }
