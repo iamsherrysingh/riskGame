@@ -167,6 +167,9 @@ public class Controller {
 		map.removeContinent("Asia",g);
 		g.printGraph();
 		Database.getInstance().printContinentList();
+
+		map.removeNeighbour("Congo", "North-africa",g);
+        g.printGraph();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());

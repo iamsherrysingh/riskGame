@@ -296,6 +296,41 @@ public class Mapx {
         gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().add(numberOfCountryWithNewNeighbour); //Added this country as neighbour to it's neighbour
     }
 
+    public void removeNeighbour(String countryThatLosesNeighbour, String neighbour, Graph gameGraph) {
+        Integer countryNumber = -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.getName().equalsIgnoreCase(countryThatLosesNeighbour)) {
+                countryNumber = country.getNumber();
+            }
+        }
+        if (countryNumber == -1) {
+            System.out.println("Country: " + countryThatLosesNeighbour + " not in the map!");
+            return;
+        }
+        Integer neighbourNumber = -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.getName().equalsIgnoreCase(neighbour)) {
+                neighbourNumber = country.getNumber();
+            }
+        }
+        if (neighbourNumber == -1) {
+            System.out.println("Neighbour Country: " + neighbour + " not in the map!");
+            return;
+        }
+        boolean neighbourPresentInList= false;
+        for(Integer singleNeighbour: gameGraph.getAdjList().get(countryNumber-1).getNeighbours()){
+            if(gameGraph.getAdjList().get(singleNeighbour-1).getName().equalsIgnoreCase(neighbour)){
+                neighbourPresentInList = true;
+            }
+        }
+        if(neighbourPresentInList == false){
+            System.out.println("These countries are not neighbours");
+            return;
+        }
+        gameGraph.getAdjList().get(countryNumber-1).getNeighbours().remove(neighbourNumber);
+        gameGraph.getAdjList().get(neighbourNumber-1).getNeighbours().remove(countryNumber);
+    }
+
     public void removeCountry(String NameOfCountryToRemove, Graph gameGraph) {
         Country countryToRemove = null;
         for (Country country : gameGraph.getAdjList()) {
