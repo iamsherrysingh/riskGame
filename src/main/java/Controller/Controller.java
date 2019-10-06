@@ -142,7 +142,6 @@ public class Controller {
 		}
     }
     void startGame() throws IOException{
-
         Mapx map= new Mapx();
         map.createGameGraph("src/main/resources/map.map").printGraph();
         Graph g=map.createGameGraph("src/main/resources/map.map");
@@ -150,9 +149,11 @@ public class Controller {
         a.add(1);
         g.addCountryToMap(new Country(43,"newCountry",1,"sd",3, 1,1,a));
 		g.printGraph();
-		g.getAdjList().get(42).getNeighbours().clear();
-		g.getAdjList().get(0).getNeighbours().remove(3);
+//		g.getAdjList().get(42).getNeighbours().clear();
+//		g.getAdjList().get(0).getNeighbours().remove(3);
         System.out.println(map.validateMap(g));
+        map.addCountry("Indiana",2,g);
+        g.printGraph();
     	map.saveMap();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
