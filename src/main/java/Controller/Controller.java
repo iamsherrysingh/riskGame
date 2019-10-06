@@ -160,6 +160,13 @@ public class Controller {
 		map.addNeighbour("Swarg","Pataal",g);
 		map.removeCountry("japan",g);
 		g.printGraph();
+
+		map.addContinent("Jupiter",67);
+		Database.getInstance().printContinentList();
+
+		map.removeContinent("Asia",g);
+		g.printGraph();
+		Database.getInstance().printContinentList();
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());

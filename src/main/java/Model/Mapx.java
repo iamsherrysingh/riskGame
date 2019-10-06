@@ -335,8 +335,39 @@ public class Mapx {
             country.setNeighbours(newNeighbourList);
         }
 
+    }
+
+    public void addContinent(String continentName, Integer controlValue){
+        Continent newContinent= new Continent(Database.getInstance().getContinentList().size()+1, continentName, controlValue, "");
+        Database.getInstance().getContinentList().add(newContinent);
+    }
+
+    public void removeContinent(String continentToRemove, Graph gameGraph){
+        Integer serialNumberOfContinentToRemove=-1;
+        for(Continent continent: Database.getInstance().getContinentList()){
+            if(continent.getName().equalsIgnoreCase(continentToRemove)){
+                serialNumberOfContinentToRemove = continent.getNumber();
+            }
+        }
+        if(serialNumberOfContinentToRemove == -1){
+            System.out.println("Continent: "+continentToRemove+" not found in the map!");
+            return;
+        }
+        ArrayList<String> countriesInContinentToRemove= new ArrayList<String>();
+        for(Country country: gameGraph.getAdjList()){
+            if(country.getInContinent()==serialNumberOfContinentToRemove){
+                countriesInContinentToRemove.add(country.getName());
+            }
+        }
+
+        //Start deleting all the countries in this continent
+        for(String country: countriesInContinentToRemove){
+            this.removeCountry(country, gameGraph);
         }
     }
+
+
+}
 
 
 
