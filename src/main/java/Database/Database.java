@@ -1,6 +1,6 @@
 package Database;
 
-import Model.Continent;
+import Model.*;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,15 @@ public class Database {
 	}
 
 	static ArrayList<Continent> continentList= new ArrayList<Continent>();
+	static ArrayList<Player> playerList= new ArrayList<Player>();
+
+	public static ArrayList<Player> getPlayerList() {
+		return playerList;
+	}
+
+	public static void setPlayerList(ArrayList<Player> playerList) {
+		Database.playerList = playerList;
+	}
 
 	public ArrayList<Continent> getContinentList() {
 		return continentList;
@@ -34,5 +43,9 @@ public class Database {
 		}
 	}
 
+	static void addPlayer(Integer id, String Name, Integer noOfArmies){
+		Player player= new Player(id, Name,noOfArmies);
+		dbobj.playerList.add(player);
+	}
 
 }
