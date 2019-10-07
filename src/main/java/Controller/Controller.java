@@ -445,6 +445,7 @@ public class Controller {
 				case removeplayer:
 					for(Player itrPlayerObjs : playerObjs){
 						playerName = itr.taskData.get(0);
+						System.out.println("playerName="+playerName+ "   itrPlayerObjs.getName()="+ itrPlayerObjs.getName());
 						if(itrPlayerObjs.getName().equals(playerName)) {
 							playerObjs.remove(itrPlayerObjs);
 						}
@@ -458,13 +459,22 @@ public class Controller {
 						System.out.println(name.getName());
 					} 
 					break;
+				case placearmy:
+					break;
+				case placeall:
+					break;
+				case reinforce:
+					break;
+				case fortifycountry:
+					break;
+				case fortifynone:
+					break;
 				default:
 					System.out.println("Invalid Command. Please Enter Map Editor Command");
 				return false;
 			}
 			
-		} 
-		
+		} 		
 		return true;
 	}
 		
