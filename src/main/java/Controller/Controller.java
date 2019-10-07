@@ -7,7 +7,7 @@ import Controller.Controller.tasksEnum;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
-import database.Database;
+import Database.Database;
 
 public class Controller {
 
@@ -312,49 +312,35 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command fortify (both types of command)
-		else if(cmdStr.equals("fortipfy")) {
+		else if(cmdStr.equals("fortify")) {
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
 			}
 			
-			//Detect type of fortify according its first data
-			//If the first data is "none" the task will be "ignorfortify"
-			//Otherwise, the task will be "fortify" 
+			//Detect type of fortify according its number of data
+			//If it has only 1 data, the task will be "ignorfortify"
+			//If it has 3 data, the task will be "fortify"
+			//Otherwise, it is a wrong command
+			extractedTasks eTask = new extractedTasks();
 			String firstData = cmdItr.next();
-			if(firstData.equals("none")) {
-				extractedTasks eTask = new extractedTasks();
+			if(!cmdItr.hasNext()) {
 				eTask.name = tasksEnum.ignorefortify;
-				tasksList.add(eTask);
+				eTask.taskData.add(firstData);
 			}
 			else {
-				if(!cmdItr.hasNext()) {
-					System.out.println("wrong Command");
-					return false;
-				}
-				
-				extractedTasks eTask = new extractedTasks();
 				eTask.name = tasksEnum.fortify;
-				
-				//get first data related to fortify task
 				eTask.taskData.add(firstData);
+				eTask.taskData.add(cmdItr.next());
 				
-				//get second data related to fortify task
 				if(!cmdItr.hasNext()) {
 					System.out.println("wrong Command");
 					return false;
 				}
 				eTask.taskData.add(cmdItr.next());
-				
-				//get third data related to fortify task
-				if(!cmdItr.hasNext()) {
-					System.out.println("wrong Command");
-					return false;
-				}
-				eTask.taskData.add(cmdItr.next());
-				
-				tasksList.add(eTask);
 			}
+			
+			tasksList.add(eTask);
 		}
 		
 		return true;
@@ -363,7 +349,7 @@ public class Controller {
 	boolean checkValidityOfTasksList(ArrayList<extractedTasks> tasksList) {
 		
 		// check commands that are valid in state of mapEditor
-		if( currentState == States.gamePlay) {		
+		if( currentState == States.mapEditor) {		
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){	
 					case addcontinent:	
@@ -371,7 +357,7 @@ public class Controller {
 						//check if control value is numeric
 						for(int i=0; i<controlValueStr.length(); i++) {
 							if(!Character.isDigit(controlValueStr.charAt(i))){
-								System.out.println("Wrong Control Value");
+								System.out.println("Invalid Command: Control Value shoud be digit");
 								return false;
 							}
 						}
@@ -391,10 +377,9 @@ public class Controller {
 					case validatemap:
 						break;
 					case savemap:
-						currentState = States.gamePlay;
 						break;
 					default:
-						System.out.println("Invalid Command. Please Enter Map Editor Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
 			}			
@@ -403,10 +388,9 @@ public class Controller {
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
-						currentState = States.startupPhase;
 						break;
 					default: 
-						System.out.println("Invalid Command. Please Enter Game Play Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
 			}
@@ -415,10 +399,9 @@ public class Controller {
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case loadmap:
-						currentState = States.editPlayer;
 						break;
 					default: 
-						System.out.println("Invalid Command. Please Enter Startup Phase Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
 			}
@@ -426,15 +409,14 @@ public class Controller {
 		else if( currentState == States.editPlayer ){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
-					case addplayer:	
+				case addplayer:	
 					break;
 				case removeplayer:
 					break;
 				case populatecountries:
-					currentState = States.troopArmies;
 					break;		
 				default:
-					System.out.println("Invalid Command. Please Enter Startup Phase Command");
+					System.out.println("Invalid command in the current state");
 					return false;		
 				}	
 			}	
@@ -445,10 +427,9 @@ public class Controller {
 					case placearmy:
 						break;	
 					case placeall:
-						//	currentState = States.reinforcementPhase;
 						break;	
 					default:
-						System.out.println("Invalid Command. Please Enter Troop Armies Phase Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
   			}
@@ -459,22 +440,37 @@ public class Controller {
 					case reinforce:
 						break;	
 					default:
-						System.out.println("Invalid Command. Please Enter Troop Armies Phase Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
 			}
 		}
-	/*	else if(currentState == States.fortificationPhase){
+		else if(currentState == States.fortificationPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
-					case reinforce:
+					case fortify:
+						String numOfFortify = itr.taskData.get(2);	
+						//check if the data related to the number of army in fortify command is numeric
+						for(int i=0; i<numOfFortify.length(); i++) {
+							if(!Character.isDigit(numOfFortify.charAt(i))){
+								System.out.println("Invalid command: Number of army should be digit");
+								return false;
+							}
+						}
 						break;	
+					case ignorefortify:
+						String tmpData = itr.taskData.get(0);
+						if(!tmpData.equals("none")) {
+							System.out.println("Invalid Command: For withdraw of moving in fortify state should use \"none\"");
+							return false;
+						}
+						break;
 					default:
-						System.out.println("Invalid Command. Please Enter Troop Armies Phase Command");
+						System.out.println("Invalid command in the current state");
 						return false;
 				}
 			}
-		} */  
+		}  
 		return true;
 	}
 	
