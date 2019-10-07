@@ -4,6 +4,11 @@ import java.util.*;
 import Model.*;
 import Database.Database;
 
+/**
+ * THis is the main Controller class.
+ * This interfaces with the console/terminal and processes the commands.
+ * Most of these commands have corresponding methods in Model package.
+ */
 public class Controller {
 	 
 	enum States {EditMap,StartupPhase,ReinForcement,Attack,Fortification }
@@ -140,7 +145,13 @@ public class Controller {
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }
-    void startGame() throws IOException{
+
+	/**
+	 * This method starts the execution of the game.
+	 * This method is run by Controller.main()
+	 * @throws IOException
+	 */
+	void startGame() throws IOException{
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
 		g.printGraph();

@@ -4,6 +4,10 @@ import Model.*;
 
 import java.util.ArrayList;
 
+/**
+ * This is a Database that holds the continent details, and player details
+ * This has singleton implementation so that the list of continen/player is not duplicated in a single game run
+ */
 public class Database {
 	private static Database dbobj;
 
