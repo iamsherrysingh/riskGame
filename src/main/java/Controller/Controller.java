@@ -144,6 +144,7 @@ public class Controller {
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
 		g.printGraph();
+		System.out.println("======"+map.validateMap(g));
 		map.saveMap(g);
 		System.out.println("======");
 		for(Continent c: Database.getInstance().getContinentList()){
@@ -172,6 +173,7 @@ public class Controller {
         g.printGraph();
         map.addArmiesToCountry("Egypt",100,g);
         System.out.println(g.getAdjList().get(21).getNumberOfArmies());
+		System.out.println(map.validateMap(g));
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
