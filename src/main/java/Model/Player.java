@@ -11,6 +11,12 @@ public class Player {
         return name;
     }
 
+    public Player(Integer id, String name, Integer numberOfArmies) {
+        this.name = name;
+        this.id = id;
+        this.numberOfArmies = numberOfArmies;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -30,6 +36,7 @@ public class Player {
     public void setNumberOfArmies(Integer numberOfArmies) {
         this.numberOfArmies = numberOfArmies;
     }
+
     public ArrayList<Integer> getMyCountries() {
         return myCountries;
     }

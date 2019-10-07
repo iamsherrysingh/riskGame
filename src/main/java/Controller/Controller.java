@@ -7,11 +7,12 @@ import Controller.Controller.tasksEnum;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
+import database.Database;
 
 public class Controller {
 
 	enum States {mapEditor,gamePlay,startupPhase,editPlayer,troopArmies,reinforcementPhase,attackPhase,fortificationPhase }
-	enum tasksEnum {unknown,addcontinent,removecontinent,addcountry,removecountry,addneighbor,removeneighbor,savemap,editmap,validatemap,showmap,loadmap,addplayer,removeplayer,populatecountries,placearmy,placeall,reinforce,fortifycountry,fortifynone}
+	enum tasksEnum {unknown,addcontinent,removecontinent,addcountry,removecountry,addneighbor,removeneighbor,savemap,editmap,validatemap,showmap,loadmap,addplayer,removeplayer,populatecountries,placearmy,placeall,reinforce,fortify,ignorefortify}
 	States currentState = States.mapEditor;
 	tasksEnum currentTask;
 	String continentName,countryName,neighborCountryName,mapFile,playerName;
@@ -273,6 +274,88 @@ public class Controller {
 			eTask.name = tasksEnum.populatecountries;
 			tasksList.add(eTask);
 		}
+		//Command placearmy
+		else if(cmdStr.equals("placearmy")) {
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			extractedTasks eTask = new extractedTasks();
+			eTask.name = tasksEnum.placearmy;
+			
+			//get data related to placearmy task
+			eTask.taskData.add(cmdItr.next());
+			
+			tasksList.add(eTask);
+		}
+		//Command placeall
+		else if(cmdStr.equals("placeall")) {
+			extractedTasks eTask = new extractedTasks();
+			eTask.name = tasksEnum.placeall;
+			tasksList.add(eTask);
+		}
+		//Command reinforce
+		else if(cmdStr.equals("reinforce")) {
+			
+			extractedTasks eTask = new extractedTasks();
+			eTask.name = tasksEnum.reinforce;
+			
+			//get data related to reinforce task
+			for(int i=0;i<2;i++) {
+				if(!cmdItr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				eTask.taskData.add(cmdItr.next());
+			}
+			tasksList.add(eTask);
+		}
+		//Command fortify (both types of command)
+		else if(cmdStr.equals("fortipfy")) {
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			//Detect type of fortify according its first data
+			//If the first data is "none" the task will be "ignorfortify"
+			//Otherwise, the task will be "fortify" 
+			String firstData = cmdItr.next();
+			if(firstData.equals("none")) {
+				extractedTasks eTask = new extractedTasks();
+				eTask.name = tasksEnum.ignorefortify;
+				tasksList.add(eTask);
+			}
+			else {
+				if(!cmdItr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				
+				extractedTasks eTask = new extractedTasks();
+				eTask.name = tasksEnum.fortify;
+				
+				//get first data related to fortify task
+				eTask.taskData.add(firstData);
+				
+				//get second data related to fortify task
+				if(!cmdItr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				eTask.taskData.add(cmdItr.next());
+				
+				//get third data related to fortify task
+				if(!cmdItr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				eTask.taskData.add(cmdItr.next());
+				
+				tasksList.add(eTask);
+			}
+		}
 		
 		return true;
 	}
@@ -498,16 +581,44 @@ public class Controller {
 		}
     }
     void startGame() throws IOException{
-
         Mapx map= new Mapx();
-        map.createGameGraph("src/main/resources/map.map").printGraph();
-    	map.saveMap();
+		Graph g=map.createGameGraph("src/main/resources/map.map");
+		g.printGraph();
+		map.saveMap(g);
+		System.out.println("======");
+		for(Continent c: Database.getInstance().getContinentList()){
+			System.out.println(c.getName());
+		}
+		System.out.println("====");
+		System.out.println(Database.getInstance().getContinentList().size());
+
+		map.addCountry("Havanna","Australia",g);
+		g.printGraph();
+		System.out.println(g.getAdjList().get(42).getInContinent());
+		map.addNeighbour("Havanna","India", g);
+		g.printGraph();
+		map.addNeighbour("Swarg","Pataal",g);
+		map.removeCountry("japan",g);
+		g.printGraph();
+
+		map.addContinent("Jupiter",67);
+		Database.getInstance().printContinentList();
+
+		map.removeContinent("Asia",g);
+		g.printGraph();
+		Database.getInstance().printContinentList();
+
+		map.removeNeighbour("Congo", "North-africa",g);
+        g.printGraph();
+        map.addArmiesToCountry("Egypt",100,g);
+        System.out.println(g.getAdjList().get(21).getNumberOfArmies());
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
-//        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());
-       
+//        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());       
     }   
 }
+
+
 class extractedTasks{
 	public tasksEnum name;
 	public ArrayList<String> taskData;
@@ -515,4 +626,6 @@ class extractedTasks{
 	public extractedTasks(){
 		taskData = new ArrayList<String>();
 	}
+
 }
+

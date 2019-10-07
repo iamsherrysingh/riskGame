@@ -6,8 +6,6 @@ public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
 	String name, owner;
 	ArrayList<Integer> neighbours;
-	
-
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
 			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
 		this.number = number;
@@ -19,7 +17,6 @@ public class Country {
 		this.owner = owner;
 		this.neighbours = neighbours;
 	}
-
 	void addNeighbour(Integer newNeighbour) {
 		this.neighbours.add(newNeighbour);
 	}
