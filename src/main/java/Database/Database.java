@@ -25,11 +25,11 @@ public class Database {
 	static ArrayList<Continent> continentList= new ArrayList<Continent>();
 	static ArrayList<Player> playerList= new ArrayList<Player>();
 
-	public static ArrayList<Player> getPlayerList() {
+	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
 
-	public static void setPlayerList(ArrayList<Player> playerList) {
+	public void setPlayerList(ArrayList<Player> playerList) {
 		Database.playerList = playerList;
 	}
 
@@ -40,6 +40,8 @@ public class Database {
 	public void setContinentList(ArrayList<Continent> continentList) {
 		this.continentList = continentList;
 	}
+
+
 
 	public void printContinentList(){
 		for(Continent continent: continentList){

@@ -1,7 +1,7 @@
 package Model;
 
+import Database.Database;
 import org.junit.*;
-
 import static org.junit.Assert.*;
 
 public class MapxTest {
@@ -25,6 +25,10 @@ public class MapxTest {
 
     @AfterClass
     public static void tearDown() throws Exception{
+        map=null;
+        g=null;
+        Database.getInstance().getContinentList().clear();
+        Database.getInstance().getPlayerList().clear();
     }
 
     @Test
