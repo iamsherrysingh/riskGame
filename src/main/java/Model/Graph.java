@@ -6,9 +6,17 @@ import java.util.*;
 public class Graph {
     static public ArrayList<Country> adjList= new ArrayList<Country>();
     private static Graph gameGraph;
+
+    /**
+     * private constructor so that a object of public class Database cannot be created
+     */
     private Graph() {
     }
 
+    /**
+     * Singleton implementation of Database class
+     * @return
+     */
     public static Graph getInstance(){
         if(gameGraph==null)
             gameGraph= new Graph();
@@ -23,7 +31,10 @@ public class Graph {
         this.adjList = adjList;
     }
 
-//Print Model.Graph
+    /**
+     * This method is an implementation of showMap command
+     * @param graph
+     */
     public void printGraph(Graph graph)
     {
         for(Country country: graph.adjList){
@@ -31,7 +42,9 @@ public class Graph {
         }
     }
 
-//Print Model.Graph
+    /**
+     * This method is another implementation of the showMap command
+     */
     public static void printGraph()
     {
 

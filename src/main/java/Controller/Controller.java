@@ -1,7 +1,6 @@
 package Controller;
 import java.io.IOException;
 import java.util.Scanner;
-//import Controller.Controller.tasksEnum;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
@@ -29,7 +28,11 @@ enum tasksEnum {
 	fortify,
 	ignorefortify
 	}
-
+/**
+ * THis is the main Controller class.
+ * This interfaces with the console/terminal and processes the commands.
+ * Most of these commands have corresponding methods in Model package.
+ */
 public class Controller {
 	
 	tasksEnum currentTask;
@@ -657,12 +660,18 @@ public class Controller {
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }
-    
-    
+
+
+	/**
+	 * This method starts the execution of the game.
+	 * This method is run by Controller.main()
+	 * @throws IOException
+	 */
 /*    void startGame() throws IOException{
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
 		g.printGraph();
+		System.out.println("======"+map.validateMap(g));
 		map.saveMap(g);
 		System.out.println("======");
 		for(Continent c: Database.getInstance().getContinentList()){
@@ -691,14 +700,14 @@ public class Controller {
         g.printGraph();
         map.addArmiesToCountry("Egypt",100,g);
         System.out.println(g.getAdjList().get(21).getNumberOfArmies());
-//        Scanner commandScanner= new Scanner(System.in);
-//        System.out.print ("Enter number of Players: ");
-//        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());       
+		System.out.println(map.validateMap(g));
+        Scanner commandScanner= new Scanner(System.in);
+        System.out.print ("Enter number of Players: ");
+        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());       
     }
 */
     
 }
-
 
 class extractedTasks{
 	public tasksEnum name;

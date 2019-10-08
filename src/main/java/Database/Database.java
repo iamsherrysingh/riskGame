@@ -4,6 +4,10 @@ import Model.*;
 
 import java.util.ArrayList;
 
+/**
+ * This is a Database that holds the continent details, and player details
+ * This has singleton implementation so that the list of continen/player is not duplicated in a single game run
+ */
 public class Database {
 	private static Database dbobj;
 
@@ -21,11 +25,11 @@ public class Database {
 	static ArrayList<Continent> continentList= new ArrayList<Continent>();
 	static ArrayList<Player> playerList= new ArrayList<Player>();
 
-	public static ArrayList<Player> getPlayerList() {
+	public ArrayList<Player> getPlayerList() {
 		return playerList;
 	}
 
-	public static void setPlayerList(ArrayList<Player> playerList) {
+	public void setPlayerList(ArrayList<Player> playerList) {
 		Database.playerList = playerList;
 	}
 
@@ -36,6 +40,8 @@ public class Database {
 	public void setContinentList(ArrayList<Continent> continentList) {
 		this.continentList = continentList;
 	}
+
+
 
 	public void printContinentList(){
 		for(Continent continent: continentList){

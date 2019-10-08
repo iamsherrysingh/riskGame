@@ -17,10 +17,19 @@ public class Country {
 		this.owner = owner;
 		this.neighbours = neighbours;
 	}
+
+	/**
+	 * adds new neighbour to the Country.neighbour adjacency list
+	 * @param newNeighbour
+	 */
 	void addNeighbour(Integer newNeighbour) {
 		this.neighbours.add(newNeighbour);
 	}
 
+	/**
+	 * removes an existing neighbour from the Country.neighbour adjacency list
+	 * @param deletedNeighbour
+	 */
 	void removeNeighbour(Integer deletedNeighbour) {
 		this.neighbours.remove(deletedNeighbour);
 	}
