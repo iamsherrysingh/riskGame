@@ -1,26 +1,42 @@
 package Controller;
-import Model.Mapx;
-import Model.Player;
 import java.io.IOException;
 import java.util.Scanner;
-import Controller.Controller.tasksEnum;
+//import Controller.Controller.tasksEnum;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
 import Database.Database;
 
-public class Controller {
+enum tasksEnum {
+	unknown,
+	addcontinent,
+	removecontinent,
+	addcountry,
+	removecountry,
+	addneighbor,
+	removeneighbor,
+	savemap,
+	editmap,
+	validatemap,
+	showmap,
+	loadmap,
+	addplayer,
+	removeplayer,
+	populatecountries,
+	placearmy,
+	placeall,
+	reinforce,
+	fortify,
+	ignorefortify
+	}
 
-	enum States {mapEditor,gamePlay,startupPhase,editPlayer,troopArmies,reinforcementPhase,attackPhase,fortificationPhase }
-	enum tasksEnum {unknown,addcontinent,removecontinent,addcountry,removecountry,addneighbor,removeneighbor,savemap,editmap,validatemap,showmap,loadmap,addplayer,removeplayer,populatecountries,placearmy,placeall,reinforce,fortify,ignorefortify}
-	States currentState = States.mapEditor;
+public class Controller {
+	
 	tasksEnum currentTask;
 	String continentName,countryName,neighborCountryName,mapFile,playerName;
-	Integer controlValue,playerId=1;
-	private Mapx mapObj;
-	private ArrayList<Player> playerObjs;
 	boolean editPlayerFinished = false;
-	boolean gameFinished = false;
+	
+	private GamePlay gamePlayObj = null;
 	
 	// parse input Instruction -> Command , Switch, Data
 	boolean getCommand(ArrayList<extractedTasks> tasksList){
@@ -349,7 +365,7 @@ public class Controller {
 	boolean checkValidityOfTasksList(ArrayList<extractedTasks> tasksList) {
 		
 		// check commands that are valid in state of mapEditor
-		if( currentState == States.mapEditor) {		
+		if( gamePlayObj.getCurrentState() == State.mapEditor) {		
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){	
 					case addcontinent:	
@@ -384,7 +400,7 @@ public class Controller {
 				}
 			}			
 		} 
-		else if( currentState == States.gamePlay ){
+		else if(gamePlayObj.getCurrentState() == State.gamePlay ){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
@@ -395,7 +411,7 @@ public class Controller {
 				}
 			}
 		}
-		else if(currentState == States.startupPhase){
+		else if(gamePlayObj.getCurrentState() == State.startupPhase){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case loadmap:
@@ -406,7 +422,7 @@ public class Controller {
 				}
 			}
 		} 
-		else if( currentState == States.editPlayer ){
+		else if(gamePlayObj.getCurrentState() == State.editPlayer ){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 				case addplayer:	
@@ -421,7 +437,7 @@ public class Controller {
 				}	
 			}	
 		}
-		else if(currentState == States.troopArmies){
+		else if(gamePlayObj.getCurrentState() == State.troopArmies){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case placearmy:
@@ -434,7 +450,7 @@ public class Controller {
 				}
   			}
 		}
-		else if(currentState == States.reinforcementPhase){
+		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case reinforce:
@@ -445,7 +461,7 @@ public class Controller {
 				}
 			}
 		}
-		else if(currentState == States.fortificationPhase){
+		else if(gamePlayObj.getCurrentState() == State.fortificationPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case fortify:
@@ -482,77 +498,142 @@ public class Controller {
 			
 			switch (itr.name){	
 			
-				case addcontinent:	
-					continentName = itr.taskData.get(0);
-					controlValue = Integer.parseInt(itr.taskData.get(1));
-				//	System.out.println("-add " + continentName + " " +controlValue);
-					//addContinent(continentName,controlValue);
+				case addcontinent:
+				{
+					if(!gamePlayObj.addContinent(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
+						return false;
+				
 					break;
+				}
 				case removecontinent:
-					continentName = itr.taskData.get(0);
-				//	System.out.println("-remove " + continentName);
-					//removeContinent();
+				{	
+					if(!gamePlayObj.removeContinent(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case addcountry:
-					//addCountry();
+				{
+					if(!gamePlayObj.addCountry(itr.taskData.get(0),itr.taskData.get(1)))
+						return false;
+					
 					break;
+				}
 				case removecountry:
+				{
+					if(!gamePlayObj.removeCountry(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case addneighbor:
+				{
+					if(!gamePlayObj.addNeighbor(itr.taskData.get(0),itr.taskData.get(1)))
+						return false;
+					
 					break;
+				}
 				case removeneighbor:
+				{
+					if(!gamePlayObj.removeNeighbor(itr.taskData.get(0),itr.taskData.get(1)))
+						return false;
+					
 					break;
+				}
 				case savemap:
+				{
+					if(!gamePlayObj.saveMap(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case editmap:
+				{
+					if(!gamePlayObj.editMap(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case validatemap:
+				{
+					if(!gamePlayObj.validateMap())
+						return false;
+					
 					break;	
+				}
 				case showmap:
+				{
+					if(!gamePlayObj.showMap())
+						return false;
+					
 					break;
+				}
 				case loadmap:
+				{
+					if(!gamePlayObj.loadMap(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case addplayer:
-					Player playerobj = new Player();
-					playerName = itr.taskData.get(0);
-					playerobj.setName(playerName);
-					playerobj.setId(playerId);
-					playerObjs.add(playerobj);
-					playerId++;
-					System.out.println(playerobj.getName());
+				{
+					if(!gamePlayObj.addPlayer(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case removeplayer:
-					for(Player itrPlayerObjs : playerObjs){
-						playerName = itr.taskData.get(0);
-						System.out.println("playerName="+playerName+ "   itrPlayerObjs.getName()="+ itrPlayerObjs.getName());
-						if(itrPlayerObjs.getName().equals(playerName)) {
-							playerObjs.remove(itrPlayerObjs);
-						}
-						else {
-							System.out.println("This Player does not exist. Please enter the correct Player");
-						}
-					}
+				{
+					if(!gamePlayObj.removePlayer(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case populatecountries:
-					for(Player name:playerObjs) {
-						System.out.println(name.getName());
-					} 
+				{
+					if(!gamePlayObj.populateCountries())
+						return false;
+					
 					break;
+				}
 				case placearmy:
+				{
+					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
+						return false;
+					
 					break;
+				}
 				case placeall:
+				{
+					if(!gamePlayObj.placeAll())
+						return false;
+					
 					break;
+				}
 				case reinforce:
+				{
+					if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
+						return false;
+					
 					break;
-				case fortifycountry:
+				}
+				case fortify:
+				{
+					if(!gamePlayObj.fortifyArmy(itr.taskData.get(0),itr.taskData.get(1),Integer.parseInt(itr.taskData.get(2))))
+						return false;
+					
 					break;
-				case fortifynone:
+				}
+				case ignorefortify:
+				{
+					if(!gamePlayObj.ignoreFortifyArmy())
+						return false;
+					
 					break;
+				}
 				default:
-					System.out.println("Invalid Command. Please Enter Map Editor Command");
-				return false;
+					return false;
 			}
-			
 		} 		
 		return true;
 	}
@@ -560,10 +641,10 @@ public class Controller {
     public static void main(String[] args) throws IOException {
 		try {
 			Controller controller = new Controller();
-			controller.playerObjs = new ArrayList<Player>();
-		//	controller.startGame();
+			controller.gamePlayObj = GamePlay.getInstance();
 	    	
-			while(!controller.gameFinished){
+			while(controller.gamePlayObj.getCurrentState() != State.gameFInished){
+				
 				ArrayList<extractedTasks> tasksList = new ArrayList<extractedTasks>();
 				if(!controller.getCommand(tasksList))
 					continue;
@@ -576,7 +657,9 @@ public class Controller {
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }
-    void startGame() throws IOException{
+    
+    
+/*    void startGame() throws IOException{
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
 		g.printGraph();
@@ -611,7 +694,9 @@ public class Controller {
 //        Scanner commandScanner= new Scanner(System.in);
 //        System.out.print ("Enter number of Players: ");
 //        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());       
-    }   
+    }
+*/
+    
 }
 
 
