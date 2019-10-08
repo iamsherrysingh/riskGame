@@ -54,7 +54,7 @@ public class MapxTest {
     }
 
     @Test
-    public void addCountry() {
+    public void addCountry1() {
         map.addCountry("Tchala","Africa",g);
         Country retrievedCountry= null;
         for(Country country: g.getAdjList()){
@@ -68,15 +68,14 @@ public class MapxTest {
     @Test
     public void addCountry2() {
         map.addCountry("Tchala2","NonExistentContinent",g);
-        Country retrievedCountry= null;
+        Country retrievedCountry= new Country(00,"",-1,"",-1,-1,-1,null);
         for(Country country: g.getAdjList()){
-            if(country.getName().equalsIgnoreCase("Tchala")){
+            if(country.getName().equalsIgnoreCase("Tchala2")){
                 retrievedCountry= country;
             }
         }
         assertFalse(retrievedCountry.getName().equalsIgnoreCase("Tchala2"));
     }
-
 
     @Test
     public void addNeighbour() {
