@@ -10,6 +10,8 @@ public class MapxTest {
 
     @Before
     public void setUp() throws Exception {
+        map= new Mapx();
+        g=map.createGameGraph("src/main/resources/map.map");
     }
 
     @BeforeClass
@@ -21,6 +23,10 @@ public class MapxTest {
 
     @After
     public void tearDownClass() throws Exception {
+        map=null;
+        g=null;
+        Database.getInstance().getContinentList().clear();
+        Database.getInstance().getPlayerList().clear();
     }
 
     @AfterClass
@@ -58,6 +64,19 @@ public class MapxTest {
         }
         assertTrue(retrievedCountry.getName().equalsIgnoreCase("Tchala"));
     }
+
+    @Test
+    public void addCountry2() {
+        map.addCountry("Tchala2","NonExistentContinent",g);
+        Country retrievedCountry= null;
+        for(Country country: g.getAdjList()){
+            if(country.getName().equalsIgnoreCase("Tchala")){
+                retrievedCountry= country;
+            }
+        }
+        assertFalse(retrievedCountry.getName().equalsIgnoreCase("Tchala2"));
+    }
+
 
     @Test
     public void addNeighbour() {
