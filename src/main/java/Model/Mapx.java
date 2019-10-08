@@ -499,5 +499,4 @@ public class Mapx {
             System.out.println("Cannot have less than 1 army in a country!");
         }
     }
-
 }
