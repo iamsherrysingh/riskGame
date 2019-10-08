@@ -8,8 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import Database.Database;
-
 /**
  * This file holds most of the logic of the game
  */

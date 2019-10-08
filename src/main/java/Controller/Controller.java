@@ -2,7 +2,7 @@ package Controller;
 import java.io.IOException;
 import java.util.*;
 import Model.*;
-import Database.Database;
+import Model.Database;
 
 /**
  * THis is the main Controller class.
