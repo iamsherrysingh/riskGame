@@ -8,6 +8,6 @@ public enum State {
 	troopArmies,
 	reinforcementPhase,
 	attackPhase,
-	fortificationPhase, 
-	gameFInished
+	fortificationPhase,
+	gameFinished
 }
