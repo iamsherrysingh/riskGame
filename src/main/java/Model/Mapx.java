@@ -312,6 +312,9 @@ public class Mapx {
 	 * @param gameGraph
 	 */
 	public boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
+	    if(newCountry.length()==0){
+	        return false;
+        }
 		Integer continentNumber = -1;
 		for (Continent continent : database.getContinentList()) {
 			if (continent.getName().equalsIgnoreCase(inContinent)) {
@@ -466,10 +469,16 @@ public class Mapx {
 	 * @param controlValue
 	 */
 	public boolean addContinent(String continentName, Integer controlValue) {
-		Continent newContinent = new Continent(Database.getInstance().getContinentList().size() + 1, continentName,
-				controlValue, "");
-		Database.getInstance().getContinentList().add(newContinent);
-		return true;
+	    if(continentName.length()==0){
+	        return false;
+        }
+	    if(!checkExistenceOfContinent(continentName)) {
+            Continent newContinent = new Continent(Database.getInstance().getContinentList().size() + 1, continentName,
+                    controlValue, "");
+            Database.getInstance().getContinentList().add(newContinent);
+            return true;
+        }
+	    return false;
 	}
 
 	public boolean removeContinent(String continentToRemove, Graph gameGraph) {
