@@ -201,59 +201,66 @@ public class Mapx {
 	 */
 	public void saveMap(Graph gameGraph, String mp) throws IOException {
 		ArrayList<Country> ct = gameGraph.adjList;
+		String[] DefaultMaps = { "map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
+				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" };
 		Iterator itr = ct.iterator();
 		Scanner scCreate = new Scanner(System.in);
 		String mapName = mp.trim();
 		boolean testEmptyString = "".equals(mapName);
 		if (testEmptyString == false) {
-			mapName = mapName + ".map";
-			// Create the file
-			File f = createFile(mapName);
-			FileWriter writer = new FileWriter(f);
-			writer.write("[files]" + System.getProperty("line.separator"));
-			writer.write(System.getProperty("line.separator"));
-			writer.write("[continents]" + System.getProperty("line.separator"));
-			for (int i = 0; i < database.getContinentList().size(); i++) {
-				Continent continent = database.getContinentList().get(i);
-				writer.write(continent.getName() + " " + continent.getControlValue() + " " + continent.getColor());
-				if (i < database.getContinentList().size() - 1) {
-					writer.write(System.getProperty("line.separator"));
-				}
-			}
-			writer.write(System.getProperty("line.separator"));
-			writer.write(System.getProperty("line.separator"));
-			writer.write("[countries] " + System.getProperty("line.separator"));
-			Integer countitr = 0;
-			while (itr.hasNext()) {
-				Country country = (Country) itr.next();
-				countitr++;
-				String CountryName = country.name;
-				Integer ContiNumber = country.inContinent;
-				Integer coordinateOne = country.coOrdinate1;
-				Integer coordinateTwo = country.getCoOrdinate2;
-				writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " "
-						+ coordinateTwo + System.getProperty("line.separator"));
-			}
-			writer.write(System.getProperty("line.separator"));
-			itr = ct.iterator();
-			writer.write("[borders] " + System.getProperty("line.separator"));
 
-			Integer countIterator = 0;
-			while (itr.hasNext()) {
-				countIterator++;
-				Country country = (Country) itr.next();
-				ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
-				NeighbourList = country.neighbours;
-				String borderString = "";
-				for (int i = 0; i < NeighbourList.size(); i++) {
-					borderString = borderString + " " + NeighbourList.get(i);
+			mapName = mapName + ".map";
+			if (Arrays.asList(DefaultMaps).contains(mapName)) {
+				System.out.println("you cannot edit a default map");
+			} else {
+				// Create the file
+				File f = createFile(mapName);
+				FileWriter writer = new FileWriter(f);
+				writer.write("[files]" + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[continents]" + System.getProperty("line.separator"));
+				for (int i = 0; i < database.getContinentList().size(); i++) {
+					Continent continent = database.getContinentList().get(i);
+					writer.write(continent.getName() + " " + continent.getControlValue() + " " + continent.getColor());
+					if (i < database.getContinentList().size() - 1) {
+						writer.write(System.getProperty("line.separator"));
+					}
 				}
-				writer.write(countIterator + borderString + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[countries] " + System.getProperty("line.separator"));
+				Integer countitr = 0;
+				while (itr.hasNext()) {
+					Country country = (Country) itr.next();
+					countitr++;
+					String CountryName = country.name;
+					Integer ContiNumber = country.inContinent;
+					Integer coordinateOne = country.coOrdinate1;
+					Integer coordinateTwo = country.getCoOrdinate2;
+					writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " "
+							+ coordinateTwo + System.getProperty("line.separator"));
+				}
+				writer.write(System.getProperty("line.separator"));
+				itr = ct.iterator();
+				writer.write("[borders] " + System.getProperty("line.separator"));
+
+				Integer countIterator = 0;
+				while (itr.hasNext()) {
+					countIterator++;
+					Country country = (Country) itr.next();
+					ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
+					NeighbourList = country.neighbours;
+					String borderString = "";
+					for (int i = 0; i < NeighbourList.size(); i++) {
+						borderString = borderString + " " + NeighbourList.get(i);
+					}
+					writer.write(countIterator + borderString + System.getProperty("line.separator"));
+				}
+				writer.close();
 			}
-			writer.close();
-		}else {
+		} else {
 			System.out.println("Please enter a valid map name!");
-			
+
 		}
 	}
 

@@ -641,10 +641,6 @@ public class Controller {
 	}
 		
     public static void main(String[] args) throws IOException {
-    	 Mapx map= new Mapx();
-    	 Graph g = new Graph();
-    	map.saveMap(g," ");
-    	
 		try {
 			Controller controller = new Controller();
 			controller.gamePlayObj = GamePlay.getInstance();
