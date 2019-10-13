@@ -354,20 +354,8 @@ public class Mapx {
 			System.out.println("Neighbour Country: " + neighbour + " not in the map!");
 			return false;
 		}
-		gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour - 1).getNeighbours().add(neighbourNumber); // Added
-																												// new
-																												// neighbour
-																												// for
-																												// this
-																												// country
-		gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().add(numberOfCountryWithNewNeighbour); // Added
-																												// this
-																												// country
-																												// as
-																												// neighbour
-																												// to
-																												// it's
-																												// neighbour
+		gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour - 1).getNeighbours().add(neighbourNumber); // Added new neighbour for this country
+		gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().add(numberOfCountryWithNewNeighbour); // Added this country as neighbour to it'sneighbour
 		return true;
 	}
 
