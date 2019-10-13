@@ -547,4 +547,23 @@ public class Mapx {
 		}
 		return true;
 	}
+	public boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph){
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryToCheck)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public boolean checkExistenceOfContinent(String continentToCheck){
+		for (Continent singleContinent : Database.getInstance().getContinentList()) {
+			if (singleContinent.getName().equalsIgnoreCase(continentToCheck)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
