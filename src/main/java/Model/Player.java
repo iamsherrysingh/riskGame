@@ -62,6 +62,13 @@ public class Player {
             return false;
         }
         Database.playerList.remove(player);
+
+        Integer playerNumber=1;
+        for(Player player1: Database.getInstance().getPlayerList() ){
+            player1.number=playerNumber;
+            playerNumber++;
+        }
+
         return true;
     }
 
