@@ -1,3 +1,7 @@
 /target/
 /bin/
 /.idea/
+*.classpath
+*.settings/
+*.project
+*src/main/java/Controller/_birjot.java
