@@ -28,7 +28,7 @@ public class GamePlay {
     	currentState = State.mapEditor;
     	playerObjs = new ArrayList<Player>();
     	mapxObj = new Mapx();
-    	graphObj = mapxObj.createGameGraph("src/main/resources/savemap.map");
+    	graphObj = mapxObj.createGameGraph("src/main/resources/map.map");
     }
 
     public static GamePlay getInstance(){
