@@ -1,7 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
-
+import java.util.*; 
 import Model.State;
 import Model.Player;
 
@@ -9,16 +9,17 @@ public class GamePlay {
 	
 	private static GamePlay gamePlay = null;
 	private State currentState;
-	private ArrayList<Player> playerObjs;
 	private Mapx mapxObj;
 	private Graph graphObj;
+	private Database databaseObj;
+	
     
 	
 	private GamePlay() {
-    	currentState = State.mapEditor;
-    	playerObjs = new ArrayList<Player>();
+		currentState = State.mapEditor;
     	mapxObj = new Mapx();
     	graphObj = mapxObj.createGameGraph("src/main/resources/map.map");
+    	databaseObj = Database.getInstance();
     }
 
     public static GamePlay getInstance(){
@@ -46,7 +47,7 @@ public class GamePlay {
 		//get the list of countries belongs to this continent(call getCountriesOfContinent(String continentName))
 		//remove all countries belong to this continent (call removeCountry())
 		//remove neighbors according to removed countri
-		es (call removeNeighbors())
+		//es (call removeNeighbors())
 		//Call removeContinent() from Mapx
 		
 		return true;
@@ -135,19 +136,39 @@ public class GamePlay {
 	public boolean addPlayer(String playerName) {
 		
 		//check: if there is a player with this name, return false
-		//create an object of Player class
-		//add the object to the list of players
+		for(Player itr:Database.playerList) {
+			if(itr.getName().equals(playerName)) {
+				return false;
+			}
+		}
 		
+		Integer newPlayerId;
+		if(Database.playerList.isEmpty())
+			newPlayerId = 1;
+		else {
+			newPlayerId = Database.playerList.get(Database.playerList.size() - 1).id + 1;
+		}
+			
+		//add the object to the list of players
+		Database.addPlayer(newPlayerId, playerName, 0);
+
 		return true;
 	}
 	
 	public boolean removePlayer(String playerName) {
 		
 		//check: if there is not a player with this name, return false
-		//find the related object of player
-		//delete the object
-		//remove object of player from list
-		//clean owner field of countries that belong to player
+		boolean checkExistence = false;
+		for(Player itr:Database.playerList) {
+			if( itr.getName().equals(playerName) ) {
+				 checkExistence = true;
+				 Database.removePlayer(playerName);
+				 break;
+			}
+		}
+		if(checkExistence == false) {
+			return false;
+		}
 		
 		return true;
 	}
