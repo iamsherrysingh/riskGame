@@ -10,7 +10,7 @@ public class Graph {
     /**
      * private constructor so that a object of public class Database cannot be created
      */
-    public Graph() {
+    private Graph() {
     }
 
     /**
@@ -26,11 +26,6 @@ public class Graph {
     public ArrayList<Country> getAdjList() {
         return adjList;
     }
-
-    public void setAdjList(ArrayList<Country> adjList) {
-        this.adjList = adjList;
-    }
-
 
     /**
      * This method is another implementation of the showMap command

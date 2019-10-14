@@ -3,6 +3,7 @@ package Model;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import Model.*;
 
 public class MapxTest {
     static Mapx map;
@@ -55,7 +56,7 @@ public class MapxTest {
 
     @Test
     public void addCountry1() {
-        map.addCountry("Tchala","Africa",g);
+        Country.addCountry("Tchala","Africa",g);
         Country retrievedCountry= null;
         for(Country country: g.getAdjList()){
             if(country.getName().equalsIgnoreCase("Tchala")){
@@ -67,7 +68,7 @@ public class MapxTest {
 
     @Test
     public void addCountry2() {
-        map.addCountry("Tchala2","NonExistentContinent",g);
+        Country.addCountry("Tchala2","NonExistentContinent",g);
         Country retrievedCountry= new Country(00,"",-1,"",-1,-1,-1,null);
         for(Country country: g.getAdjList()){
             if(country.getName().equalsIgnoreCase("Tchala2")){
@@ -88,7 +89,7 @@ public class MapxTest {
     	Country secndCountry = g.getAdjList().get(0);
 
     
-		boolean add = map.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
+		boolean add = Country.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
     
 		//we need a function to check if a country name exist in the graph or not. Can I write that?
 		
@@ -108,7 +109,7 @@ public class MapxTest {
     	Country firstCountry = g.getAdjList().get(0);
 
     
-    	boolean add = map.addNeighbour( firstCountry.getName(),  secondCountry.getName(), g);
+    	boolean add = Country.addNeighbour( firstCountry.getName(),  secondCountry.getName(), g);
 
     	assertTrue(!add);
 		
@@ -124,7 +125,7 @@ public class MapxTest {
     	int indx = firstCountry.neighbours.get(0);
     	Country secndCountry = g.getAdjList().get(indx-1);
 
-    	boolean add = map.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
+    	boolean add = Country.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
     	
     	assertTrue(!add);
 		
@@ -166,8 +167,8 @@ public class MapxTest {
         	}
         }
 
-   
-		map.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
+
+        Country.addNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
 
 		boolean neib = isNeighour( firstCountry, secndCountry, g );
 		
@@ -185,7 +186,7 @@ public class MapxTest {
     	Country secndCountry = g.getAdjList().get(indx-1);
 
         
-		map.removeNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
+		Country.removeNeighbour( firstCountry.getName(),  secndCountry.getName(), g);
     	
         
         boolean mutualNeighbour = isNeighour( firstCountry, secndCountry, g);

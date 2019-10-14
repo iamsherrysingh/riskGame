@@ -10,6 +10,11 @@ public class GamePlay {
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private Mapx mapxObj;
+
+	public Graph getGraphObj() {
+		return graphObj;
+	}
+
 	private Graph graphObj;
 	private Database databaseObj;
 	
@@ -36,7 +41,7 @@ public class GamePlay {
 		
 		//check: if there is a continent with this name, return false (call checkExistenceOfContinent(String continentName))
 		//call addContinent() from Mapx
-		mapxObj.addContinent(continentName, controlValue);
+		Continent.addContinent(continentName, controlValue);
 		return true;
 	}
 	
@@ -136,7 +141,7 @@ public class GamePlay {
 	public boolean addPlayer(String playerName) {
 		
 		//check: if there is a player with this name, return false
-		for(Player itr:Database.playerList) {
+	/*	for(Player itr:Database.playerList) {
 			if(itr.getName().equals(playerName)) {
 				return false;
 			}
@@ -152,7 +157,7 @@ public class GamePlay {
 		//add the object to the list of players
 		Database.addPlayer(newPlayerId, playerName, 0);
 
-		return true;
+		return true; */
 	}
 	
 	public boolean removePlayer(String playerName) {
@@ -173,9 +178,31 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean populateCountries() {
+	public boolean populateCountries(Graph gameGraph) {
 		
-		//change the currentState
+
+        Integer playerNumberToBeAssigned=1;
+        while (! Country.allCountriesPopulated(gameGraph)) {
+            double randomDouble = Math.random();
+            randomDouble = randomDouble * gameGraph.getAdjList().size() + 1;
+            int randomInt = (int) randomDouble;
+            Integer randomCountryNumber = randomInt;
+
+            Country countryToBePopulated= Country.getCountryByNumber(randomCountryNumber, gameGraph);
+            //System.out.println("Player "+ playerNumberToBeAssigned +" turn");
+            if(countryToBePopulated.getOwner()==null){
+                Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
+                countryToBePopulated.setOwner(assignedPlayer.getName());
+            }
+            else{
+                continue;
+            }
+            playerNumberToBeAssigned++;
+
+            if(playerNumberToBeAssigned > Database.getInstance().getPlayerList().size()){
+                playerNumberToBeAssigned =1;
+            }
+        }
 		currentState = State.troopArmies;
 		return true;
 	}
@@ -188,6 +215,10 @@ public class GamePlay {
 		//add an army to the related country
 		Country targetCountry= Country.getCountryByName(country, gameGraph);
 		if(targetCountry==null){
+			return false;
+		}
+
+		if(currentPlayer.getNumberOfArmies() <=0){
 			return false;
 		}
 
@@ -205,14 +236,12 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean placeAll(Player currentPlayer, Graph gameGraph) {
+	public boolean placeAll(Graph gameGraph) {
 	
 		//implement a loop for placing all army for players
 		//update owning parameter of country and MyCountry parameter of player
 		//change currentState
-<<<<<<< HEAD
-		currentState = State.reinforcementPhase;
-=======
+
         while( ! Player.allPlayersRemainingArmiesExhausted()) {
             for (Country thisCountry : gameGraph.getAdjList()) {
                 Player playerThatOwnsThisCountry= Player.getPlayerByName(thisCountry.getOwner());
@@ -222,7 +251,7 @@ public class GamePlay {
                 }
             }
         }
->>>>>>> master
+        currentState = State.reinforcementPhase;
 		
 		return true;
 	}

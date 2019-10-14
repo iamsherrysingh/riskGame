@@ -593,8 +593,8 @@ public class Controller {
 				}
 				case populatecountries:
 				{
-					if(!gamePlayObj.populateCountries())
-						return false;
+//					if(!gamePlayObj.populateCountries())
+//						return false;
 					
 					break;
 				}

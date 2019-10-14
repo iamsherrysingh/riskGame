@@ -35,7 +35,7 @@ public class removeCountryTest {
     public void removeCountry() {
     	
     	boolean check = true;
-    	map.removeCountry("Alaska", g);
+    	Country.removeCountry("Alaska", g);
         for(Country country: g.getAdjList()){
             if(country.getName().equalsIgnoreCase("Alaska")){
                 check = true;
