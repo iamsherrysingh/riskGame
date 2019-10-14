@@ -151,8 +151,8 @@ public class GamePlay {
 			
 		//add the object to the list of players
 		Database.addPlayer(newPlayerId, playerName, 0);
-
-		return true; */
+*/
+		return true;
 	}
 	
 	public boolean removePlayer(String playerName) {
@@ -162,7 +162,7 @@ public class GamePlay {
 		for(Player itr:Database.playerList) {
 			if( itr.getName().equals(playerName) ) {
 				 checkExistence = true;
-				 Database.removePlayer(playerName);
+				 Player.removePlayer(playerName);
 				 break;
 			}
 		}
