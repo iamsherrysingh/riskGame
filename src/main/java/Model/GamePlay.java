@@ -242,7 +242,12 @@ public class GamePlay {
 		if(currentPlayer.getNumberOfArmies() <=0){
 			
 			System.out.println("All armies are placed");
+			
+			//Change state of game
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			
+			//Set current player to the first player
+			currentPlayerItr = Database.playerList.listIterator();
 			
 			return false;
 		}
@@ -280,7 +285,10 @@ public class GamePlay {
         
         // change state of game
         setCurrentState(State.reinforcementPhase, "Reinforcement");
-		
+        
+        //Set current player to the first player
+		currentPlayerItr = Database.playerList.listIterator();
+        
 		return true;
 	}
 	
