@@ -168,7 +168,7 @@ public class GamePlay {
             Integer randomCountryNumber = randomInt;
 
             Country countryToBePopulated= Country.getCountryByNumber(randomCountryNumber, gameGraph);
-            System.out.println("Player "+ playerNumberToBeAssigned +" turn");
+            //System.out.println("Player "+ playerNumberToBeAssigned +" turn");
             if(countryToBePopulated.getOwner()==null){
                 Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
                 countryToBePopulated.setOwner(assignedPlayer.getName());

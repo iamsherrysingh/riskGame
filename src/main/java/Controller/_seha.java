@@ -19,6 +19,7 @@ public class _seha {
 
         Player currrentPlayer= Player.addPlayer("Old Player ", 42);
         Player newPlayer= Player.addPlayer("New Player", 42);
+        Player newss= Player.addPlayer("Newest Player", 42);
         Player.printAllPlayers();
 
 //        System.out.println(gamePlay.placeArmy(currrentPlayer,"ssss", g));
