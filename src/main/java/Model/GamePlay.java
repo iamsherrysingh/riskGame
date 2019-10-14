@@ -19,7 +19,7 @@ public class GamePlay {
 	private GamePlay() {
 		currentState = State.mapEditor;
     	mapxObj = new Mapx();
-    	graphObj = mapxObj.createGameGraph("src/main/resources/map.map");
+    	graphObj = Graph.getInstance();
     	databaseObj = Database.getInstance();
     }
 
@@ -120,7 +120,7 @@ public class GamePlay {
 	
 	public boolean validateMap() {
 	
-		if(! mapxObj.validateMap(graphObj))
+		if(! Mapx.validateMap(graphObj))
 			return false;
 		
 		return true;
@@ -128,53 +128,56 @@ public class GamePlay {
 	
 	public boolean loadMap(String fileName) {
 		
-		//call loadMap() from Mapx
+		mapxObj.createGameGraph(fileName);
+		
 		currentState = State.editPlayer;
 		return true;
 	}
 	
 	public boolean addPlayer(String playerName) {
 		
-		//check: if there is a player with this name, return false
-	/*	for(Player itr:Database.playerList) {
-			if(itr.getName().equals(playerName)) {
-				return false;
-			}
-		}
+		if(!Player.addPlayer(playerName, 0))
+			return false;
 		
-		Integer newPlayerId;
-		if(Database.playerList.isEmpty())
-			newPlayerId = 1;
-		else {
-			newPlayerId = Database.playerList.get(Database.playerList.size() - 1).id + 1;
-		}
-			
-		//add the object to the list of players
-		Database.addPlayer(newPlayerId, playerName, 0);
-*/
 		return true;
 	}
 	
 	public boolean removePlayer(String playerName) {
 		
-		//check: if there is not a player with this name, return false
-		boolean checkExistence = false;
-		for(Player itr:Database.playerList) {
-			if( itr.getName().equals(playerName) ) {
-				 checkExistence = true;
-				 Player.removePlayer(playerName);
-				 break;
-			}
-		}
-		if(checkExistence == false) {
+		if(!Player.removePlayer(playerName))
 			return false;
-		}
 		
 		return true;
 	}
 	
 	public boolean populateCountries(Graph gameGraph) {
 		
+		//set number of armies for each player
+        Integer numArmies;
+        switch(Database.playerList.size()) {
+        case 2:
+        	numArmies = 40;
+        	break;
+        case 3:
+        	numArmies = 35;
+        	break;
+        case 4:
+        	numArmies = 30;
+        	break;
+        case 5:
+        	numArmies = 25;
+        	break;
+        case 6:
+        	numArmies = 20;
+        	break;
+        default:
+        	System.out.println("Number of players should be between 2 and 6");
+        	return false;
+        }
+        
+        for(Player iter: Database.playerList) {
+        	iter.numberOfArmies = numArmies;
+        }
 
         Integer playerNumberToBeAssigned=1;
         while (! Country.allCountriesPopulated(gameGraph)) {
@@ -197,7 +200,11 @@ public class GamePlay {
             if(playerNumberToBeAssigned > Database.getInstance().getPlayerList().size()){
                 playerNumberToBeAssigned =1;
             }
+            
         }
+        
+        
+        currentPlayer = Database.playerList.get(0);
 		currentState = State.troopArmies;
 		return true;
 	}
