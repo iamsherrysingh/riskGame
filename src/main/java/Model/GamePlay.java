@@ -40,7 +40,7 @@ public class GamePlay {
 		
 		//check: if there is a continent with this name, return false (call checkExistenceOfContinent(String continentName))
 		//call addContinent() from Mapx
-		mapxObj.addContinent(continentName, controlValue);
+		Continent.addContinent(continentName, controlValue);
 		return true;
 	}
 	
