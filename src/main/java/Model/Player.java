@@ -1,20 +1,27 @@
 package Model;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class Player {
     String name;
-    Integer numberOfArmies;
+    Integer number, numberOfArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();;
 
     public String getName() {
         return name;
     }
 
-    private Player(Integer id, String name, Integer numberOfArmies) {
+    private Player(Integer number, String name, Integer numberOfArmies) {
+        this.number = number;
         this.name = name;
         this.numberOfArmies = numberOfArmies;
     }
+
+    public Integer getNumber() {
+        return number;
+    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -39,10 +46,11 @@ public class Player {
 
     public static Player addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
-            System.out.println("This player exists");
+            System.out.println("=======> This player exists <========");
             return null;
         }
         Integer id= Database.getInstance().getPlayerList().size() + 1;
+
         Player player= new Player(id, playerName,noOfArmies);
         Database.playerList.add(player);
         return player;
@@ -66,6 +74,15 @@ public class Player {
         return null;
     }
 
+    public static Player getPlayerByNumber(Integer playerNumber){
+        for(Player player: Database.getInstance().getPlayerList()){
+            if(player.getNumber() == playerNumber){
+                return player;
+            }
+        }
+        return null;
+    }
+
     public static boolean allPlayersRemainingArmiesExhausted(){
         for(Player player: Database.getInstance().getPlayerList()){
             if(player.getNumberOfArmies()>0){
@@ -75,5 +92,11 @@ public class Player {
         return true;
     }
 
+    public static void printAllPlayers(){
+        for(Player player: Database.getInstance().getPlayerList()){
+            System.out.println(player.getNumber()+ " " + player.getName() +" "+ player.getNumberOfArmies() );
+        }
+        System.out.println();
+    }
 
 }

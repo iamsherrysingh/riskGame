@@ -1,5 +1,6 @@
 package Model;
 
+import javax.xml.crypto.Data;
 import java.util.*;
 
 public class Country {
@@ -149,6 +150,15 @@ public class Country {
 			}
 		}
 		return false;
+	}
+
+	public static boolean allCountriesPopulated(Graph gameGraph){
+		for(Country country: gameGraph.getAdjList()){
+			if(country.getOwner()==null){
+				return false;
+			}
+		}
+		return true;
 	}
 
 

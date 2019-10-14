@@ -11,6 +11,11 @@ public class GamePlay {
 	private State currentState;
 	private ArrayList<Player> playerObjs;
 	private Mapx mapxObj;
+
+	public Graph getGraphObj() {
+		return graphObj;
+	}
+
 	private Graph graphObj;
     
 	
@@ -151,11 +156,31 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean populateCountries() {
+	public boolean populateCountries(Graph gameGraph) {
 		
 		//change the currentState
-		
-		return true;
+
+        Integer playerNumberToBeAssigned=1;
+        while (! Country.allCountriesPopulated(gameGraph)) {
+            double randomDouble = Math.random();
+            randomDouble = randomDouble * gameGraph.getAdjList().size() + 1;
+            int randomInt = (int) randomDouble;
+            Integer randomCountryNumber = randomInt;
+
+            Country countryToBePopulated= Country.getCountryByNumber(randomCountryNumber, gameGraph);
+
+            if(countryToBePopulated.getOwner()==null){
+                Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
+                countryToBePopulated.setOwner(assignedPlayer.getName());
+            }
+            playerNumberToBeAssigned++;
+
+            if(playerNumberToBeAssigned > Database.getInstance().getPlayerList().size()){
+                playerNumberToBeAssigned =1;
+            }
+        }
+
+        return true;
 	}
 	
 	public boolean placeArmy(Player currentPlayer, String country, Graph gameGraph) {
