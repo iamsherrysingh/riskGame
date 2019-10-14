@@ -44,16 +44,16 @@ public class Player {
     	myCountries.add(number); 
     }
 
-    public static Player addPlayer(String playerName, Integer noOfArmies){
+    public static boolean addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
             System.out.println("=======> This player exists <========");
-            return null;
+            return false;
         }
         Integer id= Database.getInstance().getPlayerList().size() + 1;
 
         Player player= new Player(id, playerName,noOfArmies);
         Database.playerList.add(player);
-        return player;
+        return true;
     }
 
     public static boolean removePlayer(String playerName){

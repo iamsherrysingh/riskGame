@@ -10,6 +10,11 @@ public class GamePlay {
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private ArrayList<Player> playerObjs;
+
+	public Mapx getMapxObj() {
+		return mapxObj;
+	}
+
 	private Mapx mapxObj;
 
 	public Graph getGraphObj() {
@@ -23,7 +28,7 @@ public class GamePlay {
     	currentState = State.mapEditor;
     	playerObjs = new ArrayList<Player>();
     	mapxObj = new Mapx();
-    	graphObj = mapxObj.createGameGraph("src/main/resources/map.map");
+    	graphObj = mapxObj.createGameGraph("src/main/resources/savemap.map");
     }
 
     public static GamePlay getInstance(){
