@@ -45,7 +45,8 @@ public class GamePlay {
 		//check: if there is not a continent with this name, return false (call checkExistenceOfContinent(String continentName))
 		//get the list of countries belongs to this continent(call getCountriesOfContinent(String continentName))
 		//remove all countries belong to this continent (call removeCountry())
-		//remove neighbors according to removed countries (call removeNeighbors())
+		//remove neighbors according to removed countri
+		es (call removeNeighbors())
 		//Call removeContinent() from Mapx
 		
 		return true;
@@ -103,6 +104,7 @@ public class GamePlay {
 		
 		//Get object of Graph
 		//call saveMap from Mapx
+		currentState = State.gamePlay;
 		
 		return true;
 	}
@@ -119,7 +121,6 @@ public class GamePlay {
 	
 		//Get object of Graph
 		//call validateMap() from Mapx
-		//change the currentState 
 		
 		return true;
 	}
@@ -127,7 +128,7 @@ public class GamePlay {
 	public boolean loadMap(String fileName) {
 		
 		//call loadMap() from Mapx
-		
+		currentState = State.editPlayer;
 		return true;
 	}
 	
@@ -154,7 +155,7 @@ public class GamePlay {
 	public boolean populateCountries() {
 		
 		//change the currentState
-		
+		currentState = State.troopArmies;
 		return true;
 	}
 	
@@ -173,6 +174,7 @@ public class GamePlay {
 		//implement a loop for placing all army for players
 		//update owning parameter of country and MyCountry parameter of player
 		//change currentState
+		currentState = State.reinforcementPhase;
 		
 		return true;
 	}
