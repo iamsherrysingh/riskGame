@@ -513,7 +513,7 @@ public class Mapx {
 	    if(continentName.length()==0){
 	        return false;
         }
-	    if(!checkExistenceOfContinent(continentName)) {
+	    if(!Continent.checkExistenceOfContinent(continentName)) {
             Continent newContinent = new Continent(Database.getInstance().getContinentList().size() + 1, continentName,
                     controlValue, "");
             Database.getInstance().getContinentList().add(newContinent);
@@ -597,23 +597,15 @@ public class Mapx {
 		}
 		return true;
 	}
-	public boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph){
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.getName().equalsIgnoreCase(countryToCheck)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 
-	public boolean checkExistenceOfContinent(String continentToCheck){
-		for (Continent singleContinent : Database.getInstance().getContinentList()) {
-			if (singleContinent.getName().equalsIgnoreCase(continentToCheck)) {
-				return true;
-			}
-		}
-		return false;
-	}
+
+
+
+
+
+
+
+
 
 }
