@@ -183,11 +183,20 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean placeAll() {
+	public boolean placeAll(Player currentPlayer, Graph gameGraph) {
 	
 		//implement a loop for placing all army for players
 		//update owning parameter of country and MyCountry parameter of player
 		//change currentState
+        while( ! Player.allPlayersRemainingArmiesExhausted()) {
+            for (Country thisCountry : gameGraph.getAdjList()) {
+                Player playerThatOwnsThisCountry= Player.getPlayerByName(thisCountry.getOwner());
+                if (playerThatOwnsThisCountry.getNumberOfArmies() > 0 ){
+                    thisCountry.setNumberOfArmies(thisCountry.getNumberOfArmies() + 1);
+                    playerThatOwnsThisCountry.setNumberOfArmies(playerThatOwnsThisCountry.getNumberOfArmies() -1);
+                }
+            }
+        }
 		
 		return true;
 	}

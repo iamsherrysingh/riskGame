@@ -1,33 +1,23 @@
 package Model;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class Player {
     String name;
-    Integer id, numberOfArmies;
+    Integer numberOfArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();;
 
     public String getName() {
         return name;
     }
 
-    public Player(Integer id, String name, Integer numberOfArmies) {
+    private Player(Integer id, String name, Integer numberOfArmies) {
         this.name = name;
-        this.id = id;
         this.numberOfArmies = numberOfArmies;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
 
@@ -47,11 +37,12 @@ public class Player {
     	myCountries.add(number); 
     }
 
-    public static Player addPlayer(Integer id, String playerName, Integer noOfArmies){
+    public static Player addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
             System.out.println("This player exists");
             return null;
         }
+        Integer id= Database.getInstance().getPlayerList().size() + 1;
         Player player= new Player(id, playerName,noOfArmies);
         Database.playerList.add(player);
         return player;
@@ -73,6 +64,15 @@ public class Player {
             }
         }
         return null;
+    }
+
+    public static boolean allPlayersRemainingArmiesExhausted(){
+        for(Player player: Database.getInstance().getPlayerList()){
+            if(player.getNumberOfArmies()>0){
+                return false;
+            }
+        }
+        return true;
     }
 
 

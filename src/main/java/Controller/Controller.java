@@ -608,9 +608,9 @@ public class Controller {
 				}
 				case placeall:
 				{
-					if(!gamePlayObj.placeAll())
-						return false;
-					
+//					if(!gamePlayObj.placeAll())
+//						return false;
+//					placeAll() method defined. Modify call as required
 					break;
 				}
 				case reinforce:

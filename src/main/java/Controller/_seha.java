@@ -15,7 +15,7 @@ public class _seha {
         System.out.println(Country.getCountryByName("Western-Australia",g).getNumber());
         System.out.println(Country.getCountryByNumber(39,g).getName());
 
-        Player currrentPlayer= Player.addPlayer(1, "Player1 ", 42);
+        Player currrentPlayer= Player.addPlayer("Player1 ", 42);
 
 
         GamePlay gamePlay= GamePlay.getInstance();
