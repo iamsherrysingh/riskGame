@@ -211,7 +211,7 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean placeAll(Player currentPlayer, Graph gameGraph) {
+	public boolean placeAll(Graph gameGraph) {
 	
 		//implement a loop for placing all army for players
 		//update owning parameter of country and MyCountry parameter of player
