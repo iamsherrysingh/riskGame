@@ -202,6 +202,10 @@ public class Mapx {
 	 * @throws IOException
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
+        if(validateMap(gameGraph) == false){
+            System.out.println("Game Graph is not a connected graph");
+            return false;
+        }
 		ArrayList<Country> ct = gameGraph.adjList;
 		String[] DefaultMaps = {"map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map"};
@@ -273,7 +277,7 @@ public class Mapx {
 	 * @param gameGraph
 	 * @return
 	 */
-	public boolean validateMap(Graph gameGraph) {
+	public static boolean validateMap(Graph gameGraph) {
 		Integer startPosition = 1;
 		int count = 0;
 		boolean visited[] = new boolean[gameGraph.getAdjList().size() + 1];
