@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.*; 
@@ -110,11 +112,18 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean editMap(String fileName) {
+	public boolean editMap(String mapName,Graph gameGraph) {
 		
 		//Get object of Graph
 		//call editMap() from Mapx
-		
+		File file = new File("src/main/resources/" + mapName);
+		if (file.exists()) {
+			gameGraph=mapxObj.createGameGraph("src/main/resources/"+mapName);
+		}
+		else{
+			System.out.println("New Game Graph created");
+			gameGraph=Graph.getInstance();
+		}
 		return true;
 	}
 	

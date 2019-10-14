@@ -206,6 +206,11 @@ public class Mapx {
             System.out.println("Game Graph is not a connected graph");
             return false;
         }
+        mp=mp.trim();
+        if(mp.length()==0){
+			System.out.println("Please enter a name for the map");
+        	return false;
+		}
 		ArrayList<Country> ct = gameGraph.adjList;
 		String[] DefaultMaps = {"map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map"};
@@ -269,6 +274,7 @@ public class Mapx {
 					writer.write(countIterator + borderString + System.getProperty("line.separator"));
 				}
 				writer.close();
+				return true;
 			}
 		} else {
 			System.out.println("Please enter a valid map name!");
