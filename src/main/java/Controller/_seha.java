@@ -9,7 +9,7 @@ public class _seha {
         Graph g = gamePlay.getGraphObj();
 
 //        g.showMap();
-        Country.removeNeighbour("Greenland", "Ontario", g);
+ //      Country.removeNeighbour("Greenland", "Ontario", g);
 //        g.showMap();
 
 
