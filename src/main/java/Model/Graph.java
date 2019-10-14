@@ -10,7 +10,7 @@ public class Graph {
     /**
      * private constructor so that a object of public class Database cannot be created
      */
-    private Graph() {
+    public Graph() {
     }
 
     /**

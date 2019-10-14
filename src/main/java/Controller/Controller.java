@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
-import Database.Database;
 
 enum tasksEnum {
 	unknown,
@@ -646,7 +645,7 @@ public class Controller {
 			Controller controller = new Controller();
 			controller.gamePlayObj = GamePlay.getInstance();
 	    	
-			while(controller.gamePlayObj.getCurrentState() != State.gameFInished){
+			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
 				ArrayList<extractedTasks> tasksList = new ArrayList<extractedTasks>();
 				if(!controller.getCommand(tasksList))

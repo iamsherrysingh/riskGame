@@ -1,18 +1,17 @@
-package Database;
-
-import Model.*;
+package Model;
 
 import java.util.ArrayList;
 
 /**
  * This is a Database that holds the continent details, and player details
- * This has singleton implementation so that the list of continen/player is not duplicated in a single game run
+ * This has singleton implementation so that the list of continent/player is not duplicated in a single game run
  */
 public class Database {
 	private static Database dbobj;
 
-	// private constructor to force use of
-	// getInstance() to create Singleton object
+	/**
+	 * 	private constructor to force use of  getInstance() to create Singleton object
+	 */
 	private Database() {
 	}
 
