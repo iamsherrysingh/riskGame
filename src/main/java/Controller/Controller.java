@@ -594,24 +594,23 @@ public class Controller {
 				}
 				case populatecountries:
 				{
-//					if(!gamePlayObj.populateCountries())
-//						return false;
+					if(!gamePlayObj.populateCountries())
+						return false;
 					
 					break;
 				}
 				case placearmy:
 				{
-//					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
-//						return false;
-					// Need to change the function call to placeArmy
+					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
+						return false;
 					
 					break;
 				}
 				case placeall:
 				{
-//					if(!gamePlayObj.placeAll())
-//						return false;
-//					placeAll() method defined. Modify call as required
+					if(!gamePlayObj.placeAll())
+						return false;
+
 					break;
 				}
 				case reinforce:
