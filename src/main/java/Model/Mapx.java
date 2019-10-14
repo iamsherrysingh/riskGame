@@ -222,7 +222,13 @@ public class Mapx {
 				// Create the file
 				File f = createFile(mapName);
 				FileWriter writer = new FileWriter(f);
+				writer.write("name "+mp + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
 				writer.write("[files]" + System.getProperty("line.separator"));
+				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+				writer.write("map sample.gif" + System.getProperty("line.separator"));
+				writer.write("crd sample.cards" + System.getProperty("line.separator"));
+				writer.write("prv world.jpg" + System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
 				writer.write("[continents]" + System.getProperty("line.separator"));
 				for (int i = 0; i < database.getContinentList().size(); i++) {
@@ -234,7 +240,7 @@ public class Mapx {
 				}
 				writer.write(System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
-				writer.write("[countries] " + System.getProperty("line.separator"));
+				writer.write("[countries]" + System.getProperty("line.separator"));
 				Integer countitr = 0;
 				while (itr.hasNext()) {
 					Country country = (Country) itr.next();
@@ -248,7 +254,7 @@ public class Mapx {
 				}
 				writer.write(System.getProperty("line.separator"));
 				itr = ct.iterator();
-				writer.write("[borders] " + System.getProperty("line.separator"));
+				writer.write("[borders]" + System.getProperty("line.separator"));
 
 				Integer countIterator = 0;
 				while (itr.hasNext()) {
