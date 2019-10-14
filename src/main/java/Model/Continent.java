@@ -57,7 +57,7 @@ public class Continent {
      * @param controlValue
      */
     public static boolean addContinent(String continentName, Integer controlValue) {
-        if (continentName.length() == 0) {
+        if (continentName.trim().length() == 0) {
             return false;
         }
         if (!Continent.checkExistenceOfContinent(continentName)) {
