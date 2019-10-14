@@ -600,8 +600,9 @@ public class Controller {
 				}
 				case placearmy:
 				{
-					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
-						return false;
+//					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
+//						return false;
+					// Need to change the function call to placeArmy
 					
 					break;
 				}
