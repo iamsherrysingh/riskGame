@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class removeCountryTest {
+public class CountryTest {
 
 	
 	static Mapx map;
@@ -48,6 +48,12 @@ public class removeCountryTest {
     }
 	
 	
-	
+    @Test
+    public void removeCountry2() {
+    	
+    	boolean check = Country.removeCountry("birjot", g);
+        assertEquals(false,check);
+    	
+    }
 	
 }
