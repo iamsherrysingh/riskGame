@@ -171,7 +171,7 @@ public class GamePlay {
 		if(!targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName())){
 			return false;
 		}
-		if(Country.getCountryByName(country, gameGraph).getOwner()==currentPlayer.getName()){
+		if(targetCountry.getOwner()==currentPlayer.getName()     ||      targetCountry.getOwner()==null){
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies()+1);
 		}
 		return true;
