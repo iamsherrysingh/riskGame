@@ -552,8 +552,8 @@ public class Controller {
 				}
 				case editmap:
 				{
-					if(!gamePlayObj.editMap(itr.taskData.get(0)))
-						return false;
+//					if(!gamePlayObj.editMap(itr.taskData.get(0)))
+//						return false;
 					
 					break;
 				}
