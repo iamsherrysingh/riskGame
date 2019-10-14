@@ -168,11 +168,17 @@ public class GamePlay {
 		if(targetCountry==null){
 			return false;
 		}
-		if(!targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName())){
-			return false;
+
+		if(targetCountry.getOwner()!=null){
+			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName()) == false){
+				return false;
+			}
 		}
+
 		if(targetCountry.getOwner()==currentPlayer.getName()     ||      targetCountry.getOwner()==null){
-			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies()+1);
+			targetCountry.setOwner(currentPlayer.getName());
+			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() +1);
+			currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() -1);
 		}
 		return true;
 	}

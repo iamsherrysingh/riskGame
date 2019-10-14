@@ -30,6 +30,7 @@ public class Player {
         this.id = id;
     }
 
+
     public Integer getNumberOfArmies() {
         return numberOfArmies;
     }
@@ -46,13 +47,17 @@ public class Player {
     	myCountries.add(number); 
     }
 
-    static boolean addPlayer(Integer id, String Name, Integer noOfArmies){
-        Player player= new Player(id, Name,noOfArmies);
+    public static Player addPlayer(Integer id, String playerName, Integer noOfArmies){
+        if(Player.getPlayerByName(playerName)!=null){
+            System.out.println("This player exists");
+            return null;
+        }
+        Player player= new Player(id, playerName,noOfArmies);
         Database.playerList.add(player);
-        return true;
+        return player;
     }
 
-    static boolean removePlayer(String playerName){
+    public static boolean removePlayer(String playerName){
         Player player= Player.getPlayerByName(playerName);
         if(player==null){
             return false;
@@ -61,7 +66,7 @@ public class Player {
         return true;
     }
 
-    static Player getPlayerByName(String playerName){
+    public static Player getPlayerByName(String playerName){
         for(Player player: Database.playerList){
             if(player.getName().equalsIgnoreCase(playerName)){
                 return player;
