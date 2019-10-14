@@ -206,6 +206,11 @@ public class Mapx {
             System.out.println("Game Graph is not a connected graph");
             return false;
         }
+        mp=mp.trim();
+        if(mp.length()==0){
+			System.out.println("Please enter a name for the map");
+        	return false;
+		}
 		ArrayList<Country> ct = gameGraph.adjList;
 		String[] DefaultMaps = {"map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map"};
@@ -222,7 +227,13 @@ public class Mapx {
 				// Create the file
 				File f = createFile(mapName);
 				FileWriter writer = new FileWriter(f);
+				writer.write("name "+mp + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
 				writer.write("[files]" + System.getProperty("line.separator"));
+				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+				writer.write("map sample.gif" + System.getProperty("line.separator"));
+				writer.write("crd sample.cards" + System.getProperty("line.separator"));
+				writer.write("prv world.jpg" + System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
 				writer.write("[continents]" + System.getProperty("line.separator"));
 				for (int i = 0; i < database.getContinentList().size(); i++) {
@@ -234,7 +245,7 @@ public class Mapx {
 				}
 				writer.write(System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
-				writer.write("[countries] " + System.getProperty("line.separator"));
+				writer.write("[countries]" + System.getProperty("line.separator"));
 				Integer countitr = 0;
 				while (itr.hasNext()) {
 					Country country = (Country) itr.next();
@@ -248,7 +259,7 @@ public class Mapx {
 				}
 				writer.write(System.getProperty("line.separator"));
 				itr = ct.iterator();
-				writer.write("[borders] " + System.getProperty("line.separator"));
+				writer.write("[borders]" + System.getProperty("line.separator"));
 
 				Integer countIterator = 0;
 				while (itr.hasNext()) {
@@ -263,6 +274,7 @@ public class Mapx {
 					writer.write(countIterator + borderString + System.getProperty("line.separator"));
 				}
 				writer.close();
+				return true;
 			}
 		} else {
 			System.out.println("Please enter a valid map name!");

@@ -2,6 +2,8 @@ package Controller;
 
 import Model.*;
 
+import java.io.File;
+
 
 public class _seha {
     public static void main(String[] args) {
@@ -9,7 +11,7 @@ public class _seha {
         Graph g = gamePlay.getGraphObj();
 
 //        g.showMap();
-        Country.removeNeighbour("Greenland", "Ontario", g);
+ //      Country.removeNeighbour("Greenland", "Ontario", g);
 //        g.showMap();
 
 
@@ -39,6 +41,11 @@ public class _seha {
         catch(Exception e){
 
         }
+
+        System.out.println("==================");
+        gamePlay.getGraphObj().getAdjList().clear();
+        gamePlay.editMap("masp.map", Graph.getInstance());
+        gamePlay.getGraphObj().showMap();
 
 
 
