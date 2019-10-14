@@ -600,16 +600,17 @@ public class Controller {
 				}
 				case placearmy:
 				{
-					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
-						return false;
+//					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
+//						return false;
+					// Need to change the function call to placeArmy
 					
 					break;
 				}
 				case placeall:
 				{
-					if(!gamePlayObj.placeAll())
-						return false;
-					
+//					if(!gamePlayObj.placeAll())
+//						return false;
+//					placeAll() method defined. Modify call as required
 					break;
 				}
 				case reinforce:
@@ -669,7 +670,7 @@ public class Controller {
 /*    void startGame() throws IOException{
         Mapx map= new Mapx();
 		Graph g=map.createGameGraph("src/main/resources/map.map");
-		g.printGraph();
+		g.showMap();
 		System.out.println("======"+map.validateMap(g));
 		map.saveMap(g);
 		System.out.println("======");
@@ -680,23 +681,23 @@ public class Controller {
 		System.out.println(Database.getInstance().getContinentList().size());
 
 		map.addCountry("Havanna","Australia",g);
-		g.printGraph();
+		g.showMap();
 		System.out.println(g.getAdjList().get(42).getInContinent());
 		map.addNeighbour("Havanna","India", g);
-		g.printGraph();
+		g.showMap();
 		map.addNeighbour("Swarg","Pataal",g);
 		map.removeCountry("japan",g);
-		g.printGraph();
+		g.showMap();
 
 		map.addContinent("Jupiter",67);
 		Database.getInstance().printContinentList();
 
 		map.removeContinent("Asia",g);
-		g.printGraph();
+		g.showMap();
 		Database.getInstance().printContinentList();
 
 		map.removeNeighbour("Congo", "North-africa",g);
-        g.printGraph();
+        g.showMap();
         map.addArmiesToCountry("Egypt",100,g);
         System.out.println(g.getAdjList().get(21).getNumberOfArmies());
 		System.out.println(map.validateMap(g));

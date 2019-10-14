@@ -31,25 +31,22 @@ public class Graph {
         this.adjList = adjList;
     }
 
-    /**
-     * This method is an implementation of showMap command
-     * @param graph
-     */
-    public void printGraph(Graph graph)
-    {
-        for(Country country: graph.adjList){
-            System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
-        }
-    }
 
     /**
      * This method is another implementation of the showMap command
      */
-    public static void printGraph()
+    public static void showMap()
     {
 
         for(Country country: adjList){
-            System.out.println(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
+            System.out.print(country.getNumber() + " " +country.getName() +" "+ country.getNeighbours());
+            if(country.getOwner() == null){
+                System.out.print(" Owner: None");
+            }
+            else{
+                System.out.print(" Owner: "+country.getOwner());
+            }
+            System.out.println(" Armies: "+country.getNumberOfArmies());
         }
     }
 }

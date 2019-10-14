@@ -97,4 +97,62 @@ public class Country {
 	public void setNeighbours(ArrayList<Integer> neighbours) {
 		this.neighbours = neighbours;
 	}
+
+	public static Country getCountryByName(String countryName, Graph gameGraph){
+		Country returnedCountry=null;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryName)) {
+				returnedCountry = country;
+			}
+		}
+		return returnedCountry;
+	}
+
+	public static Country getCountryByNumber(Integer countryNumber, Graph gameGraph){
+		Country returnedCountry=null;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getNumber()==countryNumber) {
+				returnedCountry = country;
+			}
+		}
+		return returnedCountry;
+	}
+
+	public static boolean assignOwner(String ownerName, String countryName, Graph g){
+		Country country= Country.getCountryByName(countryName, g);
+		if(country==null){
+			return false;
+		}
+		if(country.getOwner()==null){
+			country.setOwner(ownerName);
+		}
+		else {
+			System.out.println("Country assigned to owner: " + country.owner);
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean changeOwner(String newOwnerName, String countryName, Graph g){
+		Country country= Country.getCountryByName(countryName, g);
+		if(country==null){
+			return false;
+		}
+		country.setOwner(newOwnerName);
+		return true;
+	}
+
+	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph){
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryToCheck)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
 }
+
+

@@ -48,17 +48,6 @@ public class Database {
 		}
 	}
 
-	static void addPlayer(Integer id, String Name, Integer noOfArmies){
-		Player player= new Player(id, Name,noOfArmies);
-		playerList.add(player);
-	}
 
-	static void removePlayer(String Name){
-		for(Player player: playerList){
-			if(player.getName().equalsIgnoreCase(Name)){
-				playerList.remove(player);
-			}
-		}
-	}
 
 }

@@ -332,6 +332,7 @@ public class Mapx {
 		return true;
 	}
 
+
 	public boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
 		Integer numberOfCountryWithNewNeighbour = -1;
 		for (Country country : gameGraph.getAdjList()) {
@@ -359,49 +360,101 @@ public class Mapx {
 		return true;
 	}
 
+    
 	/**
 	 * This method removes a neighbour from a country that exists in the gameGraph
 	 * variable
 	 * 
-	 * @param countryThatLosesNeighbour
-	 * @param neighbour
+	 * @param firstCountryName
+	 * @param secondCountryName
 	 * @param gameGraph
 	 */
-	public boolean removeNeighbour(String countryThatLosesNeighbour, String neighbour, Graph gameGraph) {
-		Integer countryNumber = -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.getName().equalsIgnoreCase(countryThatLosesNeighbour)) {
-				countryNumber = country.getNumber();
-			}
-		}
-		if (countryNumber == -1) {
-			System.out.println("Country: " + countryThatLosesNeighbour + " not in the map!");
-			return false;
-		}
-		Integer neighbourNumber = -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.getName().equalsIgnoreCase(neighbour)) {
-				neighbourNumber = country.getNumber();
-			}
-		}
-		if (neighbourNumber == -1) {
-			System.out.println("Neighbour Country: " + neighbour + " not in the map!");
-			return false;
-		}
-		boolean neighbourPresentInList = false;
-		for (Integer singleNeighbour : gameGraph.getAdjList().get(countryNumber - 1).getNeighbours()) {
-			if (gameGraph.getAdjList().get(singleNeighbour - 1).getName().equalsIgnoreCase(neighbour)) {
-				neighbourPresentInList = true;
-			}
-		}
-		if (neighbourPresentInList == false) {
-			System.out.println("These countries are not neighbours");
-			return false;
-		}
-		gameGraph.getAdjList().get(countryNumber - 1).getNeighbours().remove(neighbourNumber);
-		gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().remove(countryNumber);
-		return true;
-	}
+    public boolean removeNeighbour(String firstCountryName, String secondCountryName, Graph gameGraph) {
+
+    	Country firstCountry = null;
+    	Country secndCountry = null;
+    	 
+        boolean firstCountryExist=false;
+        boolean secndCountryExist=false;
+        
+        for (Country country : gameGraph.getAdjList()) {
+        	
+            if (country.getName().equalsIgnoreCase(firstCountryName)) {
+            	firstCountryExist = true;
+            	firstCountry = country;
+            }
+            
+            if (country.getName().equalsIgnoreCase(secondCountryName)) {
+            	secndCountryExist = true;
+            	secndCountry = country;
+            }
+            
+        }
+        
+        
+        if (!firstCountryExist) {
+            System.out.println("Country: " + firstCountryName + " is not in the map!");
+            return false;
+        }
+
+        if (!secndCountryExist) {
+            System.out.println("Country: " + secondCountryName + " is not in the map!");
+            return false;
+        }
+ 
+        
+        boolean mutualNeighbour = false;
+        int neighbourIndex2 = -1;
+	    for ( int index=0;  index<firstCountry.getNeighbours().size(); index++) {
+	    	
+	    	int indx = firstCountry.neighbours.get(index);
+	    	Country neib = gameGraph.getAdjList().get(indx-1);
+	    	
+	    	if ( secndCountry.getName().equalsIgnoreCase(neib.getName()) ) {
+	    		mutualNeighbour = true;
+	    		neighbourIndex2 = index;
+	    	}
+	    	
+	    }
+	    
+   	    if (!mutualNeighbour) {
+		 System.out.println("First country is not neighbour of second country");
+          return false;
+	    }
+   	    
+   	    
+        mutualNeighbour = false;
+        int neighbourIndex1 = -1;
+	    for ( int index=0;  index<secndCountry.getNeighbours().size(); index++) {
+	    	
+	    	int indx = secndCountry.neighbours.get(index);
+	    	Country neib = gameGraph.getAdjList().get(indx-1);
+	    	
+	    	if ( firstCountry.getName().equalsIgnoreCase(neib.getName()) ) {
+	    		mutualNeighbour = true;
+	    		neighbourIndex1 = index;
+	    	}
+	    	
+	    }
+	    
+   	    if (!mutualNeighbour) {
+		 System.out.println("Second country is not neighbour of first country");
+          return false;
+	    }
+
+   	    
+    	int firstCountryInx = firstCountry.getNumber()-1;
+    	int secndCountryInx = secndCountry.getNumber()-1;
+
+    	gameGraph.getAdjList().get(firstCountryInx).getNeighbours().remove(neighbourIndex2);
+    	gameGraph.getAdjList().get(secndCountryInx).getNeighbours().remove(neighbourIndex1);
+
+    	return true;
+    }
+    
+    
+    
+    
 
 	/**
 	 * This method removes a country from the gameGraph list, and makes the
@@ -460,7 +513,7 @@ public class Mapx {
 	    if(continentName.length()==0){
 	        return false;
         }
-	    if(!checkExistenceOfContinent(continentName)) {
+	    if(!Continent.checkExistenceOfContinent(continentName)) {
             Continent newContinent = new Continent(Database.getInstance().getContinentList().size() + 1, continentName,
                     controlValue, "");
             Database.getInstance().getContinentList().add(newContinent);
@@ -544,23 +597,15 @@ public class Mapx {
 		}
 		return true;
 	}
-	public boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph){
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.getName().equalsIgnoreCase(countryToCheck)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 
-	public boolean checkExistenceOfContinent(String continentToCheck){
-		for (Continent singleContinent : Database.getInstance().getContinentList()) {
-			if (singleContinent.getName().equalsIgnoreCase(continentToCheck)) {
-				return true;
-			}
-		}
-		return false;
-	}
+
+
+
+
+
+
+
+
 
 }

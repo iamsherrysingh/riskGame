@@ -4,16 +4,15 @@ import java.util.ArrayList;
 
 public class Player {
     String name;
-    Integer id, numberOfArmies;
+    Integer numberOfArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();;
 
     public String getName() {
         return name;
     }
 
-    public Player(Integer id, String name, Integer numberOfArmies) {
+    private Player(Integer id, String name, Integer numberOfArmies) {
         this.name = name;
-        this.id = id;
         this.numberOfArmies = numberOfArmies;
     }
 
@@ -21,13 +20,6 @@ public class Player {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getNumberOfArmies() {
         return numberOfArmies;
@@ -44,4 +36,44 @@ public class Player {
     public void setMyCountries(Integer number) {
     	myCountries.add(number); 
     }
+
+    public static Player addPlayer(String playerName, Integer noOfArmies){
+        if(Player.getPlayerByName(playerName)!=null){
+            System.out.println("This player exists");
+            return null;
+        }
+        Integer id= Database.getInstance().getPlayerList().size() + 1;
+        Player player= new Player(id, playerName,noOfArmies);
+        Database.playerList.add(player);
+        return player;
+    }
+
+    public static boolean removePlayer(String playerName){
+        Player player= Player.getPlayerByName(playerName);
+        if(player==null){
+            return false;
+        }
+        Database.playerList.remove(player);
+        return true;
+    }
+
+    public static Player getPlayerByName(String playerName){
+        for(Player player: Database.playerList){
+            if(player.getName().equalsIgnoreCase(playerName)){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static boolean allPlayersRemainingArmiesExhausted(){
+        for(Player player: Database.getInstance().getPlayerList()){
+            if(player.getNumberOfArmies()>0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
 }

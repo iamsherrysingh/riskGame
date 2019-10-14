@@ -38,4 +38,14 @@ public class Continent {
     public void setNumber(Integer number) {
         this.number = number;
     }
+
+    public static boolean checkExistenceOfContinent(String continentToCheck){
+        for (Continent singleContinent : Database.getInstance().getContinentList()) {
+            if (singleContinent.getName().equalsIgnoreCase(continentToCheck)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

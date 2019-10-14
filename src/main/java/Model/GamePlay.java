@@ -180,22 +180,49 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean placeArmy(String countryName) {
+	public boolean placeArmy(Player currentPlayer, String country, Graph gameGraph) {
 		
 		//check: if there is not a a country with this name, return false
 		//check: if the country does not belong to the current player or the country is not free, return false
 		//if the country was free, change the owner of country to the player and update MyCountry list of player
 		//add an army to the related country
-		
+		Country targetCountry= Country.getCountryByName(country, gameGraph);
+		if(targetCountry==null){
+			return false;
+		}
+
+		if(targetCountry.getOwner()!=null){
+			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName()) == false){
+				return false;
+			}
+		}
+
+		if(targetCountry.getOwner()==currentPlayer.getName()     ||      targetCountry.getOwner()==null){
+			targetCountry.setOwner(currentPlayer.getName());
+			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() +1);
+			currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() -1);
+		}
 		return true;
 	}
 	
-	public boolean placeAll() {
+	public boolean placeAll(Player currentPlayer, Graph gameGraph) {
 	
 		//implement a loop for placing all army for players
 		//update owning parameter of country and MyCountry parameter of player
 		//change currentState
+<<<<<<< HEAD
 		currentState = State.reinforcementPhase;
+=======
+        while( ! Player.allPlayersRemainingArmiesExhausted()) {
+            for (Country thisCountry : gameGraph.getAdjList()) {
+                Player playerThatOwnsThisCountry= Player.getPlayerByName(thisCountry.getOwner());
+                if (playerThatOwnsThisCountry.getNumberOfArmies() > 0 ){
+                    thisCountry.setNumberOfArmies(thisCountry.getNumberOfArmies() + 1);
+                    playerThatOwnsThisCountry.setNumberOfArmies(playerThatOwnsThisCountry.getNumberOfArmies() -1);
+                }
+            }
+        }
+>>>>>>> master
 		
 		return true;
 	}
