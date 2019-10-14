@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.io.IOException;
 import java.util.*; 
 import Model.State;
 import Model.Player;
@@ -9,6 +10,7 @@ public class GamePlay {
 	
 	private static GamePlay gamePlay = null;
 	private State currentState;
+	private Player currentPlayer;
 	private Mapx mapxObj;
 
 	public Graph getGraphObj() {
@@ -39,78 +41,69 @@ public class GamePlay {
 	
 	public boolean addContinent(String continentName, Integer controlValue) {
 		
-		//check: if there is a continent with this name, return false (call checkExistenceOfContinent(String continentName))
-		//call addContinent() from Mapx
-		Continent.addContinent(continentName, controlValue);
+		if(!Continent.addContinent(continentName, controlValue))
+			return false;
+		
 		return true;
 	}
 	
 	public boolean removeContinent(String continentName) {
 		
-		//Get object of Graph
-		//check: if there is not a continent with this name, return false (call checkExistenceOfContinent(String continentName))
-		//get the list of countries belongs to this continent(call getCountriesOfContinent(String continentName))
-		//remove all countries belong to this continent (call removeCountry())
-		//remove neighbors according to removed countri
-		//es (call removeNeighbors())
-		//Call removeContinent() from Mapx
+		if(!Continent.removeContinent(continentName, graphObj))
+			return false;
 		
 		return true;
 	}
 	
 	public boolean addCountry(String countryName, String continentName) {
 			
-		//Get object of Graph
-		//check: if there is a country with this name, return false (call checkExistenceOfCountry(String countryName))
-		//check: if there is not a continent with this name, return false (call checkExistenceOfContinent(String continentName))
-		//Call addCountry() form Mapx
+		if(!Country.addCountry(countryName, continentName, graphObj) )
+			return false;
 		
 		return true;
 	}
 	
 	public boolean removeCountry(String countryName) {
 		
-		//Get object of Graph
-		//check: if there is not a country with this name, return false (call checkExistenceOfCountry(String countryName))
-		//remove neighbors (call removeNeighbors())
-		//Call removeCountry from Mapx
+		if(!Country.removeCountry(countryName, graphObj))
+			return false;
 		
 		return true;
 	}
 	
 	public boolean addNeighbor(String countryName, String neighborCountryName) {
 		
-		//Get object of Graph
-		//check: if there is not a country with this name, return false (call checkExistenceOfCountry(String countryName))
-		//check: if there is not a neighbor with this name, return false (call checkExistenceOfCountry(String countryName))
-		//Call addNeighbor() from Mapx
+		if(!Country.addNeighbour(countryName, neighborCountryName, graphObj))
+			return false;
 		
 		return true;
 	}
 	
 	public boolean removeNeighbor(String countryName, String neighborCountryName) {
 		
-		//Get object of Graph
-		//check: if there is not a country with this name, return false (call checkExistenceOfCountry(String countryName))
-		//check: if there is not a neighbor with this name, return false (call checkExistenceOfCountry(String countryName))
-		//Call addNeighbor() from Mapx
+		if(!Country.removeNeighbour(countryName, neighborCountryName, graphObj) )
+			return false;
 		
 		return true;
 	}
 	
 	public boolean showMap() {
 		
-		//Get object of Graph
-		//call showMap from Mapx
-		
+		Graph.showMap();		
 		return true;
 	}
 	
 	public boolean saveMap(String fileName) {
 		
-		//Get object of Graph
-		//call saveMap from Mapx
-		currentState = State.gamePlay;
+		try {
+			if(! mapxObj.saveMap(graphObj, fileName))
+				return false;
+			currentState = State.startupPhase;	
+		}
+		catch (IOException io ){
+			System.out.println("IO Exception Occured");
+			return false;
+		}
 		
 		return true;
 	}
@@ -125,8 +118,8 @@ public class GamePlay {
 	
 	public boolean validateMap() {
 	
-		//Get object of Graph
-		//call validateMap() from Mapx
+		if(! mapxObj.validateMap(graphObj))
+			return false;
 		
 		return true;
 	}

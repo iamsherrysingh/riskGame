@@ -2,7 +2,6 @@ package Model;
 
 public enum State {
 	mapEditor,
-	gamePlay,
 	startupPhase,
 	editPlayer,
 	troopArmies,

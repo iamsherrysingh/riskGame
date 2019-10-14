@@ -390,6 +390,8 @@ public class Controller {
 						break;
 					case removeneighbor:
 						break;
+					case showmap:
+						break;
 					case editmap:
 						break;
 					case validatemap:
@@ -402,20 +404,11 @@ public class Controller {
 				}
 			}			
 		} 
-		else if(gamePlayObj.getCurrentState() == State.gamePlay ){
+		else if(gamePlayObj.getCurrentState() == State.startupPhase){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
 						break;
-					default: 
-						System.out.println("Invalid command in the current state");
-						return false;
-				}
-			}
-		}
-		else if(gamePlayObj.getCurrentState() == State.startupPhase){
-			for(extractedTasks itr:tasksList) {
-				switch (itr.name){
 					case loadmap:
 						break;
 					default: 
@@ -427,6 +420,8 @@ public class Controller {
 		else if(gamePlayObj.getCurrentState() == State.editPlayer ){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
+				case showmap:
+					break;
 				case addplayer:	
 					break;
 				case removeplayer:
@@ -442,6 +437,8 @@ public class Controller {
 		else if(gamePlayObj.getCurrentState() == State.troopArmies){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
+					case showmap:
+						break;
 					case placearmy:
 						break;	
 					case placeall:
@@ -455,6 +452,8 @@ public class Controller {
 		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
+					case showmap:
+						break;
 					case reinforce:
 						break;	
 					default:
@@ -466,6 +465,8 @@ public class Controller {
 		else if(gamePlayObj.getCurrentState() == State.fortificationPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
+					case showmap:
+						break;	
 					case fortify:
 						String numOfFortify = itr.taskData.get(2);	
 						//check if the data related to the number of army in fortify command is numeric
