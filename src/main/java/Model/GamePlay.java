@@ -197,6 +197,10 @@ public class GamePlay {
 			return false;
 		}
 
+		if(currentPlayer.getNumberOfArmies() <=0){
+			return false;
+		}
+
 		if(targetCountry.getOwner()!=null){
 			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName()) == false){
 				return false;

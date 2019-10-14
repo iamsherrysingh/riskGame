@@ -9,12 +9,12 @@ public class _seha {
         Graph g = gamePlay.getGraphObj();
 
 //        g.showMap();
-//        map.removeNeighbour("Greenland", "Ontario", g);
+        Country.removeNeighbour("Greenland", "Ontario", g);
 //        g.showMap();
 
 
-//        System.out.println(Country.getCountryByName("Western-Australia",g).getNumber());
-//        System.out.println(Country.getCountryByNumber(39,g).getName());
+        System.out.println(Country.getCountryByName("Western-Australia",g).getNumber());
+        System.out.println(Country.getCountryByNumber(39,g).getName());
         System.out.println("player list size "+ Database.getInstance().getPlayerList().size());
 
         Player currrentPlayer= Player.addPlayer("Old Player ", 3);
@@ -23,11 +23,13 @@ public class _seha {
         Player.printAllPlayers();
 
 //        System.out.println(gamePlay.placeArmy(currrentPlayer,"ssss", g));
-        //gamePlay.placeArmy(currrentPlayer,"Western-Australia", g);
+
         //g.showMap();
 
         gamePlay.populateCountries(g);
         gamePlay.placeAll(g);
+
+        gamePlay.placeArmy(currrentPlayer,"Western-Australia", g);
 
         g.showMap();
 
