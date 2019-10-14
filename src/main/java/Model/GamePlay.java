@@ -12,15 +12,9 @@ public class GamePlay {
 	private State currentState;
 	private Player currentPlayer;
 	private Mapx mapxObj;
-
-	public Graph getGraphObj() {
-		return graphObj;
-	}
-
 	private Graph graphObj;
 	private Database databaseObj;
 	
-    
 	
 	private GamePlay() {
 		currentState = State.mapEditor;
@@ -34,6 +28,14 @@ public class GamePlay {
         	gamePlay= new GamePlay();
         return gamePlay;
     }
+    
+    public Graph getGraphObj() {
+		return graphObj;
+	}
+	
+	public Mapx getMapxObj() {
+		return mapxObj;
+	}
     
     public State getCurrentState(){
     	return currentState;
