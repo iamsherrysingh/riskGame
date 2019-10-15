@@ -223,6 +223,7 @@ public class Mapx {
 			mapName = mapName + ".map";
 			if (Arrays.asList(DefaultMaps).contains(mapName)) {
 				System.out.println("you cannot edit a default map");
+				return false;
 			} else {
 				// Create the file
 				File f = createFile(mapName);
@@ -280,7 +281,7 @@ public class Mapx {
 			System.out.println("Please enter a valid map name!");
 			return false;
 		}
-		return true;
+
 	}
 
 	/**
