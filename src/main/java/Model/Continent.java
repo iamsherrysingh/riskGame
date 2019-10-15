@@ -117,6 +117,21 @@ public class Continent {
         }
         return continent;
     }
+    public static Continent getContinentByName(String continentName){
+        Continent continent= null;
+        for (Continent continent1: Database.getInstance().getContinentList()){
+            if(continent1.getName().equalsIgnoreCase( continentName)){
+                return continent1;
+            }
+        }
+        return continent;
+    }
+
+    public static boolean continentBelongToPlayer(Player playerName, String continentName, Graph gameGraph){
+        Continent continentInQuestion= Continent.getContinentByName(continentName);
+        //TODO
+        return true;
+    }
 
 
 
