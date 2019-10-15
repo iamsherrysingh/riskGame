@@ -224,37 +224,25 @@ public class GamePlay {
             }
             
         }
-        
-        //create iterator of players
-        currentPlayerItr = Database.playerList.listIterator();
       
         //Change current state to next state
 		setCurrentState(State.troopArmies, "Troop Armies");
+		
+		//Set current player to the first player
+		currentPlayerObj.resetCurrentPlayer();
 		
 		return true;
 	}
 	
 	public boolean placeArmy(String country) {
 		
-		//Get current player
-		Player currentPlayer;
-		if(currentPlayerItr.hasNext())
-			currentPlayer = currentPlayerItr.next();
-		else {
-			currentPlayerItr = Database.playerList.listIterator();
-			currentPlayer = currentPlayerItr.next();
-		}
-		
 		Country targetCountry= Country.getCountryByName(country, graphObj);
 		if(targetCountry==null){
-			
-			if(currentPlayerItr.hasPrevious())
-				currentPlayerItr.previous();
 			
 			return false;
 		}
 
-		if(currentPlayer.getNumberOfArmies() <=0){
+		if(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <=0){
 			
 			System.out.println("All armies are placed");
 			
@@ -262,26 +250,24 @@ public class GamePlay {
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			
 			//Set current player to the first player
-			currentPlayerItr = Database.playerList.listIterator();
+			currentPlayerObj.resetCurrentPlayer();
 			
 			return false;
 		}
 
 		if(targetCountry.getOwner()!=null){
-			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayer.getName()) == false){
+			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false){
 				
 				System.out.println("The country is not belong to the current player");
-				if(currentPlayerItr.hasPrevious())
-					currentPlayerItr.previous();
 				
 				return false;
 			}
 		}
 
-		if(targetCountry.getOwner()==currentPlayer.getName()     ||      targetCountry.getOwner()==null){
-			targetCountry.setOwner(currentPlayer.getName());
+		if(targetCountry.getOwner()==currentPlayerObj.getCurrentPlayer().getName()     ||      targetCountry.getOwner()==null){
+			targetCountry.setOwner(currentPlayerObj.getCurrentPlayer().getName());
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() +1);
-			currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() -1);
+			currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() -1);
 		}
 		return true;
 	}
@@ -302,7 +288,7 @@ public class GamePlay {
         setCurrentState(State.reinforcementPhase, "Reinforcement");
         
         //Set current player to the first player
-		currentPlayerItr = Database.playerList.listIterator();
+		currentPlayerObj.resetCurrentPlayer();
         
 		return true;
 	}
@@ -356,12 +342,23 @@ public class GamePlay {
 		//reduce the numberOfArmy form source country and add them to the destination country
 		//change the currentState
 		
+		
+		//Change current state to next state
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
+				
+		//Change current player
+		currentPlayerObj.goToNextPlayer();
+		
 		return true;
 	}
 	
 	public boolean ignoreFortifyArmy() {
 		
-		//change the currentState
+		//Change current state to next state
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		
+		//Change current player
+		currentPlayerObj.goToNextPlayer();
 		
 		return true;
 	}

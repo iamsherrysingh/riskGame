@@ -109,7 +109,7 @@ public class Continent {
     	
     	for(Continent continentItr : Database.continentList) {
     		
-    		String tempOwner = continentItr.getOwner();
+    		String tempOwner = null;
     		boolean continentHasOwner = true;
     		
     		for(Country countryItr : gameGraph.getAdjList()) {
@@ -127,12 +127,13 @@ public class Continent {
     					break;
     				}
     			}
-    			
-    			if(continentHasOwner)
-    				continentItr.setOwner(tempOwner);
-    			else
-    				continentItr.setOwner(null);
     		}
+    		
+    		if(continentHasOwner)
+				continentItr.setOwner(tempOwner);
+			else
+				continentItr.setOwner(null);
+    		
     	}
     }
 
