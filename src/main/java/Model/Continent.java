@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Continent {
     String name, color;
     Integer number,controlValue;
+    String owner;
+    
     public Continent(Integer number, String name, Integer controlValue, String color) {
         this.number= number;
         this.name = name;
@@ -39,6 +41,12 @@ public class Continent {
     }
     public void setNumber(Integer number) {
         this.number = number;
+    }
+    public String getOwner() {
+    	return owner;
+    }
+    public void setOwner(String owner) {
+    	this.owner = owner;
     }
 
     public static boolean checkExistenceOfContinent(String continentToCheck){
@@ -95,6 +103,37 @@ public class Continent {
         }
         Database.getInstance().getContinentList().remove(continent);
         return true;
+    }
+    
+    public static void updateContinitsOwner(Graph gameGraph) {
+    	
+    	for(Continent continentItr : Database.continentList) {
+    		
+    		String tempOwner = continentItr.getOwner();
+    		boolean continentHasOwner = true;
+    		
+    		for(Country countryItr : gameGraph.getAdjList()) {
+    			
+    			if(countryItr.getInContinent() == continentItr.getNumber()) {
+    				
+    				if(tempOwner.isEmpty()){
+    					tempOwner = countryItr.getOwner();
+    				}
+    				else if(tempOwner.equals(countryItr.getOwner())) {
+    					continue;
+    				}
+    				else {
+    					continentHasOwner = false;
+    					break;
+    				}
+    			}
+    			
+    			if(continentHasOwner)
+    				continentItr.setOwner(tempOwner);
+    			else
+    				continentItr.setOwner(null);
+    		}
+    	}
     }
 
 

@@ -12,16 +12,17 @@ public class GamePlay {
 	
 	private static GamePlay gamePlay = null;
 	private State currentState;
-	private ListIterator<Player> currentPlayerItr;
 	private Mapx mapxObj;
 	private Graph graphObj;
 	private Database databaseObj;
+	private CurrentPlayer currentPlayerObj;
 	
 	
 	private GamePlay() {
 		currentState = State.initializeGame;
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
+    	currentPlayerObj = CurrentPlayer.getInstance();
     }
 
     public static GamePlay getInstance(){
@@ -46,6 +47,10 @@ public class GamePlay {
     	System.out.println("State of game changed to: " + newStateStr);
     	currentState = newState;
     }
+    
+    
+    
+    
     
 	public boolean addContinent(String continentName, Integer controlValue) {
 		
@@ -302,13 +307,41 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean reinforceArmy(String countryName, Integer numberOfArmy) {
+	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
+		
+		//check: if target country is not exist, return false
+		Country targetCountry= Country.getCountryByName(countryName, graphObj);
+		if(targetCountry==null){
+			return false;
+		}
 		
 		//check: if country does not belong to the currentPlayer, return false
+		if(targetCountry.getOwner()!=null){
+			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false){
+				
+				System.out.println("The country is not belong to the current player");
+				return false;
+			}
+		}
 		//check: if numberOfArmy is more than allocated army, return false
-		//if the numberOfArmy is less than allocated army, stay in this state and return true
-		//if the number of army is equal to the allocated army, change the state and return true
+		if(numberOfArmies > currentPlayerObj.getNumReinforceArmies()) {
+			System.out.println("The current player can reinforce just " + currentPlayerObj.getNumReinforceArmies() + "armies");
+			return false;
+		}
+		
+		//Reinforce armies in the target country
+		targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + numberOfArmies);
+		
 		//increase the number of armies belong to the player
+		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
+		
+		if(numberOfArmies < currentPlayerObj.getNumReinforceArmies()) {
+			System.out.println("Please reinforce the remain " + (currentPlayerObj.getNumReinforceArmies() - numberOfArmies) + "armies");
+		}
+		else {
+			//Change current state to next state
+			setCurrentState(State.fortificationPhase, "Fortification");
+		}
 		
 		return true;
 	}
@@ -333,4 +366,73 @@ public class GamePlay {
 		return true;
 	}
 
+}
+
+
+class CurrentPlayer{
+	
+	private static CurrentPlayer currentPlayerObj = null;
+	private ListIterator<Player> currentPlayerItr;
+	private Player currentPlayer;
+	private Integer numReinforceArmies;
+	private GamePlay gamePlayObj;
+	
+	private CurrentPlayer() {
+		gamePlayObj = GamePlay.getInstance();
+		currentPlayerItr = Database.playerList.listIterator();
+	}
+	
+	public static CurrentPlayer getInstance(){
+        if(currentPlayerObj==null)
+        	currentPlayerObj= new CurrentPlayer();
+        return currentPlayerObj;
+    }
+	
+	public Integer getNumReinforceArmies() {
+		return this.numReinforceArmies;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+	
+	public void goToNextPlayer() {
+    	
+    	if(currentPlayerItr.hasNext())
+    		currentPlayer = currentPlayerItr.next();
+		else {
+			resetCurrentPlayer();
+		}
+    	
+    	//At reinforcement state of each player calculate its reinforcement armies
+    	if(gamePlayObj.getCurrentState() == State.reinforcementPhase) {
+    		Continent.updateContinitsOwner(gamePlayObj.getGraphObj());
+    		calculateReinforceentArmies();
+    	}
+    }
+	
+	public void resetCurrentPlayer() {
+		currentPlayerItr = Database.playerList.listIterator();
+		currentPlayer = currentPlayerItr.next();
+	}
+	
+	private void calculateReinforceentArmies() {
+    	Integer numArmies = 0;
+    	
+    	Integer numOfCountries = currentPlayer.myCountries.size();
+    	numArmies += (numOfCountries/3);
+    	
+    	for(Continent continentItr : Database.continentList) {
+    		if(continentItr.getOwner().equals(currentPlayer.name))
+    			numArmies += continentItr.getControlValue();
+    	}
+    	
+    	//Each player has at least 3 armies for reinforcement
+    	numReinforceArmies = (numArmies>3) ? numArmies : 3;
+    }
+	
+	public void increaseCurrentPlayerArmies(Integer numArmies) {
+		currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() + numArmies);
+		currentPlayerItr.set(currentPlayer);
+	}
 }
