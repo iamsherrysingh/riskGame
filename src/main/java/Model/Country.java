@@ -7,6 +7,7 @@ public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
 	String name, owner;
 	ArrayList<Integer> neighbours;
+
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
 			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
 		this.number = number;
@@ -21,6 +22,7 @@ public class Country {
 
 	/**
 	 * adds new neighbour to the Country.neighbour adjacency list
+	 * 
 	 * @param newNeighbour
 	 */
 	void addNeighbour(Integer newNeighbour) {
@@ -29,6 +31,7 @@ public class Country {
 
 	/**
 	 * removes an existing neighbour from the Country.neighbour adjacency list
+	 * 
 	 * @param deletedNeighbour
 	 */
 	void removeNeighbour(Integer deletedNeighbour) {
@@ -99,208 +102,208 @@ public class Country {
 		this.neighbours = neighbours;
 	}
 
-    /**
-     * Add a new country object to gameGraph adjacency list
-     *
-     * @param newCountry
-     * @param inContinent
-     * @param gameGraph
-     */
-    public static  boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
-        if(newCountry.length()==0){
-            return false;
-        }
-        Integer continentNumber = -1;
-        for (Continent continent : Database.getInstance().getContinentList()) {
-            if (continent.getName().equalsIgnoreCase(inContinent)) {
-                continentNumber = continent.getNumber();
-            }
-        }
-        if (continentNumber == -1) {
-            System.out.println("Continent: " + inContinent + " not found!");
-            System.out.println("Perhaps add one first");
-            return false;
-        }
-        Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, null, null, 0, 0,
-                new ArrayList<Integer>());
-        gameGraph.getAdjList().add(country);
-        return true;
-    }
+	/**
+	 * Add a new country object to gameGraph adjacency list
+	 *
+	 * @param newCountry
+	 * @param inContinent
+	 * @param gameGraph
+	 */
+	public static boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
+		if (newCountry.length() == 0) {
+			return false;
+		}
+		Integer continentNumber = -1;
+		for (Continent continent : Database.getInstance().getContinentList()) {
+			if (continent.getName().equalsIgnoreCase(inContinent)) {
+				continentNumber = continent.getNumber();
+			}
+		}
+		if (continentNumber == -1) {
+			System.out.println("Continent: " + inContinent + " not found!");
+			System.out.println("Perhaps add one first");
+			return false;
+		}
+		Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, null, null, 0, 0,
+				new ArrayList<Integer>());
+		gameGraph.getAdjList().add(country);
+		return true;
+	}
 
+	public static boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
+		Integer numberOfCountryWithNewNeighbour = -1;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryWithNewNeighbour)) {
+				numberOfCountryWithNewNeighbour = country.getNumber();
+			}
+		}
+		if (numberOfCountryWithNewNeighbour == -1) {
+			System.out.println("Country: " + countryWithNewNeighbour + " not in the map!");
+			System.out.println("Perhaps add one first.");
+			return false;
+		}
+		Integer neighbourNumber = -1;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(neighbour)) {
+				neighbourNumber = country.getNumber();
+			}
+		}
+		if (neighbourNumber == -1) {
+			System.out.println("Neighbour Country: " + neighbour + " not in the map!");
+			return false;
+		}
+		gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour - 1).getNeighbours().add(neighbourNumber); // Added
+																												// new
+																												// neighbour
+																												// for
+																												// this
+																												// country
+		gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().add(numberOfCountryWithNewNeighbour); // Added
+																												// this
+																												// country
+																												// as
+																												// neighbour
+																												// to
+																												// it'sneighbour
+		return true;
+	}
 
+	/**
+	 * This method removes a country from the gameGraph list, and makes the
+	 * necessary changes to the list
+	 *
+	 * @param NameOfCountryToRemove
+	 * @param gameGraph
+	 */
+	public static boolean removeCountry(String NameOfCountryToRemove, Graph gameGraph) {
+		Country countryToRemove = null;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(NameOfCountryToRemove)) {
+				countryToRemove = country;
+			}
+		}
+		if (countryToRemove == null) {
+			System.out.println("Country: " + NameOfCountryToRemove + " not in the map!");
+			return false;
+		}
+		for (Integer neighbour : countryToRemove.getNeighbours()) {
+			ArrayList<Integer> neighbourListOfNeighbour = gameGraph.getAdjList().get(neighbour - 1).getNeighbours();
+			neighbourListOfNeighbour.remove(countryToRemove.getNumber());
+		}
+		gameGraph.getAdjList().remove(countryToRemove);
 
+		// Now fixing the serial number mess after a country is removed
+		// serial number for every country after the removedd country is decremented
+		for (int i = countryToRemove.getNumber() - 1; i < gameGraph.getAdjList().size(); i++) {
+			Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
+			Integer newSerialNumber = oldSerialNumber - 1;
+			gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
+		}
 
+		// neighbour list updated for every affected country
+		for (Country country : gameGraph.getAdjList()) {
+			ArrayList<Integer> newNeighbourList = new ArrayList<Integer>();
+			for (Integer singleNeighbour : country.getNeighbours()) {
+				if (singleNeighbour > countryToRemove.getNumber()) {
+					newNeighbourList.add(singleNeighbour - 1);
+				} else {
+					newNeighbourList.add(singleNeighbour);
+				}
+			}
+			country.setNeighbours(newNeighbourList);
+		}
+		return true;
+	}
 
+	/**
+	 * This method removes a neighbour from a country that exists in the gameGraph
+	 * variable
+	 *
+	 * @param firstCountryName
+	 * @param secondCountryName
+	 * @param gameGraph
+	 */
+	public static boolean removeNeighbour(String firstCountryName, String secondCountryName, Graph gameGraph) {
 
-    public static boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
-        Integer numberOfCountryWithNewNeighbour = -1;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.getName().equalsIgnoreCase(countryWithNewNeighbour)) {
-                numberOfCountryWithNewNeighbour = country.getNumber();
-            }
-        }
-        if (numberOfCountryWithNewNeighbour == -1) {
-            System.out.println("Country: " + countryWithNewNeighbour + " not in the map!");
-            System.out.println("Perhaps add one first.");
-            return false;
-        }
-        Integer neighbourNumber = -1;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.getName().equalsIgnoreCase(neighbour)) {
-                neighbourNumber = country.getNumber();
-            }
-        }
-        if (neighbourNumber == -1) {
-            System.out.println("Neighbour Country: " + neighbour + " not in the map!");
-            return false;
-        }
-        gameGraph.getAdjList().get(numberOfCountryWithNewNeighbour - 1).getNeighbours().add(neighbourNumber); // Added new neighbour for this country
-        gameGraph.getAdjList().get(neighbourNumber - 1).getNeighbours().add(numberOfCountryWithNewNeighbour); // Added this country as neighbour to it'sneighbour
-        return true;
-    }
+		Country firstCountry = null;
+		Country secndCountry = null;
 
-    /**
-     * This method removes a country from the gameGraph list, and makes the
-     * necessary changes to the list
-     *
-     * @param NameOfCountryToRemove
-     * @param gameGraph
-     */
-    public static boolean removeCountry(String NameOfCountryToRemove, Graph gameGraph) {
-        Country countryToRemove = null;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.getName().equalsIgnoreCase(NameOfCountryToRemove)) {
-                countryToRemove = country;
-            }
-        }
-        if (countryToRemove == null) {
-            System.out.println("Country: " + NameOfCountryToRemove + " not in the map!");
-            return false;
-        }
-        for (Integer neighbour : countryToRemove.getNeighbours()) {
-            ArrayList<Integer> neighbourListOfNeighbour = gameGraph.getAdjList().get(neighbour - 1).getNeighbours();
-            neighbourListOfNeighbour.remove(countryToRemove.getNumber());
-        }
-        gameGraph.getAdjList().remove(countryToRemove);
+		boolean firstCountryExist = false;
+		boolean secndCountryExist = false;
 
-        // Now fixing the serial number mess after a country is removed
-        // serial number for every country after the removedd country is decremented
-        for (int i = countryToRemove.getNumber() - 1; i < gameGraph.getAdjList().size(); i++) {
-            Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
-            Integer newSerialNumber = oldSerialNumber - 1;
-            gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
-        }
+		for (Country country : gameGraph.getAdjList()) {
 
-        // neighbour list updated for every affected country
-        for (Country country : gameGraph.getAdjList()) {
-            ArrayList<Integer> newNeighbourList = new ArrayList<Integer>();
-            for (Integer singleNeighbour : country.getNeighbours()) {
-                if (singleNeighbour > countryToRemove.getNumber()) {
-                    newNeighbourList.add(singleNeighbour - 1);
-                } else {
-                    newNeighbourList.add(singleNeighbour);
-                }
-            }
-            country.setNeighbours(newNeighbourList);
-        }
-        return true;
-    }
+			if (country.getName().equalsIgnoreCase(firstCountryName)) {
+				firstCountryExist = true;
+				firstCountry = country;
+			}
 
+			if (country.getName().equalsIgnoreCase(secondCountryName)) {
+				secndCountryExist = true;
+				secndCountry = country;
+			}
 
-    /**
-     * This method removes a neighbour from a country that exists in the gameGraph
-     * variable
-     *
-     * @param firstCountryName
-     * @param secondCountryName
-     * @param gameGraph
-     */
-    public static boolean removeNeighbour(String firstCountryName, String secondCountryName, Graph gameGraph) {
+		}
 
-        Country firstCountry = null;
-        Country secndCountry = null;
+		if (!firstCountryExist) {
+			System.out.println("Country: " + firstCountryName + " is not in the map!");
+			return false;
+		}
 
-        boolean firstCountryExist=false;
-        boolean secndCountryExist=false;
+		if (!secndCountryExist) {
+			System.out.println("Country: " + secondCountryName + " is not in the map!");
+			return false;
+		}
 
-        for (Country country : gameGraph.getAdjList()) {
+		boolean mutualNeighbour = false;
+		int neighbourIndex2 = -1;
+		for (int index = 0; index < firstCountry.getNeighbours().size(); index++) {
 
-            if (country.getName().equalsIgnoreCase(firstCountryName)) {
-                firstCountryExist = true;
-                firstCountry = country;
-            }
+			int indx = firstCountry.neighbours.get(index);
+			Country neib = gameGraph.getAdjList().get(indx - 1);
 
-            if (country.getName().equalsIgnoreCase(secondCountryName)) {
-                secndCountryExist = true;
-                secndCountry = country;
-            }
+			if (secndCountry.getName().equalsIgnoreCase(neib.getName())) {
+				mutualNeighbour = true;
+				neighbourIndex2 = index;
+			}
 
-        }
+		}
 
+		if (!mutualNeighbour) {
+			System.out.println("First country is not neighbour of second country");
+			return false;
+		}
 
-        if (!firstCountryExist) {
-            System.out.println("Country: " + firstCountryName + " is not in the map!");
-            return false;
-        }
+		mutualNeighbour = false;
+		int neighbourIndex1 = -1;
+		for (int index = 0; index < secndCountry.getNeighbours().size(); index++) {
 
-        if (!secndCountryExist) {
-            System.out.println("Country: " + secondCountryName + " is not in the map!");
-            return false;
-        }
+			int indx = secndCountry.neighbours.get(index);
+			Country neib = gameGraph.getAdjList().get(indx - 1);
 
+			if (firstCountry.getName().equalsIgnoreCase(neib.getName())) {
+				mutualNeighbour = true;
+				neighbourIndex1 = index;
+			}
 
-        boolean mutualNeighbour = false;
-        int neighbourIndex2 = -1;
-        for ( int index=0;  index<firstCountry.getNeighbours().size(); index++) {
+		}
 
-            int indx = firstCountry.neighbours.get(index);
-            Country neib = gameGraph.getAdjList().get(indx-1);
+		if (!mutualNeighbour) {
+			System.out.println("Second country is not neighbour of first country");
+			return false;
+		}
 
-            if ( secndCountry.getName().equalsIgnoreCase(neib.getName()) ) {
-                mutualNeighbour = true;
-                neighbourIndex2 = index;
-            }
+		int firstCountryInx = firstCountry.getNumber() - 1;
+		int secndCountryInx = secndCountry.getNumber() - 1;
 
-        }
+		gameGraph.getAdjList().get(firstCountryInx).getNeighbours().remove(neighbourIndex2);
+		gameGraph.getAdjList().get(secndCountryInx).getNeighbours().remove(neighbourIndex1);
 
-        if (!mutualNeighbour) {
-            System.out.println("First country is not neighbour of second country");
-            return false;
-        }
+		return true;
+	}
 
-
-        mutualNeighbour = false;
-        int neighbourIndex1 = -1;
-        for ( int index=0;  index<secndCountry.getNeighbours().size(); index++) {
-
-            int indx = secndCountry.neighbours.get(index);
-            Country neib = gameGraph.getAdjList().get(indx-1);
-
-            if ( firstCountry.getName().equalsIgnoreCase(neib.getName()) ) {
-                mutualNeighbour = true;
-                neighbourIndex1 = index;
-            }
-
-        }
-
-        if (!mutualNeighbour) {
-            System.out.println("Second country is not neighbour of first country");
-            return false;
-        }
-
-
-        int firstCountryInx = firstCountry.getNumber()-1;
-        int secndCountryInx = secndCountry.getNumber()-1;
-
-        gameGraph.getAdjList().get(firstCountryInx).getNeighbours().remove(neighbourIndex2);
-        gameGraph.getAdjList().get(secndCountryInx).getNeighbours().remove(neighbourIndex1);
-
-        return true;
-    }
-
-
-	public static Country getCountryByName(String countryName, Graph gameGraph){
-		Country returnedCountry=null;
+	public static Country getCountryByName(String countryName, Graph gameGraph) {
+		Country returnedCountry = null;
 		for (Country country : gameGraph.getAdjList()) {
 			if (country.getName().equalsIgnoreCase(countryName)) {
 				returnedCountry = country;
@@ -309,43 +312,40 @@ public class Country {
 		return returnedCountry;
 	}
 
-	public static Country getCountryByNumber(Integer countryNumber, Graph gameGraph){
-		Country returnedCountry=null;
+	public static Country getCountryByNumber(Integer countryNumber, Graph gameGraph) {
+		Country returnedCountry = null;
 		for (Country country : gameGraph.getAdjList()) {
-			if (country.getNumber()==countryNumber) {
+			if (country.getNumber() == countryNumber) {
 				returnedCountry = country;
 			}
 		}
 		return returnedCountry;
 	}
 
-	public static boolean assignOwner(String ownerName, String countryName, Graph g){
-		Country country= Country.getCountryByName(countryName, g);
-		if(country==null){
+	public static boolean assignOwner(String ownerName, String countryName, Graph g) {
+		Country country = Country.getCountryByName(countryName, g);
+		if (country == null) {
 			return false;
 		}
-		if(country.getOwner()==null){
+		if (country.getOwner() == null) {
 			country.setOwner(ownerName);
-		}
-		else {
+		} else {
 			System.out.println("Country assigned to owner: " + country.owner);
 			return false;
 		}
 		return true;
 	}
 
-
-
-	public static boolean changeOwner(String newOwnerName, String countryName, Graph g){
-		Country country= Country.getCountryByName(countryName, g);
-		if(country==null){
+	public static boolean changeOwner(String newOwnerName, String countryName, Graph g) {
+		Country country = Country.getCountryByName(countryName, g);
+		if (country == null) {
 			return false;
 		}
 		country.setOwner(newOwnerName);
 		return true;
 	}
 
-	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph){
+	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
 			if (country.getName().equalsIgnoreCase(countryToCheck)) {
 				return true;
@@ -354,79 +354,77 @@ public class Country {
 		return false;
 	}
 
-	public static boolean allCountriesPopulated(Graph gameGraph){
-		for(Country country: gameGraph.getAdjList()){
-			if(country.getOwner()==null){
+	public static boolean allCountriesPopulated(Graph gameGraph) {
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getOwner() == null) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-    /**
-     * This method adds additional army units to a country object in gameGraph
-     *
-     * @param countryName
-     * @param numberOfArmies
-     * @param gameGraph
-     */
-    public static boolean addArmiesToCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
-        Country countryToReinforce = null;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.getName().equalsIgnoreCase(countryName)) {
-                countryToReinforce = country;
-            }
-        }
-        if (countryToReinforce == null) {
-            System.out.println("Country: " + countryName + " not in the map!");
-            return false;
-        }
-        countryToReinforce.setNumberOfArmies(countryToReinforce.getNumberOfArmies() + numberOfArmies);
-        return true;
-    }
+	/**
+	 * This method adds additional army units to a country object in gameGraph
+	 *
+	 * @param countryName
+	 * @param numberOfArmies
+	 * @param gameGraph
+	 */
+	public static boolean addArmiesToCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
+		Country countryToReinforce = null;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryName)) {
+				countryToReinforce = country;
+			}
+		}
+		if (countryToReinforce == null) {
+			System.out.println("Country: " + countryName + " not in the map!");
+			return false;
+		}
+		countryToReinforce.setNumberOfArmies(countryToReinforce.getNumberOfArmies() + numberOfArmies);
+		return true;
+	}
 
-    /**
-     * This method removes army units from a country object in the gameGraph
-     *
-     * @param countryName
-     * @param numberOfArmies
-     * @param gameGraph
-     */
-    public static boolean removeArmiesFromCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
-        Country countryToWeaken = null;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.getName().equalsIgnoreCase(countryName)) {
-                countryToWeaken = country;
-            }
-        }
-        if (countryToWeaken == null) {
-            System.out.println("Country: " + countryName + " not in the map!");
-            return false;
-        }
-        if ((countryToWeaken.getNumberOfArmies() - numberOfArmies) <= 0) {
-            countryToWeaken.setNumberOfArmies(countryToWeaken.getNumberOfArmies() - numberOfArmies);
-        } else {
-            System.out.println("Cannot have less than 1 army in a country!");
-        }
-        return true;
-    }
+	/**
+	 * This method removes army units from a country object in the gameGraph
+	 *
+	 * @param countryName
+	 * @param numberOfArmies
+	 * @param gameGraph
+	 */
+	public static boolean removeArmiesFromCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
+		Country countryToWeaken = null;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getName().equalsIgnoreCase(countryName)) {
+				countryToWeaken = country;
+			}
+		}
+		if (countryToWeaken == null) {
+			System.out.println("Country: " + countryName + " not in the map!");
+			return false;
+		}
+		if ((countryToWeaken.getNumberOfArmies() - numberOfArmies) <= 0) {
+			countryToWeaken.setNumberOfArmies(countryToWeaken.getNumberOfArmies() - numberOfArmies);
+		} else {
+			System.out.println("Cannot have less than 1 army in a country!");
+		}
+		return true;
+	}
 
-    
- public static boolean fortify(String fromCname, String toCname, Integer numberOfArm, Graph gameGraph) {
-    	
-    	
+	public static boolean fortify(String fromCname, String toCname, Integer numberOfArm, Graph gameGraph) {
+
 		if (fromCname.trim().length() > 0 && toCname.trim().length() > 0) {
 			Integer toCountryNumber = null;
 			Integer toCountryIndex = null;
 			Integer fromCountryIndex = null;
 			Integer i = 0;
-			
+
 			for (Country country : gameGraph.getAdjList()) {
 				if (country.getName().equalsIgnoreCase(toCname)) {
 					toCountryNumber = country.getNumber();
-					toCountryIndex = i+1;
+					toCountryIndex = i + 1;
 				} else if (country.getName().equalsIgnoreCase(fromCname)) {
-					fromCountryIndex = i+1;
+					fromCountryIndex = i + 1;
 				}
 				i++;
 			}
@@ -436,25 +434,28 @@ public class Country {
 			}
 
 			for (int j = 0; j < gameGraph.getAdjList().get(fromCountryIndex).getNeighbours().size(); j++) {
-				
+
 				if (gameGraph.getAdjList().get(fromCountryIndex).getNeighbours().get(j) == toCountryNumber) {
-					
-				if (gameGraph.getAdjList().get(fromCountryIndex).getOwner()
+
+					if (gameGraph.getAdjList().get(fromCountryIndex).getOwner()
 							.equalsIgnoreCase(gameGraph.getAdjList().get(toCountryIndex).getOwner())) {
 
 						if (gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() > numberOfArm) {
 
 							if ((gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() - numberOfArm) > 0) {
-								
-								
-								Integer to = (gameGraph.getAdjList().get(toCountryIndex).getNumberOfArmies() + numberOfArm);
-								Integer from = (gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() - numberOfArm);
-															
+
+								Integer to = (gameGraph.getAdjList().get(toCountryIndex).getNumberOfArmies()
+										+ numberOfArm);
+								Integer from = (gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies()
+										- numberOfArm);
+
 								gameGraph.getAdjList().get(toCountryIndex).setNumberOfArmies(to);
-							
+
 								gameGraph.getAdjList().get(fromCountryIndex).setNumberOfArmies(from);
-								// operation
+								
+								checkCountriesOwnedByPlayer(gameGraph);
 								return true;
+								
 							} else {
 								Integer MaxNoOfArm = gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies();
 								System.out.println("Maximum number of armies that you can move: " + MaxNoOfArm);
@@ -476,13 +477,26 @@ public class Country {
 			System.out.println("Please enter a valid country name");
 			return false;
 		}
-		
-		
-		//for(Player player : Database.getInstance().playerList) {}
-		
+	}
+
+	public static void checkCountriesOwnedByPlayer(Graph g) {
+
+		for (Player player : Database.getInstance().getPlayerList()) {
+			Integer NumberOfCountriesOwned = 0;
+			for (Country country : g.getAdjList()) {
+
+				if (country.getOwner().equalsIgnoreCase(player.getName())) {
+					NumberOfCountriesOwned++;
+				}
+			}
+
+			if (NumberOfCountriesOwned == 0) {
+				Player.removePlayer(player.getName());
+			} else if (NumberOfCountriesOwned == g.getAdjList().size()) {
+				System.out.println(player.getName() + "wins the game!");
+			}
+		}
+
 	}
 
 }
-
-
-
