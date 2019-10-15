@@ -320,9 +320,10 @@ public class GamePlay {
 		
 		//increase the number of armies belong to the player
 		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
+		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
 		
-		if(numberOfArmies < currentPlayerObj.getNumReinforceArmies()) {
-			System.out.println("Please reinforce the remain " + (currentPlayerObj.getNumReinforceArmies() - numberOfArmies) + "armies");
+		if(currentPlayerObj.getNumReinforceArmies() > 0) {
+			System.out.println("Please reinforce the remain " + currentPlayerObj.getNumReinforceArmies() + "armies");
 		}
 		else {
 			//Change current state to next state
@@ -405,6 +406,7 @@ class CurrentPlayer{
     	if(gamePlayObj.getCurrentState() == State.reinforcementPhase) {
     		Continent.updateContinitsOwner(gamePlayObj.getGraphObj());
     		calculateReinforceentArmies();
+    		System.out.println("You have " + getNumReinforceArmies() );
     	}
     }
 	
@@ -427,6 +429,10 @@ class CurrentPlayer{
     	//Each player has at least 3 armies for reinforcement
     	numReinforceArmies = (numArmies>3) ? numArmies : 3;
     }
+	
+	public void decreaseReinforceentArmies(Integer numOfArmies) {
+		numReinforceArmies -= numOfArmies;
+	}
 	
 	public void increaseCurrentPlayerArmies(Integer numArmies) {
 		currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() + numArmies);
