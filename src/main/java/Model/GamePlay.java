@@ -19,9 +19,8 @@ public class GamePlay {
 	
 	
 	private GamePlay() {
-		currentState = State.mapEditor;
+		currentState = State.initializeGame;
     	mapxObj = new Mapx();
-    	graphObj = Graph.getInstance();
     	databaseObj = Database.getInstance();
     }
 
@@ -108,7 +107,7 @@ public class GamePlay {
 			if(! mapxObj.saveMap(graphObj, fileName))
 				return false;
 			
-			setCurrentState(State.startupPhase, "Startup");
+			setCurrentState(State.initializeGame, "Initialize Game");
 		}
 		catch (IOException io ){
 			System.out.println("IO Exception Occured");
@@ -118,18 +117,20 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean editMap(String mapName,Graph gameGraph) {
+	public boolean editMap(String mapName) {
 		
-		//Get object of Graph
-		//call editMap() from Mapx
 		File file = new File("src/main/resources/" + mapName);
 		if (file.exists()) {
-			gameGraph=mapxObj.createGameGraph("src/main/resources/"+mapName);
+			graphObj=mapxObj.createGameGraph("src/main/resources/"+mapName);
 		}
 		else{
 			System.out.println("New Game Graph created");
-			gameGraph=Graph.getInstance();
+			graphObj=Graph.getInstance();
 		}
+		
+		//change current state
+		setCurrentState(State.mapEditor, "Map Editor");
+		
 		return true;
 	}
 	
@@ -141,9 +142,9 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean loadMap(String fileName) {
+	public boolean loadGameMap(String fileName) {
 		
-		mapxObj.createGameGraph(fileName);
+		graphObj = mapxObj.createGameGraph(fileName);
 		
 		setCurrentState(State.editPlayer, "Edit Player");
 		

@@ -366,8 +366,23 @@ public class Controller {
 	
 	boolean checkValidityOfTasksList(ArrayList<extractedTasks> tasksList) {
 		
+		// check commands that are valid in state of startGame
+		if( gamePlayObj.getCurrentState() == State.initializeGame) {
+			for(extractedTasks itr:tasksList) {
+				switch (itr.name){	
+				
+					case editmap:
+						break;
+					case loadmap:
+						break;
+					default:
+						System.out.println("Invalid command in the current state");
+						return false;
+				}
+			}
+		}
 		// check commands that are valid in state of mapEditor
-		if( gamePlayObj.getCurrentState() == State.mapEditor) {		
+		else if( gamePlayObj.getCurrentState() == State.mapEditor) {		
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){	
 					case addcontinent:	
@@ -392,8 +407,6 @@ public class Controller {
 						break;
 					case showmap:
 						break;
-					case editmap:
-						break;
 					case validatemap:
 						break;
 					case savemap:
@@ -404,19 +417,7 @@ public class Controller {
 				}
 			}			
 		} 
-		else if(gamePlayObj.getCurrentState() == State.startupPhase){
-			for(extractedTasks itr:tasksList) {
-				switch (itr.name){
-					case showmap:
-						break;
-					case loadmap:
-						break;
-					default: 
-						System.out.println("Invalid command in the current state");
-						return false;
-				}
-			}
-		} 
+		// check commands that are valid in state of editPlayer
 		else if(gamePlayObj.getCurrentState() == State.editPlayer ){
 			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
@@ -434,6 +435,7 @@ public class Controller {
 				}	
 			}	
 		}
+		// check commands that are valid in state of troopArmies
 		else if(gamePlayObj.getCurrentState() == State.troopArmies){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
@@ -449,6 +451,7 @@ public class Controller {
 				}
   			}
 		}
+		// check commands that are valid in state of reinforcementPhase
 		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
@@ -462,6 +465,7 @@ public class Controller {
 				}
 			}
 		}
+		// check commands that are valid in state of fortificationPhase
 		else if(gamePlayObj.getCurrentState() == State.fortificationPhase){
   			for(extractedTasks itr:tasksList) {
 				switch (itr.name){
@@ -552,8 +556,8 @@ public class Controller {
 				}
 				case editmap:
 				{
-//					if(!gamePlayObj.editMap(itr.taskData.get(0)))
-//						return false;
+					if(!gamePlayObj.editMap(itr.taskData.get(0)))
+					return false;
 					
 					break;
 				}
@@ -573,7 +577,7 @@ public class Controller {
 				}
 				case loadmap:
 				{
-					if(!gamePlayObj.loadMap(itr.taskData.get(0)))
+					if(!gamePlayObj.loadGameMap(itr.taskData.get(0)))
 						return false;
 					
 					break;

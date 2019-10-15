@@ -1,7 +1,7 @@
 package Model;
 
 public enum State {
-	begin,
+	initializeGame,
 	mapEditor,
 	startupPhase,
 	editPlayer,
