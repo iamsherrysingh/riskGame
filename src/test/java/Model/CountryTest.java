@@ -10,50 +10,49 @@ import org.junit.Test;
 
 public class CountryTest {
 
-	
 	static Mapx map;
-    static Graph g;
+	static Graph g;
 
-    @Before
-    public void before() throws Exception {
-        map= new Mapx();
-        g=map.createGameGraph("src/main/resources/map.map");
-    }
+	@Before
+	public void before() throws Exception {
+		map = new Mapx();
+		g = map.createGameGraph("src/main/resources/map.map");
+	}
 
+	@After
+	public void after() throws Exception {
+		map = null;
+		g = null;
+		Database.getInstance().getContinentList().clear();
+		Database.getInstance().getPlayerList().clear();
+	}
 
-
-    @After
-    public void after() throws Exception {
-        map=null;
-        g=null;
-        Database.getInstance().getContinentList().clear();
-        Database.getInstance().getPlayerList().clear();
-    }
-
-
-    @Test
-    public void removeCountry() {
-    	
-    	boolean check = true;
-    	Country.removeCountry("Alaska", g);
-        for(Country country: g.getAdjList()){
-            if(country.getName().equalsIgnoreCase("Alaska")){
-                check = true;
-            }else {
-            	check = false;
-            }
-        }
-        assertEquals(check,false);
-    	
-    }
 	
+
 	
-    @Test
-    public void removeCountry2() {
-    	
-    	boolean check = Country.removeCountry("birjot", g);
-        assertEquals(false,check);
-    	
-    }
+	@Test
+	public void removeCountry() {
+
+		boolean check = true;
+		Country.removeCountry("Alaska", g);
+		for (Country country : g.getAdjList()) {
+			if (country.getName().equalsIgnoreCase("Alaska")) {
+				check = true;
+			} else {
+				check = false;
+			}
+		}
+		assertEquals(check, false);
+
+	}
+
+	@Test
+	public void removeCountry2() {
+
+		boolean check = Country.removeCountry("birjot", g);
+		assertEquals(false, check);
+
+	}
+
 	
 }
