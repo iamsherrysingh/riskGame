@@ -411,6 +411,77 @@ public class Country {
         return true;
     }
 
+    
+ public static boolean fortify(String fromCname, String toCname, Integer numberOfArm, Graph gameGraph) {
+    	
+    	
+		if (fromCname.trim().length() > 0 && toCname.trim().length() > 0) {
+			Integer toCountryNumber = null;
+			Integer toCountryIndex = null;
+			Integer fromCountryIndex = null;
+			Integer i = 0;
+			
+			for (Country country : gameGraph.getAdjList()) {
+				if (country.getName().equalsIgnoreCase(toCname)) {
+					toCountryNumber = country.getNumber();
+					toCountryIndex = i+1;
+				} else if (country.getName().equalsIgnoreCase(fromCname)) {
+					fromCountryIndex = i+1;
+				}
+				i++;
+			}
+			if (toCountryIndex == null || fromCountryIndex == null) {
+				System.out.println("Country you entered doesnt exist!");
+				return false;
+			}
+
+			for (int j = 0; j < gameGraph.getAdjList().get(fromCountryIndex).getNeighbours().size(); j++) {
+				
+				if (gameGraph.getAdjList().get(fromCountryIndex).getNeighbours().get(j) == toCountryNumber) {
+					
+				if (gameGraph.getAdjList().get(fromCountryIndex).getOwner()
+							.equalsIgnoreCase(gameGraph.getAdjList().get(toCountryIndex).getOwner())) {
+
+						if (gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() > numberOfArm) {
+
+							if ((gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() - numberOfArm) > 0) {
+								
+								
+								Integer to = (gameGraph.getAdjList().get(toCountryIndex).getNumberOfArmies() + numberOfArm);
+								Integer from = (gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies() - numberOfArm);
+															
+								gameGraph.getAdjList().get(toCountryIndex).setNumberOfArmies(to);
+							
+								gameGraph.getAdjList().get(fromCountryIndex).setNumberOfArmies(from);
+								// operation
+								return true;
+							} else {
+								Integer MaxNoOfArm = gameGraph.getAdjList().get(fromCountryIndex).getNumberOfArmies();
+								System.out.println("Maximum number of armies that you can move: " + MaxNoOfArm);
+								return false;
+							}
+						} else {
+							System.out.println("You don't have enough number of armies in " + fromCname);
+						}
+					} else {
+						System.out.println("You can only place army in your owned countries!!");
+						return false;
+					}
+				}
+
+			}
+
+			return false;
+		} else {
+			System.out.println("Please enter a valid country name");
+			return false;
+		}
+		
+		
+		//for(Player player : Database.getInstance().playerList) {}
+		
+	}
+
 }
 
 
