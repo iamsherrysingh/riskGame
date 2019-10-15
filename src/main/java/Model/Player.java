@@ -106,4 +106,13 @@ public class Player {
         System.out.println();
     }
 
+    public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph){
+        ArrayList<Country> countryList= new ArrayList<Country>();
+        for(Country country: gameGraph.getAdjList()){
+            if(country.getOwner().equalsIgnoreCase(playerName)){
+                countryList.add(country);
+            }
+        }
+        return countryList;
+    }
 }

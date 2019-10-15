@@ -301,13 +301,17 @@ public class GamePlay {
 		return true;
 	}
 	
-	public boolean reinforceArmy(String countryName, Integer numberOfArmy) {
+	public boolean reinforceArmy(String playerName, Integer numberOfArmy) {
 		
 		//check: if country does not belong to the currentPlayer, return false
 		//check: if numberOfArmy is more than allocated army, return false
 		//if the numberOfArmy is less than allocated army, stay in this state and return true
 		//if the number of army is equal to the allocated army, change the state and return true
 		//increase the number of armies belong to the player
+        Integer reinforcementArmyNumber=Player.getOwnedCountryList(playerName, graphObj).size() / 3;
+
+
+
 		
 		return true;
 	}
