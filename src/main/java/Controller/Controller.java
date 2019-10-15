@@ -159,7 +159,7 @@ public class Controller {
 					eTask.name = tasksEnum.addneighbor;
 					
 					//get data related to addneighbor task
-					for(int i=0;i<1;i++) {
+					for(int i=0;i<2;i++) {
 						if(!cmdItr.hasNext()) {
 							System.out.println("wrong Command");
 							return false;
@@ -173,7 +173,7 @@ public class Controller {
 					eTask.name = tasksEnum.removeneighbor;
 					
 					//get data related to removeneighbor task
-					for(int i=0;i<1;i++) {
+					for(int i=0;i<2;i++) {
 						if(!cmdItr.hasNext()) {
 							System.out.println("wrong Command");
 							return false;
@@ -183,7 +183,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else {
-					System.out.println("wrong Command");
+					System.out.println("wronggggg");
 					return false;
 				}
 			}			

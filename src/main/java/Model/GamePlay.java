@@ -149,7 +149,7 @@ public class GamePlay {
 	
 	public boolean loadGameMap(String fileName) {
 		
-		graphObj = mapxObj.createGameGraph(fileName);
+		graphObj = mapxObj.createGameGraph("src/main/resources/" + fileName);
 		
 		setCurrentState(State.editPlayer, "Edit Player");
 		
@@ -229,7 +229,7 @@ public class GamePlay {
 		setCurrentState(State.troopArmies, "Troop Armies");
 		
 		//Set current player to the first player
-		currentPlayerObj.resetCurrentPlayer();
+		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		
 		return true;
 	}
@@ -250,7 +250,7 @@ public class GamePlay {
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			
 			//Set current player to the first player
-			currentPlayerObj.resetCurrentPlayer();
+			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 			
 			return false;
 		}
@@ -288,7 +288,7 @@ public class GamePlay {
         setCurrentState(State.reinforcementPhase, "Reinforcement");
         
         //Set current player to the first player
-		currentPlayerObj.resetCurrentPlayer();
+		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
         
 		return true;
 	}
@@ -348,7 +348,7 @@ public class GamePlay {
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
 				
 		//Change current player
-		currentPlayerObj.goToNextPlayer();
+		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 		
 		return true;
 	}
@@ -359,7 +359,7 @@ public class GamePlay {
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
 		
 		//Change current player
-		currentPlayerObj.goToNextPlayer();
+		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 		
 		return true;
 	}
@@ -394,25 +394,37 @@ class CurrentPlayer{
 		return this.currentPlayer;
 	}
 	
-	public void goToNextPlayer() {
+	public void goToNextPlayer(State currentState, Graph gameGraph) {
     	
     	if(currentPlayerItr.hasNext())
     		currentPlayer = currentPlayerItr.next();
 		else {
-			resetCurrentPlayer();
+			goToFirstPlayer(currentState, gameGraph);
+			return;
 		}
     	
+    	System.out.println("Current player is " + currentPlayer.getName());
+    	
     	//At reinforcement state of each player calculate its reinforcement armies
-    	if(gamePlayObj.getCurrentState() == State.reinforcementPhase) {
-    		Continent.updateContinitsOwner(gamePlayObj.getGraphObj());
+    	if( currentState == State.reinforcementPhase) {
+    		Continent.updateContinitsOwner(gameGraph);
     		calculateReinforceentArmies();
-    		System.out.println("You have " + getNumReinforceArmies() );
+    		System.out.println("You have " + getNumReinforceArmies() + "armies" );
     	}
     }
 	
-	public void resetCurrentPlayer() {
+	public void goToFirstPlayer(State currentState, Graph gameGraph) {
 		currentPlayerItr = Database.playerList.listIterator();
 		currentPlayer = currentPlayerItr.next();
+		
+		System.out.println("Current player is " + currentPlayer.getName());
+		
+		//At reinforcement state of each player calculate its reinforcement armies
+    	if( currentState == State.reinforcementPhase) {
+    		Continent.updateContinitsOwner(gameGraph);
+    		calculateReinforceentArmies();
+    		System.out.println("You have " + getNumReinforceArmies() + "armies" );
+    	}
 	}
 	
 	private void calculateReinforceentArmies() {

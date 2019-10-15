@@ -1,4 +1,10 @@
+name map.map
+
 [files]
+pic sample.jpg
+map sample.gif
+crd sample.cards
+prv world.jpg
 
 [continents]
 North-America 5 yellow
@@ -8,7 +14,7 @@ Africa 3 orange
 Asia 7 green
 Australia 2 magenta
 
-[countries] 
+[countries]
 1 Alaska 1 57 82
 2 North-West-Territory 1 126 86
 3 Alberta 1 123 132
@@ -52,7 +58,7 @@ Australia 2 magenta
 41 Western-Australia 6 645 381
 42 Eastern-Australia 6 697 391
 
-[borders] 
+[borders]
 1 2 3 38
 2 1 3 7 6
 3 1 2 7 4

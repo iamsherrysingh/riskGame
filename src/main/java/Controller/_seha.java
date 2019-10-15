@@ -32,7 +32,7 @@ public class _seha {
     //    gamePlay.placeAll(g);
 
 
-        g.showMap();
+     /*   g.showMap();
         System.out.println();
 
         try {
@@ -40,13 +40,14 @@ public class _seha {
         }
         catch(Exception e){
 
-        }
+         }  */
 
         System.out.println("==================");
     //    gamePlay.getGraphObj().getAdjList().clear();
     //    getMapxObj().createGameGraph("masp.map", Graph.getInstance());
-        gamePlay.getInstance().saveMap("map.map");
-        gamePlay.getInstance().showMap();
+    //    gamePlay.saveMap("map.map");
+        gamePlay.editMap("map.map");
+        gamePlay.showMap();
 
 
 
