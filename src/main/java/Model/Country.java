@@ -454,6 +454,7 @@ public class Country {
 								gameGraph.getAdjList().get(fromCountryIndex).setNumberOfArmies(from);
 								
 								checkCountriesOwnedByPlayer(gameGraph);
+								
 								return true;
 								
 							} else {

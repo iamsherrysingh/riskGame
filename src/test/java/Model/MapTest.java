@@ -2,6 +2,9 @@ package Model;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +53,22 @@ public class MapTest {
 		
 	}
 	
+	 @Test
+	    public void saveMap1() throws IOException {
+		 //test if mapName is null
+		 map.saveMap(g, " ");
+		 String path = "src/main/resources/.map";
+		 File file = new File(path);
+		 boolean exists = file.exists();
+		 assertTrue(exists == false);		 
+	    }
+
+	 @Test
+	    public void saveMap2() throws IOException {
+		 // test for overwriting the default map
+		boolean check = map.saveMap(g, "map");
+		 assertFalse(check); 
+	    }
 	
 	
 }
