@@ -15,9 +15,9 @@ public class _seha {
 //        g.showMap();
 
 
-        System.out.println(Country.getCountryByName("Western-Australia",g).getNumber());
-        System.out.println(Country.getCountryByNumber(39,g).getName());
-        System.out.println("player list size "+ Database.getInstance().getPlayerList().size());
+   //     System.out.println(Country.getCountryByName("Western-Australia",g).getNumber());
+     //   System.out.println(Country.getCountryByNumber(39,g).getName());
+     //   System.out.println("player list size "+ Database.getInstance().getPlayerList().size());
 
         Player.addPlayer("Sherry", 3);
        Player.addPlayer("Kammu", 3);
@@ -28,8 +28,8 @@ public class _seha {
 
         //g.showMap();
 
-        gamePlay.populateCountries(g);
-        gamePlay.placeAll(g);
+    //    gamePlay.populateCountries(g);
+    //    gamePlay.placeAll(g);
 
 
         g.showMap();
@@ -43,9 +43,10 @@ public class _seha {
         }
 
         System.out.println("==================");
-        gamePlay.getGraphObj().getAdjList().clear();
-        gamePlay.editMap("masp.map", Graph.getInstance());
-        gamePlay.getGraphObj().showMap();
+    //    gamePlay.getGraphObj().getAdjList().clear();
+    //    getMapxObj().createGameGraph("masp.map", Graph.getInstance());
+        gamePlay.getInstance().saveMap("map.map");
+        gamePlay.getInstance().showMap();
 
 
 

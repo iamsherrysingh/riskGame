@@ -376,7 +376,7 @@ class CurrentPlayer{
 	private GamePlay gamePlayObj;
 	
 	private CurrentPlayer() {
-		gamePlayObj = GamePlay.getInstance();
+	//	gamePlayObj = GamePlay.getInstance();
 		currentPlayerItr = Database.playerList.listIterator();
 	}
 	
