@@ -97,5 +97,27 @@ public class Continent {
         return true;
     }
 
+    public static ArrayList<Country> getCountryList(Continent continent, Graph gameGraph){
+        ArrayList<Country> countryList= new ArrayList<Country>();
+        for(Country country: gameGraph.getAdjList()){
+            Continent continentOfThisCountry= Continent.getContinentById(country.getInContinent());
+            if(continentOfThisCountry.getName().equalsIgnoreCase(continent.getName())) {
+                countryList.add(country);
+            }
+        }
+        return countryList;
+    }
+
+    public static Continent getContinentById(Integer continentNumber){
+        Continent continent= null;
+        for (Continent continent1: Database.getInstance().getContinentList()){
+            if(continent1.getNumber() == continentNumber){
+                return continent1;
+            }
+        }
+        return continent;
+    }
+
+
 
 }
