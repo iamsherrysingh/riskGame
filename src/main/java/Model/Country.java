@@ -129,6 +129,15 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * This adds new neighhbor country number in ArrayList of neighbors in
+	 * country.adjlist.neighbours and also adds the country's number in new
+	 * neighbor's Arraylist of neighbors
+	 *
+	 * @param countryWithNewNeighbour
+	 * @param neighbour
+	 * @param gameGraph
+	 */
 	public static boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
 		Integer numberOfCountryWithNewNeighbour = -1;
 		for (Country country : gameGraph.getAdjList()) {
@@ -301,6 +310,13 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * this returns the instance where the country is saved in Database.adjlist
+	 * 
+	 * @param countryName
+	 * @param gameGraph
+	 * @return instance of country
+	 */
 	public static Country getCountryByName(String countryName, Graph gameGraph) {
 		Country returnedCountry = null;
 		for (Country country : gameGraph.getAdjList()) {
@@ -311,6 +327,13 @@ public class Country {
 		return returnedCountry;
 	}
 
+	/**
+	 * this returns the instance where the country is saved in Database.adjlist
+	 * 
+	 * @param countryNumber
+	 * @param gameGraph
+	 * @return instance of country
+	 */
 	public static Country getCountryByNumber(Integer countryNumber, Graph gameGraph) {
 		Country returnedCountry = null;
 		for (Country country : gameGraph.getAdjList()) {
@@ -321,6 +344,13 @@ public class Country {
 		return returnedCountry;
 	}
 
+	/**
+	 * this assign an owner to a country without owner
+	 * 
+	 * @param ownerName
+	 * @param countryName
+	 * @param g
+	 */
 	public static boolean assignOwner(String ownerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
 		if (country == null) {
@@ -335,6 +365,13 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * this updates the owner name for a country in Database.adjlist
+	 * 
+	 * @param newOwnerName
+	 * @param countryName
+	 * @param g
+	 */
 	public static boolean changeOwner(String newOwnerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
 		if (country == null) {
@@ -344,6 +381,12 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * checks the existence of the country in Database.adjlist
+	 * 
+	 * @param countryToCheck
+	 * @param gameGraph
+	 */
 	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
 			if (country.getName().equalsIgnoreCase(countryToCheck)) {
@@ -353,6 +396,11 @@ public class Country {
 		return false;
 	}
 
+	/**
+	 * checks if all the countries has an owner
+	 * 
+	 * @param gameGraph
+	 */
 	public static boolean allCountriesPopulated(Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
 			if (country.getOwner() == null) {
@@ -410,22 +458,28 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * This allows a player to move any number of armies from his owned country to
+	 * any of his owned neighbor country, leaving behind atleast 1 army unit.
+	 * 
+	 * @param fromCname
+	 * @param toCountryName
+	 * @param numberOfArmies
+	 * @param gameGraph
+	 */
 	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		Country toCountry= Country.getCountryByName(toCountryName, gameGraph);
-		Country fromcountry= Country.getCountryByName(fromCname, gameGraph);
-		if(!(fromcountry.getNumberOfArmies() - numberOfArmies >0)){
+		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
+		Country fromcountry = Country.getCountryByName(fromCname, gameGraph);
+		if (!(fromcountry.getNumberOfArmies() - numberOfArmies > 0)) {
 			System.out.println("You must leave at least 1 army unit behind");
 			return false;
-		}
-		else if(fromcountry ==null || toCountry==null){
+		} else if (fromcountry == null || toCountry == null) {
 			System.out.println("One or both countries do not exist");
 			return false;
-		}
-		else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))){
+		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))) {
 			System.out.println("A player has to own both the countries");
 			return false;
 		}
-
 
 		fromcountry.setNumberOfArmies(fromcountry.getNumberOfArmies() - numberOfArmies);
 		toCountry.setNumberOfArmies(toCountry.getNumberOfArmies() + numberOfArmies);
@@ -435,6 +489,12 @@ public class Country {
 		return true;
 	}
 
+	/**
+	 * updates the player list, remove the player if 0 country is owned by that
+	 * player or declares winner if every country in Database.adjlist is owned by a single player
+	 * 
+	 * @param g
+	 */
 	public static void updatePlayerListAndDeclareWinner(Graph g) {
 
 		for (Player player : Database.getInstance().getPlayerList()) {

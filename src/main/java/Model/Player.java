@@ -44,6 +44,11 @@ public class Player {
     	myCountries.add(number); 
     }
 
+    /**
+     * This adds a new player in Database.playerlist
+     * @param playerName
+     * @param noOfArmies
+     */
     public static boolean addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
             System.out.println("=======> This player exists <========");
@@ -56,6 +61,10 @@ public class Player {
         return true;
     }
 
+    /**
+     * This removes a player from Database.playerlist
+     * @param playerName
+     */
     public static boolean removePlayer(String playerName){
         Player player= Player.getPlayerByName(playerName);
         if(player==null){
@@ -72,6 +81,11 @@ public class Player {
         return true;
     }
 
+    /**
+     * This returns the instance of the player where a player is saved in Database.playerlist using player's name
+     * @param playerName
+     * @return instance of the player
+     */
     public static Player getPlayerByName(String playerName){
         for(Player player: Database.playerList){
             if(player.getName().equalsIgnoreCase(playerName)){
@@ -81,6 +95,11 @@ public class Player {
         return null;
     }
 
+    /**
+     * This returns the instance of the player where a player is saved in Database.playerlist using player's number
+     * @param playerName
+     * @return instance of the player
+     */
     public static Player getPlayerByNumber(Integer playerNumber){
         for(Player player: Database.getInstance().getPlayerList()){
             if(player.getNumber() == playerNumber){
@@ -90,6 +109,10 @@ public class Player {
         return null;
     }
 
+    
+    /**
+     *  check if the number of remaining armies that can be placed is equal to zero for every player
+     */
     public static boolean allPlayersRemainingArmiesExhausted(){
         for(Player player: Database.getInstance().getPlayerList()){
             if(player.getNumberOfArmies()>0){
@@ -99,6 +122,9 @@ public class Player {
         return true;
     }
 
+    /**
+     * This prints all the details for each and every player in Database.playerlist 
+     */
     public static void printAllPlayers(){
         for(Player player: Database.getInstance().getPlayerList()){
             System.out.println(player.getNumber()+ " " + player.getName() +" "+ player.getNumberOfArmies() );
@@ -106,6 +132,13 @@ public class Player {
         System.out.println();
     }
 
+    
+    /**
+     * this provides the list of countries owned by a particular player
+     * @param playerName
+     * @param gameGraph
+     * @return list of countries owned by a player
+     */
     public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph){
         ArrayList<Country> countryList= new ArrayList<Country>();
         for(Country country: gameGraph.getAdjList()){
