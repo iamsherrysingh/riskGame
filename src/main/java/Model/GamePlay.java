@@ -470,12 +470,13 @@ public class GamePlay {
 		if(!Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj()))
 			return false;
 
+
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
 		
 		//Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
+		
 		return true;
 	}
 	
