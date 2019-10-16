@@ -46,7 +46,7 @@ public class Controller {
 	 * @param tasksList
 	 * @return
 	 */
-	boolean getCommand(ArrayList<extractedTasks> tasksList){
+	boolean getCommand(ArrayList<ExtractedTasks> tasksList){
 
 		System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
 		System.out.print("Enter Command: ");
@@ -75,7 +75,7 @@ public class Controller {
 				//get and check the switches
 				cmdStr = cmdItr.next();
 				if(cmdStr.equals("-add")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.addcontinent;
 					
 					//get data related to addContinent task
@@ -89,7 +89,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.removecontinent;
 					
 					//get data related to removeContinent task
@@ -118,7 +118,7 @@ public class Controller {
 				//get and check the switches
 				cmdStr = cmdItr.next();
 				if(cmdStr.equals("-add")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.addcountry;
 					
 					//get data related to addCountry task
@@ -132,7 +132,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.removecountry;
 					
 					//get data related to removeCountry task
@@ -161,7 +161,7 @@ public class Controller {
 				//get and check the switches
 				cmdStr = cmdItr.next();
 				if(cmdStr.equals("-add")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.addneighbor;
 					
 					//get data related to addneighbor task
@@ -175,7 +175,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.removeneighbor;
 					
 					//get data related to removeneighbor task
@@ -201,7 +201,7 @@ public class Controller {
 				return false;
 			}
 			
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.savemap;
 			
 			//get data related to savemap task
@@ -216,7 +216,7 @@ public class Controller {
 				return false;
 			}
 			
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.editmap;
 			
 			//get data related to editmap task
@@ -226,13 +226,13 @@ public class Controller {
 		}
 		//Command validatemap
 		else if(cmdStr.equalsIgnoreCase("validatemap")){
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.validatemap;
 			tasksList.add(eTask);
 		}
 		//Command showmap
 		else if(cmdStr.equalsIgnoreCase("showmap")){
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.showmap;
 			tasksList.add(eTask);
 		}
@@ -243,7 +243,7 @@ public class Controller {
 				return false;
 			}
 			
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.loadmap;
 			
 			//get data related to loadmap task
@@ -263,7 +263,7 @@ public class Controller {
 				//get and check the switches
 				cmdStr = cmdItr.next();
 				if(cmdStr.equals("-add")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.addplayer;
 					
 					//get data related to addPlayer task
@@ -275,7 +275,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
-					extractedTasks eTask = new extractedTasks();
+					ExtractedTasks eTask = new ExtractedTasks();
 					eTask.name = tasksEnum.removeplayer;
 					
 					//get data related to removePlayer task
@@ -294,7 +294,7 @@ public class Controller {
 		}
 		//Command populatecountries
 		else if(cmdStr.equalsIgnoreCase("populatecountries")){
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.populatecountries;
 			tasksList.add(eTask);
 		}
@@ -305,7 +305,7 @@ public class Controller {
 				return false;
 			}
 			
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.placearmy;
 			
 			//get data related to placearmy task
@@ -315,7 +315,7 @@ public class Controller {
 		}
 		//Command placeall
 		else if(cmdStr.equalsIgnoreCase("placeall")) {
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.placeall;
 			tasksList.add(eTask);
 		}
@@ -323,7 +323,7 @@ public class Controller {
 		//Command reinforce
 		else if(cmdStr.equalsIgnoreCase("reinforce")) {
 			
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.reinforce;
 			
 			//get data related to reinforce task
@@ -347,7 +347,7 @@ public class Controller {
 			//If it has only 1 data, the task will be "ignorfortify"
 			//If it has 3 data, the task will be "fortify"
 			//Otherwise, it is a wrong command
-			extractedTasks eTask = new extractedTasks();
+			ExtractedTasks eTask = new ExtractedTasks();
 			String firstData = cmdItr.next();
 			if(!cmdItr.hasNext()) {
 				eTask.name = tasksEnum.ignorefortify;
@@ -380,11 +380,11 @@ public class Controller {
 	 * @param tasksList
 	 * @return
 	 */
-	boolean checkValidityOfTasksList(ArrayList<extractedTasks> tasksList) {
+	boolean checkValidityOfTasksList(ArrayList<ExtractedTasks> tasksList) {
 		
 		// check commands that are valid in state of startGame
 		if( gamePlayObj.getCurrentState() == State.initializeGame) {
-			for(extractedTasks itr:tasksList) {
+			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){	
 				
 					case editmap:
@@ -399,7 +399,7 @@ public class Controller {
 		}
 		// check commands that are valid in state of mapEditor
 		else if( gamePlayObj.getCurrentState() == State.mapEditor) {		
-			for(extractedTasks itr:tasksList) {
+			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){	
 					case addcontinent:	
 						String controlValueStr = itr.taskData.get(1);	
@@ -435,7 +435,7 @@ public class Controller {
 		} 
 		// check commands that are valid in state of editPlayer
 		else if(gamePlayObj.getCurrentState() == State.editPlayer ){
-			for(extractedTasks itr:tasksList) {
+			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){
 				case showmap:
 					break;
@@ -453,7 +453,7 @@ public class Controller {
 		}
 		// check commands that are valid in state of troopArmies
 		else if(gamePlayObj.getCurrentState() == State.troopArmies){
-  			for(extractedTasks itr:tasksList) {
+  			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
 						break;
@@ -469,7 +469,7 @@ public class Controller {
 		}
 		// check commands that are valid in state of reinforcementPhase
 		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
-  			for(extractedTasks itr:tasksList) {
+  			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
 						break;
@@ -483,7 +483,7 @@ public class Controller {
 		}
 		// check commands that are valid in state of fortificationPhase
 		else if(gamePlayObj.getCurrentState() == State.fortificationPhase){
-  			for(extractedTasks itr:tasksList) {
+  			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
 						break;	
@@ -519,11 +519,11 @@ public class Controller {
 	 * @param tasksList
 	 * @return
 	 */
-	boolean cmdController(ArrayList<extractedTasks> tasksList){	
+	boolean cmdController(ArrayList<ExtractedTasks> tasksList){	
 		if(!checkValidityOfTasksList(tasksList))
 			return false; 
 		
-		for(extractedTasks itr:tasksList) {		
+		for(ExtractedTasks itr:tasksList) {		
 			
 			switch (itr.name){	
 			
@@ -674,7 +674,7 @@ public class Controller {
 	    	
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
-				ArrayList<extractedTasks> tasksList = new ArrayList<extractedTasks>();
+				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				if(!controller.getCommand(tasksList))
 					continue;
 				if(!controller.cmdController(tasksList)) {
@@ -692,11 +692,11 @@ public class Controller {
 /**
  * This class extracts each command 
  */
-class extractedTasks{
+class ExtractedTasks{
 	public tasksEnum name;
 	public ArrayList<String> taskData;
 	
-	public extractedTasks(){
+	public ExtractedTasks(){
 		taskData = new ArrayList<String>();
 	}
 

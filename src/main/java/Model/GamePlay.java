@@ -467,11 +467,8 @@ public class GamePlay {
 		//reduce the numberOfArmy form source country and add them to the destination country
 		//change the currentState
 
-		boolean fortifyOutput =false;
-
-		do {
-			fortifyOutput= Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
-		} while(fortifyOutput == false);
+		if(!Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj()))
+			return false;
 
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
