@@ -40,7 +40,12 @@ public class Controller {
 	
 	private GamePlay gamePlayObj = null;
 	
-	// parse input Instruction -> Command , Switch, Data
+	
+	/**
+	 * parse input Instruction -> Command , Switch, Data
+	 * @param tasksList
+	 * @return
+	 */
 	boolean getCommand(ArrayList<extractedTasks> tasksList){
 		
 		System.out.println("Enter Command");
@@ -369,6 +374,11 @@ public class Controller {
 		return true;
 	}
 	
+	/**
+	 * Check if the command is valid In the current sate of the game or not.
+	 * @param tasksList
+	 * @return
+	 */
 	boolean checkValidityOfTasksList(ArrayList<extractedTasks> tasksList) {
 		
 		// check commands that are valid in state of startGame
@@ -502,6 +512,12 @@ public class Controller {
 		return true;
 	}
 	
+	
+	/**
+	 * Invokes the corresponding function according to the command 
+	 * @param tasksList
+	 * @return
+	 */
 	boolean cmdController(ArrayList<extractedTasks> tasksList){	
 		if(!checkValidityOfTasksList(tasksList))
 			return false; 
@@ -669,55 +685,12 @@ public class Controller {
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }
-
-
-	/**
-	 * This method starts the execution of the game.
-	 * This method is run by Controller.main()
-	 * @throws IOException
-	 */
-/*    void startGame() throws IOException{
-        Mapx map= new Mapx();
-		Graph g=map.loadMap("src/main/resources/map.map");
-		g.showMap();
-		System.out.println("======"+map.validateMap(g));
-		map.saveMap(g);
-		System.out.println("======");
-		for(Continent c: Database.getInstance().getContinentList()){
-			System.out.println(c.getName());
-		}
-		System.out.println("====");
-		System.out.println(Database.getInstance().getContinentList().size());
-
-		map.addCountry("Havanna","Australia",g);
-		g.showMap();
-		System.out.println(g.getAdjList().get(42).getInContinent());
-		map.addNeighbour("Havanna","India", g);
-		g.showMap();
-		map.addNeighbour("Swarg","Pataal",g);
-		map.removeCountry("japan",g);
-		g.showMap();
-
-		map.addContinent("Jupiter",67);
-		Database.getInstance().printContinentList();
-
-		map.removeContinent("Asia",g);
-		g.showMap();
-		Database.getInstance().printContinentList();
-
-		map.removeNeighbour("Congo", "North-africa",g);
-        g.showMap();
-        map.addArmiesToCountry("Egypt",100,g);
-        System.out.println(g.getAdjList().get(21).getNumberOfArmies());
-		System.out.println(map.validateMap(g));
-        Scanner commandScanner= new Scanner(System.in);
-        System.out.print ("Enter number of Players: ");
-        Integer numberOfPlayers= Integer.parseInt(commandScanner.nextLine().trim());       
-    }
-*/
     
 }
 
+/**
+ * This class extracts each command 
+ */
 class extractedTasks{
 	public tasksEnum name;
 	public ArrayList<String> taskData;

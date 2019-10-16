@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/** 
+ * This Class maintains the state of the game and current player.
+ * The methods of this class are called by Controller.
+ */
 public class GamePlay {
 	
 	private static GamePlay gamePlay = null;
@@ -38,13 +42,25 @@ public class GamePlay {
     public State getCurrentState(){
     	return currentState;
     }
-
+    
+    
+    /**
+     * Set Current State of the game
+     * @param newState
+     * @param newStateStr
+     */
     private void setCurrentState(State newState, String newStateStr) {
     	System.out.println("State of game changed to: " + newStateStr);
     	currentState = newState;
     }
     
-    // Call Add Continent Function
+    
+    /**
+     * Add Continent Function
+     * @param continentName
+     * @param controlValue
+     * @return
+     */
 	public boolean addContinent(String continentName, Integer controlValue) {
 		
 		if(!Continent.addContinent(continentName, controlValue))
@@ -52,7 +68,13 @@ public class GamePlay {
 		
 		return true;
 	}
-	// Call remove Continent Function
+	
+	
+	/**
+	 * Remove Continent Function
+	 * @param continentName
+	 * @return
+	 */
 	public boolean removeContinent(String continentName) {
 		
 		if(!Continent.removeContinent(continentName, graphObj))
@@ -60,7 +82,14 @@ public class GamePlay {
 		
 		return true;
 	}
-	// Call Add Continent Function
+	
+	
+	/**
+	 * Add Country Function
+	 * @param countryName
+	 * @param continentName
+	 * @return
+	 */
 	public boolean addCountry(String countryName, String continentName) {
 			
 		if(!Country.addCountry(countryName, continentName, graphObj) )
@@ -69,6 +98,12 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/** 
+	 * Remove Country Function
+	 * @param countryName
+	 * @return
+	 */
 	public boolean removeCountry(String countryName) {
 		
 		if(!Country.removeCountry(countryName, graphObj))
@@ -77,6 +112,13 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Add Neighbor Function
+	 * @param countryName
+	 * @param neighborCountryName
+	 * @return
+	 */
 	public boolean addNeighbor(String countryName, String neighborCountryName) {
 		
 		if(!Country.addNeighbour(countryName, neighborCountryName, graphObj))
@@ -85,6 +127,13 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Remove Neighbor Function
+	 * @param countryName
+	 * @param neighborCountryName
+	 * @return
+	 */
 	public boolean removeNeighbor(String countryName, String neighborCountryName) {
 		
 		if(!Country.removeNeighbour(countryName, neighborCountryName, graphObj) )
@@ -93,19 +142,30 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Show map Function
+	 * @return
+	 */
 	public boolean showMap() {
 		
 		Graph.showMap();		
 		return true;
 	}
 	
+	
+	/**
+	 * Save Map Function
+	 * @param fileName
+	 * @return
+	 */
 	public boolean saveMap(String fileName) {
 		
 		try {
 			if(! mapxObj.saveMap(graphObj, fileName))
 				return false;
 			
-			setCurrentState(State.initializeGame, "Initialize Game");
+			loadGameMap(fileName);
 		}
 		catch (IOException io ){
 			System.out.println("IO Exception Occured");
@@ -115,6 +175,12 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Edit Map Function
+	 * @param mapName
+	 * @return
+	 */
 	public boolean editMap(String mapName) {
 		try {
 			File file = new File("src/main/resources/" + mapName);
@@ -136,6 +202,11 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Validate Map Function
+	 * @return
+	 */
 	public boolean validateMap() {
 	
 		if(! Mapx.validateMap(graphObj))
@@ -144,6 +215,12 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Load Game Map Function
+	 * @param fileName
+	 * @return
+	 */
 	public boolean loadGameMap(String fileName) {
 		try {
 			mapxObj.loadMap("src/main/resources/" + fileName, graphObj);
@@ -153,11 +230,16 @@ public class GamePlay {
 			System.out.println("File not found");
 			return false;
 		}
-
 		
 		return true;
 	}
 	
+	
+	/**
+	 * Add Player Function
+	 * @param playerName
+	 * @return
+	 */
 	public boolean addPlayer(String playerName) {
 		
 		if(!Player.addPlayer(playerName, 0))
@@ -166,6 +248,11 @@ public class GamePlay {
 		return true;
 	}
 	
+	/**
+	 * Remove Player Function
+	 * @param playerName
+	 * @return
+	 */
 	public boolean removePlayer(String playerName) {
 		
 		if(!Player.removePlayer(playerName))
@@ -174,6 +261,11 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Populate Countries Function
+	 * @return
+	 */
 	public boolean populateCountries() {
 		
 		//set number of armies for each player
@@ -236,6 +328,12 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Place Army Function
+	 * @param country
+	 * @return
+	 */
 	public boolean placeArmy(String country) {
 		
 		Country targetCountry= Country.getCountryByName(country, graphObj);
@@ -274,6 +372,11 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Place All Function
+	 * @return
+	 */
 	public boolean placeAll() {
 
         while( ! Player.allPlayersRemainingArmiesExhausted()) {
@@ -295,6 +398,13 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Reinforce Army Function
+	 * @param countryName
+	 * @param numberOfArmies
+	 * @return
+	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
 		
 		//check: if target country is not exist, return false
@@ -336,6 +446,14 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Fortify Army Function
+	 * @param sourceCountry
+	 * @param destinationCOuntry
+	 * @param numberOfArmy
+	 * @return
+	 */
 	public boolean fortifyArmy(String sourceCountry, String destinationCOuntry, Integer numberOfArmy) {
 		
 		//check: if sourceCountry does not belong to the currentPlayer, return false
@@ -358,6 +476,11 @@ public class GamePlay {
 		return true;
 	}
 	
+	
+	/**
+	 * Fortify none Function
+	 * @return
+	 */
 	public boolean ignoreFortifyArmy() {
 		
 		//Change current state to next state
@@ -371,20 +494,24 @@ public class GamePlay {
 
 }
 
-
+/**
+ * This Class handle players turn and calculate reinforment armies
+ */
 class CurrentPlayer{
 	
 	private static CurrentPlayer currentPlayerObj = null;
 	private ListIterator<Player> currentPlayerItr;
 	private Player currentPlayer;
 	private Integer numReinforceArmies;
-	private GamePlay gamePlayObj;
 	
 	private CurrentPlayer() {
-	//	gamePlayObj = GamePlay.getInstance();
 		currentPlayerItr = Database.playerList.listIterator();
 	}
 	
+	/**
+	 * Current Player get Instance method with SingleTone design
+	 * @return
+	 */
 	public static CurrentPlayer getInstance(){
         if(currentPlayerObj==null)
         	currentPlayerObj= new CurrentPlayer();
@@ -399,6 +526,12 @@ class CurrentPlayer{
 		return this.currentPlayer;
 	}
 	
+	
+	/**
+	 * Go to next player.
+	 * @param currentState
+	 * @param gameGraph
+	 */
 	public void goToNextPlayer(State currentState, Graph gameGraph) {
     	
     	if(currentPlayerItr.hasNext())
@@ -418,6 +551,12 @@ class CurrentPlayer{
     	}
     }
 	
+	
+	/**
+	 * Reset players turn whenever it comes to the end of the players list.
+	 * @param currentState
+	 * @param gameGraph
+	 */
 	public void goToFirstPlayer(State currentState, Graph gameGraph) {
 		currentPlayerItr = Database.playerList.listIterator();
 		currentPlayer = currentPlayerItr.next();
@@ -432,6 +571,9 @@ class CurrentPlayer{
     	}
 	}
 	
+	/**
+	 * Calculate Reinforcement Armies 
+	 */
 	private void calculateReinforceentArmies() {
     	Integer numArmies = 0;
     	
@@ -447,10 +589,19 @@ class CurrentPlayer{
     	numReinforceArmies = (numArmies>3) ? numArmies : 3;
     }
 	
+	/**
+	 * Decrease Reinforcement Armies.
+	 * @param numOfArmies
+	 */
 	public void decreaseReinforceentArmies(Integer numOfArmies) {
 		numReinforceArmies -= numOfArmies;
 	}
 	
+	
+	/**
+	 * Update The number of players for current Player.
+	 * @param numArmies
+	 */
 	public void increaseCurrentPlayerArmies(Integer numArmies) {
 		currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() + numArmies);
 		currentPlayerItr.set(currentPlayer);

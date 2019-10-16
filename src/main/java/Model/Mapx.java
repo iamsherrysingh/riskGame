@@ -27,7 +27,7 @@ public class Mapx {
 		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
+			String line = br.readLine().trim();
 			int continentsEncountered = 0;
 			while (line != null) {
 				if (line.equals("[countries]"))
@@ -49,8 +49,7 @@ public class Mapx {
 			for (int i = 1; i < continentLine.length; i++) {
 				continentLine[i] = continentLine[i].trim();
 				String split[] = continentLine[i].split(" ");
-				Continent continent = new Continent(database.getInstance().getContinentList().size() + 1, split[0],
-						Integer.parseInt(split[1]), split[2]);
+				Continent continent = new Continent(Database.getInstance().getContinentList().size() + 1, split[0],Integer.parseInt(split[1]), split[2]);
 				database.getContinentList().add(continent);
 			}
 		} catch (FileNotFoundException e) {
