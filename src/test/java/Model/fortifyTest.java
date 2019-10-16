@@ -14,7 +14,7 @@ public class fortifyTest {
 	@Before
 	public void before() throws Exception {
 		map = new Mapx();
-		g = map.createGameGraph("src/main/resources/map.map");
+		g = map.loadMap("src/main/resources/map.map");
 	}
 
 	@After

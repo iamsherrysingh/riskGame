@@ -1,12 +1,8 @@
 package Model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.io.IOException;
-import java.util.*; 
-import Model.State;
-import Model.Player;
+import java.util.*;
 
 public class GamePlay {
 	
@@ -126,7 +122,7 @@ public class GamePlay {
 		
 		File file = new File("src/main/resources/" + mapName);
 		if (file.exists()) {
-			graphObj=mapxObj.createGameGraph("src/main/resources/"+mapName);
+			graphObj=mapxObj.loadMap("src/main/resources/"+mapName);
 		}
 		else{
 			System.out.println("New Game Graph created");
@@ -149,7 +145,7 @@ public class GamePlay {
 	
 	public boolean loadGameMap(String fileName) {
 		
-		graphObj = mapxObj.createGameGraph("src/main/resources/" + fileName);
+		graphObj = mapxObj.loadMap("src/main/resources/" + fileName);
 		
 		setCurrentState(State.editPlayer, "Edit Player");
 		

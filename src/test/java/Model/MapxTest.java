@@ -3,7 +3,6 @@ package Model;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
-import Model.*;
 
 public class MapxTest {
     static Mapx map;
@@ -12,13 +11,13 @@ public class MapxTest {
     @Before
     public void setUp() throws Exception {
         map= new Mapx();
-        g=map.createGameGraph("src/main/resources/map.map");
+        g=map.loadMap("src/main/resources/map.map");
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception{
         map= new Mapx();
-        g=map.createGameGraph("src/main/resources/map.map");
+        g=map.loadMap("src/main/resources/map.map");
 
     }
 

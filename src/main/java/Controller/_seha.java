@@ -44,7 +44,7 @@ public class _seha {
 
         System.out.println("==================");
     //    gamePlay.getGraphObj().getAdjList().clear();
-    //    getMapxObj().createGameGraph("masp.map", Graph.getInstance());
+    //    getMapxObj().loadMap("masp.map", Graph.getInstance());
     //    gamePlay.saveMap("map.map");
         gamePlay.editMap("map.map");
         gamePlay.showMap();
