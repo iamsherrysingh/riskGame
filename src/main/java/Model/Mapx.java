@@ -17,13 +17,13 @@ public class Mapx {
 
 	/**
 	 * This reads the maps file and stores the country, continent and border details
-	 * in their variables This is used by createGameGraph(). The variables generated
+	 * in their variables This is used by loadMap(). The variables generated
 	 * by this method are used throughout the game.
 	 *
 	 * @param mapFile
 	 * @throws FileNotFoundException
 	 */
-	private boolean loadMap(String mapFile) throws FileNotFoundException {
+	private boolean readMapIntoVariables(String mapFile) throws FileNotFoundException {
 		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
@@ -122,9 +122,9 @@ public class Mapx {
 	 * @param mapFile
 	 * @return
 	 */
-	public Graph createGameGraph(String mapFile) {
+	public Graph loadMap(String mapFile) {
 		try {
-			loadMap(mapFile);
+			readMapIntoVariables(mapFile);
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 		}
@@ -220,7 +220,6 @@ public class Mapx {
 		boolean testEmptyString = "".equals(mapName);
 		if (testEmptyString == false) {
 
-			mapName = mapName + ".map";
 			if (Arrays.asList(DefaultMaps).contains(mapName)) {
 				System.out.println("you cannot edit a default map");
 				return false;

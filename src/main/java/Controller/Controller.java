@@ -678,7 +678,7 @@ public class Controller {
 	 */
 /*    void startGame() throws IOException{
         Mapx map= new Mapx();
-		Graph g=map.createGameGraph("src/main/resources/map.map");
+		Graph g=map.loadMap("src/main/resources/map.map");
 		g.showMap();
 		System.out.println("======"+map.validateMap(g));
 		map.saveMap(g);

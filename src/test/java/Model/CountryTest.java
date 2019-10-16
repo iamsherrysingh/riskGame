@@ -3,9 +3,7 @@ package Model;
 import static org.junit.Assert.*;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CountryTest {
@@ -16,7 +14,7 @@ public class CountryTest {
 	@Before
 	public void before() throws Exception {
 		map = new Mapx();
-		g = map.createGameGraph("src/main/resources/map.map");
+		g = map.loadMap("src/main/resources/map.map");
 	}
 
 	@After
