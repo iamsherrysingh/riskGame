@@ -471,12 +471,8 @@ public class Country {
 	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 		Country toCountry= Country.getCountryByName(toCountryName, gameGraph);
 		Country fromcountry= Country.getCountryByName(fromCname, gameGraph);
-		ArrayList<Integer> toCountryNeighbours= toCountry.getNeighbours();
-		if(!(fromcountry.getNumberOfArmies() - numberOfArmies >0)){
-			System.out.println("You must leave at least 1 army unit behind");
-			return false;
-		}
-		else if(fromcountry ==null || toCountry==null){
+
+		if(fromcountry ==null || toCountry==null){
 			System.out.println("One or both countries do not exist");
 			return false;
 		}
@@ -484,10 +480,18 @@ public class Country {
 			System.out.println("A player has to own both the countries");
 			return false;
 		}
-		else if(!(toCountryNeighbours.contains(fromcountry.getNumber()))){
+		else if(!(toCountry.getNeighbours().contains(fromcountry.getNumber()))){
 			System.out.println("Both countries should be adjacent");
 			return false;
 		}
+		else if(!(fromcountry.getNumberOfArmies() - numberOfArmies >0)){
+			System.out.println("You must leave at least 1 army unit behind");
+			return false;
+		}
+
+
+
+		ArrayList<Integer> toCountryNeighbours= toCountry.getNeighbours();
 
 
 		fromcountry.setNumberOfArmies(fromcountry.getNumberOfArmies() - numberOfArmies);
