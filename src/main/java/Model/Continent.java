@@ -2,6 +2,9 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * This class maintains all the data members and methods related to each continent.
+ */
 public class Continent {
 	
     String name, color;

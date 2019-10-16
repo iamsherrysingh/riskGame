@@ -3,6 +3,10 @@ package Model;
 
 import java.util.*;
 
+/**
+ * This class creates the graph of the game.
+ * This has singleton implementation.
+ */
 public class Graph {
     static public ArrayList<Country> adjList= new ArrayList<Country>();
     private static Graph gameGraph;

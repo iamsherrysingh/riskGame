@@ -46,7 +46,7 @@ public class Controller {
 	 * @param tasksList
 	 * @return
 	 */
-	boolean getCommand(ArrayList<ExtractedTasks> tasksList){
+	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
 		System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
 		System.out.print("Enter Command: ");
@@ -527,134 +527,115 @@ public class Controller {
 			
 			switch (itr.name){	
 			
-				case addcontinent:
-				{
+				case addcontinent:{
 					if(!gamePlayObj.addContinent(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
 						return false;
 				
 					break;
 				}
-				case removecontinent:
-				{	
+				case removecontinent:{	
 					if(!gamePlayObj.removeContinent(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case addcountry:
-				{
+				case addcountry:{
 					if(!gamePlayObj.addCountry(itr.taskData.get(0),itr.taskData.get(1)))
 						return false;
 					
 					break;
 				}
-				case removecountry:
-				{
+				case removecountry:{
 					if(!gamePlayObj.removeCountry(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case addneighbor:
-				{
+				case addneighbor:{
 					if(!gamePlayObj.addNeighbor(itr.taskData.get(0),itr.taskData.get(1)))
 						return false;
 					
 					break;
 				}
-				case removeneighbor:
-				{
+				case removeneighbor:{
 					if(!gamePlayObj.removeNeighbor(itr.taskData.get(0),itr.taskData.get(1)))
 						return false;
 					
 					break;
 				}
-				case savemap:
-				{
+				case savemap:{
 					if(!gamePlayObj.saveMap(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case editmap:
-				{
+				case editmap:{
 					if(!gamePlayObj.editMap(itr.taskData.get(0)))
 					return false;
 					
 					break;
 				}
-				case validatemap:
-				{
+				case validatemap:{
 					if(!gamePlayObj.validateMap())
 						return false;
 					
 					break;	
 				}
-				case showmap:
-				{
+				case showmap:{
 					if(!gamePlayObj.showMap())
 						return false;
 					
 					break;
 				}
-				case loadmap:
-				{
+				case loadmap:{
 					if(!gamePlayObj.loadGameMap(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case addplayer:
-				{
+				case addplayer:{
 					if(!gamePlayObj.addPlayer(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case removeplayer:
-				{
+				case removeplayer:{
 					if(!gamePlayObj.removePlayer(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case populatecountries:
-				{
+				case populatecountries:{
 					if(!gamePlayObj.populateCountries())
 						return false;
 					
 					break;
 				}
-				case placearmy:
-				{
+				case placearmy:{
 					if(!gamePlayObj.placeArmy(itr.taskData.get(0)))
 						return false;
 					
 					break;
 				}
-				case placeall:
-				{
+				case placeall:{
 					if(!gamePlayObj.placeAll())
 						return false;
 
 					break;
 				}
-				case reinforce:
-				{
+				case reinforce:{
 					if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
 						return false;
 					
 					break;
 				}
-				case fortify:
-				{
+				case fortify:{
 					if(!gamePlayObj.fortifyArmy(itr.taskData.get(0),itr.taskData.get(1),Integer.parseInt(itr.taskData.get(2))))
 						return false;
 					
 					break;
 				}
-				case ignorefortify:
-				{
+				case ignorefortify:{
 					if(!gamePlayObj.ignoreFortifyArmy())
 						return false;
 					
@@ -692,7 +673,7 @@ public class Controller {
 /**
  * This class extracts each command 
  */
-class ExtractedTasks{
+class ExtractedTasks {
 	public tasksEnum name;
 	public ArrayList<String> taskData;
 	

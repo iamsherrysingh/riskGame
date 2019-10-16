@@ -2,6 +2,9 @@ package Model;
 
 import java.util.*;
 
+/**
+ * This class maintains all the data members and methods related to each country.
+ */
 public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
 	String name, owner;

@@ -7,6 +7,7 @@ import java.util.*;
 /** 
  * This Class maintains the state of the game and current player.
  * The methods of this class are called by Controller.
+ * This class has singleton implementation.
  */
 public class GamePlay {
 	
@@ -30,7 +31,7 @@ public class GamePlay {
     	graphObj=Graph.getInstance();
     }
 
-    public static GamePlay getInstance(){
+    public static GamePlay getInstance() {
         if(gamePlay==null)
         	gamePlay= new GamePlay();
         return gamePlay;
@@ -44,10 +45,9 @@ public class GamePlay {
 		return mapxObj;
 	}
     
-    public State getCurrentState(){
+    public State getCurrentState() {
     	return currentState;
     }
-    
     
     /**
      * Set Current State of the game
@@ -58,8 +58,7 @@ public class GamePlay {
     	System.out.println("<== State of game changed to: " + newStateStr+" ==>");
     	currentState = newState;
     }
-    
-    
+       
     /**
      * Add Continent Function
      * @param continentName
@@ -73,8 +72,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Remove Continent Function
 	 * @param continentName
@@ -87,8 +85,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Add Country Function
 	 * @param countryName
@@ -103,7 +100,6 @@ public class GamePlay {
 		return true;
 	}
 	
-	
 	/** 
 	 * Remove Country Function
 	 * @param countryName
@@ -116,8 +112,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Add Neighbor Function
 	 * @param countryName
@@ -131,8 +126,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Remove Neighbor Function
 	 * @param countryName
@@ -146,8 +140,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Show map Function
 	 * @return
@@ -157,7 +150,6 @@ public class GamePlay {
 		Graph.showMap();		
 		return true;
 	}
-	
 	
 	/**
 	 * Save Map Function
@@ -178,8 +170,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Edit Map Function
 	 * @param mapName
@@ -205,8 +196,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Validate Map Function
 	 * @return
@@ -218,8 +208,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Load Game Map Function
 	 * @param fileName
@@ -237,7 +226,6 @@ public class GamePlay {
 		
 		return true;
 	}
-	
 	
 	/**
 	 * Add Player Function
@@ -264,8 +252,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Populate Countries Function
 	 * @return
@@ -330,8 +317,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
-	
+		
 	/**
 	 * Place Army Function
 	 * @param country
@@ -375,7 +361,6 @@ public class GamePlay {
 		return true;
 	}
 	
-	
 	/**
 	 * Place All Function
 	 * @return
@@ -400,7 +385,6 @@ public class GamePlay {
         
 		return true;
 	}
-	
 	
 	/**
 	 * Reinforce Army Function
@@ -449,7 +433,6 @@ public class GamePlay {
 		return true;
 	}
 	
-	
 	/**
 	 * Fortify Army Function
 	 * @param sourceCountry
@@ -479,7 +462,6 @@ public class GamePlay {
 		
 		return true;
 	}
-	
 	
 	/**
 	 * Fortify none Function
@@ -529,7 +511,6 @@ class CurrentPlayer{
 		return this.currentPlayer;
 	}
 	
-	
 	/**
 	 * Go to next player.
 	 * @param currentState
@@ -553,8 +534,7 @@ class CurrentPlayer{
     		System.out.println("You have " + getNumReinforceArmies() + "armies" );
     	}
     }
-	
-	
+		
 	/**
 	 * Reset players turn whenever it comes to the end of the players list.
 	 * @param currentState
