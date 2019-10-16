@@ -297,6 +297,7 @@ public class GamePlay {
             if(countryToBePopulated.getOwner()==null){
                 Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
                 countryToBePopulated.setOwner(assignedPlayer.getName());
+                assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
             }
             else{
                 continue;
@@ -550,7 +551,7 @@ class CurrentPlayer{
     	if( currentState == State.reinforcementPhase) {
     		Continent.updateContinitsOwner(gameGraph);
     		calculateReinforceentArmies();
-    		System.out.println("You have " + getNumReinforceArmies() + "armies" );
+    		System.out.println("You have " + getNumReinforceArmies() + " armies" );
     	}
 	}
 	
@@ -579,7 +580,6 @@ class CurrentPlayer{
 	public void decreaseReinforceentArmies(Integer numOfArmies) {
 		numReinforceArmies -= numOfArmies;
 	}
-	
 	
 	/**
 	 * Update The number of players for current Player.
