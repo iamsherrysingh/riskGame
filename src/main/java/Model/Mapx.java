@@ -322,8 +322,6 @@ public class Mapx {
 				}
 			}
 		}
-		System.out.println(count);
-		System.out.println(gameGraph.getAdjList().size());
 		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
 			return true;
 		}
