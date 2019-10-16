@@ -165,8 +165,7 @@ public class GamePlay {
 		try {
 			if(! mapxObj.saveMap(graphObj, fileName))
 				return false;
-			
-			loadGameMap(fileName);
+			setCurrentState(State.editPlayer, "Edit Player");
 		}
 		catch (IOException io ){
 			System.out.println("IO Exception Occured");
@@ -304,7 +303,6 @@ public class GamePlay {
             Integer randomCountryNumber = randomInt;
 
             Country countryToBePopulated= Country.getCountryByNumber(randomCountryNumber, graphObj);
-            //System.out.println("Player "+ playerNumberToBeAssigned +" turn");
             if(countryToBePopulated.getOwner()==null){
                 Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
                 countryToBePopulated.setOwner(assignedPlayer.getName());

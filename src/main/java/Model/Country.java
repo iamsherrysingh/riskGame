@@ -307,7 +307,7 @@ public class Country {
 			if (country.getName().equalsIgnoreCase(countryName)) {
 				returnedCountry = country;
 			}
-		}
+		}		
 		return returnedCountry;
 	}
 
@@ -318,6 +318,7 @@ public class Country {
 				returnedCountry = country;
 			}
 		}
+		
 		return returnedCountry;
 	}
 
