@@ -48,6 +48,11 @@ public class _seha {
     //    gamePlay.saveMap("map.map");
         gamePlay.editMap("map.map");
         gamePlay.showMap();
+        g= gamePlay.getGraphObj();
+        Country.addNeighbour("Central-America", "Greenland",g);
+        g.showMap();
+
+
 
 
 

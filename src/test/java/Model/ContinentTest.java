@@ -14,7 +14,7 @@ public class ContinentTest {
 	@Before
 	public void before() throws Exception {
 		map = new Mapx();
-		g = map.loadMap("src/main/resources/map.map");
+		map.loadMap("src/main/resources/map.map", g);
 	}
 
 	@After
