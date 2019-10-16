@@ -64,7 +64,7 @@ public class Controller {
 		cmdStr = cmdItr.next();	
 		
 		//command editcontinent
-		if(cmdStr.equals("editcontinent")){
+		if(cmdStr.equalsIgnoreCase("editcontinent")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -107,7 +107,7 @@ public class Controller {
 			}			
 		}
 		//command editcountry
-		else if(cmdStr.equals("editcountry")){
+		else if(cmdStr.equalsIgnoreCase("editcountry")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -150,7 +150,7 @@ public class Controller {
 			}			
 		}
 		//command editneighbor
-		else if(cmdStr.equals("editneighbor")){
+		else if(cmdStr.equalsIgnoreCase("editneighbor")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -195,7 +195,7 @@ public class Controller {
 			}			
 		}
 		//Command savemap
-		else if(cmdStr.equals("savemap")){
+		else if(cmdStr.equalsIgnoreCase("savemap")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -210,7 +210,7 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command editmap
-		else if(cmdStr.equals("editmap")){
+		else if(cmdStr.equalsIgnoreCase("editmap")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -225,19 +225,19 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command validatemap
-		else if(cmdStr.equals("validatemap")){
+		else if(cmdStr.equalsIgnoreCase("validatemap")){
 			extractedTasks eTask = new extractedTasks();
 			eTask.name = tasksEnum.validatemap;
 			tasksList.add(eTask);
 		}
 		//Command showmap
-		else if(cmdStr.equals("showmap")){
+		else if(cmdStr.equalsIgnoreCase("showmap")){
 			extractedTasks eTask = new extractedTasks();
 			eTask.name = tasksEnum.showmap;
 			tasksList.add(eTask);
 		}
 		//Command loadmap
-		else if(cmdStr.equals("loadmap")){
+		else if(cmdStr.equalsIgnoreCase("loadmap")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -252,7 +252,7 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command gameplayer
-		else if(cmdStr.equals("gameplayer")){
+		else if(cmdStr.equalsIgnoreCase("gameplayer")){
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -293,13 +293,13 @@ public class Controller {
 			}			
 		}
 		//Command populatecountries
-		else if(cmdStr.equals("populatecountries")){
+		else if(cmdStr.equalsIgnoreCase("populatecountries")){
 			extractedTasks eTask = new extractedTasks();
 			eTask.name = tasksEnum.populatecountries;
 			tasksList.add(eTask);
 		}
 		//Command placearmy
-		else if(cmdStr.equals("placearmy")) {
+		else if(cmdStr.equalsIgnoreCase("placearmy")) {
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
@@ -314,14 +314,14 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command placeall
-		else if(cmdStr.equals("placeall")) {
+		else if(cmdStr.equalsIgnoreCase("placeall")) {
 			extractedTasks eTask = new extractedTasks();
 			eTask.name = tasksEnum.placeall;
 			tasksList.add(eTask);
 		}
 		
 		//Command reinforce
-		else if(cmdStr.equals("reinforce")) {
+		else if(cmdStr.equalsIgnoreCase("reinforce")) {
 			
 			extractedTasks eTask = new extractedTasks();
 			eTask.name = tasksEnum.reinforce;
@@ -337,7 +337,7 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		//Command fortify (both types of command)
-		else if(cmdStr.equals("fortify")) {
+		else if(cmdStr.equalsIgnoreCase("fortify")) {
 			if(!cmdItr.hasNext()) {
 				System.out.println("wrong Command");
 				return false;
