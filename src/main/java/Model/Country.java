@@ -484,7 +484,7 @@ public class Country {
 			System.out.println("A player has to own both the countries");
 			return false;
 		}
-		else if(toCountryNeighbours.contains(fromcountry.getNumber())){
+		else if(!(toCountryNeighbours.contains(fromcountry.getNumber()))){
 			System.out.println("Both countries should be adjacent");
 			return false;
 		}
