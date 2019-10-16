@@ -54,9 +54,12 @@ public class Mapx {
 				database.getContinentList().add(continent);
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
 		} catch (IOException e) {
-			e.printStackTrace();
+
+		}
+		catch(Exception e){
+
 		}
 
 		// Read countries
@@ -81,13 +84,17 @@ public class Mapx {
 			countries = sb.toString();
 			countries = countries.trim();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
 		} catch (IOException e) {
-			e.printStackTrace();
+
+		}
+		catch(Exception e){
+
 		}
 
 		// Read Borders
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(mapFile));
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 			int bordersEncountered = 0;
@@ -106,9 +113,12 @@ public class Mapx {
 			borders = sb.toString();
 			borders = borders.trim();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+
 		} catch (IOException e) {
-			e.printStackTrace();
+
+		}
+		catch(Exception e){
+
 		}
 
 		return true;
@@ -122,13 +132,14 @@ public class Mapx {
 	 * @param mapFile
 	 * @return
 	 */
-	public Graph loadMap(String mapFile) {
+	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
 		try {
 			readMapIntoVariables(mapFile);
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
+			return false;
 		}
-		Graph gameGraph = Graph.getInstance();
+//		Graph gameGraph = Graph.getInstance();
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
 		while (countryScanner.hasNext()) {
@@ -155,7 +166,7 @@ public class Mapx {
 					Integer.parseInt(countryLineSubstrings[4]), neighbours);
 			gameGraph.getAdjList().add(country);
 		}
-		return gameGraph;
+		return true;
 	}
 
 	/**

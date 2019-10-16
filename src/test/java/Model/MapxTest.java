@@ -11,13 +11,13 @@ public class MapxTest {
     @Before
     public void setUp() throws Exception {
         map= new Mapx();
-        g=map.loadMap("src/main/resources/map.map");
+        map.loadMap("src/main/resources/map.map", g);
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception{
         map= new Mapx();
-        g=map.loadMap("src/main/resources/map.map");
+        map.loadMap("src/main/resources/map.map", g);
 
     }
 
