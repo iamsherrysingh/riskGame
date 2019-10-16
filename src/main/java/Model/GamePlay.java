@@ -115,18 +115,22 @@ public class GamePlay {
 	}
 	
 	public boolean editMap(String mapName) {
-		
-		File file = new File("src/main/resources/" + mapName);
-		if (file.exists()) {
-			graphObj=mapxObj.loadMap("src/main/resources/"+mapName);
+		try {
+			File file = new File("src/main/resources/" + mapName);
+			if (file.exists()) {
+				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+			} else {
+				System.out.println("New Game Graph created");
+				graphObj = Graph.getInstance();
+			}
+
+
+			//change current state
+			setCurrentState(State.mapEditor, "Map Editor");
 		}
-		else{
-			System.out.println("New Game Graph created");
-			graphObj=Graph.getInstance();
+		catch(IOException e){
+			System.out.println("IOException occured");
 		}
-		
-		//change current state
-		setCurrentState(State.mapEditor, "Map Editor");
 		
 		return true;
 	}
@@ -140,10 +144,15 @@ public class GamePlay {
 	}
 	
 	public boolean loadGameMap(String fileName) {
-		
-		graphObj = mapxObj.loadMap("src/main/resources/" + fileName);
-		
-		setCurrentState(State.editPlayer, "Edit Player");
+		try {
+			mapxObj.loadMap("src/main/resources/" + fileName, graphObj);
+			setCurrentState(State.editPlayer, "Edit Player");
+		}
+		catch(Exception e){
+			System.out.println("File not found");
+			return false;
+		}
+
 		
 		return true;
 	}
