@@ -469,9 +469,9 @@ public class GamePlay {
 
 		boolean fortifyOutput =false;
 
-		do {
+
 			fortifyOutput= Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
-		} while(fortifyOutput == false);
+
 
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
@@ -479,7 +479,7 @@ public class GamePlay {
 		//Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 
-		return true;
+		return fortifyOutput;
 	}
 	
 	
