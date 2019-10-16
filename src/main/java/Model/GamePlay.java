@@ -44,6 +44,7 @@ public class GamePlay {
     	currentState = newState;
     }
     
+    // Call Add Continent Function
 	public boolean addContinent(String continentName, Integer controlValue) {
 		
 		if(!Continent.addContinent(continentName, controlValue))
@@ -51,7 +52,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
+	// Call remove Continent Function
 	public boolean removeContinent(String continentName) {
 		
 		if(!Continent.removeContinent(continentName, graphObj))
@@ -59,7 +60,7 @@ public class GamePlay {
 		
 		return true;
 	}
-	
+	// Call Add Continent Function
 	public boolean addCountry(String countryName, String continentName) {
 			
 		if(!Country.addCountry(countryName, continentName, graphObj) )
