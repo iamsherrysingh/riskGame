@@ -58,6 +58,10 @@ public class _seha {
         Country.fortify("China", "Siberia", 1, gamePlay.getGraphObj());
         gamePlay.showMap();
 
+        gamePlay.removeNeighbor("Middle-East", "India");
+
+        gamePlay.showMap();
+
 
 
 
