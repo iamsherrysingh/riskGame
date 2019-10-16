@@ -414,12 +414,15 @@ public class Country {
 		Country toCountry= Country.getCountryByName(toCountryName, gameGraph);
 		Country fromcountry= Country.getCountryByName(fromCname, gameGraph);
 		if(!(fromcountry.getNumberOfArmies() - numberOfArmies >0)){
+			System.out.println("You must leave at least 1 army unit behind");
 			return false;
 		}
 		else if(fromcountry ==null || toCountry==null){
+			System.out.println("One or both countries do not exist");
 			return false;
 		}
 		else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))){
+			System.out.println("A player has to own both the countries");
 			return false;
 		}
 
