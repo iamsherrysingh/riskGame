@@ -48,10 +48,6 @@ public class GamePlay {
     	currentState = newState;
     }
     
-    
-    
-    
-    
 	public boolean addContinent(String continentName, Integer controlValue) {
 		
 		if(!Continent.addContinent(continentName, controlValue))
@@ -323,6 +319,7 @@ public class GamePlay {
 		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
 		
 		if(currentPlayerObj.getNumReinforceArmies() > 0) {
+
 			System.out.println("Please reinforce the remain " + currentPlayerObj.getNumReinforceArmies() + "armies");
 		}
 		else {
@@ -343,6 +340,8 @@ public class GamePlay {
 		//reduce the numberOfArmy form source country and add them to the destination country
 		//change the currentState
 		
+		if(!Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, graphObj))
+			return false;
 		
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");

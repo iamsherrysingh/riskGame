@@ -313,6 +313,7 @@ public class Controller {
 			eTask.name = tasksEnum.placeall;
 			tasksList.add(eTask);
 		}
+		
 		//Command reinforce
 		else if(cmdStr.equals("reinforce")) {
 			
@@ -359,6 +360,10 @@ public class Controller {
 			}
 			
 			tasksList.add(eTask);
+		}
+		else {
+			System.out.println("wrong Command");
+			return false;
 		}
 		
 		return true;
