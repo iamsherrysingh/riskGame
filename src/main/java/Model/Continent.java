@@ -50,6 +50,11 @@ public class Continent {
     	this.owner = owner;
     }
 
+    /**
+	 * This checks whether a continent exist or not in Database.continentList
+	 *
+	 * @param continentToCheck
+	 */
     public static boolean checkExistenceOfContinent(String continentToCheck) {
 		for (Continent singleContinent : Database.getInstance().getContinentList()) {
 			if (singleContinent.getName().equalsIgnoreCase(continentToCheck)) {
@@ -83,6 +88,11 @@ public class Continent {
 		}
 	}
 
+	/**
+	 * if the entered continent exists, it removes all the countries under that continent and after that removes that continent from the Database.continentList
+	 *
+	 * @param continentToRemove
+	 */
 	public static boolean removeContinent(String continentToRemove, Graph gameGraph) {
 		Integer serialNumberOfContinentToRemove = -1;
 		Continent continent = null;
@@ -111,6 +121,12 @@ public class Continent {
 		return true;
 	}
 
+	
+	/**
+	 * This create and returns list of countries in a continent
+	 *
+	 *@return ArrayList of countries in a continent
+	 */
 	public static ArrayList<Country> getCountryList(Continent continent, Graph gameGraph) {
 		ArrayList<Country> countryList = new ArrayList<Country>();
 		for (Country country : gameGraph.getAdjList()) {
@@ -122,6 +138,12 @@ public class Continent {
 		return countryList;
 	}
 
+	/**
+	 * This provides with the instance at which a particular continent is present in Database.continentList  using continentNumber
+	 *
+	 * @param continentNumber
+	 * @return instance for continentNumber
+	 */
 	public static Continent getContinentById(Integer continentNumber) {
 		Continent continent = null;
 		for (Continent continent1 : Database.getInstance().getContinentList()) {
@@ -132,6 +154,12 @@ public class Continent {
 		return continent;
 	}
 
+	/**
+	 * This provides with the instance at which a particular continent is present in Database.continentList using continentName 
+	 *
+	 * @param continentName
+	 * @return instance for continentName
+	 */
 	public static Continent getContinentByName(String continentName) {
 		Continent continent = null;
 		for (Continent continent1 : Database.getInstance().getContinentList()) {
@@ -142,12 +170,14 @@ public class Continent {
 		return continent;
 	}
 
+	
 	public static boolean continentBelongToPlayer(Player playerName, String continentName, Graph gameGraph) {
 		Continent continentInQuestion = Continent.getContinentByName(continentName);
 		// TODO
 		return true;
 	}
     
+	
     public static void updateContinitsOwner(Graph gameGraph) {
     	
     	for(Continent continentItr : Database.continentList) {

@@ -6,6 +6,10 @@ import java.util.*;
 
 public class GamePlay {
 	
+	/**
+	 * This file holds most of the utility functions that call other methods for implementation in gamePlay mode
+	 */
+	
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private Mapx mapxObj;
@@ -236,6 +240,7 @@ public class GamePlay {
 		return true;
 	}
 	
+	
 	public boolean placeArmy(String country) {
 		
 		Country targetCountry= Country.getCountryByName(country, graphObj);
@@ -345,17 +350,18 @@ public class GamePlay {
 		//check: if there is not a way between source and destination, return false
 		//reduce the numberOfArmy form source country and add them to the destination country
 		//change the currentState
-		
-		if(!Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, graphObj))
-			return false;
-		
+
+		boolean fortifyOutput =false;
+
+		do {
+			fortifyOutput= Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
+		} while(fortifyOutput == false);
+
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
-				
+		
 		//Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
-		Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
 
 		return true;
 	}
