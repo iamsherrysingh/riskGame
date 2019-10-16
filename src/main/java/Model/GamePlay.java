@@ -16,13 +16,14 @@ public class GamePlay {
 	private Graph graphObj;
 	private Database databaseObj;
 	private CurrentPlayer currentPlayerObj;
-	
+
 	
 	private GamePlay() {
 		currentState = State.initializeGame;
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
+    	graphObj=Graph.getInstance();
     }
 
     public static GamePlay getInstance(){
@@ -50,7 +51,7 @@ public class GamePlay {
      * @param newStateStr
      */
     private void setCurrentState(State newState, String newStateStr) {
-    	System.out.println("State of game changed to: " + newStateStr);
+    	System.out.println("<== State of game changed to: " + newStateStr+" ==>");
     	currentState = newState;
     }
     
@@ -472,7 +473,9 @@ public class GamePlay {
 				
 		//Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-		
+
+		Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
+
 		return true;
 	}
 	
