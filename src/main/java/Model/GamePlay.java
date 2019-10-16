@@ -471,7 +471,9 @@ public class GamePlay {
 
 
 			fortifyOutput= Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj());
-
+		if (fortifyOutput==false){
+			return false;
+		}
 
 		//Change current state to next state
 		setCurrentState(State.reinforcementPhase, "Reinforcement");
