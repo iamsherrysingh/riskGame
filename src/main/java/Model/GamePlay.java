@@ -6,6 +6,10 @@ import java.util.*;
 
 public class GamePlay {
 	
+	/**
+	 * This file holds most of the utility functions that call other methods for implementation in gamePlay mode
+	 */
+	
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private Mapx mapxObj;
@@ -239,6 +243,7 @@ public class GamePlay {
 		
 		return true;
 	}
+	
 	
 	public boolean placeArmy(String country) {
 		
