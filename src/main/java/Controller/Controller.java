@@ -360,6 +360,10 @@ public class Controller {
 			
 			tasksList.add(eTask);
 		}
+		else {
+			System.out.println("wrong Command");
+			return false;
+		}
 		
 		return true;
 	}
