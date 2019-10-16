@@ -42,8 +42,9 @@ public class Controller {
 	
 	// parse input Instruction -> Command , Switch, Data
 	boolean getCommand(ArrayList<extractedTasks> tasksList){
-		
-		System.out.println("Enter Command");
+
+		System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
+		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();
 		List<String> command = Arrays.asList(instruction.split(" "));

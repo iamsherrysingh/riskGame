@@ -8,7 +8,7 @@ import java.io.File;
 public class _seha {
     public static void main(String[] args) {
         GamePlay gamePlay= GamePlay.getInstance();
-        Graph g = gamePlay.getGraphObj();
+
 
 //        g.showMap();
  //      Country.removeNeighbour("Greenland", "Ontario", g);
@@ -47,10 +47,16 @@ public class _seha {
     //    getMapxObj().loadMap("masp.map", Graph.getInstance());
     //    gamePlay.saveMap("map.map");
         gamePlay.editMap("map.map");
+
+
+
+
+        gamePlay.populateCountries();
+        gamePlay.placeAll();
         gamePlay.showMap();
-        g= gamePlay.getGraphObj();
-        Country.addNeighbour("Central-America", "Greenland",g);
-        g.showMap();
+        System.out.println("===================");
+        Country.fortify("China", "Siberia", 1, gamePlay.getGraphObj());
+        gamePlay.showMap();
 
 
 
