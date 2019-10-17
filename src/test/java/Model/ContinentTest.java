@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.crypto.Data;
-
 public class ContinentTest {
 	static GamePlay gamePlay;
 
