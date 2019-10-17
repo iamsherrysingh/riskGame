@@ -46,6 +46,14 @@ public class MapxTest {
     }
 
     @Test
+    public void validateMap() throws IOException {
+        //test if mapName is null
+        gamePlay.loadGameMap("map.map");
+        boolean validmap= mapx.validateMap(gamePlay.getGraphObj());
+        assertTrue(validmap == true);
+    }
+
+    @Test
     public void saveMap2() throws IOException {
         // test for overwriting the default map
         gamePlay.loadGameMap("map.map");
