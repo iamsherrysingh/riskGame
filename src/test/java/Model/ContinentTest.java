@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.crypto.Data;
+
 public class ContinentTest {
 	static GamePlay gamePlay;
 
@@ -17,6 +19,7 @@ public class ContinentTest {
 
 	@After
 	public void after() throws Exception {
+	    gamePlay.getGraphObj().getAdjList().clear();
 		gamePlay = null;
 		Database.getInstance().getContinentList().clear();
 		Database.getInstance().getPlayerList().clear();
@@ -42,4 +45,16 @@ public class ContinentTest {
 		Continent.addContinent("Kammulaska", 8);
 		assertTrue(Database.getInstance().getContinentList().contains(Continent.getContinentByName("kAMMUlasKa")));
 	}
+
+    @Test
+    public void removeContinent(){
+        Continent.removeContinent("Europe", gamePlay.getGraphObj());
+        Continent continent= Continent.getContinentByName("Europe");
+        if(continent == null){
+            assertTrue(true);
+        }
+        else{
+            assertFalse(true);
+        }
+    }
 }

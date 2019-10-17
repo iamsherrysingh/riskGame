@@ -17,6 +17,7 @@ public class PlayerTest {
 
 	@After
 	public void after() throws Exception {
+        gamePlay.getGraphObj().getAdjList().clear();
 		gamePlay = null;
 		Database.getInstance().getContinentList().clear();
 		Database.getInstance().getPlayerList().clear();

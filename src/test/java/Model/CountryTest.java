@@ -1,7 +1,5 @@
 package Model;
 
-import Model.*;
-
 import org.junit.*;
 
 import static org.junit.Assert.*;
@@ -13,12 +11,6 @@ public class CountryTest {
     public void setUp() throws Exception {
         gamePlay= GamePlay.getInstance();
         gamePlay.editMap("map.map");
-        gamePlay.showMap();
-//        Country.removeCountry("India", gamePlay.getGraphObj());
-//        System.out.println("===========");
-//        gamePlay.showMap();
-
-        //gamePlay.showMap();
     }
 
     @After
@@ -30,30 +22,14 @@ public class CountryTest {
     }
 
     @Test
-    public void addNeighbour() {
-    }
-
-    @Test
-    public void removeNeighbour() throws Exception {
-
-    }
-
-    @Test
-    public void addCountry() {
-    }
-
-    @Test
-    public void addNeighbour1() {
-    }
-
-    @Test
     public void removeCountry() {
-        Country.removeCountry("India", gamePlay.getGraphObj());
-        Country india= Country.getCountryByName("India", gamePlay.getGraphObj());
         boolean removedCounryExists=false;
-        if(india != null)
+        Country.removeCountry("India", gamePlay.getGraphObj());
+        Country indiaObject= Country.getCountryByName("India", gamePlay.getGraphObj());
+
+        if(indiaObject != null)
             removedCounryExists= true;
-        assertEquals(removedCounryExists, false);
+        assertFalse(removedCounryExists);
     }
 
     @Test
@@ -79,22 +55,6 @@ public class CountryTest {
     }
 
     @Test
-    public void getCountryByName() {
-    }
-
-    @Test
-    public void getCountryByNumber() {
-    }
-
-    @Test
-    public void assignOwner() {
-    }
-
-    @Test
-    public void changeOwner() {
-    }
-
-    @Test
     public void checkExistenceOfCountry() {
         assertFalse(Country.checkExistenceOfCountry("Bir", gamePlay.getGraphObj()));
     }
@@ -104,24 +64,4 @@ public class CountryTest {
         assertTrue(Country.checkExistenceOfCountry("chINa", gamePlay.getGraphObj()));
     }
 
-    @Test
-    public void allCountriesPopulated() {
-    }
-
-    @Test
-    public void addArmiesToCountry() {
-    }
-
-    @Test
-    public void removeArmiesFromCountry() {
-    }
-
-    @Test
-    public void fortify() {
-
-    }
-
-    @Test
-    public void updatePlayerListAndDeclareWinner() {
-    }
 }
