@@ -302,12 +302,13 @@ public class GamePlay {
             if(countryToBePopulated.getOwner()==null){
                 Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
                 countryToBePopulated.setOwner(assignedPlayer.getName());
-                assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
+               assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
+                playerNumberToBeAssigned++;
             }
             else{
                 continue;
             }
-            playerNumberToBeAssigned++;
+
 
             if(playerNumberToBeAssigned > Database.getInstance().getPlayerList().size()){
                 playerNumberToBeAssigned =1;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
     String name;
     Integer number, numberOfArmies;
-    ArrayList<Integer> myCountries = new ArrayList<Integer>();;
+    ArrayList<Integer> myCountries = new ArrayList<Integer>();
 
     public String getName() {
         return name;
