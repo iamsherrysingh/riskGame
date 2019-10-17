@@ -58,6 +58,10 @@ public class Player {
             System.out.println("=======> This player exists <========");
             return false;
         }
+        else if(playerName.trim().length() ==0){
+            System.out.println("=======> Please enter a name for the player <========");
+            return false;
+        }
         Integer id= Database.getInstance().getPlayerList().size() + 1;
 
         Player player= new Player(id, playerName,noOfArmies);
