@@ -551,7 +551,8 @@ class CurrentPlayer{
     	if( currentState == State.reinforcementPhase) {
     		Continent.updateContinitsOwner(gameGraph);
     		calculateReinforceentArmies();
-    		System.out.println("You have " + getNumReinforceArmies() + " armies" );
+    		System.out.println("You have " + getNumReinforceArmies() + " "
+    				+ "armies" );
     	}
 	}
 	
