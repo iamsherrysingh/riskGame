@@ -206,9 +206,9 @@ public class Country {
 		// Now fixing the serial number mess after a country is removed
 		// serial number for every country after the removedd country is decremented
 		for (int i = countryToRemove.getNumber() - 1; i < gameGraph.getAdjList().size(); i++) {
-			Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
-			Integer newSerialNumber = oldSerialNumber - 1;
-			gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
+				Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
+				Integer newSerialNumber = oldSerialNumber - 1;
+				gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
 		}
 
 		// neighbour list updated for every affected country

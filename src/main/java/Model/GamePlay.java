@@ -20,6 +20,11 @@ public class GamePlay {
 	private Mapx mapxObj;
 	private Graph graphObj;
 	private Database databaseObj;
+
+	public CurrentPlayer getCurrentPlayerObj() {
+		return currentPlayerObj;
+	}
+
 	private CurrentPlayer currentPlayerObj;
 
 	
@@ -297,12 +302,13 @@ public class GamePlay {
             if(countryToBePopulated.getOwner()==null){
                 Player assignedPlayer= Player.getPlayerByNumber(playerNumberToBeAssigned);
                 countryToBePopulated.setOwner(assignedPlayer.getName());
-                assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
+               assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
+                playerNumberToBeAssigned++;
             }
             else{
                 continue;
             }
-            playerNumberToBeAssigned++;
+
 
             if(playerNumberToBeAssigned > Database.getInstance().getPlayerList().size()){
                 playerNumberToBeAssigned =1;
@@ -488,6 +494,11 @@ class CurrentPlayer{
 	private static CurrentPlayer currentPlayerObj = null;
 	private ListIterator<Player> currentPlayerItr;
 	private Player currentPlayer;
+
+	public static CurrentPlayer getCurrentPlayerObj() {
+		return currentPlayerObj;
+	}
+
 	private Integer numReinforceArmies;
 	
 	private CurrentPlayer() {
@@ -559,7 +570,7 @@ class CurrentPlayer{
 	/**
 	 * Calculate Reinforcement Armies 
 	 */
-	private void calculateReinforceentArmies() {
+	public void calculateReinforceentArmies() {
     	Integer numArmies = 0;
     	
     	Integer numOfCountries = currentPlayer.myCountries.size();

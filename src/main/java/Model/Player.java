@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
     String name;
     Integer number, numberOfArmies;
-    ArrayList<Integer> myCountries = new ArrayList<Integer>();;
+    ArrayList<Integer> myCountries = new ArrayList<Integer>();
 
     public String getName() {
         return name;
@@ -56,6 +56,10 @@ public class Player {
     public static boolean addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
             System.out.println("=======> This player exists <========");
+            return false;
+        }
+        else if(playerName.trim().length() ==0){
+            System.out.println("=======> Please enter a name for the player <========");
             return false;
         }
         Integer id= Database.getInstance().getPlayerList().size() + 1;

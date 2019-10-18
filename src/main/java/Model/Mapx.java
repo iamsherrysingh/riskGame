@@ -138,7 +138,7 @@ public class Mapx {
 			System.out.println(f.getMessage());
 			return false;
 		}
-//		Graph gameGraph = Graph.getInstance();
+		gameGraph.getAdjList().clear(); //Clearing gameGraph before laoding new map
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
 		while (countryScanner.hasNext()) {
