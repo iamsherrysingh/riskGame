@@ -3,7 +3,8 @@ package Model;
 import java.util.*;
 
 /**
- * This class maintains all the data members and methods related to each country.
+ * This class maintains all the data members and methods related to each
+ * country.
  */
 public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
@@ -110,6 +111,7 @@ public class Country {
 	 * @param newCountry
 	 * @param inContinent
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
 		if (newCountry.length() == 0) {
@@ -140,6 +142,7 @@ public class Country {
 	 * @param countryWithNewNeighbour
 	 * @param neighbour
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
 		Integer numberOfCountryWithNewNeighbour = -1;
@@ -185,6 +188,7 @@ public class Country {
 	 *
 	 * @param NameOfCountryToRemove
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean removeCountry(String NameOfCountryToRemove, Graph gameGraph) {
 		Country countryToRemove = null;
@@ -206,9 +210,9 @@ public class Country {
 		// Now fixing the serial number mess after a country is removed
 		// serial number for every country after the removedd country is decremented
 		for (int i = countryToRemove.getNumber() - 1; i < gameGraph.getAdjList().size(); i++) {
-				Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
-				Integer newSerialNumber = oldSerialNumber - 1;
-				gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
+			Integer oldSerialNumber = gameGraph.getAdjList().get(i).getNumber();
+			Integer newSerialNumber = oldSerialNumber - 1;
+			gameGraph.getAdjList().get(i).setNumber(newSerialNumber);
 		}
 
 		// neighbour list updated for every affected country
@@ -233,6 +237,7 @@ public class Country {
 	 * @param firstCountryName
 	 * @param secondCountryName
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean removeNeighbour(String firstCountryName, String secondCountryName, Graph gameGraph) {
 
@@ -326,7 +331,7 @@ public class Country {
 			if (country.getName().equalsIgnoreCase(countryName)) {
 				returnedCountry = country;
 			}
-		}		
+		}
 		return returnedCountry;
 	}
 
@@ -344,7 +349,7 @@ public class Country {
 				returnedCountry = country;
 			}
 		}
-		
+
 		return returnedCountry;
 	}
 
@@ -354,6 +359,7 @@ public class Country {
 	 * @param ownerName
 	 * @param countryName
 	 * @param g
+	 * @return true or false
 	 */
 	public static boolean assignOwner(String ownerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
@@ -375,6 +381,7 @@ public class Country {
 	 * @param newOwnerName
 	 * @param countryName
 	 * @param g
+	 * @return true or false
 	 */
 	public static boolean changeOwner(String newOwnerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
@@ -390,6 +397,7 @@ public class Country {
 	 *
 	 * @param countryToCheck
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
@@ -404,6 +412,7 @@ public class Country {
 	 * checks if all the countries has an owner
 	 *
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean allCountriesPopulated(Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
@@ -420,6 +429,7 @@ public class Country {
 	 * @param countryName
 	 * @param numberOfArmies
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean addArmiesToCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
 		Country countryToReinforce = null;
@@ -442,6 +452,7 @@ public class Country {
 	 * @param countryName
 	 * @param numberOfArmies
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean removeArmiesFromCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
 		Country countryToWeaken = null;
@@ -470,32 +481,27 @@ public class Country {
 	 * @param toCountryName
 	 * @param numberOfArmies
 	 * @param gameGraph
+	 * @return true or false
 	 */
 	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		Country toCountry= Country.getCountryByName(toCountryName, gameGraph);
-		Country fromcountry= Country.getCountryByName(fromCname, gameGraph);
+		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
+		Country fromcountry = Country.getCountryByName(fromCname, gameGraph);
 
-		if(fromcountry ==null || toCountry==null){
+		if (fromcountry == null || toCountry == null) {
 			System.out.println("One or both countries do not exist");
 			return false;
-		}
-		else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))){
+		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))) {
 			System.out.println("A player has to own both the countries");
 			return false;
-		}
-		else if(!(toCountry.getNeighbours().contains(fromcountry.getNumber()))){
+		} else if (!(toCountry.getNeighbours().contains(fromcountry.getNumber()))) {
 			System.out.println("Both countries should be adjacent");
 			return false;
-		}
-		else if(!(fromcountry.getNumberOfArmies() - numberOfArmies >0)){
+		} else if (!(fromcountry.getNumberOfArmies() - numberOfArmies > 0)) {
 			System.out.println("You must leave at least 1 army unit behind");
 			return false;
 		}
 
-
-
-		ArrayList<Integer> toCountryNeighbours= toCountry.getNeighbours();
-
+		ArrayList<Integer> toCountryNeighbours = toCountry.getNeighbours();
 
 		fromcountry.setNumberOfArmies(fromcountry.getNumberOfArmies() - numberOfArmies);
 		toCountry.setNumberOfArmies(toCountry.getNumberOfArmies() + numberOfArmies);
@@ -507,7 +513,8 @@ public class Country {
 
 	/**
 	 * updates the player list, remove the player if 0 country is owned by that
-	 * player or declares winner if every country in Database.adjlist is owned by a single player
+	 * player or declares winner if every country in Database.adjlist is owned by a
+	 * single player
 	 *
 	 * @param g
 	 */
