@@ -22,6 +22,7 @@ public class Mapx {
 	 *
 	 * @param mapFile
 	 * @throws FileNotFoundException
+	 * @return true or false
 	 */
 	private boolean readMapIntoVariables(String mapFile) throws FileNotFoundException {
 		// Read Continents
@@ -129,7 +130,7 @@ public class Mapx {
 	 * holds an ArrayList of countries
 	 *
 	 * @param mapFile
-	 * @return
+	 * @return true or false
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
 		try {
@@ -172,7 +173,7 @@ public class Mapx {
 	 * This is a utility method that creates a plain text file
 	 *
 	 * @param mapName
-	 * @return
+	 * @return file 
 	 * @throws IOException
 	 */
 	public static File createFile(String mapName) throws IOException {
@@ -210,6 +211,7 @@ public class Mapx {
 	 *
 	 * @param gameGraph
 	 * @throws IOException
+	 * @return true or false
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
         if(validateMap(gameGraph) == false){
@@ -297,7 +299,7 @@ public class Mapx {
 	 * This method checks the gameGraph for graph connectivity
 	 *
 	 * @param gameGraph
-	 * @return
+	 * @return true or false
 	 */
 	public static boolean validateMap(Graph gameGraph) {
 		Integer startPosition = 1;

@@ -52,6 +52,7 @@ public class Player {
      * This adds a new player in Database.playerlist
      * @param playerName
      * @param noOfArmies
+	 * @return true or false
      */
     public static boolean addPlayer(String playerName, Integer noOfArmies){
         if(Player.getPlayerByName(playerName)!=null){
@@ -72,6 +73,7 @@ public class Player {
     /**
      * This removes a player from Database.playerlist
      * @param playerName
+	 * @return true or false
      */
     public static boolean removePlayer(String playerName){
         Player player= Player.getPlayerByName(playerName);
@@ -120,6 +122,8 @@ public class Player {
     
     /**
      *  check if the number of remaining armies that can be placed is equal to zero for every player
+     * 
+	 * @return true or false
      */
     public static boolean allPlayersRemainingArmiesExhausted(){
         for(Player player: Database.getInstance().getPlayerList()){
