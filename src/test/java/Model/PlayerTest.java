@@ -6,6 +6,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * It contains different Junit tests for the methods defined in {@link Model.Player}
+ * 
+ * @see Player.java
+ * @author birjotsingh17
+ */
+
 public class PlayerTest {
 	static GamePlay gamePlay;
 

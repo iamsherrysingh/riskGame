@@ -4,6 +4,13 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * It contains different Junit tests for the methods defined in {@link Model.Country}
+ * 
+ * @see Country.java
+ * @author birjotsingh17
+ */
+
 public class CountryTest {
     static GamePlay gamePlay;
 

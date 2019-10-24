@@ -7,6 +7,13 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ * It contains different Junit tests for the methods defined in {@link Model.GamePlay}
+ * 
+ * @see GamePlay.java
+ * @author birjotsingh17
+ */
+
 public class GamePlayTest {
     static GamePlay gamePlay;
 
