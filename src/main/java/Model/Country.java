@@ -115,6 +115,7 @@ public class Country {
 	 */
 	public static boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
 		if (newCountry.length() == 0) {
+			System.out.println("Enter a name for the new country");
 			return false;
 		}
 		Integer continentNumber = -1;
@@ -128,6 +129,13 @@ public class Country {
 			System.out.println("Perhaps add one first");
 			return false;
 		}
+		
+		if(Country.getCountryByName(newCountry, gameGraph) !=null) {
+			System.out.println("Country already exists");
+			return false;
+		}
+		
+		
 		Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, null, null, 0, 0,
 				new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
