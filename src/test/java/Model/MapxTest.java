@@ -7,6 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.*;
 
+/**
+ * It contains different Junit tests for the methods defined in {@link Model.Mapx}
+ * 
+ * @see Mapx.java
+ * @author birjotsingh17
+ */
+
 public class MapxTest {
     static GamePlay gamePlay;
     Mapx mapx;
