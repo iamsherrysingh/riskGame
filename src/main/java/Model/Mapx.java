@@ -215,7 +215,6 @@ public class Mapx {
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
         if(validateMap(gameGraph) == false){
-            System.out.println("Game Graph is not a connected graph");
             return false;
         }
         mp=mp.trim();
@@ -325,8 +324,10 @@ public class Mapx {
 			}
 		}
 		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
+			System.out.println("This map is valid.");
 			return true;
 		}
+		System.out.println("This map is not connected.");
 		return false;
 	}
 
