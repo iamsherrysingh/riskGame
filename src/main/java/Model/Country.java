@@ -131,7 +131,7 @@ public class Country {
 		}
 		
 		if(Country.getCountryByName(newCountry, gameGraph) !=null) {
-			System.out.println("Country already exists");
+			System.out.println("Country "+newCountry+" already exists");
 			return false;
 		}
 		
@@ -139,6 +139,7 @@ public class Country {
 		Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, null, null, 0, 0,
 				new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
+		System.out.println(newCountry+ " added.");
 		return true;
 	}
 
@@ -235,6 +236,7 @@ public class Country {
 			}
 			country.setNeighbours(newNeighbourList);
 		}
+		System.out.println(NameOfCountryToRemove+" removed.");
 		return true;
 	}
 
