@@ -16,12 +16,21 @@ import org.junit.Test;
 public class PlayerTest {
 	static GamePlay gamePlay;
 
+	/**
+	 * This method runs before every test method and creates an object for GamePlay and also loads a map
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void before() throws Exception {
 		 gamePlay= GamePlay.getInstance();
 		 gamePlay.editMap("map.map");
 	}
 
+	/**
+	 * This method runs after each and every test method and clears the instance changed by the test method
+	 * @throws Exception
+	 */
 	@After
 	public void after() throws Exception {
         gamePlay.getGraphObj().getAdjList().clear();
@@ -30,6 +39,9 @@ public class PlayerTest {
 		Database.getInstance().getPlayerList().clear();
 	}
 
+	/**
+	 * This is a jUnit test for {@link Model.Player#addPlayer(String, Integer)}
+	 */
 	@Test
 	public void addPlayer1() {
 		boolean playerFound = false;
@@ -38,6 +50,9 @@ public class PlayerTest {
 		assertTrue(playerFound);
 	}
 
+	/**
+	 * This is a jUnit test for {@link Model.Player#addPlayer(String, Integer)}
+	 */
 	@Test
 	public void addPlayer2() {
 		assertFalse(Player.addPlayer(" ", 20));
