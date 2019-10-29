@@ -7,22 +7,40 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.*;
 
+/**
+ * It contains different Junit tests for the methods defined in {@link Model.Mapx}
+ * 
+ * @see Mapx.java
+ * @author birjotsingh17
+ */
+
 public class MapxTest {
     static GamePlay gamePlay;
     Mapx mapx;
 
+    /**
+	 * This method runs before every test method and creates an object for GamePlay and Mapx
+	 */
     @Before
     public void setUp() {
         gamePlay = GamePlay.getInstance();
         mapx= GamePlay.getInstance().getMapxObj();
     }
 
+    /**
+	 * This method runs after each and every test method and clears the instance changed by the test method
+	 */
     @After
     public void tearDown() {
         gamePlay.getGraphObj().getAdjList().clear();
         gamePlay = null;
     }
 
+   
+    /**
+     *  This is a jUnit test for {@link Model.Mapx#loadMap(String, Graph)}
+     * @throws Exception
+     */
     @Test
     public void loadMap() throws Exception {
         gamePlay.loadGameMap("map.map");
@@ -34,6 +52,10 @@ public class MapxTest {
             assertTrue(false);
     }
 
+    /**
+     *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}
+     * @throws IOException
+     */
     @Test
     public void saveMap1() throws IOException {
         //test if mapName is null
@@ -45,6 +67,10 @@ public class MapxTest {
         assertTrue(exists == false);
     }
 
+    /**
+     *  This is a jUnit test for {@link Model.Mapx#validateMap(Graph)}
+     * @throws IOException
+     */
     @Test
     public void validateMap() throws IOException {
         //test if mapName is null
@@ -53,6 +79,10 @@ public class MapxTest {
         assertTrue(validmap == true);
     }
 
+    /**
+     *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}
+     * @throws IOException
+     */
     @Test
     public void saveMap2() throws IOException {
         // test for overwriting the default map

@@ -187,8 +187,9 @@ public class GamePlay {
 			if (file.exists()) {
 				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
 			} else {
-				System.out.println("New Game Graph created");
 				graphObj = Graph.getInstance();
+				System.out.println("New Game Graph created");
+
 			}
 
 
@@ -198,7 +199,6 @@ public class GamePlay {
 		catch(IOException e){
 			System.out.println("IOException occured");
 		}
-		
 		return true;
 	}
 		
@@ -443,11 +443,11 @@ public class GamePlay {
 	/**
 	 * Fortify Army Function
 	 * @param sourceCountry
-	 * @param destinationCOuntry
+	 * @param destinationCountry
 	 * @param numberOfArmy
 	 * @return
 	 */
-	public boolean fortifyArmy(String sourceCountry, String destinationCOuntry, Integer numberOfArmy) {
+	public boolean fortifyArmy(String sourceCountry, String destinationCountry, Integer numberOfArmy) {
 		
 		//check: if sourceCountry does not belong to the currentPlayer, return false
 		//check: if destinationCountry does not belong to the currentPlayer, return false
@@ -457,7 +457,7 @@ public class GamePlay {
 		//reduce the numberOfArmy form source country and add them to the destination country
 		//change the currentState
 
-		if(!Country.fortify(sourceCountry, destinationCOuntry, numberOfArmy, getGraphObj()))
+		if(!Country.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
 
