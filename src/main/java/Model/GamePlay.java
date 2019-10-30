@@ -21,7 +21,6 @@ public class GamePlay {
 	private Mapx mapxObj;
 	private Graph graphObj;
 	private Database databaseObj;
-	private ArrayList<Card> cardsList;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -36,8 +35,6 @@ public class GamePlay {
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
-    	cardsList = new ArrayList<Card>();
-    	initilizaGamecards();
     }
 
     public static GamePlay getInstance() {
@@ -58,30 +55,6 @@ public class GamePlay {
     	return currentState;
     }
     
-    private void initilizaGamecards() {
-    	
-    	Card cardObj;
-    	
-    	for(int i=0; i < 14; i++) {	
-    		cardObj = new Card(cardType.Infantry,i+1,0);
-    		cardsList.add(cardObj);
-    	}
-    	
-    	for(int i=0; i < 14; i++) {	
-    		cardObj = new Card(cardType.Cavalry,i+15,0);
-    		cardsList.add(cardObj);
-    	}
-    	
-    	for(int i=0; i < 14; i++) {	
-    		cardObj = new Card(cardType.Artillery,i+29,0);
-    		cardsList.add(cardObj);
-    	}
-    	
-    	for(int i=0; i < 2; i++) {	
-    		cardObj = new Card(cardType.Wild,i+43,0);
-    		cardsList.add(cardObj);
-    	}
-    }
     /**
      * Set Current State of the game
      * @param newState
