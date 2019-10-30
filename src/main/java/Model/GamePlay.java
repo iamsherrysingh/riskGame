@@ -21,6 +21,7 @@ public class GamePlay {
 	private Mapx mapxObj;
 	private Graph graphObj;
 	private Database databaseObj;
+	private CardPlay cardPlayObj;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -35,6 +36,7 @@ public class GamePlay {
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
+    	cardPlayObj = CardPlay.getInstance();
     }
 
     public static GamePlay getInstance() {
