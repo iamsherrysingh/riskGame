@@ -97,4 +97,11 @@ class CardPlay{
         
         return tempCard;
   	}
+  	
+  	public void refundCard(Card cardObj) {
+  		
+  		cardObj.setOwner(0);
+  		cardsList.add(cardObj);
+  		
+  	}
 }
