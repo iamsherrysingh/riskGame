@@ -104,4 +104,23 @@ class CardPlay{
   		cardsList.add(cardObj);
   		
   	}
+  	
+  	public boolean checkExchangeCardsValidation(Card cardObj1, Card cardObj2, Card cardObj3) {
+  		
+  		if( cardObj1.getCardType() == cardType.Wild || 
+  			cardObj2.getCardType() == cardType.Wild || 
+  			cardObj3.getCardType() == cardType.Wild )
+  			return true;
+  		
+  		if( cardObj1.getCardType() == cardObj2.getCardType()) {
+  			if( cardObj2.getCardType() == cardObj3.getCardType() )
+  				return true;
+  		}
+  		else
+  			if( cardObj1.getCardType() != cardObj3.getCardType() && cardObj2.getCardType() != cardObj3.getCardType())
+  				return true;
+  		
+  		return false;
+  	}
+  	
 }
