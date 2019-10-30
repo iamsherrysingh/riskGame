@@ -11,6 +11,7 @@ import java.util.*;
  */
 public class GamePlay {
 	
+	
 	/**
 	 * This file holds most of the utility functions that call other methods for implementation in gamePlay mode
 	 */
@@ -373,7 +374,7 @@ public class GamePlay {
 	 * @return
 	 */
 	public boolean placeAll() {
-
+		try {
         while( ! Player.allPlayersRemainingArmiesExhausted()) {
             for (Country thisCountry : graphObj.getAdjList()) {
                 Player playerThatOwnsThisCountry= Player.getPlayerByName(thisCountry.getOwner());
@@ -383,7 +384,11 @@ public class GamePlay {
                 }
             }
         }
-        
+		}
+		catch(Exception e)
+		{
+			System.out.println("errrroeee: "+e.getMessage());
+		}
         // change state of game
         setCurrentState(State.reinforcementPhase, "Reinforcement");
         
