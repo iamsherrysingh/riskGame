@@ -9,7 +9,7 @@ import java.util.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay {
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for implementation in gamePlay mode
@@ -483,6 +483,21 @@ public class GamePlay {
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 		
 		return true;
+	}
+
+	@Override
+	public void notifyObservers() {
+
+	}
+
+	@Override
+	public void addObserver(Object observer) {
+
+	}
+
+	@Override
+	public void detachObserver(Object observer) {
+
 	}
 }
 
