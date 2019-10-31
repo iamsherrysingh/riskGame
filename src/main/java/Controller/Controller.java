@@ -23,6 +23,8 @@ enum tasksEnum {
 	populatecountries,
 	placearmy,
 	placeall,
+	exchangecards,
+	ignoreexchangecards,
 	reinforce,
 	fortify,
 	ignorefortify
@@ -320,6 +322,34 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		
+		//Command exchangeCards
+		else if(cmdStr.equalsIgnoreCase("exchangecards")) {
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			ExtractedTasks eTask = new ExtractedTasks();
+			String firstData = cmdItr.next();
+			if(!cmdItr.hasNext()) {
+				eTask.name = tasksEnum.ignoreexchangecards;
+				eTask.taskData.add(firstData);
+			}
+			else {
+				eTask.name = tasksEnum.exchangecards;
+				eTask.taskData.add(firstData);
+				eTask.taskData.add(cmdItr.next());
+				
+				if(!cmdItr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				eTask.taskData.add(cmdItr.next());
+			}
+			
+			tasksList.add(eTask);
+		}
+		
 		//Command reinforce
 		else if(cmdStr.equalsIgnoreCase("reinforce")) {
 			
@@ -467,6 +497,37 @@ public class Controller {
 				}
   			}
 		}
+		// check commands that are valid in state of exchangeCardsPhase
+		else if(gamePlayObj.getCurrentState() == State.exchangeCards){
+  			for(ExtractedTasks itr:tasksList) {
+				switch (itr.name){
+					case showmap:
+						break;
+					case exchangecards:
+						for(int j=0; j < 3; j++) {
+							String cardNumber = itr.taskData.get(j);	
+							//check if the data related to the card's numbers in exchange cards command is numeric
+							for(int i=0; i<cardNumber.length(); i++) {
+								if(!Character.isDigit(cardNumber.charAt(i))){
+									System.out.println("Invalid command: Card's Number should be digit");
+									return false;
+								}
+							}
+						}
+						break;	
+					case ignoreexchangecards:
+						String tmpData = itr.taskData.get(0);
+						if(!tmpData.equals("-none")) {
+							System.out.println("Invalid Command: For withdraw of exchanging cards should use \"-none\"");
+							return false;
+						}
+						break;
+					default:
+						System.out.println("Invalid command in the current state");
+						return false;
+				}
+			}
+		}
 		// check commands that are valid in state of reinforcementPhase
 		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
   			for(ExtractedTasks itr:tasksList) {
@@ -499,8 +560,8 @@ public class Controller {
 						break;	
 					case ignorefortify:
 						String tmpData = itr.taskData.get(0);
-						if(!tmpData.equals("none")) {
-							System.out.println("Invalid Command: For withdraw of moving in fortify state should use \"none\"");
+						if(!tmpData.equals("-none")) {
+							System.out.println("Invalid Command: For withdraw of moving in fortify state should use \"-none\"");
 							return false;
 						}
 						break;
@@ -621,6 +682,18 @@ public class Controller {
 					if(!gamePlayObj.placeAll())
 						return false;
 
+					break;
+				}
+				case exchangecards:{
+				//	if(!gamePlayObj. exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
+				//		return false;
+					
+					break;
+				}
+				case ignoreexchangecards:{
+				//	if(!gamePlayObj.ignoreExchangeCards())
+				//		return false;
+					
 					break;
 				}
 				case reinforce:{
