@@ -685,7 +685,7 @@ public class Controller {
 					break;
 				}
 				case exchangecards:{
-				//	if(!gamePlayObj. exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
+				//	if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
 				//		return false;
 					
 					break;

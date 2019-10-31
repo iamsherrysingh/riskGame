@@ -346,7 +346,7 @@ public class GamePlay implements ISubject{
 			System.out.println("All armies are placed");
 			
 			//Change state of game
-			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			setCurrentState(State.exchangeCards, "exchangeCards");
 			
 			//Set current player to the first player
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
@@ -363,7 +363,7 @@ public class GamePlay implements ISubject{
 			}
 		}
 
-		if(targetCountry.getOwner()==currentPlayerObj.getCurrentPlayer().getName()     ||      targetCountry.getOwner()==null){
+		if(targetCountry.getOwner()==currentPlayerObj.getCurrentPlayer().getName() || targetCountry.getOwner() == null){
 			targetCountry.setOwner(currentPlayerObj.getCurrentPlayer().getName());
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() +1);
 			currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() -1);
@@ -392,11 +392,37 @@ public class GamePlay implements ISubject{
 			System.out.println("errrroeee: "+e.getMessage());
 		}
         // change state of game
-        setCurrentState(State.reinforcementPhase, "Reinforcement");
+        setCurrentState(State.exchangeCards, "exchangeCards");
         
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
         
+		return true;
+	}
+	
+	/**
+	 * Exchange Cards Function
+	 * @param cardNumber1
+	 * @param cardNumber2
+	 * @param cardNumber3
+	 * @return
+	 */
+	public boolean exchangeCards(Integer cardNumber1,Integer cardNumber2,Integer cardNumber3) {
+		
+		//Change current state to next state
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		
+		return true;
+	}
+	/**
+	 * Fortify none Function
+	 * @return
+	 */
+	public boolean ignoreExchangeCards() {
+		
+		//Change current state to next state
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		
 		return true;
 	}
 	
