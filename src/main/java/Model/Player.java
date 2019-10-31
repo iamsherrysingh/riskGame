@@ -11,6 +11,9 @@ public class Player {
     String name;
     Integer number, numberOfArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();
+    Integer exchangeCardsTimes;
+    ArrayList<Card> playerCards;
+    boolean countryConquer;
 
     public String getName() {
         return name;
@@ -20,6 +23,9 @@ public class Player {
         this.number = number;
         this.name = name;
         this.numberOfArmies = numberOfArmies;
+        playerCards = new ArrayList<Card>();
+        exchangeCardsTimes = 0;
+        countryConquer = false;
     }
 
     public Integer getNumber() {
@@ -30,7 +36,6 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public Integer getNumberOfArmies() {
         return numberOfArmies;

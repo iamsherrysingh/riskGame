@@ -674,12 +674,12 @@ public class Controller {
  * This class extracts each command 
  */
 class ExtractedTasks {
+	
 	public tasksEnum name;
 	public ArrayList<String> taskData;
 	
 	public ExtractedTasks(){
 		taskData = new ArrayList<String>();
 	}
-
 }
 
