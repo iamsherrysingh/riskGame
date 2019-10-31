@@ -13,7 +13,7 @@ public class Player {
     ArrayList<Integer> myCountries = new ArrayList<Integer>();
     Integer exchangeCardsTimes;
     ArrayList<Card> playerCards;
-    boolean countryConquer;
+    boolean countryConquered;
 
     public String getName() {
         return name;
@@ -25,7 +25,7 @@ public class Player {
         this.numberOfArmies = numberOfArmies;
         playerCards = new ArrayList<Card>();
         exchangeCardsTimes = 0;
-        countryConquer = false;
+        countryConquered = false;
     }
 
     public Integer getNumber() {

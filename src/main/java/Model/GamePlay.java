@@ -22,12 +22,13 @@ public class GamePlay implements ISubject{
 	private Graph graphObj;
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
+	private CurrentPlayer currentPlayerObj;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
 
-	private CurrentPlayer currentPlayerObj;
+	
 
 	
 	private GamePlay() {
@@ -409,8 +410,41 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean exchangeCards(Integer cardNumber1,Integer cardNumber2,Integer cardNumber3) {
 		
-		//Change current state to next state
-		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
+		Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
+		
+		if( ((cardNumber1 > currentPlayerCardsListSize) && ( cardNumber1 < 1 )) ||
+			((cardNumber2 > currentPlayerCardsListSize) && ( cardNumber2 < 1 ))	||
+			((cardNumber3 > currentPlayerCardsListSize) && ( cardNumber3 < 1 )) ) {
+			
+			System.out.println("Input Numbers is wrong");
+			return false;
+		}
+		
+		if(!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)) )
+			return false;
+		
+		Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
+		currentPlayer.exchangeCardsTimes++;
+		currentPlayerObj.setNumReinforceArmies( currentPlayerObj.getNumReinforceArmies() + exchageArmies );
+		
+		System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
+
+		Card card1 = currentPlayer.playerCards.get(cardNumber1 - 1);
+		Card card2 = currentPlayer.playerCards.get(cardNumber2 - 1);
+		Card card3 = currentPlayer.playerCards.get(cardNumber3 - 1);
+		
+		currentPlayer.playerCards.remove(cardNumber1 - 1);
+		currentPlayer.playerCards.remove(cardNumber2 - 1);
+		currentPlayer.playerCards.remove(cardNumber3 - 1);
+		
+		cardPlayObj.refundCard(card1);
+		cardPlayObj.refundCard(card2);
+		cardPlayObj.refundCard(card3);
+		
+		if( currentPlayer.playerCards.size() < 3 )		
+			//Change current state to next state
+			setCurrentState(State.reinforcementPhase, "Reinforcement");
 		
 		return true;
 	}
@@ -420,9 +454,13 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean ignoreExchangeCards() {
 		
-		//Change current state to next state
-		setCurrentState(State.reinforcementPhase, "Reinforcement");
-		
+		if( currentPlayerObj.getCurrentPlayer().playerCards.size() < 5 )	
+			//Change current state to next state
+			setCurrentState(State.reinforcementPhase, "Reinforcement");
+		else {
+			System.out.println("You have more than 5 cards. You should exchange your cards.");
+			return false;
+		}
 		return true;
 	}
 	
@@ -542,15 +580,17 @@ class CurrentPlayer{
 	private static CurrentPlayer currentPlayerObj = null;
 	private ListIterator<Player> currentPlayerItr;
 	private Player currentPlayer;
-
+	private Integer numReinforceArmies;
+	CardPlay cardPlayObj;
+	
 	public static CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
 
-	private Integer numReinforceArmies;
-	
+
 	private CurrentPlayer() {
 		currentPlayerItr = Database.playerList.listIterator();
+		cardPlayObj = CardPlay.getInstance();
 	}
 	
 	/**
@@ -562,6 +602,10 @@ class CurrentPlayer{
         	currentPlayerObj= new CurrentPlayer();
         return currentPlayerObj;
     }
+	
+	public void setNumReinforceArmies(Integer numArmies) {
+		this.numReinforceArmies = numArmies;
+	}
 	
 	public Integer getNumReinforceArmies() {
 		return this.numReinforceArmies;
@@ -578,8 +622,16 @@ class CurrentPlayer{
 	 */
 	public void goToNextPlayer(State currentState, Graph gameGraph) {
     	
-    	if(currentPlayerItr.hasNext())
+		// handle picking card at turn of each player
+		if(currentPlayer.countryConquered) {
+			currentPlayer.playerCards.add(cardPlayObj.pickCard(currentPlayer.number));
+			currentPlayer.countryConquered = false;
+		}
+		
+    	if(currentPlayerItr.hasNext()) {
+    		numReinforceArmies = 0;
     		currentPlayer = currentPlayerItr.next();
+    	}
 		else {
 			goToFirstPlayer(currentState, gameGraph);
 			return;
@@ -602,6 +654,7 @@ class CurrentPlayer{
 	 */
 	public void goToFirstPlayer(State currentState, Graph gameGraph) {
 		currentPlayerItr = Database.playerList.listIterator();
+		numReinforceArmies = 0;
 		currentPlayer = currentPlayerItr.next();
 		
 		System.out.println("Current player is " + currentPlayer.getName());
@@ -619,10 +672,9 @@ class CurrentPlayer{
 	 * Calculate Reinforcement Armies 
 	 */
 	public void calculateReinforceentArmies() {
-    	Integer numArmies = 0;
     	
     	Integer numOfCountries = currentPlayer.myCountries.size();
-    	numArmies += (numOfCountries/3);
+    	Integer numArmies = (numOfCountries/3);
     	
     	for(Continent continentItr : Database.continentList) {
     		if(continentItr.getOwner().equals(currentPlayer.name))
@@ -630,7 +682,7 @@ class CurrentPlayer{
     	}
     	
     	//Each player has at least 3 armies for reinforcement
-    	numReinforceArmies = (numArmies>3) ? numArmies : 3;
+    	numReinforceArmies += (numArmies>3) ? numArmies : 3;
     }
 	
 	/**
