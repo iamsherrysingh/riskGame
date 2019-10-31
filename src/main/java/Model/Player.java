@@ -2,6 +2,7 @@ package Model;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * This file holds data members and all the methods which are related to player.
@@ -165,4 +166,135 @@ public class Player {
         }
         return countryList;
     }
+}
+
+/**
+ * This Class handle players turn and calculate reinforment armies
+ */
+class CurrentPlayer{
+	
+	private static CurrentPlayer currentPlayerObj = null;
+	private ListIterator<Player> currentPlayerItr;
+	private Player currentPlayer;
+	private Integer numReinforceArmies;
+	CardPlay cardPlayObj;
+	
+	public static CurrentPlayer getCurrentPlayerObj() {
+		return currentPlayerObj;
+	}
+
+
+	private CurrentPlayer() {
+		currentPlayerItr = Database.playerList.listIterator();
+		cardPlayObj = CardPlay.getInstance();
+	}
+	
+	/**
+	 * Current Player get Instance method with SingleTone design
+	 * @return
+	 */
+	public static CurrentPlayer getInstance(){
+        if(currentPlayerObj==null)
+        	currentPlayerObj= new CurrentPlayer();
+        return currentPlayerObj;
+    }
+	
+	public void setNumReinforceArmies(Integer numArmies) {
+		this.numReinforceArmies = numArmies;
+	}
+	
+	public Integer getNumReinforceArmies() {
+		return this.numReinforceArmies;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayer;
+	}
+	
+	/**
+	 * Go to next player.
+	 * @param currentState
+	 * @param gameGraph
+	 */
+	public void goToNextPlayer(State currentState, Graph gameGraph) {
+    	
+		// handle picking card at turn of each player
+		if(currentPlayer.countryConquered) {
+			currentPlayer.playerCards.add(cardPlayObj.pickCard(currentPlayer.number));
+			currentPlayer.countryConquered = false;
+		}
+		
+    	if(currentPlayerItr.hasNext()) {
+    		numReinforceArmies = 0;
+    		currentPlayer = currentPlayerItr.next();
+    	}
+		else {
+			goToFirstPlayer(currentState, gameGraph);
+			return;
+		}
+    	
+    	System.out.println("Current player is " + currentPlayer.getName());
+    	
+    	//At reinforcement state of each player calculate its reinforcement armies
+    	if( currentState == State.reinforcementPhase) {
+    		Continent.updateContinitsOwner(gameGraph);
+    		calculateReinforceentArmies();
+    		System.out.println("You have " + getNumReinforceArmies() + "armies" );
+    	}
+    }
+		
+	/**
+	 * Reset players turn whenever it comes to the end of the players list.
+	 * @param currentState
+	 * @param gameGraph
+	 */
+	public void goToFirstPlayer(State currentState, Graph gameGraph) {
+		currentPlayerItr = Database.playerList.listIterator();
+		numReinforceArmies = 0;
+		currentPlayer = currentPlayerItr.next();
+		
+		System.out.println("Current player is " + currentPlayer.getName());
+		
+		//At reinforcement state of each player calculate its reinforcement armies
+    	if( currentState == State.reinforcementPhase) {
+    		Continent.updateContinitsOwner(gameGraph);
+    		calculateReinforceentArmies();
+    		System.out.println("You have " + getNumReinforceArmies() + " "
+    				+ "armies" );
+    	}
+	}
+	
+	/**
+	 * Calculate Reinforcement Armies 
+	 */
+	public void calculateReinforceentArmies() {
+    	
+    	Integer numOfCountries = currentPlayer.myCountries.size();
+    	Integer numArmies = (numOfCountries/3);
+    	
+    	for(Continent continentItr : Database.continentList) {
+    		if(continentItr.getOwner().equals(currentPlayer.name))
+    			numArmies += continentItr.getControlValue();
+    	}
+    	
+    	//Each player has at least 3 armies for reinforcement
+    	numReinforceArmies += (numArmies>3) ? numArmies : 3;
+    }
+	
+	/**
+	 * Decrease Reinforcement Armies.
+	 * @param numOfArmies
+	 */
+	public void decreaseReinforceentArmies(Integer numOfArmies) {
+		numReinforceArmies -= numOfArmies;
+	}
+	
+	/**
+	 * Update The number of players for current Player.
+	 * @param numArmies
+	 */
+	public void increaseCurrentPlayerArmies(Integer numArmies) {
+		currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() + numArmies);
+		currentPlayerItr.set(currentPlayer);
+	}
 }
