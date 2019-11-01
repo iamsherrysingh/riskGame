@@ -590,7 +590,7 @@ public class GamePlay implements ISubject {
 								return false;
 							} else {
 
-								battle(fromCountry, toCountry, numDice, defenderDice);
+								battle(attackerCountry, defenderCountry, numDice, defenderDice);
 
 							}
 						} else {
@@ -618,10 +618,50 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
-	public boolean battle(String attackerCountry, String defenderCountry, Integer dttackerArmies,
+	public static int getRandomNumber(Integer maxDice) {
+		Random randomGenerator;
+		randomGenerator = new Random();
+		return randomGenerator.nextInt(maxDice) + 1;
+	}
+
+	public boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies) {
 
-		return false;
+		Integer index = 0;
+		Integer defenderArmiesChange = 0;
+		Integer attackerArmiesChange = 0;
+		ArrayList<Integer> defenderDices = new ArrayList<Integer>();
+		ArrayList<Integer> attackerDices = new ArrayList<Integer>();
+
+		for (int i = 0; i < attackerArmies; i++) {
+			index = getRandomNumber(6);
+			attackerDices.add(index);
+		}
+		for (int i = 0; i < defenderArmies; i++) {
+			index = getRandomNumber(6);
+			defenderDices.add(index);
+		}
+		Collections.sort(attackerDices);
+		Collections.sort(defenderDices);
+
+		for (int i = 0; i < defenderArmies; i++) {
+
+			if (attackerDices.get(i) > defenderDices.get(i)) {
+				attackerArmiesChange++;
+				defenderArmiesChange--;
+			} else {
+				attackerArmiesChange--;
+				defenderArmiesChange++;
+			}
+		}
+
+		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() + attackerArmiesChange);
+		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() + defenderArmies);
+
+		if (defenderCountry.getNumberOfArmies() == 0) {
+			System.out.println("Attacker won the country " + defenderCountry.name);
+		}
+		return true;
 	}
 
 	@Override
