@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
+import View.CardExchange;
 
 enum tasksEnum {
 	unknown,
@@ -530,6 +531,7 @@ public class Controller {
 		}
 		// check commands that are valid in state of reinforcementPhase
 		else if(gamePlayObj.getCurrentState() == State.reinforcementPhase){
+			
   			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){
 					case showmap:
@@ -724,7 +726,7 @@ public class Controller {
     public static void main(String[] args) throws IOException {
 		try {
 			Controller controller = new Controller();
-			controller.gamePlayObj = GamePlay.getInstance();
+			controller.gamePlayObj = GamePlay.getInstance();			
 	    	
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				

@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import View.CardExchange;
+
 /** 
  * This Class maintains the state of the game and current player.
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay implements ISubject{
+public class GamePlay{
 	
 	
 	/**
@@ -23,14 +25,13 @@ public class GamePlay implements ISubject{
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
+	GameSubject gameSubjectObj;
+	CardExchange cardExchangeView;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
 
-	
-
-	
 	private GamePlay() {
 		currentState = State.initializeGame;
     	mapxObj = new Mapx();
@@ -38,6 +39,8 @@ public class GamePlay implements ISubject{
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
+    	gameSubjectObj = new GameSubject();
+    	cardExchangeView = new CardExchange();
     }
 
     public static GamePlay getInstance() {
@@ -348,6 +351,8 @@ public class GamePlay implements ISubject{
 			
 			//Change state of game
 			setCurrentState(State.exchangeCards, "exchangeCards");
+	    	gameSubjectObj.attachObserver(cardExchangeView);
+	    	gameSubjectObj.stateChanged(getCurrentState());
 			
 			//Set current player to the first player
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
@@ -392,8 +397,11 @@ public class GamePlay implements ISubject{
 		{
 			System.out.println("errrroeee: "+e.getMessage());
 		}
+		
         // change state of game
         setCurrentState(State.exchangeCards, "exchangeCards");
+    	gameSubjectObj.attachObserver(cardExchangeView);
+    	gameSubjectObj.stateChanged(getCurrentState());
         
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
@@ -442,9 +450,12 @@ public class GamePlay implements ISubject{
 		cardPlayObj.refundCard(card2);
 		cardPlayObj.refundCard(card3);
 		
-		if( currentPlayer.playerCards.size() < 3 )		
+		if( currentPlayer.playerCards.size() < 3 )	{	
 			//Change current state to next state
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			gameSubjectObj.detachObserver(cardExchangeView);
+			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+		}
 		
 		return true;
 	}
@@ -454,9 +465,11 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean ignoreExchangeCards() {
 		
-		if( currentPlayerObj.getCurrentPlayer().playerCards.size() < 5 )	
+		if( currentPlayerObj.getCurrentPlayer().playerCards.size() < 5 ) {
 			//Change current state to next state
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			gameSubjectObj.detachObserver(cardExchangeView);
+		}
 		else {
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
@@ -524,19 +537,5 @@ public class GamePlay implements ISubject{
 		return true;
 	}
 
-	@Override
-	public void notifyObservers() {
-
-	}
-
-	@Override
-	public void attachObserver(Object observer) {
-
-	}
-
-	@Override
-	public void detachObserver(Object observer) {
-
-	}
 }
 
