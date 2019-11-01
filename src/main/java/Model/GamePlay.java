@@ -530,7 +530,7 @@ public class GamePlay implements ISubject{
 	}
 
 	@Override
-	public void addObserver(Object observer) {
+	public void attachObserver(Object observer) {
 
 	}
 

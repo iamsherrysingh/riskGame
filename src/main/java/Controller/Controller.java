@@ -685,14 +685,14 @@ public class Controller {
 					break;
 				}
 				case exchangecards:{
-				//	if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
-				//		return false;
+					if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
+						return false;
 					
 					break;
 				}
 				case ignoreexchangecards:{
-				//	if(!gamePlayObj.ignoreExchangeCards())
-				//		return false;
+					if(!gamePlayObj.ignoreExchangeCards())
+						return false;
 					
 					break;
 				}
