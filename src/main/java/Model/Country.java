@@ -484,44 +484,6 @@ public class Country {
 	}
 
 	/**
-	 * This allows a player to move any number of armies from his owned country to
-	 * any of his owned neighbor country, leaving behind atleast 1 army unit.
-	 *
-	 * @param fromCname
-	 * @param toCountryName
-	 * @param numberOfArmies
-	 * @param gameGraph
-	 * @return true or false
-	 */
-	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
-		Country fromcountry = Country.getCountryByName(fromCname, gameGraph);
-
-		if (fromcountry == null || toCountry == null) {
-			System.out.println("One or both countries do not exist");
-			return false;
-		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromcountry.getOwner()))) {
-			System.out.println("A player has to own both the countries");
-			return false;
-		} else if (!(toCountry.getNeighbours().contains(fromcountry.getNumber()))) {
-			System.out.println("Both countries should be adjacent");
-			return false;
-		} else if (!(fromcountry.getNumberOfArmies() - numberOfArmies > 0)) {
-			System.out.println("You must leave at least 1 army unit behind");
-			return false;
-		}
-
-		ArrayList<Integer> toCountryNeighbours = toCountry.getNeighbours();
-
-		fromcountry.setNumberOfArmies(fromcountry.getNumberOfArmies() - numberOfArmies);
-		toCountry.setNumberOfArmies(toCountry.getNumberOfArmies() + numberOfArmies);
-
-		updatePlayerListAndDeclareWinner(gameGraph);
-
-		return true;
-	}
-
-	/**
 	 * updates the player list, remove the player if 0 country is owned by that
 	 * player or declares winner if every country in Database.adjlist is owned by a
 	 * single player

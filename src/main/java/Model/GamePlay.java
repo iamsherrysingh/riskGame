@@ -495,16 +495,8 @@ public class GamePlay implements ISubject{
 	 * @return
 	 */
 	public boolean fortifyArmy(String sourceCountry, String destinationCountry, Integer numberOfArmy) {
-		
-		//check: if sourceCountry does not belong to the currentPlayer, return false
-		//check: if destinationCountry does not belong to the currentPlayer, return false
-		//check: if the numberOfArmy is more than army that placed in sourceCountry, return flase
-		//find if there is a way between source and destination (use BFS algorithm for finding ways
-		//check: if there is not a way between source and destination, return false
-		//reduce the numberOfArmy form source country and add them to the destination country
-		//change the currentState
 
-		if(!Country.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
+		if(!Player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
 
