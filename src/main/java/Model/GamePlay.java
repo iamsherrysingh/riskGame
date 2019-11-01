@@ -472,33 +472,9 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
 		
-		//check: if target country is not exist, return false
-		Country targetCountry= Country.getCountryByName(countryName, graphObj);
-		if(targetCountry==null){
+		if( !Player.reinforcement(countryName, numberOfArmies, graphObj))
 			return false;
-		}
-		
-		//check: if country does not belong to the currentPlayer, return false
-		if(targetCountry.getOwner()!=null){
-			if(targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false){
-				
-				System.out.println("The country is not belong to the current player");
-				return false;
-			}
-		}
-		//check: if numberOfArmy is more than allocated army, return false
-		if(numberOfArmies > currentPlayerObj.getNumReinforceArmies()) {
-			System.out.println("The current player can reinforce just " + currentPlayerObj.getNumReinforceArmies() + "armies");
-			return false;
-		}
-		
-		//Reinforce armies in the target country
-		targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + numberOfArmies);
-		
-		//increase the number of armies belong to the player
-		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
-		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
-		
+			
 		if(currentPlayerObj.getNumReinforceArmies() > 0) {
 
 			System.out.println("Please reinforce the remain " + currentPlayerObj.getNumReinforceArmies() + "armies");
