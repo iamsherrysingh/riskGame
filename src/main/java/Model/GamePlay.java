@@ -647,11 +647,11 @@ public class GamePlay implements ISubject {
 		for (int i = 0; i < defenderArmies; i++) {
 
 			if (attackerDices.get(i) > defenderDices.get(i)) {
-				attackerArmiesChange++;
+				
 				defenderArmiesChange--;
 			} else {
 				attackerArmiesChange--;
-				defenderArmiesChange++;
+				
 			}
 		}
 
