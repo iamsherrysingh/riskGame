@@ -560,32 +560,24 @@ public class GamePlay implements ISubject {
 	public Integer defenderCommandInput(Integer numberOfArmiesDefenderCanSelect, Scanner sc) {
 		String defenderCommand = "";
 		Integer defenderDice = null;
-		boolean flag = false;
 		defenderCommand = sc.nextLine();
 		String[] defenderDiceSplit = defenderCommand.split(" ");
-		System.out.println("length of array " + defenderDiceSplit.length);
-		System.out.println("array " + defenderDiceSplit[0]);
-		while (!(defenderDiceSplit.length == 2 && defenderDiceSplit[0].trim().equals("defend")
+		if (!(defenderDiceSplit.length == 2 && defenderDiceSplit[0].trim().equals("defend")
 				&& ((Integer.parseInt(defenderDiceSplit[1])) < (numberOfArmiesDefenderCanSelect + 1))
-				&& ((Integer.parseInt(defenderDiceSplit[1])) > 0))&& flag==false) {
-			
-			
-				System.out.println("Please write a valid command");
-				defenderCommand = "";
-				defenderCommandInput(numberOfArmiesDefenderCanSelect, sc);
-		
+				&& ((Integer.parseInt(defenderDiceSplit[1])) > 0))) {
 
+			System.out.println("Please write a valid command");
+
+		} else {
+			defenderDice = Integer.parseInt(defenderDiceSplit[1].trim());
 		}
-		System.out.println(flag);
-		if(flag == false) {
-			flag = true;
-			defenderDice = Integer.parseInt(defenderDiceSplit[1].trim());	
-		}else {
+		defenderCommand = "";
+
+		if (defenderDice != null) {
 			return defenderDice;
+		} else {
+			return defenderCommandInput(numberOfArmiesDefenderCanSelect, sc);
 		}
-		
-
-		return defenderDice;
 	}
 
 	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice) {
@@ -624,19 +616,19 @@ public class GamePlay implements ISubject {
 								return false;
 							} else {
 
-								System.out.println("A"
-										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-
-								System.out.println(
-										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+//								System.out.println("A"
+//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+//
+//								System.out.println(
+//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 
 								battle(attackerCountry, defenderCountry, numDice, defenderDice);
 
-								System.out.println("A"
-										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-
-								System.out.println(
-										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+//								System.out.println("A"
+//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+//
+//								System.out.println(
+//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 							}
 						} else {
 							System.out.println("You can attack with atmost 3 armies");
@@ -694,16 +686,16 @@ public class GamePlay implements ISubject {
 			if (attackerDices.get(i) > defenderDices.get(i)) {
 
 				defenderArmiesKilled++;
-				System.out.println("atackerWins");
+				System.out.println("--- Attacker wins the battle ---");
 			} else {
 				attackerArmiesKilled++;
-				System.out.println("def wins");
+				System.out.println("--- Defender wins the battle ---");
 
 			}
 		}
 
-		System.out.println("AC" + attackerArmiesKilled);
-		System.out.println("DC" + defenderArmiesKilled);
+	//	System.out.println("AC" + attackerArmiesKilled);
+		//System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
