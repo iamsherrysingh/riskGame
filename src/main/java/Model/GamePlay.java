@@ -580,12 +580,47 @@ public class GamePlay implements ISubject {
 		}
 	}
 
+	public boolean attackAllout(String fromCountry, String toCountry) {
+
+		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
+		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
+
+		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+
+			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+				System.out.println("You can only attack the countries that are owned by some other player");
+				return false;
+			} else {
+				if (attackerCountry.getNumberOfArmies() > 1) {
+					
+					
+					
+					
+					
+					
+				} else {
+					System.out.println("You dont have enough number of armies to attack from " + fromCountry);
+					return false;
+				}
+				}
+
+			}
+
+		} else {
+			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().name
+					+ ") as attackerCountry");
+			return false;
+		}
+		return true;
+
+	}
+
 	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
 
-		System.out.println("cureent" + currentPlayerObj.getCurrentPlayer().name);
+		// System.out.println("cureent" + currentPlayerObj.getCurrentPlayer().name);
 		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
 
 			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
@@ -694,8 +729,8 @@ public class GamePlay implements ISubject {
 			}
 		}
 
-	//	System.out.println("AC" + attackerArmiesKilled);
-		//System.out.println("DC" + defenderArmiesKilled);
+		// System.out.println("AC" + attackerArmiesKilled);
+		// System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
