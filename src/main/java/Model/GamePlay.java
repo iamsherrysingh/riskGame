@@ -559,14 +559,32 @@ public class GamePlay implements ISubject {
 
 	public Integer defenderCommandInput(Integer numberOfArmiesDefenderCanSelect, Scanner sc) {
 		String defenderCommand = "";
+		Integer defenderDice = null;
+		boolean flag = false;
 		defenderCommand = sc.nextLine();
 		String[] defenderDiceSplit = defenderCommand.split(" ");
 		System.out.println("length of array " + defenderDiceSplit.length);
-		while (!(defenderDiceSplit.length == 2 && defenderDiceSplit[0].trim().equals("defend") && ((Integer.parseInt(defenderDiceSplit[1]))<(numberOfArmiesDefenderCanSelect+1)) &&((Integer.parseInt(defenderDiceSplit[1]))>0))) {
-			System.out.println("Please write a valid command");
-			defenderCommandInput(numberOfArmiesDefenderCanSelect,sc);
+		System.out.println("array " + defenderDiceSplit[0]);
+		while (!(defenderDiceSplit.length == 2 && defenderDiceSplit[0].trim().equals("defend")
+				&& ((Integer.parseInt(defenderDiceSplit[1])) < (numberOfArmiesDefenderCanSelect + 1))
+				&& ((Integer.parseInt(defenderDiceSplit[1])) > 0))&& flag==false) {
+			
+			
+				System.out.println("Please write a valid command");
+				defenderCommand = "";
+				defenderCommandInput(numberOfArmiesDefenderCanSelect, sc);
+		
+
 		}
-		Integer defenderDice = Integer.parseInt(defenderDiceSplit[1].trim());
+		System.out.println(flag);
+		if(flag == false) {
+			flag = true;
+			defenderDice = Integer.parseInt(defenderDiceSplit[1].trim());	
+		}else {
+			return defenderDice;
+		}
+		
+
 		return defenderDice;
 	}
 
@@ -592,12 +610,12 @@ public class GamePlay implements ISubject {
 							if (defenderCountry.getNumberOfArmies() >= 2) {
 								System.out.println(defenderCountry.getOwner()
 										+ ", you can select maximum of 2 armies to defend your country");
-								defenderDice = defenderCommandInput(2,sc);
+								defenderDice = defenderCommandInput(2, sc);
 
 							} else {
 								System.out.println(defenderCountry.getOwner()
 										+ ", you only have 1 army with which you can defend your country");
-								defenderDice = defenderCommandInput(1,sc);
+								defenderDice = defenderCommandInput(1, sc);
 							}
 
 							sc.close();
