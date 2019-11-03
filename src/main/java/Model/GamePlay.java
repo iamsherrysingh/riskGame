@@ -22,6 +22,7 @@ public class GamePlay implements ISubject {
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
+	Integer lastDiceSelected = null;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -637,9 +638,24 @@ public class GamePlay implements ISubject {
 
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						System.out.println("Attacker won the country " + defenderCountry.name);
-						
-						System.out.println("adddddddddd");// we have to add attackmove
-						
+
+						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
+						System.out.println("Please select a number greater than or equal to " + lastDiceSelected
+								+ " and less than " + attackerCountry.getNumberOfArmies());
+
+						Integer attackMove = null;
+						Scanner scanner = new Scanner(System.in);
+
+						attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
+
+						if (attackMove != null) {
+							attackMove(attackerCountry, defenderCountry, attackMove);
+						} else {
+							System.out.println("something went wrong!!");
+						}
+						System.out.println("allout is finished here.");
+						scanner.close();
+
 					} else if (attackerCountry.getNumberOfArmies() == 1) {
 
 						System.out.println("no attack anymore possible!!!");
@@ -657,9 +673,67 @@ public class GamePlay implements ISubject {
 			return false;
 		}
 
-		//System.out.println("AllOut khatam");
+		// System.out.println("AllOut khatam");
 		return true;
 
+	}
+	// Scanner scanner = new Scanner(System.in);
+
+	public Integer attackMoveCommand(Integer numberOfArmiesDuringLastAttack, Scanner scanner,
+			Integer numberOfArmiesThatAttackerHave) {
+
+		Integer attackMoveNumber = null;
+		String Command = scanner.nextLine();
+
+		String[] AttackMoveSplit = Command.split(" ");
+		if (!(AttackMoveSplit.length == 2 && AttackMoveSplit[0].trim().equals("attackmove")
+				&& ((Integer.parseInt(AttackMoveSplit[1])) >= numberOfArmiesDuringLastAttack))) {
+
+			System.out.println("Please write a valid command");
+
+		} else {
+			attackMoveNumber = Integer.parseInt(AttackMoveSplit[1].trim());
+		}
+
+		if (attackMoveNumber != null) {
+
+			if (attackMoveNumber < numberOfArmiesDuringLastAttack || attackMoveNumber>=numberOfArmiesThatAttackerHave) {
+				Integer range =numberOfArmiesThatAttackerHave-1;
+				if(numberOfArmiesDuringLastAttack==range) {
+					System.out.println("you can only move " + range + " armies/army" + ", please retry:" );
+					return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);}
+				else {
+				System.out.println("you have to select number of armies between the number " + numberOfArmiesDuringLastAttack + "and " + range +", please retry:");
+				return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);
+			}} else {
+				return attackMoveNumber;
+			}
+		} else {
+			return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);
+		}
+		// scanner.close();
+
+	}
+
+	public boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
+
+		if (defenderCountry.getNumberOfArmies() == 0) {
+
+			if (attackerCountry.getNumberOfArmies() > numberOfArmiesToMove) {
+				defenderCountry.setNumberOfArmies(numberOfArmiesToMove);
+				attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - numberOfArmiesToMove);
+			} else {
+				System.out.println("you selected a greater number than you are allowed to move from attacker country");
+				return false;
+
+			}
+
+		} else {
+			System.out.println("something went wrong!!");
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice) {
@@ -763,6 +837,7 @@ public class GamePlay implements ISubject {
 	public boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies) {
 
+		lastDiceSelected = attackerArmies;
 		Integer index = 0;
 		Integer defenderArmiesKilled = 0;
 		Integer attackerArmiesKilled = 0;
