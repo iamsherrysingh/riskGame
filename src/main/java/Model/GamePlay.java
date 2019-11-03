@@ -580,6 +580,10 @@ public class GamePlay implements ISubject {
 		}
 	}
 
+	public Integer defenderArmiesSelectionForAllout() {
+		return 0;
+	}
+
 	public boolean attackAllout(String fromCountry, String toCountry) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
@@ -593,27 +597,67 @@ public class GamePlay implements ISubject {
 			} else {
 				if (attackerCountry.neighbours.contains(defenderCountry.getNumber())) {
 
+					Integer AttackerArmiesSelected = null;
+					Integer DefenderArmiesSelected = null;
+
 					if (attackerCountry.getNumberOfArmies() > 3) {
+						AttackerArmiesSelected = 3;
 						// armies selected 3
 					} else if (attackerCountry.getNumberOfArmies() == 3) {
+						AttackerArmiesSelected = 2;
 						// armies selected 2
 					} else if (attackerCountry.getNumberOfArmies() == 2) {
+						AttackerArmiesSelected = 1;
 						// armies selected 1
 					} else {
 						System.out.println("Cannot attack anymore " + fromCountry + ", has only 1 army left!");
 					}
 
+					if (defenderCountry.getNumberOfArmies() >= 2) {
+						DefenderArmiesSelected = 2;
+						// armies selected 2
+					} else if (defenderCountry.getNumberOfArmies() == 1) {
+						DefenderArmiesSelected = 1;
+						// armies selected 1
+					} else {
+						System.out.println("No more armies to defend the country");
+					}
+
+					System.out
+							.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+
+					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
+					AttackerArmiesSelected = null;
+					DefenderArmiesSelected = null;
+					System.out
+							.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+
+					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+
+					if (defenderCountry.getNumberOfArmies() == 0) {
+						System.out.println("Attacker won the country " + defenderCountry.name);
+						
+						System.out.println("adddddddddd");// we have to add attackmove
+						
+					} else if (attackerCountry.getNumberOfArmies() == 1) {
+
+						System.out.println("no attack anymore possible!!!");
+					} else {
+						attackAllout(fromCountry, toCountry);
+					}
+
 				} else {
 					System.out.println("Attacker country and the defender country should be adjacent");
 				}
-
 			}
-
 		} else {
 			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().name
 					+ ") as attackerCountry");
 			return false;
 		}
+
+		//System.out.println("AllOut khatam");
 		return true;
 
 	}
@@ -663,19 +707,24 @@ public class GamePlay implements ISubject {
 									return false;
 								} else {
 
-//								System.out.println("A"
-//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-//
-//								System.out.println(
-//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance())
+											.getNumberOfArmies());
+
+									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance())
+											.getNumberOfArmies());
 
 									battle(attackerCountry, defenderCountry, numDice, defenderDice);
 
-//								System.out.println("A"
-//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-//
-//								System.out.println(
-//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+									if (defenderCountry.getNumberOfArmies() == 0) {
+										System.out.println("Attacker won the country " + defenderCountry.name);
+
+										System.out.println("adddddddddddd");// we have to add attackmove
+									}
+									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance())
+											.getNumberOfArmies());
+
+									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance())
+											.getNumberOfArmies());
 								}
 							} else {
 								System.out.println("You can attack with atmost 3 armies");
@@ -731,29 +780,40 @@ public class GamePlay implements ISubject {
 		Collections.sort(attackerDices);
 		Collections.sort(defenderDices);
 
-		for (int i = 0; i < defenderArmies; i++) {
+		if (defenderArmies > attackerArmies) {
+			for (int i = 0; i < attackerArmies; i++) {
 
-			if (attackerDices.get(i) > defenderDices.get(i)) {
+				if (attackerDices.get(i) > defenderDices.get(i)) {
 
-				defenderArmiesKilled++;
-				System.out.println("--- Attacker wins the battle ---");
-			} else {
-				attackerArmiesKilled++;
-				System.out.println("--- Defender wins the battle ---");
+					defenderArmiesKilled++;
+					System.out.println("--- Attacker wins the battle ---");
+				} else {
+					attackerArmiesKilled++;
+					System.out.println("--- Defender wins the battle ---");
 
+				}
+			}
+		} else {
+
+			for (int i = 0; i < defenderArmies; i++) {
+
+				if (attackerDices.get(i) > defenderDices.get(i)) {
+
+					defenderArmiesKilled++;
+					System.out.println("--- Attacker wins the battle ---");
+				} else {
+					attackerArmiesKilled++;
+					System.out.println("--- Defender wins the battle ---");
+
+				}
 			}
 		}
 
-		// System.out.println("AC" + attackerArmiesKilled);
-		// System.out.println("DC" + defenderArmiesKilled);
+		System.out.println("AC" + attackerArmiesKilled);
+		System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
-		if (defenderCountry.getNumberOfArmies() == 0) {
-			System.out.println("Attacker won the country " + defenderCountry.name);
-
-			// we have to add attackmove
-		}
 		return true;
 	}
 
