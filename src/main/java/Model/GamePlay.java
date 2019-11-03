@@ -562,8 +562,7 @@ public class GamePlay{
 		// Change current state to next state
 		setCurrentState(State.attackPhase, "Attacking");
 
-		System.out.println(
-				"Player " + currentPlayerObj.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
+		System.out.println("Player " + currentPlayerObj.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
 
 		// add fortification
 
@@ -696,8 +695,8 @@ public class GamePlay{
 	// Scanner scanner = new Scanner(System.in);
 
 	public Integer attackMoveCommand(Integer numberOfArmiesDuringLastAttack, Scanner scanner,
-			Integer numberOfArmiesThatAttackerHave) {
-
+		
+		Integer numberOfArmiesThatAttackerHave) {
 		Integer attackMoveNumber = null;
 		String Command = scanner.nextLine();
 

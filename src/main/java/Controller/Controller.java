@@ -27,6 +27,9 @@ enum tasksEnum {
 	exchangecards,
 	ignoreexchangecards,
 	reinforce,
+	normalattack,
+	alloutattack,
+	ignoreattack,
 	fortify,
 	ignorefortify
 	}
@@ -192,7 +195,7 @@ public class Controller {
 					tasksList.add(eTask);
 				}
 				else {
-					System.out.println("wronggggg");
+					System.out.println("wrong Command");
 					return false;
 				}
 			}			
@@ -353,6 +356,10 @@ public class Controller {
 		
 		//Command reinforce
 		else if(cmdStr.equalsIgnoreCase("reinforce")) {
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
 			
 			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.reinforce;
@@ -367,6 +374,53 @@ public class Controller {
 			}
 			tasksList.add(eTask);
 		}
+		
+		//Command attack
+		else if(cmdStr.equalsIgnoreCase("attack")) {
+			
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			ExtractedTasks eTask = new ExtractedTasks();
+			
+			if( command.size() == 4 ) {	
+				if( command.get(command.size() - 1 ).equalsIgnoreCase("-allout") ){
+					
+					eTask.name = tasksEnum.alloutattack;
+					//get data related to attack all out task
+					for(int i=0;i<3;i++) {
+						eTask.taskData.add(cmdItr.next());
+					}
+					tasksList.add(eTask);
+				}
+				else {
+					eTask.name = tasksEnum.normalattack;
+					//get data related to normal attack task
+					for(int i=0; i<3; i++) {
+						eTask.taskData.add(cmdItr.next());
+					}
+					tasksList.add(eTask);
+				}
+			}
+			else if( command.size() == 2 ) {
+				if( command.get(1).equalsIgnoreCase("-noattack") ){	
+					
+					eTask.name = tasksEnum.ignoreattack;
+					tasksList.add(eTask);
+				}
+				else {
+					System.out.println("wrong Command");
+					return false;
+				}
+			}
+			else {
+				System.out.println("wrong Command");
+				return false;
+			}
+		}
+		
 		//Command fortify (both types of command)
 		else if(cmdStr.equalsIgnoreCase("fortify")) {
 			if(!cmdItr.hasNext()) {
@@ -544,6 +598,33 @@ public class Controller {
 				}
 			}
 		}
+		// check commands that are valid in state of Attack
+		else if(gamePlayObj.getCurrentState() == State.attackPhase){
+			
+  			for(ExtractedTasks itr:tasksList) {
+				switch (itr.name){
+					case showmap:
+						break;
+					case alloutattack:
+						break;
+					case normalattack:
+						String numOfDice = itr.taskData.get(2);	
+						//check if the data related to the number of dice in attack command is numeric
+						for(int i=0; i<numOfDice.length(); i++) {
+							if(!Character.isDigit(numOfDice.charAt(i))){
+								System.out.println("Invalid command: Number of dice should be digit");
+								return false;
+							}
+						}
+						break;
+					case ignoreattack:
+						break;
+					default:
+						System.out.println("Invalid command in the current state");
+						return false;
+				}
+			}
+		}
 		// check commands that are valid in state of fortificationPhase
 		else if(gamePlayObj.getCurrentState() == State.fortificationPhase){
   			for(ExtractedTasks itr:tasksList) {
@@ -702,6 +783,21 @@ public class Controller {
 					if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
 						return false;
 					
+					break;
+				}
+				case alloutattack:{
+				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
+				//		return false;			
+					break;
+				}
+				case normalattack:{
+				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
+				//		return false;			
+					break;
+				}
+				case ignoreattack:{
+				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
+				//		return false;			
 					break;
 				}
 				case fortify:{
