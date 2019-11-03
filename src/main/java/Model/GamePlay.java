@@ -22,6 +22,7 @@ public class GamePlay implements ISubject {
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
+	Integer lastDiceSelected = null;
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -557,7 +558,34 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
-	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice) {
+	public Integer defenderCommandInput(Integer numberOfArmiesDefenderCanSelect, Scanner sc) {
+		String defenderCommand = "";
+		Integer defenderDice = null;
+		defenderCommand = sc.nextLine();
+		String[] defenderDiceSplit = defenderCommand.split(" ");
+		if (!(defenderDiceSplit.length == 2 && defenderDiceSplit[0].trim().equals("defend")
+				&& ((Integer.parseInt(defenderDiceSplit[1])) < (numberOfArmiesDefenderCanSelect + 1))
+				&& ((Integer.parseInt(defenderDiceSplit[1])) > 0))) {
+
+			System.out.println("Please write a valid command");
+
+		} else {
+			defenderDice = Integer.parseInt(defenderDiceSplit[1].trim());
+		}
+		defenderCommand = "";
+
+		if (defenderDice != null) {
+			return defenderDice;
+		} else {
+			return defenderCommandInput(numberOfArmiesDefenderCanSelect, sc);
+		}
+	}
+
+	public Integer defenderArmiesSelectionForAllout() {
+		return 0;
+	}
+
+	public boolean attackAllout(String fromCountry, String toCountry) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
@@ -568,44 +596,244 @@ public class GamePlay implements ISubject {
 				System.out.println("You can only attack the countries that are owned by some other player");
 				return false;
 			} else {
-				if (attackerCountry.getNumberOfArmies() > 1) {
-					if (attackerCountry.getNumberOfArmies() > numDice) {
+				if (attackerCountry.neighbours.contains(defenderCountry.getNumber())) {
 
-						if (numDice < 4) {
-							Integer defenderDice = 0;
-							if (defenderCountry.getNumberOfArmies() >= 2) {
-								System.out.println(defenderCountry.getOwner()
-										+ ", you can select maximum of 2 armies to defend your country");
-								Scanner sc = new Scanner(System.in);
-								defenderDice = sc.nextInt();
-								sc.close();
-							} else {
-								System.out.println(defenderCountry.getOwner()
-										+ ", you only have 1 army with which you can defend your country");
-								defenderDice = 1;
-							}
+					Integer AttackerArmiesSelected = null;
+					Integer DefenderArmiesSelected = null;
 
-							if (defenderDice > 2) {
-								System.out.println("defender entered a number greater than 2");
-								return false;
-							} else {
-
-								battle(attackerCountry, defenderCountry, numDice, defenderDice);
-
-							}
-						} else {
-							System.out.println("You can attack with atmost 3 armies");
-						}
-					} else if (attackerCountry.getNumberOfArmies() == numDice) {
-						System.out.println("You cannot attack with all your armies");
-						return false;
+					if (attackerCountry.getNumberOfArmies() > 3) {
+						AttackerArmiesSelected = 3;
+						// armies selected 3
+					} else if (attackerCountry.getNumberOfArmies() == 3) {
+						AttackerArmiesSelected = 2;
+						// armies selected 2
+					} else if (attackerCountry.getNumberOfArmies() == 2) {
+						AttackerArmiesSelected = 1;
+						// armies selected 1
 					} else {
-						System.out.println("You selected more armies than you have in " + fromCountry);
+						System.out.println("Cannot attack anymore " + fromCountry + ", has only 1 army left!");
+					}
+
+					if (defenderCountry.getNumberOfArmies() >= 2) {
+						DefenderArmiesSelected = 2;
+						// armies selected 2
+					} else if (defenderCountry.getNumberOfArmies() == 1) {
+						DefenderArmiesSelected = 1;
+						// armies selected 1
+					} else {
+						System.out.println("No more armies to defend the country");
+					}
+
+					System.out
+							.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+
+					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
+					AttackerArmiesSelected = null;
+					DefenderArmiesSelected = null;
+					System.out
+							.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+
+					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+
+					if (defenderCountry.getNumberOfArmies() == 0) {
+						System.out.println("Attacker won the country " + defenderCountry.name);
+
+						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
+						System.out.println("Please select a number greater than or equal to " + lastDiceSelected
+								+ " and less than " + attackerCountry.getNumberOfArmies());
+
+						Integer attackMove = null;
+						Scanner scanner = new Scanner(System.in);
+
+						attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
+
+						if (attackMove != null) {
+							attackMove(attackerCountry, defenderCountry, attackMove);
+						} else {
+							System.out.println("something went wrong!!");
+						}
+						System.out.println("allout is finished here.");
+						scanner.close();
+
+					} else if (attackerCountry.getNumberOfArmies() == 1) {
+
+						System.out.println("no attack anymore possible!!!");
+					} else {
+						attackAllout(fromCountry, toCountry);
+					}
+
+				} else {
+					System.out.println("Attacker country and the defender country should be adjacent");
+				}
+			}
+		} else {
+			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().name
+					+ ") as attackerCountry");
+			return false;
+		}
+
+		// System.out.println("AllOut khatam");
+		return true;
+
+	}
+	// Scanner scanner = new Scanner(System.in);
+
+	public Integer attackMoveCommand(Integer numberOfArmiesDuringLastAttack, Scanner scanner,
+			Integer numberOfArmiesThatAttackerHave) {
+
+		Integer attackMoveNumber = null;
+		String Command = scanner.nextLine();
+
+		String[] AttackMoveSplit = Command.split(" ");
+		if (!(AttackMoveSplit.length == 2 && AttackMoveSplit[0].trim().equals("attackmove")
+				&& ((Integer.parseInt(AttackMoveSplit[1])) >= numberOfArmiesDuringLastAttack))) {
+
+			System.out.println("Please write a valid command");
+
+		} else {
+			attackMoveNumber = Integer.parseInt(AttackMoveSplit[1].trim());
+		}
+
+		if (attackMoveNumber != null) {
+
+			if (attackMoveNumber < numberOfArmiesDuringLastAttack || attackMoveNumber>=numberOfArmiesThatAttackerHave) {
+				Integer range =numberOfArmiesThatAttackerHave-1;
+				if(numberOfArmiesDuringLastAttack==range) {
+					System.out.println("you can only move " + range + " armies/army" + ", please retry:" );
+					return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);}
+				else {
+				System.out.println("you have to select number of armies between the number " + numberOfArmiesDuringLastAttack + "and " + range +", please retry:");
+				return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);
+			}} else {
+				return attackMoveNumber;
+			}
+		} else {
+			return attackMoveCommand(numberOfArmiesDuringLastAttack, scanner, numberOfArmiesThatAttackerHave);
+		}
+		// scanner.close();
+
+	}
+
+	public boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
+
+		if (defenderCountry.getNumberOfArmies() == 0) {
+
+			if (attackerCountry.getNumberOfArmies() > numberOfArmiesToMove) {
+				defenderCountry.setNumberOfArmies(numberOfArmiesToMove);
+				attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - numberOfArmiesToMove);
+			} else {
+				System.out.println("you selected a greater number than you are allowed to move from attacker country");
+				return false;
+
+			}
+
+		} else {
+			System.out.println("something went wrong!!");
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice) {
+
+		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
+		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
+
+		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) { // Owner of
+																										// attackerCountry
+																										// should be
+																										// same as
+																										// currentPlayer
+
+			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) { // Owner of
+																											// defenderCointry
+																											// cannot be
+																											// currentPlayer
+				System.out.println("You can only attack the countries that are owned by some other player");
+				return false;
+			} else {
+				if (attackerCountry.neighbours.contains(defenderCountry.getNumber())) { // checks adjacency of the
+																						// countries
+					if (attackerCountry.getNumberOfArmies() > 1) { // can attack keeping min 1 army in his own country
+						if (attackerCountry.getNumberOfArmies() > numDice) { // armies in attacker country should be
+																				// more than armies selected for attack
+
+							if (numDice < 4) { // max armies for attack can be 3
+								Integer defenderDice = 0;
+
+								Scanner sc = new Scanner(System.in);
+								if (defenderCountry.getNumberOfArmies() >= 2) {
+									System.out.println(defenderCountry.getOwner()
+											+ ", you can select maximum of 2 armies to defend your country");
+									defenderDice = defenderCommandInput(2, sc);
+
+								} else {
+									System.out.println(defenderCountry.getOwner()
+											+ ", you only have 1 army with which you can defend your country");
+									defenderDice = defenderCommandInput(1, sc);
+								}
+
+								sc.close();
+								if (defenderDice > 2) { // defender can select max 2 armies
+									System.out.println("defender entered a number greater than 2");
+									return false;
+								} else {
+
+									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance())
+											.getNumberOfArmies());
+
+									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance())
+											.getNumberOfArmies());
+
+									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+
+									if (defenderCountry.getNumberOfArmies() == 0) {
+										System.out.println("Attacker won the country " + defenderCountry.name);
+
+										System.out.println("Please enter a command to move armies to " + defenderCountry.name);
+										System.out.println("Please select a number greater than or equal to " + lastDiceSelected
+												+ " and less than " + attackerCountry.getNumberOfArmies());
+
+										Integer attackMove = null;
+										Scanner scanner = new Scanner(System.in);
+
+										attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
+
+										if (attackMove != null) {
+											attackMove(attackerCountry, defenderCountry, attackMove);
+										} else {
+											System.out.println("something went wrong!!");
+										}
+										System.out.println("allout is finished here.");
+										scanner.close();
+									
+
+										System.out.println("attackCountry command finished");
+									}
+									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance())
+											.getNumberOfArmies());
+
+									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance())
+											.getNumberOfArmies());
+								}
+							} else {
+								System.out.println("You can attack with atmost 3 armies");
+							}
+						} else if (attackerCountry.getNumberOfArmies() == numDice) {
+							System.out.println("You cannot attack with all your armies");
+							return false;
+						} else {
+							System.out.println("You selected more armies than you have in " + fromCountry);
+							return false;
+						}
+					} else {
+						System.out.println("You dont have enough number of armies to attack from " + fromCountry);
 						return false;
 					}
 				} else {
-					System.out.println("You dont have enough number of armies to attack from " + fromCountry);
-					return false;
+					System.out.println("Attacker country and the defender country should be adjacent");
 				}
 			}
 
@@ -627,9 +855,10 @@ public class GamePlay implements ISubject {
 	public boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies) {
 
+		lastDiceSelected = attackerArmies;
 		Integer index = 0;
-		Integer defenderArmiesChange = 0;
-		Integer attackerArmiesChange = 0;
+		Integer defenderArmiesKilled = 0;
+		Integer attackerArmiesKilled = 0;
 		ArrayList<Integer> defenderDices = new ArrayList<Integer>();
 		ArrayList<Integer> attackerDices = new ArrayList<Integer>();
 
@@ -644,23 +873,40 @@ public class GamePlay implements ISubject {
 		Collections.sort(attackerDices);
 		Collections.sort(defenderDices);
 
-		for (int i = 0; i < defenderArmies; i++) {
+		if (defenderArmies > attackerArmies) {
+			for (int i = 0; i < attackerArmies; i++) {
 
-			if (attackerDices.get(i) > defenderDices.get(i)) {
-				
-				defenderArmiesChange--;
-			} else {
-				attackerArmiesChange--;
-				
+				if (attackerDices.get(i) > defenderDices.get(i)) {
+
+					defenderArmiesKilled++;
+					System.out.println("--- Attacker wins the battle ---");
+				} else {
+					attackerArmiesKilled++;
+					System.out.println("--- Defender wins the battle ---");
+
+				}
+			}
+		} else {
+
+			for (int i = 0; i < defenderArmies; i++) {
+
+				if (attackerDices.get(i) > defenderDices.get(i)) {
+
+					defenderArmiesKilled++;
+					System.out.println("--- Attacker wins the battle ---");
+				} else {
+					attackerArmiesKilled++;
+					System.out.println("--- Defender wins the battle ---");
+
+				}
 			}
 		}
 
-		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() + attackerArmiesChange);
-		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() + defenderArmies);
+		System.out.println("AC" + attackerArmiesKilled);
+		System.out.println("DC" + defenderArmiesKilled);
+		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
+		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
-		if (defenderCountry.getNumberOfArmies() == 0) {
-			System.out.println("Attacker won the country " + defenderCountry.name);
-		}
 		return true;
 	}
 
