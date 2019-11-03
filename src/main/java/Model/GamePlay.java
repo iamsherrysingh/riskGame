@@ -591,17 +591,20 @@ public class GamePlay implements ISubject {
 				System.out.println("You can only attack the countries that are owned by some other player");
 				return false;
 			} else {
-				if (attackerCountry.getNumberOfArmies() > 1) {
-					
-					
-					
-					
-					
-					
+				if (attackerCountry.neighbours.contains(defenderCountry.getNumber())) {
+
+					if (attackerCountry.getNumberOfArmies() > 3) {
+						// armies selected 3
+					} else if (attackerCountry.getNumberOfArmies() == 3) {
+						// armies selected 2
+					} else if (attackerCountry.getNumberOfArmies() == 2) {
+						// armies selected 1
+					} else {
+						System.out.println("Cannot attack anymore " + fromCountry + ", has only 1 army left!");
+					}
+
 				} else {
-					System.out.println("You dont have enough number of armies to attack from " + fromCountry);
-					return false;
-				}
+					System.out.println("Attacker country and the defender country should be adjacent");
 				}
 
 			}
@@ -620,64 +623,76 @@ public class GamePlay implements ISubject {
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
 
-		// System.out.println("cureent" + currentPlayerObj.getCurrentPlayer().name);
-		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) { // Owner of
+																										// attackerCountry
+																										// should be
+																										// same as
+																										// currentPlayer
 
-			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) { // Owner of
+																											// defenderCointry
+																											// cannot be
+																											// currentPlayer
 				System.out.println("You can only attack the countries that are owned by some other player");
 				return false;
 			} else {
-				if (attackerCountry.getNumberOfArmies() > 1) {
-					if (attackerCountry.getNumberOfArmies() > numDice) {
+				if (attackerCountry.neighbours.contains(defenderCountry.getNumber())) { // checks adjacency of the
+																						// countries
+					if (attackerCountry.getNumberOfArmies() > 1) { // can attack keeping min 1 army in his own country
+						if (attackerCountry.getNumberOfArmies() > numDice) { // armies in attacker country should be
+																				// more than armies selected for attack
 
-						if (numDice < 4) {
-							Integer defenderDice = 0;
+							if (numDice < 4) { // max armies for attack can be 3
+								Integer defenderDice = 0;
 
-							Scanner sc = new Scanner(System.in);
-							if (defenderCountry.getNumberOfArmies() >= 2) {
-								System.out.println(defenderCountry.getOwner()
-										+ ", you can select maximum of 2 armies to defend your country");
-								defenderDice = defenderCommandInput(2, sc);
+								Scanner sc = new Scanner(System.in);
+								if (defenderCountry.getNumberOfArmies() >= 2) {
+									System.out.println(defenderCountry.getOwner()
+											+ ", you can select maximum of 2 armies to defend your country");
+									defenderDice = defenderCommandInput(2, sc);
 
-							} else {
-								System.out.println(defenderCountry.getOwner()
-										+ ", you only have 1 army with which you can defend your country");
-								defenderDice = defenderCommandInput(1, sc);
-							}
+								} else {
+									System.out.println(defenderCountry.getOwner()
+											+ ", you only have 1 army with which you can defend your country");
+									defenderDice = defenderCommandInput(1, sc);
+								}
 
-							sc.close();
-							if (defenderDice > 2) {
-								System.out.println("defender entered a number greater than 2");
-								return false;
-							} else {
-
-//								System.out.println("A"
-//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-//
-//								System.out.println(
-//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
-
-								battle(attackerCountry, defenderCountry, numDice, defenderDice);
+								sc.close();
+								if (defenderDice > 2) { // defender can select max 2 armies
+									System.out.println("defender entered a number greater than 2");
+									return false;
+								} else {
 
 //								System.out.println("A"
 //										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
 //
 //								System.out.println(
 //										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+
+									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+
+//								System.out.println("A"
+//										+ Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
+//
+//								System.out.println(
+//										Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+								}
+							} else {
+								System.out.println("You can attack with atmost 3 armies");
 							}
+						} else if (attackerCountry.getNumberOfArmies() == numDice) {
+							System.out.println("You cannot attack with all your armies");
+							return false;
 						} else {
-							System.out.println("You can attack with atmost 3 armies");
+							System.out.println("You selected more armies than you have in " + fromCountry);
+							return false;
 						}
-					} else if (attackerCountry.getNumberOfArmies() == numDice) {
-						System.out.println("You cannot attack with all your armies");
-						return false;
 					} else {
-						System.out.println("You selected more armies than you have in " + fromCountry);
+						System.out.println("You dont have enough number of armies to attack from " + fromCountry);
 						return false;
 					}
 				} else {
-					System.out.println("You dont have enough number of armies to attack from " + fromCountry);
-					return false;
+					System.out.println("Attacker country and the defender country should be adjacent");
 				}
 			}
 
