@@ -639,6 +639,7 @@ public class GamePlay implements ISubject {
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						System.out.println("Attacker won the country " + defenderCountry.name);
 
+						defenderCountry.setOwner(attackerCountry.getOwner());
 						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 						System.out.println("Please select a number greater than or equal to " + lastDiceSelected
 								+ " and less than " + attackerCountry.getNumberOfArmies());
@@ -792,6 +793,8 @@ public class GamePlay implements ISubject {
 									if (defenderCountry.getNumberOfArmies() == 0) {
 										System.out.println("Attacker won the country " + defenderCountry.name);
 
+										defenderCountry.setOwner(attackerCountry.getOwner());
+										
 										System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 										System.out.println("Please select a number greater than or equal to " + lastDiceSelected
 												+ " and less than " + attackerCountry.getNumberOfArmies());
