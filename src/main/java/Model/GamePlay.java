@@ -792,7 +792,25 @@ public class GamePlay implements ISubject {
 									if (defenderCountry.getNumberOfArmies() == 0) {
 										System.out.println("Attacker won the country " + defenderCountry.name);
 
-										System.out.println("adddddddddddd");// we have to add attackmove
+										System.out.println("Please enter a command to move armies to " + defenderCountry.name);
+										System.out.println("Please select a number greater than or equal to " + lastDiceSelected
+												+ " and less than " + attackerCountry.getNumberOfArmies());
+
+										Integer attackMove = null;
+										Scanner scanner = new Scanner(System.in);
+
+										attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
+
+										if (attackMove != null) {
+											attackMove(attackerCountry, defenderCountry, attackMove);
+										} else {
+											System.out.println("something went wrong!!");
+										}
+										System.out.println("allout is finished here.");
+										scanner.close();
+									
+
+										System.out.println("attackCountry command finished");
 									}
 									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance())
 											.getNumberOfArmies());
