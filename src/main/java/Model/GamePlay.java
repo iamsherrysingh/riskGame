@@ -616,7 +616,7 @@ public class GamePlay implements ISubject{
 	@Override
 	public void notifyObservers() {		
 		for(IObserver itr:observerList) {
-			itr.update();
+			itr.update(this);
 		}
 	}
 
