@@ -520,9 +520,24 @@ public class GamePlay{
 	 * @return true if implemented
 	 */
 	public boolean normalAttack(String originCountry, String destinationCountry, Integer numeOfDice) {
-
+		
+		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
+		String defenderName = defenderCountry.getOwner();
+		
 		if (!Player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
 			return false;
+		
+		// if defender lost all of his country, attacker will owned all of his cards.
+		if (  currentPlayerObj.getCurrentPlayer().defenderRemoved == true ) {
+			
+			Player defender = Player.getPlayerByName(defenderName);
+			for(Card itr: defender.playerCards) {
+				Card tempcard = itr;
+				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
+				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
+			}
+			Player.removePlayer(defenderName);		
+		}
 
 		return true;
 	}
