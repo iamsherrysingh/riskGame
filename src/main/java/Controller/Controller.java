@@ -390,7 +390,7 @@ public class Controller {
 					
 					eTask.name = tasksEnum.alloutattack;
 					//get data related to attack all out task
-					for(int i=0;i<3;i++) {
+					for(int i=0;i<2;i++) {
 						eTask.taskData.add(cmdItr.next());
 					}
 					tasksList.add(eTask);
@@ -786,8 +786,8 @@ public class Controller {
 					break;
 				}
 				case alloutattack:{
-				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
-				//		return false;			
+					if(!gamePlayObj.alloutAttack(itr.taskData.get(0),itr.taskData.get(1)))
+						return false;			
 					break;
 				}
 				case normalattack:{

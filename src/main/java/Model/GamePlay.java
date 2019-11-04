@@ -515,8 +515,30 @@ public class GamePlay{
 	}
 	
 	/**
+	 * when player decided normal attack
+	 * @return true if implemented
+	 */
+	public boolean normalAttack(String originCountry, String destinationCountry, Integer numeOfDice) {
+
+		if (!attackCountry(originCountry, destinationCountry, numeOfDice))
+			return false;
+
+		return true;
+	}
+	/**
+	 * when player decided all out attack
+	 * @return true if implemented
+	 */
+	public boolean alloutAttack(String originCountry, String destinationCountry) {
+
+		if (!attackAllout(originCountry, destinationCountry))
+			return false;
+
+		return true;
+	}
+	
+	/**
 	 * when player decided no attack
-	 * 
 	 * @return true if implemented
 	 */
 	public boolean ignoreAttack() {
@@ -553,7 +575,6 @@ public class GamePlay{
 
 	/**
 	 * Fortify none Function
-	 * 
 	 * @return true in any case
 	 */
 	public boolean ignoreFortifyArmy() {

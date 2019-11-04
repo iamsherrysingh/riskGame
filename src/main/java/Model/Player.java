@@ -200,6 +200,8 @@ public class Player {
     	return true;
     } 
     
+    
+    
     /**
 	 * This allows a player to move any number of armies from his owned country to
 	 * any of his owned neighbor country, leaving behind at least 1 army unit.
@@ -240,7 +242,7 @@ public class Player {
 }
 
 /**
- * This Class handle players turn and calculate reinforment armies
+ * This Class handle players turn and calculate reinforcement armies
  */
 class CurrentPlayer{
 	
