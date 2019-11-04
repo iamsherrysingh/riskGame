@@ -17,6 +17,12 @@ public class PhaseView implements IObserver{
         }catch (Exception e){
             //System.out.println("Skip above statement as player isn't initilized yet");
         }
+        try {
+            data += "\nOperation: " + gamePlay.getCurrentOperation();
+        }catch (Exception e){
+            //System.out.println("Skip above statement as player isn't initilized yet");
+        }
+
         System.out.println(header + "\n" + data+"\n"+footer);
     }
 

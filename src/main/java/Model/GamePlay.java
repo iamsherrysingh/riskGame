@@ -21,6 +21,17 @@ public class GamePlay implements ISubject{
 	ArrayList<IObserver> observersOfGamePlay;
 	PhaseView phaseView= new PhaseView();
 
+	public String getCurrentOperation() {
+		return currentOperation;
+	}
+
+	public void setCurrentOperation(String currentOperation) {
+		this.currentOperation = currentOperation;
+		notifyObservers();
+	}
+
+	private String currentOperation;
+
 
 	private static GamePlay gamePlay = null;
 	private State currentState;
@@ -96,7 +107,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.addContinent(continentName, controlValue))
 			return false;
-
+		setCurrentOperation("Added continent "+ continentName + " with control value "+controlValue);
 		return true;
 	}
 
@@ -110,7 +121,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.removeContinent(continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Removed continent "+ continentName );
 		return true;
 	}
 
@@ -270,7 +281,7 @@ public class GamePlay implements ISubject{
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
-
+		setCurrentOperation("Added Player "+playerName+" to the game.");
 		return true;
 	}
 
@@ -351,6 +362,7 @@ public class GamePlay implements ISubject{
 		// Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Populated all countries");
 		return true;
 	}
 
