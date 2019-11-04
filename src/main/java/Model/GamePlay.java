@@ -25,7 +25,6 @@ public class GamePlay implements ISubject{
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
-	GameSubject gameSubjectObj;
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
 
@@ -40,7 +39,6 @@ public class GamePlay implements ISubject{
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
-    	gameSubjectObj = new GameSubject();
     	cardExchangeView = new CardExchange();
     }
 
@@ -70,6 +68,8 @@ public class GamePlay implements ISubject{
 	private void setCurrentState(State newState, String newStateStr) {
 		System.out.println("<== State of game changed to: " + newStateStr + " ==>");
 		currentState = newState;
+		if( currentState == State.exchangeCards )
+			notifyObservers();
 	}
 
 	/**
@@ -347,11 +347,9 @@ public class GamePlay implements ISubject{
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-
+			attachObserver(cardExchangeView);
 			// Change state of game
 			setCurrentState(State.exchangeCards, "exchangeCards");
-	    	gameSubjectObj.attachObserver(cardExchangeView);
-	    	gameSubjectObj.stateChanged(getCurrentState());
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
 			return false;
@@ -395,10 +393,10 @@ public class GamePlay implements ISubject{
 			System.out.println("errrroeee: " + e.getMessage());
 		}
 		
+    	attachObserver(cardExchangeView);
         // change state of game
         setCurrentState(State.exchangeCards, "exchangeCards");
-    	gameSubjectObj.attachObserver(cardExchangeView);
-    	gameSubjectObj.stateChanged(getCurrentState());
+
         
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
@@ -452,7 +450,7 @@ public class GamePlay implements ISubject{
 			//Change current state to next state
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			gameSubjectObj.detachObserver(cardExchangeView);
+			detachObserver(cardExchangeView);
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
 		
@@ -471,7 +469,7 @@ public class GamePlay implements ISubject{
 
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			gameSubjectObj.detachObserver(cardExchangeView);
+			detachObserver(cardExchangeView);
 		}
 		else {
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
