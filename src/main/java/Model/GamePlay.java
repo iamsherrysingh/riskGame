@@ -62,7 +62,6 @@ public class GamePlay{
 
 	/**
 	 * Set Current State of the game
-	 * 
 	 * @param newState
 	 * @param newStateStr
 	 */
@@ -73,10 +72,9 @@ public class GamePlay{
 
 	/**
 	 * Add Continent Function
-	 * 
 	 * @param continentName
 	 * @param controlValue
-	 * @return
+	 * @return true if addContinent function return true in Continent class
 	 */
 	public boolean addContinent(String continentName, Integer controlValue) {
 
@@ -88,9 +86,8 @@ public class GamePlay{
 
 	/**
 	 * Remove Continent Function
-	 * 
 	 * @param continentName
-	 * @return
+	 * @return true if removeContinent function return true in Continent class
 	 */
 	public boolean removeContinent(String continentName) {
 
@@ -102,10 +99,9 @@ public class GamePlay{
 
 	/**
 	 * Add Country Function
-	 * 
 	 * @param countryName
 	 * @param continentName
-	 * @return
+	 * @return true if addCountry function return true in Country class
 	 */
 	public boolean addCountry(String countryName, String continentName) {
 
@@ -116,10 +112,9 @@ public class GamePlay{
 	}
 
 	/**
-	 * Remove Country Function
-	 * 
+	 * Remove Country Function 
 	 * @param countryName
-	 * @return
+	 * @return true if removeCountry function return true in Country class
 	 */
 	public boolean removeCountry(String countryName) {
 
@@ -131,10 +126,9 @@ public class GamePlay{
 
 	/**
 	 * Add Neighbor Function
-	 * 
 	 * @param countryName
 	 * @param neighborCountryName
-	 * @return
+	 * @return true if addNeighbour function return true in Country class
 	 */
 	public boolean addNeighbor(String countryName, String neighborCountryName) {
 
@@ -146,10 +140,9 @@ public class GamePlay{
 
 	/**
 	 * Remove Neighbor Function
-	 * 
 	 * @param countryName
 	 * @param neighborCountryName
-	 * @return
+	 * @return true if removeNeighbor function return true in Country class
 	 */
 	public boolean removeNeighbor(String countryName, String neighborCountryName) {
 
@@ -161,8 +154,7 @@ public class GamePlay{
 
 	/**
 	 * Show map Function
-	 * 
-	 * @return
+	 * @return true in any case
 	 */
 	public boolean showMap() {
 
@@ -172,9 +164,8 @@ public class GamePlay{
 
 	/**
 	 * Save Map Function
-	 * 
 	 * @param fileName
-	 * @return
+	 * @return true if file successfully saved and IO Exception does not occur.
 	 */
 	public boolean saveMap(String fileName) {
 
@@ -192,9 +183,8 @@ public class GamePlay{
 
 	/**
 	 * Edit Map Function
-	 * 
 	 * @param mapName
-	 * @return
+	 * @return true if IO exception does not occur.
 	 */
 	public boolean editMap(String mapName) {
 		try {
@@ -216,9 +206,8 @@ public class GamePlay{
 	}
 
 	/**
-	 * Validate Map Function
-	 * 
-	 * @return
+	 * Validate Map Function 
+	 * @return true if the map is
 	 */
 	public boolean validateMap() {
 
@@ -230,9 +219,8 @@ public class GamePlay{
 
 	/**
 	 * Load Game Map Function
-	 * 
 	 * @param fileName
-	 * @return
+	 * @return true if file exist
 	 */
 	public boolean loadGameMap(String fileName) {
 		try {
@@ -437,8 +425,7 @@ public class GamePlay{
 			return false;
 		}
 
-		if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1),
-				currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
+		if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
 			return false;
 
 		Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;

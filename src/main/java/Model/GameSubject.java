@@ -1,7 +1,5 @@
 package Model;
-
 import java.util.ArrayList;
-
 import View.IObserver;
 
 public class GameSubject implements ISubject {
