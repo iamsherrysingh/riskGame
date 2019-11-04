@@ -19,6 +19,15 @@ public class GamePlay implements ISubject{
 	 */
 
 	ArrayList<IObserver> observersOfGamePlay;
+
+	public PhaseView getPhaseView() {
+		return phaseView;
+	}
+
+	public void setPhaseView(PhaseView phaseView) {
+		this.phaseView = phaseView;
+	}
+
 	PhaseView phaseView= new PhaseView();
 
 	public String getCurrentOperation() {
