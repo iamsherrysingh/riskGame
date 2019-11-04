@@ -791,13 +791,13 @@ public class Controller {
 					break;
 				}
 				case normalattack:{
-				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
-				//		return false;			
+					if(!gamePlayObj.normalAttack(itr.taskData.get(0),itr.taskData.get(1),Integer.parseInt(itr.taskData.get(2))))
+						return false;			
 					break;
 				}
 				case ignoreattack:{
-				//	if(!gamePlayObj.reinforceArmy(itr.taskData.get(0),Integer.parseInt(itr.taskData.get(1))))
-				//		return false;			
+					if(!gamePlayObj.ignoreAttack())
+						return false;			
 					break;
 				}
 				case fortify:{
