@@ -531,9 +531,25 @@ public class GamePlay{
 	 * @return true if implemented
 	 */
 	public boolean alloutAttack(String originCountry, String destinationCountry) {
+		
+		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
+		String defenderName = defenderCountry.getOwner();
 
+		
 		if (!Player.attackAllout(originCountry, destinationCountry, graphObj, currentPlayerObj))
 			return false;
+		
+		// if defender lost all of his country, attacker will owned all of his cards.
+		if (  currentPlayerObj.getCurrentPlayer().defenderRemoved == true ) {
+			
+			Player defender = Player.getPlayerByName(defenderName);
+			for(Card itr: defender.playerCards) {
+				Card tempcard = itr;
+				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
+				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
+			}
+			Player.removePlayer(defenderName);		
+		}
 
 		return true;
 	}
@@ -543,12 +559,13 @@ public class GamePlay{
 	 * @return true if implemented
 	 */
 	public boolean ignoreAttack() {
-
+		
 		// handle picking card at turn of each player
 		if(currentPlayerObj.getCurrentPlayer().countryConquered) {
 			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
 			currentPlayerObj.getCurrentPlayer().countryConquered = false;
 		}
+		
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 

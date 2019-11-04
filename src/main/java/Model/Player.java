@@ -18,6 +18,7 @@ public class Player {
     Integer exchangeCardsTimes;
     ArrayList<Card> playerCards;
     boolean countryConquered;
+    boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
     public String getName() {
@@ -31,6 +32,7 @@ public class Player {
         playerCards = new ArrayList<Card>();
         exchangeCardsTimes = 0;
         countryConquered = false;
+        defenderRemoved = false;
     }
 
     public Integer getNumber() {
