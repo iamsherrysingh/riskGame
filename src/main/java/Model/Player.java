@@ -298,7 +298,7 @@ public class Player {
 							System.out.println("something went wrong!!");
 						}
 						System.out.println("allout is finished here.");
-						scanner.close();
+					//	scanner.close();
 
 					} else if (attackerCountry.getNumberOfArmies() == 1) {
 
@@ -419,7 +419,7 @@ public class Player {
 									defenderDice = defenderCommandInput(1, sc);
 								}
 
-								sc.close();
+						//		sc.close();
 								
 								// defender can select max 2 armies
 								if (defenderDice > 2) { 
@@ -639,12 +639,6 @@ class CurrentPlayer{
 	 * @param gameGraph
 	 */
 	public void goToNextPlayer(State currentState, Graph gameGraph) {
-    	
-		// handle picking card at turn of each player
-		if(currentPlayer.countryConquered) {
-			currentPlayer.playerCards.add(cardPlayObj.pickCard(currentPlayer.number));
-			currentPlayer.countryConquered = false;
-		}
 		
     	if(currentPlayerItr.hasNext()) {
     		

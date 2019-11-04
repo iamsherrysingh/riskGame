@@ -544,6 +544,11 @@ public class GamePlay{
 	 */
 	public boolean ignoreAttack() {
 
+		// handle picking card at turn of each player
+		if(currentPlayerObj.getCurrentPlayer().countryConquered) {
+			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
+			currentPlayerObj.getCurrentPlayer().countryConquered = false;
+		}
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
