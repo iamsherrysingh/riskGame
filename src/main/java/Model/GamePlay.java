@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
+import View.IObserver;
 
 /** 
  * This Class maintains the state of the game and current player.
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay{
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
@@ -26,6 +27,7 @@ public class GamePlay{
 	private CurrentPlayer currentPlayerObj;
 	GameSubject gameSubjectObj;
 	CardExchange cardExchangeView;
+	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -611,5 +613,22 @@ public class GamePlay{
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 
 		return true;
+	}
+	
+	@Override
+	public void notifyObservers() {		
+		for(IObserver itr:observerList) {
+			itr.update();
+		}
+	}
+
+	@Override
+	public void attachObserver(IObserver observerObj) {
+		observerList.add(observerObj);
+	}
+
+	@Override
+	public void detachObserver(IObserver observerObj) {
+		observerList.remove(observerObj);
 	}
 }
