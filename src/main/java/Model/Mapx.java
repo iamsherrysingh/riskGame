@@ -37,6 +37,7 @@ public class Mapx {
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
+
 				if (line.equals("[continents]")) {
 					continentsEncountered = 1;
 					sb.append(line);

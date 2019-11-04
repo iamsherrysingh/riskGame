@@ -37,6 +37,7 @@ public class GamePlay implements ISubject{
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
+	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
 
 	private GamePlay() {
 		currentState = State.initializeGame;
@@ -265,7 +266,7 @@ public class GamePlay implements ISubject{
 	 * @param playerName
 	 * @return
 	 */
-	public boolean addPlayer(String playerName) {
+	public 	boolean addPlayer(String playerName) {
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
