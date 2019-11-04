@@ -13,12 +13,12 @@ public class GameSubject implements ISubject {
     {  
 		this.currentState = currentState;
         notifyObservers(); 
-    } 
+    }
 	
 	@Override
 	public void notifyObservers() {		
 		for(IObserver itr:observerList) {
-			itr.update();
+	//		itr.update();   commented because of error   -Sehaj
 		}
 	}
 

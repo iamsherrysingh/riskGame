@@ -54,7 +54,7 @@ public class Controller {
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
-		System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
+		//System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
 		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();

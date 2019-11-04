@@ -4,18 +4,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
+import View.*;
 
 /** 
  * This Class maintains the state of the game and current player.
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay{
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
 	 * implementation in gamePlay mode
 	 */
+
+	ArrayList<IObserver> observersOfGamePlay;
+	PhaseView phaseView= new PhaseView();
+
 
 	private static GamePlay gamePlay = null;
 	private State currentState;
@@ -28,12 +33,14 @@ public class GamePlay{
 	CardExchange cardExchangeView;
 	Integer lastDiceSelected = null;
 
+
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
 
 	private GamePlay() {
 		currentState = State.initializeGame;
+
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
@@ -41,6 +48,10 @@ public class GamePlay{
     	cardPlayObj = CardPlay.getInstance();
     	gameSubjectObj = new GameSubject();
     	cardExchangeView = new CardExchange();
+
+
+		observersOfGamePlay= new ArrayList<IObserver>();
+		this.attachObserver(phaseView);
     }
 
     public static GamePlay getInstance() {
@@ -68,8 +79,9 @@ public class GamePlay{
 	 * @param newStateStr
 	 */
 	private void setCurrentState(State newState, String newStateStr) {
-		System.out.println("<== State of game changed to: " + newStateStr + " ==>");
-		currentState = newState;
+		//System.out.println("<== State of game changed to: " + newStateStr + " ==>");
+		this.currentState = newState;
+		notifyObservers();
 	}
 
 	/**
@@ -935,5 +947,22 @@ public class GamePlay{
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
 		return true;
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(IObserver observer: observersOfGamePlay){
+			observer.update(this);
+		}
+	}
+
+	@Override
+	public void attachObserver(IObserver observer) {
+		observersOfGamePlay.add(observer);
+	}
+
+	@Override
+	public void detachObserver(IObserver observer) {
+		observersOfGamePlay.remove(observer);
 	}
 }
