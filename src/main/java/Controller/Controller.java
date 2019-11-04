@@ -41,7 +41,11 @@ enum tasksEnum {
 public class Controller {
 	
 	tasksEnum currentTask;
-	String continentName,countryName,neighborCountryName,mapFile,playerName;
+	String continentName;
+	String countryName;
+	String neighborCountryName;
+	String mapFile;
+	String playerName;
 	boolean editPlayerFinished = false;
 	
 	private GamePlay gamePlayObj = null;
@@ -486,7 +490,7 @@ public class Controller {
 		else if( gamePlayObj.getCurrentState() == State.mapEditor) {		
 			for(ExtractedTasks itr:tasksList) {
 				switch (itr.name){	
-					case addcontinent:	
+					case addcontinednt:	
 						String controlValueStr = itr.taskData.get(1);	
 						//check if control value is numeric
 						for(int i=0; i<controlValueStr.length(); i++) {
