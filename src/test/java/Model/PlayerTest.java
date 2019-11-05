@@ -150,8 +150,8 @@ public class PlayerTest {
 
 	/**
 	 * This is a JUnit test for
-	 * {@link Model.Player#attackMove(Country, Country, Integer)}
-	 * This checks if the attackMove is working properly like adds and remove right number of armies.
+	 * {@link Model.Player#attackMove(Country, Country, Integer)} This checks if the
+	 * attackMove is working properly like adds and remove right number of armies.
 	 */
 	@Test
 	public void attackMove() {
@@ -164,8 +164,10 @@ public class PlayerTest {
 		Country.getCountryByName("Quebec", Graph.getInstance()).setNumberOfArmies(10);
 		Country.getCountryByName("Greenland", Graph.getInstance()).setNumberOfArmies(0);
 		Integer AttackerArmiesBefore = Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies();
+		Player attacker = Player.getPlayerByName(Country.getCountryByName("Quebec", gamePlay.getGraphObj()).getOwner());
+		Player defender = Player.getPlayerByName(Country.getCountryByName("Greenland", gamePlay.getGraphObj()).getOwner());
 		Player.attackMove(Country.getCountryByName("Quebec", gamePlay.getGraphObj()),
-				Country.getCountryByName("Greenland", gamePlay.getGraphObj()), 2);
+				Country.getCountryByName("Greenland", gamePlay.getGraphObj()), 2, attacker, defender);
 		Integer AttackerArmiesAfter = Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies();
 		Integer DefenderArmiesAfter = Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies();
 		Integer attackMoveOutput = AttackerArmiesBefore - 2;
