@@ -6,7 +6,7 @@ import Model.Player;
 public class CardExchange implements IObserver {
 	
     String header =          "=============================================="  + "\n" +
-            				"============== Card Exchange View ============";
+            			 	 "============== Card Exchange View ============";
     String footer =          "==============================================";
     
 	@Override

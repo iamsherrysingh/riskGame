@@ -688,7 +688,7 @@ class CurrentPlayer{
     		numReinforceArmies = 0;
     		currentPlayer = currentPlayerItr.next();
     		
-        	System.out.println("Current player is " + currentPlayer.getName());
+       // 	System.out.println("Current player is " + currentPlayer.getName());
     		Continent.updateContinitsOwner(gameGraph);
     		calculateReinforceentArmies();
     	}
