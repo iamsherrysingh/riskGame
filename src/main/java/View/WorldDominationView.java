@@ -12,7 +12,7 @@ public class WorldDominationView implements IObserver{
 
     String data="";
     @Override
-    public void update(GamePlay gamePlay) {
+    public void update(GamePlay gamePlay, Player playerobj) {
 
         try {
             data= "Map Ownership:";
