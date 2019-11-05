@@ -116,7 +116,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.addContinent(continentName, controlValue))
 			return false;
-		setCurrentOperation("Added continent "+ continentName + " with control value "+controlValue);
+		setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
 		return true;
 	}
 
@@ -130,7 +130,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.removeContinent(continentName, graphObj))
 			return false;
-		setCurrentOperation("Removed continent "+ continentName );
+		setCurrentOperation("Removing continent "+ continentName );
 		return true;
 	}
 
@@ -145,7 +145,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.addCountry(countryName, continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ countryName + " to Continent: "+continentName);
 		return true;
 	}
 
@@ -159,7 +159,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.removeCountry(countryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ countryName);
 		return true;
 	}
 
@@ -174,7 +174,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.addNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ neighborCountryName +" as a neighbour to "+countryName);
 		return true;
 	}
 
@@ -189,7 +189,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.removeNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ neighborCountryName +" as a neighbour from "+countryName);
 		return true;
 	}
 
@@ -201,6 +201,7 @@ public class GamePlay implements ISubject{
 	public boolean showMap() {
 
 		Graph.showMap();
+		setCurrentOperation("Showing Map");
 		return true;
 	}
 
@@ -220,7 +221,7 @@ public class GamePlay implements ISubject{
 			System.out.println("IO Exception Occured");
 			return false;
 		}
-
+		setCurrentOperation("Saving Map to file: \""+fileName+"\"");
 		return true;
 	}
 
@@ -290,7 +291,7 @@ public class GamePlay implements ISubject{
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
-		setCurrentOperation("Added Player "+playerName+" to the game.");
+		setCurrentOperation("Adding Player "+playerName+" to the game.");
 		return true;
 	}
 
@@ -304,7 +305,7 @@ public class GamePlay implements ISubject{
 
 		if (!Player.removePlayer(playerName))
 			return false;
-
+		setCurrentOperation("Removing Player "+playerName+" from the game.");
 		return true;
 	}
 
@@ -371,7 +372,7 @@ public class GamePlay implements ISubject{
 		// Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
-		setCurrentOperation("Populated all countries");
+		setCurrentOperation("Populating all countries");
 		return true;
 	}
 
@@ -405,7 +406,7 @@ public class GamePlay implements ISubject{
 		if (targetCountry.getOwner() != null) {
 			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
 
-				System.out.println("The country is not belong to the current player");
+				System.out.println("The country does not belong to the current player");
 
 				return false;
 			}
@@ -449,6 +450,7 @@ public class GamePlay implements ISubject{
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Placing all countries");
 		return true;
 	}
 
@@ -501,7 +503,8 @@ public class GamePlay implements ISubject{
 			gameSubjectObj.detachObserver(cardExchangeView);
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
-		
+
+		setCurrentOperation("Exchanging Cards");
 		return true;
 	}
 
@@ -522,6 +525,7 @@ public class GamePlay implements ISubject{
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
 		}
+		setCurrentOperation("Player chose not to exchange cards");
 		return true;
 	}
 
@@ -544,7 +548,7 @@ public class GamePlay implements ISubject{
 			// Change current state to next state
 			setCurrentState(State.attackPhase, "Attacking");
 		}
-
+		setCurrentOperation("Country "+countryName+" reinforced with "+numberOfArmies+" armies.");
 		return true;
 	}
 	
@@ -556,7 +560,7 @@ public class GamePlay implements ISubject{
 
 		if (!attackCountry(originCountry, destinationCountry, numeOfDice))
 			return false;
-
+		setCurrentOperation("Performing normal attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	/**
@@ -567,7 +571,7 @@ public class GamePlay implements ISubject{
 
 		if (!attackAllout(originCountry, destinationCountry))
 			return false;
-
+		setCurrentOperation("Performing all-out attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	
@@ -580,8 +584,7 @@ public class GamePlay implements ISubject{
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
-		System.out.println("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
-
+		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
 		return true;
 	}
 
