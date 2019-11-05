@@ -427,7 +427,7 @@ public class GamePlay implements ISubject{
 				|| targetCountry.getOwner() == null) {
 			targetCountry.setOwner(currentPlayerObj.getCurrentPlayer().getName());
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + 1);
-			currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() - 1);
+		//	currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() - 1);
 			setCurrentOperation("Performing PlaceArmy operations");
 		}
 		return true;
@@ -440,6 +440,7 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean placeAll() {
 		try {
+		//	Integer playerNumOfArmies = Player.
 			while (!Player.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
 					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
@@ -449,6 +450,34 @@ public class GamePlay implements ISubject{
 					}
 				}
 			}
+			
+			// set number of armies for each player
+			Integer numArmies;
+			switch (Database.playerList.size()) {
+			case 2:
+				numArmies = 40;
+				break;
+			case 3:
+				numArmies = 35;
+				break;
+			case 4:
+				numArmies = 30;
+				break;
+			case 5:
+				numArmies = 25;
+				break;
+			case 6:
+				numArmies = 20;
+				break;
+			default:
+				System.out.println("Number of players should be between 2 and 6");
+				return false;
+			}
+
+			for (Player iter : Database.playerList) {
+				iter.numberOfArmies = numArmies;
+			}
+			
 		} catch (Exception e) {
 			System.out.println("errrroeee: " + e.getMessage());
 		}
@@ -494,9 +523,12 @@ public class GamePlay implements ISubject{
 		Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
 
 		if( currentPlayer.playerCards.size() < 3 )	{	
+			
+			System.out.println("You do not have enough cards for exchange.");
 			//Change current state to next state
 			detachObserver(cardExchangeView);
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			setCurrentOperation("Due to insufficient cards, exchange cards ignored");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
