@@ -3,9 +3,9 @@ package View;
 import Model.GamePlay;
 
 public class PhaseView implements IObserver{
-    String header=          "______________________________________"  + "\n" +
-                            "_______________PHASE VIEW_____________";
-    String footer=          "______________________________________";
+    String header=          "================================================"  + "\n" +
+                            "===================PHASE VIEW===================";
+    String footer=          "________________________________________________";
 
 
     String data;
