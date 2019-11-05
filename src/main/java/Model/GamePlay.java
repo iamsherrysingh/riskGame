@@ -696,21 +696,28 @@ public class GamePlay implements ISubject{
 		if (!Player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
-    	attachObserver(cardExchangeView);
+		// Change current player
+		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		
 		this.detachObserver(phaseView);
 		this.detachObserver(worldDominationView);
 		
-        // change state of game
         setCurrentState(State.exchangeCards, "exchangeCards");
         
-        attachObserver(phaseView);
-        attachObserver(worldDominationView);
-
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-		this.detachObserver(cardExchangeView);
-        setCurrentOperation("Fortify Amry");
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
+        
+		setCurrentOperation("Fortify Army");
+		
         this.attachObserver(cardExchangeView);
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		
+        setCurrentState(State.exchangeCards, "exchangeCards");
+        
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
+        
 		return true;
 	}
 
@@ -739,7 +746,6 @@ public class GamePlay implements ISubject{
 		
         setCurrentState(State.exchangeCards, "exchangeCards");
         
- //       this.detachObserver(cardExchangeView);
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
 
