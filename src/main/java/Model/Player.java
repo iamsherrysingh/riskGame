@@ -277,9 +277,16 @@ public class Player {
 						System.out.println("No more armies to defend the country");
 					}
 
+					System.out.println("Before Atack");
+					System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
 					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
 					AttackerArmiesSelected = null;
 					DefenderArmiesSelected = null;
+					System.out.println("After Atack");
+					System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("--------------------------------");
 
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						System.out.println("Attacker won the country " + defenderCountry.name);
@@ -303,7 +310,7 @@ public class Player {
 						} else {
 							System.out.println("something went wrong!!");
 						}
-						System.out.println("allout is finished here.");
+						System.out.println("AttackAllOut is finished here.");
 					//	scanner.close();
 
 					} 
@@ -317,6 +324,7 @@ public class Player {
 				} 
 				else {
 					System.out.println("Attacker country and the defender country should be adjacent");
+					return false;
 				}
 			}
 		} 
@@ -444,8 +452,17 @@ public class Player {
 								}
 								else {
 
-									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+									System.out.println("Before Atack");
+									System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
 
+									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+									System.out.println("After Atack");
+									System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("--------------------------------");
+
+									
 									if (defenderCountry.getNumberOfArmies() == 0) {
 										
 										System.out.println("Attacker won the country " + defenderCountry.name);
@@ -473,6 +490,7 @@ public class Player {
 								//		scanner.close();
 										System.out.println("attackCountry command finished");
 									}
+
 								}
 							} 
 							else {
@@ -495,6 +513,7 @@ public class Player {
 				} 
 				else {
 					System.out.println("Attacker country and the defender country should be adjacent");
+					return false;
 				}
 			}
 		}
@@ -530,6 +549,8 @@ public class Player {
 		}
 		Collections.sort(attackerDices);
 		Collections.sort(defenderDices);
+		Collections.reverse(attackerDices);
+		Collections.reverse(defenderDices);
 
 		if (defenderArmies > attackerArmies) {
 			for (int i = 0; i < attackerArmies; i++) {
@@ -558,8 +579,8 @@ public class Player {
 			}
 		}
 
-		System.out.println("AC" + attackerArmiesKilled);
-		System.out.println("DC" + defenderArmiesKilled);
+		//System.out.println("AC" + attackerArmiesKilled);
+		//System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
