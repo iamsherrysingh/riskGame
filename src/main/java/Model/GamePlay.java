@@ -515,7 +515,7 @@ public class GamePlay implements ISubject{
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
 		}
-		setCurrentOperation("Player chose not to exchange cards");
+		setCurrentOperation("Player choose not to exchange cards");
 		return true;
 		
 	}

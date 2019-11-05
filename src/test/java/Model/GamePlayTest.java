@@ -48,8 +48,9 @@ public class GamePlayTest {
         gamePlay.populateCountries();
         gamePlay.placeAll();
 
-		System.out.println(Player.allPlayersRemainingArmiesExhausted());
-        
+
+		assertTrue(Player.allPlayersRemainingArmiesExhausted());
+		
 		System.out.println("placeAll test");
     }
     
@@ -57,6 +58,23 @@ public class GamePlayTest {
     @Test
     public void placeArmy(){
     	System.out.println("placeArmy test start");
+
+    	//Sehaj:Please see this part:
+    	//I don't know how to work with "CurrentPlayerObj". because to run a test in this class that should be initialized.
+		System.out.println( gamePlay.getCurrentPlayerObj().getCurrentPlayer().getName() );
+
+		
+		//assertTrue(gamePlay.placeArmy("India"));
+		
+		System.out.println("placeArmy test end");
+    }    
+    
+    
+    
+    
+    @Test
+    public void ignoreExchangeCards(){
+    	System.out.println("ignoreExchangeCards test start");
 
 		
         
@@ -77,10 +95,7 @@ public class GamePlayTest {
 		//System.out.println(result);
 		
 		System.out.println("placeArmy test end");
-    }    
-    
-    
-    
+    }     
     /**
 	 * This is a jUnit test for {@link Model.GamePlay#getCurrentPlayerObj()#calculateReinforcementArmies()}
 	 */
