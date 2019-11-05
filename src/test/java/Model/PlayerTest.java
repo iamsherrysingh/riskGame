@@ -57,5 +57,59 @@ public class PlayerTest {
 	public void addPlayer2() {
 		assertFalse(Player.addPlayer(" ", 20));
 	}
+	
+	/**
+	 * This is a JUnit test for {@link Model.Player#attackAllout(String, String, Graph, CurrentPlayer)}
+	 * attackAlloutOutput would be false because attacker cannot attack to a non-adjacent country.
+	 */
+	@Test
+	public void attackCountry() {
+		Player.addPlayer("birjot", 9);
+        Player.addPlayer("jaskaran", 6);
+        gamePlay.populateCountries();
+        gamePlay.placeAll();
+        Country.getCountryByName("Alberta", Graph.getInstance()).setOwner("birjot");
+        Country.getCountryByName("Quebec", Graph.getInstance()).setOwner("jaskaran");
+        Country.addArmiesToCountry("Alberta", 6,Graph.getInstance());
+        Country.addArmiesToCountry("Quebec", 4, Graph.getInstance());
+		boolean attackAlloutOutput = Player.attackAllout("Alberta", "Quebec", Graph.getInstance(), gamePlay.getCurrentPlayerObj());
+		assertFalse(attackAlloutOutput);
+	}
+	
+	/**
+	 * This is a JUnit test for {@link Model.Player#attackAllout(String, String, Graph, CurrentPlayer)}
+	 * attackAlloutOutput would be true because everything is added according to the rules.
+	 */
+	@Test
+	public void attackCountry2() {
+		Player.addPlayer("birjot", 9);
+        Player.addPlayer("jaskaran", 6);
+        gamePlay.populateCountries();
+        gamePlay.placeAll();
+        Country.getCountryByName("Quebec", Graph.getInstance()).setOwner("birjot");
+        Country.getCountryByName("Greenland", Graph.getInstance()).setOwner("jaskaran");
+        Country.addArmiesToCountry("Quebec", 6,Graph.getInstance());
+        Country.addArmiesToCountry("Greenland", 4, Graph.getInstance());
+		boolean attackAlloutOutput = Player.attackAllout( "Quebec", "Greenland", Graph.getInstance(), gamePlay.getCurrentPlayerObj());
+		assertTrue(attackAlloutOutput);
+	}
+	
+	/**
+	 * This is a JUnit test for {@link Model.Player#attackAllout(String, String, Graph, CurrentPlayer)}
+	 * attackAlloutOutput would be false because attacker cannot attack on his own country.
+	 */
+	@Test
+	public void attackCountry3() {
+		Player.addPlayer("birjot", 9);
+        Player.addPlayer("jaskaran", 6);
+        gamePlay.populateCountries();
+        gamePlay.placeAll();
+        Country.getCountryByName("Quebec", Graph.getInstance()).setOwner("birjot");
+        Country.getCountryByName("Greenland", Graph.getInstance()).setOwner("birjot");
+        Country.addArmiesToCountry("Quebec", 6,Graph.getInstance());
+        Country.addArmiesToCountry("Greenland", 4, Graph.getInstance());
+		boolean attackAlloutOutput = Player.attackAllout( "Quebec", "Greenland", Graph.getInstance(), gamePlay.getCurrentPlayerObj());
+		assertFalse(attackAlloutOutput);
+	}
 
 }

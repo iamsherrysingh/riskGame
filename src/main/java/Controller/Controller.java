@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
-import View.CardExchange;
+//import View.CardExchange;
 
 enum tasksEnum {
 	unknown,
