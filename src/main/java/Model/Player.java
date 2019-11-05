@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Player {
     String name;
-    Integer number, numberOfArmies;
+    Integer number, numberOfArmies, numberOfFreeArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();
     Integer exchangeCardsTimes;
     public ArrayList<Card> playerCards;
@@ -43,6 +43,14 @@ public class Player {
         this.name = name;
     }
 
+    public Integer getNumberOfFreeArmies() {
+        return numberOfFreeArmies;
+    }
+
+    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+        this.numberOfFreeArmies = numberOfFreeArmies;
+    }
+    
     public Integer getNumberOfArmies() {
         return numberOfArmies;
     }
@@ -138,7 +146,7 @@ public class Player {
      */
     public static boolean allPlayersRemainingArmiesExhausted(){
         for(Player player: Database.getInstance().getPlayerList()){
-            if(player.getNumberOfArmies()>0){
+            if(player.getNumberOfFreeArmies()>0){
                 return false;
             }
         }

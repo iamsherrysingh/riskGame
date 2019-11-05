@@ -336,6 +336,7 @@ public class GamePlay implements ISubject{
 
 		for (Player iter : Database.playerList) {
 			iter.numberOfArmies = numArmies;
+			iter.numberOfFreeArmies = numArmies;
 		}
 
 		Integer playerNumberToBeAssigned = 1;
@@ -427,7 +428,7 @@ public class GamePlay implements ISubject{
 				|| targetCountry.getOwner() == null) {
 			targetCountry.setOwner(currentPlayerObj.getCurrentPlayer().getName());
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + 1);
-		//	currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() - 1);
+			currentPlayerObj.getCurrentPlayer().setNumberOfFreeArmies(currentPlayerObj.getCurrentPlayer().getNumberOfFreeArmies() - 1);
 			setCurrentOperation("Performing PlaceArmy operations");
 		}
 		return true;
@@ -440,42 +441,15 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean placeAll() {
 		try {
-		//	Integer playerNumOfArmies = Player.
+
 			while (!Player.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
 					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
 					if (playerThatOwnsThisCountry.getNumberOfArmies() > 0) {
 						thisCountry.setNumberOfArmies(thisCountry.getNumberOfArmies() + 1);
-						playerThatOwnsThisCountry.setNumberOfArmies(playerThatOwnsThisCountry.getNumberOfArmies() - 1);
+						playerThatOwnsThisCountry.setNumberOfFreeArmies(playerThatOwnsThisCountry.getNumberOfFreeArmies() - 1);
 					}
 				}
-			}
-			
-			// set number of armies for each player
-			Integer numArmies;
-			switch (Database.playerList.size()) {
-			case 2:
-				numArmies = 40;
-				break;
-			case 3:
-				numArmies = 35;
-				break;
-			case 4:
-				numArmies = 30;
-				break;
-			case 5:
-				numArmies = 25;
-				break;
-			case 6:
-				numArmies = 20;
-				break;
-			default:
-				System.out.println("Number of players should be between 2 and 6");
-				return false;
-			}
-
-			for (Player iter : Database.playerList) {
-				iter.numberOfArmies = numArmies;
 			}
 			
 		} catch (Exception e) {
@@ -530,20 +504,28 @@ public class GamePlay implements ISubject{
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			setCurrentOperation("Due to insufficient cards, exchange cards ignored");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+			//currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
 		else {
 			
-			if (((cardNumber1 > currentPlayerCardsListSize) && (cardNumber1 < 1))
-					|| ((cardNumber2 > currentPlayerCardsListSize) && (cardNumber2 < 1))
-					|| ((cardNumber3 > currentPlayerCardsListSize) && (cardNumber3 < 1))) {
+			if (((cardNumber1 > currentPlayerCardsListSize) || (cardNumber1 < 1))
+					|| ((cardNumber2 > currentPlayerCardsListSize) || (cardNumber2 < 1))
+					|| ((cardNumber3 > currentPlayerCardsListSize) || (cardNumber3 < 1))) {
 
 				System.out.println("Input Numbers is wrong");
 				return false;
 			}
 			
-			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
+			if ( (cardNumber1 == cardNumber2) || (cardNumber1 == cardNumber3) || (cardNumber3 == cardNumber2) ) {
+				System.out.println("You entered duplicate cards.");
 				return false;
+			}
+			
+			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1))) {
+				System.out.println("These cards do not match for exchanging.");
+				return false;
+			}
+				
 			
 			Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
 			currentPlayer.exchangeCardsTimes++;
