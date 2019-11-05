@@ -27,14 +27,7 @@ public class PhaseView implements IObserver{
         }
 
         System.out.println(header + "\n" + data+"\n"+footer);
-//        try {
-//
-//            for(Player player: Database.getInstance().getPlayerList()) {
-//                System.out.println("Player " + player.getName() + " " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%");
-//            }
-//        }catch(Exception e){
-//
-//        }
+
     }
 
     public void printPhaseView(){

@@ -176,10 +176,18 @@ public class Continent {
 		return continent;
 	}
 
-	
-	public static boolean continentBelongToPlayer(Player playerName, String continentName, Graph gameGraph) {
+
+	public static boolean continentBelongToPlayer(String playerName, String continentName, Graph gameGraph) {
 		Continent continentInQuestion = Continent.getContinentByName(continentName);
-		// TODO
+
+		for(Country country: gameGraph.getAdjList()){
+			if(country.getInContinent() == continentInQuestion.number){
+				if(! country.owner.equalsIgnoreCase(playerName)){
+					return false;
+				}
+			}
+		}
+
 		return true;
 	}
     

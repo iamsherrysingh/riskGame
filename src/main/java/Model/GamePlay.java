@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
 import View.*;
+import com.sun.org.apache.xerces.internal.impl.dv.DatatypeValidator;
+
+import javax.xml.crypto.Data;
 
 /** 
  * This Class maintains the state of the game and current player.
@@ -29,6 +32,7 @@ public class GamePlay implements ISubject{
 	}
 
 	PhaseView phaseView= new PhaseView();
+	WorldDominationView worldDominationView = new WorldDominationView();
 
 	public String getCurrentOperation() {
 		return currentOperation;
@@ -73,6 +77,7 @@ public class GamePlay implements ISubject{
 
 		observersOfGamePlay= new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
+		this.attachObserver(worldDominationView);
     }
 
     public static GamePlay getInstance() {
@@ -668,6 +673,25 @@ public class GamePlay implements ISubject{
 			return -1;
 		}
 	}
+
+	public String getContinentOwnership(){
+	    String output="";
+//	    int singleOwnerFound= 0;
+	    for(Continent continent: Database.getInstance().getContinentList()){
+	        for(Player player: Database.getInstance().getPlayerList()){
+                if(Continent.continentBelongToPlayer(player.getName(), continent.getName(), gamePlay.getGraphObj()) ==true){
+                    output+=continent.getName() +" : "+player.getName() +"\n";
+//                    singleOwnerFound =1;
+                    break;
+                }
+	        }
+            output+= continent.getName() + " : Multiple Owners\n";
+//	        singleOwnerFound=0;
+        }
+
+
+	    return output;
+    }
 	
 	@Override
 	public void notifyObservers() {		
