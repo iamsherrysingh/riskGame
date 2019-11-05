@@ -274,14 +274,16 @@ public class Player {
 						System.out.println("No more armies to defend the country");
 					}
 
-					System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+					System.out.println("Before Atack");
+					System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
 					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
 					AttackerArmiesSelected = null;
 					DefenderArmiesSelected = null;
-					System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
-
+					System.out.println("After Atack");
+					System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
+					System.out.println("--------------------------------");
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						
 						System.out.println("Attacker won the country " + defenderCountry.name);
@@ -430,11 +432,16 @@ public class Player {
 									return false;
 								}
 								else {
-
-									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+									System.out.println("Before Atack");
+									System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
 									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+									System.out.println("After Atack");
+									System.out.println("Attacker Armies : " + Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("Defender Armies : " + Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
+									System.out.println("--------------------------------");
 
+									
 									if (defenderCountry.getNumberOfArmies() == 0) {
 										
 										System.out.println("Attacker won the country " + defenderCountry.name);
@@ -458,8 +465,7 @@ public class Player {
 										System.out.println("attackCountry command finished");
 									}
 									
-									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
+
 								}
 							} 
 							else {
@@ -548,8 +554,8 @@ public class Player {
 			}
 		}
 
-		System.out.println("AC" + attackerArmiesKilled);
-		System.out.println("DC" + defenderArmiesKilled);
+		//System.out.println("AC" + attackerArmiesKilled);
+		//System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
