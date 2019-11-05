@@ -661,7 +661,8 @@ public class GamePlay implements ISubject{
 
  	public Integer getTotalNumberOfArmies(String playerName){
 		try{
-			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
+//			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
+			return Player.getPlayerByName(playerName).getNumberOfArmies();
 		}
 		catch(Exception e){
 			return -1;
