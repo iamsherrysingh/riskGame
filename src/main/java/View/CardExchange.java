@@ -1,6 +1,8 @@
 package View;
 import Model.GamePlay;
 
+import Model.GamePlay;
+
 public class CardExchange implements IObserver {
 	
     String header=          "______________________________________________"  + "\n" +

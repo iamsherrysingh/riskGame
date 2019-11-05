@@ -54,7 +54,7 @@ public class Controller {
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
-		System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
+		//System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
 		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();
@@ -822,7 +822,8 @@ public class Controller {
     public static void main(String[] args) throws IOException {
 		try {
 			Controller controller = new Controller();
-			controller.gamePlayObj = GamePlay.getInstance();			
+			controller.gamePlayObj = GamePlay.getInstance();
+			//controller.gamePlayObj.attachObserver(controller.gamePlayObj.getPhaseView());
 	    	
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
