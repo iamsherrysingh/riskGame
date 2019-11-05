@@ -176,10 +176,11 @@ public class Player {
     	
     	//check: if target country is not exist, return false
     	Country targetCountry= Country.getCountryByName(countryName, graphObj);
-    	
-    	if(targetCountry == null)
+    	  	
+    	if(targetCountry == null) {
+    		System.out.println("This Country does not exist.");
     		return false;
-    			
+    	}		
     	//check: if country does not belong to the currentPlayer, return false
     	if(targetCountry.getOwner() != null){
     		if(targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false){			

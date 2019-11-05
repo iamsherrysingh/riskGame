@@ -102,9 +102,11 @@ public class GamePlay implements ISubject{
 	 * @param newStateStr
 	 */
 	private void setCurrentState(State newState, String newStateStr) {
-		//System.out.println("<== State of game changed to: " + newStateStr + " ==>");
+		
 		this.currentState = newState;
-		notifyObservers();
+		
+		if( newState == State.exchangeCards)
+			notifyObservers();
 	}
 
 	/**
@@ -270,7 +272,7 @@ public class GamePlay implements ISubject{
 			System.out.println("File not found");
 			return false;
 		}
-        //setCurrentOperation("Loading Game Map "+fileName);
+        setCurrentOperation("Loading Game Map "+fileName);
 		return true;
 	}
 
@@ -386,11 +388,29 @@ public class GamePlay implements ISubject{
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-			attachObserver(cardExchangeView);
-			// Change state of game
-			setCurrentState(State.exchangeCards, "exchangeCards");
+			
+			this.detachObserver(phaseView);
+			this.detachObserver(worldDominationView);
+			
+	        setCurrentState(State.exchangeCards, "exchangeCards");
+	        
+	        this.attachObserver(phaseView);
+	        this.attachObserver(worldDominationView);
+	        
+			setCurrentOperation("Performing PlaceArmy operations");
+			
+	        this.attachObserver(cardExchangeView);
+			this.detachObserver(phaseView);
+			this.detachObserver(worldDominationView);
+			
+	        setCurrentState(State.exchangeCards, "exchangeCards");
+	        
+//	        this.detachObserver(cardExchangeView);
+	        this.attachObserver(phaseView);
+	        this.attachObserver(worldDominationView);
+	        
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-            setCurrentOperation("Performing PlaceArmy operation");
+
 			return false;
 		}
 
@@ -407,7 +427,8 @@ public class GamePlay implements ISubject{
 				|| targetCountry.getOwner() == null) {
 			targetCountry.setOwner(currentPlayerObj.getCurrentPlayer().getName());
 			targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + 1);
-			currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() - 1);
+		//	currentPlayerObj.getCurrentPlayer().setNumberOfArmies(currentPlayerObj.getCurrentPlayer().getNumberOfArmies() - 1);
+			setCurrentOperation("Performing PlaceArmy operations");
 		}
 		return true;
 	}
@@ -419,6 +440,7 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean placeAll() {
 		try {
+		//	Integer playerNumOfArmies = Player.
 			while (!Player.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
 					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
@@ -428,19 +450,62 @@ public class GamePlay implements ISubject{
 					}
 				}
 			}
+			
+			// set number of armies for each player
+			Integer numArmies;
+			switch (Database.playerList.size()) {
+			case 2:
+				numArmies = 40;
+				break;
+			case 3:
+				numArmies = 35;
+				break;
+			case 4:
+				numArmies = 30;
+				break;
+			case 5:
+				numArmies = 25;
+				break;
+			case 6:
+				numArmies = 20;
+				break;
+			default:
+				System.out.println("Number of players should be between 2 and 6");
+				return false;
+			}
+
+			for (Player iter : Database.playerList) {
+				iter.numberOfArmies = numArmies;
+			}
+			
 		} catch (Exception e) {
 			System.out.println("errrroeee: " + e.getMessage());
 		}
+        
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
 		
-    	attachObserver(cardExchangeView);
-        // change state of game
         setCurrentState(State.exchangeCards, "exchangeCards");
+        
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
+        
+		setCurrentOperation("Placing armies on all countries");
+		
+        this.attachObserver(cardExchangeView);
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		
+        setCurrentState(State.exchangeCards, "exchangeCards");
+        
+    //    this.detachObserver(cardExchangeView);
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
+        
+		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+		
 
         
-        //Set current player to the first player
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-
-		setCurrentOperation("Placing armies on all countries");
 		return true;
 	}
 
@@ -457,44 +522,51 @@ public class GamePlay implements ISubject{
 		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
 		Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
 
-		if (((cardNumber1 > currentPlayerCardsListSize) && (cardNumber1 < 1))
-				|| ((cardNumber2 > currentPlayerCardsListSize) && (cardNumber2 < 1))
-				|| ((cardNumber3 > currentPlayerCardsListSize) && (cardNumber3 < 1))) {
-
-			System.out.println("Input Numbers is wrong");
-			return false;
-		}
-
-		if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
-			return false;
-
-		Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
-		currentPlayer.exchangeCardsTimes++;
-		currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
-
-		System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
-
-		Card card1 = currentPlayer.playerCards.get(cardNumber1 - 1);
-		Card card2 = currentPlayer.playerCards.get(cardNumber2 - 1);
-		Card card3 = currentPlayer.playerCards.get(cardNumber3 - 1);
-
-		currentPlayer.playerCards.remove(cardNumber1 - 1);
-		currentPlayer.playerCards.remove(cardNumber2 - 1);
-		currentPlayer.playerCards.remove(cardNumber3 - 1);
-
-		cardPlayObj.refundCard(card1);
-		cardPlayObj.refundCard(card2);
-		cardPlayObj.refundCard(card3);
-		
 		if( currentPlayer.playerCards.size() < 3 )	{	
+			
+			System.out.println("You do not have enough cards for exchange.");
 			//Change current state to next state
-			setCurrentState(State.reinforcementPhase, "Reinforcement");
-			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
 			detachObserver(cardExchangeView);
+			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			setCurrentOperation("Due to insufficient cards, exchange cards ignored");
+			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
+		else {
+			
+			if (((cardNumber1 > currentPlayerCardsListSize) && (cardNumber1 < 1))
+					|| ((cardNumber2 > currentPlayerCardsListSize) && (cardNumber2 < 1))
+					|| ((cardNumber3 > currentPlayerCardsListSize) && (cardNumber3 < 1))) {
 
-		setCurrentOperation("Exchanging Cards");
+				System.out.println("Input Numbers is wrong");
+				return false;
+			}
+			
+			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
+				return false;
+			
+			Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
+			currentPlayer.exchangeCardsTimes++;
+			currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
+
+			System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
+
+			Card card1 = currentPlayer.playerCards.get(cardNumber1 - 1);
+			Card card2 = currentPlayer.playerCards.get(cardNumber2 - 1);
+			Card card3 = currentPlayer.playerCards.get(cardNumber3 - 1);
+
+			currentPlayer.playerCards.remove(cardNumber1 - 1);
+			currentPlayer.playerCards.remove(cardNumber2 - 1);
+			currentPlayer.playerCards.remove(cardNumber3 - 1);
+
+			cardPlayObj.refundCard(card1);
+			cardPlayObj.refundCard(card2);
+			cardPlayObj.refundCard(card3);
+
+			setCurrentOperation("Exchanging Cards");
+		
+		}
+		
 		return true;
 	}
 
@@ -506,17 +578,17 @@ public class GamePlay implements ISubject{
 	public boolean ignoreExchangeCards() {
 		
 		if( currentPlayerObj.getCurrentPlayer().playerCards.size() < 5 ) {
+			
 			//Change current state to next state
-
-			setCurrentState(State.reinforcementPhase, "Reinforcement");
-			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
 			detachObserver(cardExchangeView);
+			setCurrentState(State.reinforcementPhase, "Reinforcement");
+			setCurrentOperation("Player chose not to exchange cards");	
+			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies for reinforcement");
 		}
 		else {
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
 		}
-		setCurrentOperation("Player chose not to exchange cards");
 		return true;
 		
 	}
@@ -642,13 +714,21 @@ public class GamePlay implements ISubject{
 		if (!Player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
-		// Change current state to next state
-		attachObserver(cardExchangeView);
-		setCurrentState(State.exchangeCards, "exchangeCards");
+    	attachObserver(cardExchangeView);
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		
+        // change state of game
+        setCurrentState(State.exchangeCards, "exchangeCards");
+        
+        attachObserver(phaseView);
+        attachObserver(worldDominationView);
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		this.detachObserver(cardExchangeView);
         setCurrentOperation("Fortify Amry");
+        this.attachObserver(cardExchangeView);
 		return true;
 	}
 
@@ -661,12 +741,25 @@ public class GamePlay implements ISubject{
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 		
-		// Change current state to next state
-		attachObserver(cardExchangeView);
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		
+        setCurrentState(State.exchangeCards, "exchangeCards");
+        
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
+        
+		setCurrentOperation("Performing Fortify None");
+		
+        this.attachObserver(cardExchangeView);
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		
+        setCurrentState(State.exchangeCards, "exchangeCards");
+        
+ //       this.detachObserver(cardExchangeView);
+        this.attachObserver(phaseView);
+        this.attachObserver(worldDominationView);
 
 		return true;
 	}
