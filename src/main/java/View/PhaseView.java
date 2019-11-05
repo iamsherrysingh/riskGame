@@ -1,6 +1,8 @@
 package View;
 
+import Model.Database;
 import Model.GamePlay;
+import Model.Player;
 
 public class PhaseView implements IObserver{
     String header=          "================================================"  + "\n" +
@@ -25,6 +27,14 @@ public class PhaseView implements IObserver{
         }
 
         System.out.println(header + "\n" + data+"\n"+footer);
+//        try {
+//
+//            for(Player player: Database.getInstance().getPlayerList()) {
+//                System.out.println("Player " + player.getName() + " " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%");
+//            }
+//        }catch(Exception e){
+//
+//        }
     }
 
     public void printPhaseView(){
