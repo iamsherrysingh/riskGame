@@ -4,18 +4,47 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
+import View.*;
+import com.sun.org.apache.xerces.internal.impl.dv.DatatypeValidator;
+
+import javax.xml.crypto.Data;
 
 /** 
  * This Class maintains the state of the game and current player.
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay{
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
 	 * implementation in gamePlay mode
 	 */
+
+	ArrayList<IObserver> observersOfGamePlay;
+
+	public PhaseView getPhaseView() {
+		return phaseView;
+	}
+
+	public void setPhaseView(PhaseView phaseView) {
+		this.phaseView = phaseView;
+	}
+
+	PhaseView phaseView= new PhaseView();
+	WorldDominationView worldDominationView = new WorldDominationView();
+
+	public String getCurrentOperation() {
+		return currentOperation;
+	}
+
+	public void setCurrentOperation(String currentOperation) {
+		this.currentOperation = currentOperation;
+		notifyObservers();
+	}
+
+	private String currentOperation;
+
 
 	private static GamePlay gamePlay = null;
 	private State currentState;
@@ -24,22 +53,31 @@ public class GamePlay{
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
-	GameSubject gameSubjectObj;
 	CardExchange cardExchangeView;
+	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
+
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
 
+
+	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
+
 	private GamePlay() {
 		currentState = State.initializeGame;
+
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
-    	gameSubjectObj = new GameSubject();
     	cardExchangeView = new CardExchange();
+
+
+		observersOfGamePlay= new ArrayList<IObserver>();
+		this.attachObserver(phaseView);
+		this.attachObserver(worldDominationView);
     }
 
     public static GamePlay getInstance() {
@@ -62,119 +100,112 @@ public class GamePlay{
 
 	/**
 	 * Set Current State of the game
-	 * 
 	 * @param newState
 	 * @param newStateStr
 	 */
 	private void setCurrentState(State newState, String newStateStr) {
-		System.out.println("<== State of game changed to: " + newStateStr + " ==>");
-		currentState = newState;
+		//System.out.println("<== State of game changed to: " + newStateStr + " ==>");
+		this.currentState = newState;
+		notifyObservers();
 	}
 
 	/**
 	 * Add Continent Function
-	 * 
 	 * @param continentName
 	 * @param controlValue
-	 * @return
+	 * @return true if addContinent function return true in Continent class
 	 */
 	public boolean addContinent(String continentName, Integer controlValue) {
 
 		if (!Continent.addContinent(continentName, controlValue))
 			return false;
-
+		setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
 		return true;
 	}
 
 	/**
 	 * Remove Continent Function
-	 * 
 	 * @param continentName
-	 * @return
+	 * @return true if removeContinent function return true in Continent class
 	 */
 	public boolean removeContinent(String continentName) {
 
 		if (!Continent.removeContinent(continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing continent "+ continentName );
 		return true;
 	}
 
 	/**
 	 * Add Country Function
-	 * 
 	 * @param countryName
 	 * @param continentName
-	 * @return
+	 * @return true if addCountry function return true in Country class
 	 */
 	public boolean addCountry(String countryName, String continentName) {
 
 		if (!Country.addCountry(countryName, continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ countryName + " to Continent: "+continentName);
 		return true;
 	}
 
 	/**
-	 * Remove Country Function
-	 * 
+	 * Remove Country Function 
 	 * @param countryName
-	 * @return
+	 * @return true if removeCountry function return true in Country class
 	 */
 	public boolean removeCountry(String countryName) {
 
 		if (!Country.removeCountry(countryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ countryName);
 		return true;
 	}
 
 	/**
 	 * Add Neighbor Function
-	 * 
 	 * @param countryName
 	 * @param neighborCountryName
-	 * @return
+	 * @return true if addNeighbour function return true in Country class
 	 */
 	public boolean addNeighbor(String countryName, String neighborCountryName) {
 
 		if (!Country.addNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ neighborCountryName +" as a neighbour to "+countryName);
 		return true;
 	}
 
 	/**
 	 * Remove Neighbor Function
-	 * 
 	 * @param countryName
 	 * @param neighborCountryName
-	 * @return
+	 * @return true if removeNeighbor function return true in Country class
 	 */
 	public boolean removeNeighbor(String countryName, String neighborCountryName) {
 
 		if (!Country.removeNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ neighborCountryName +" as a neighbour from "+countryName);
 		return true;
 	}
 
 	/**
 	 * Show map Function
-	 * 
-	 * @return
+	 * @return true in any case
 	 */
 	public boolean showMap() {
 
 		Graph.showMap();
+		setCurrentOperation("Showing Map");
 		return true;
 	}
 
 	/**
 	 * Save Map Function
-	 * 
 	 * @param fileName
-	 * @return
+	 * @return true if file successfully saved and IO Exception does not occur.
 	 */
 	public boolean saveMap(String fileName) {
 
@@ -186,24 +217,24 @@ public class GamePlay{
 			System.out.println("IO Exception Occured");
 			return false;
 		}
-
+		setCurrentOperation("Saving Map to file: \""+fileName+"\"");
 		return true;
 	}
 
 	/**
 	 * Edit Map Function
-	 * 
 	 * @param mapName
-	 * @return
+	 * @return true if IO exception does not occur.
 	 */
 	public boolean editMap(String mapName) {
 		try {
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
 				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				setCurrentOperation("Map: "+mapName+" found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();
-				System.out.println("New Game Graph created");
+				setCurrentOperation("New Game Graph created");
 
 			}
 
@@ -212,13 +243,13 @@ public class GamePlay{
 		} catch (IOException e) {
 			System.out.println("IOException occured");
 		}
+
 		return true;
 	}
 
 	/**
-	 * Validate Map Function
-	 * 
-	 * @return
+	 * Validate Map Function 
+	 * @return true if the map is
 	 */
 	public boolean validateMap() {
 
@@ -230,9 +261,8 @@ public class GamePlay{
 
 	/**
 	 * Load Game Map Function
-	 * 
 	 * @param fileName
-	 * @return
+	 * @return true if file exist
 	 */
 	public boolean loadGameMap(String fileName) {
 		try {
@@ -242,7 +272,7 @@ public class GamePlay{
 			System.out.println("File not found");
 			return false;
 		}
-
+        //setCurrentOperation("Loading Game Map "+fileName);
 		return true;
 	}
 
@@ -252,11 +282,11 @@ public class GamePlay{
 	 * @param playerName
 	 * @return
 	 */
-	public boolean addPlayer(String playerName) {
+	public 	boolean addPlayer(String playerName) {
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
-
+		setCurrentOperation("Adding Player "+playerName+" to the game.");
 		return true;
 	}
 
@@ -270,7 +300,7 @@ public class GamePlay{
 
 		if (!Player.removePlayer(playerName))
 			return false;
-
+		setCurrentOperation("Removing Player "+playerName+" from the game.");
 		return true;
 	}
 
@@ -337,6 +367,7 @@ public class GamePlay{
 		// Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Populating all countries");
 		return true;
 	}
 
@@ -357,20 +388,18 @@ public class GamePlay{
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-
+			attachObserver(cardExchangeView);
 			// Change state of game
 			setCurrentState(State.exchangeCards, "exchangeCards");
-	    	gameSubjectObj.attachObserver(cardExchangeView);
-	    	gameSubjectObj.stateChanged(getCurrentState());
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-
+            setCurrentOperation("Performing PlaceArmy operation");
 			return false;
 		}
 
 		if (targetCountry.getOwner() != null) {
 			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
 
-				System.out.println("The country is not belong to the current player");
+				System.out.println("The country does not belong to the current player");
 
 				return false;
 			}
@@ -405,14 +434,15 @@ public class GamePlay{
 			System.out.println("errrroeee: " + e.getMessage());
 		}
 		
+    	attachObserver(cardExchangeView);
         // change state of game
         setCurrentState(State.exchangeCards, "exchangeCards");
-    	gameSubjectObj.attachObserver(cardExchangeView);
-    	gameSubjectObj.stateChanged(getCurrentState());
+
         
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Placing armies on all countries");
 		return true;
 	}
 
@@ -437,8 +467,7 @@ public class GamePlay{
 			return false;
 		}
 
-		if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1),
-				currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
+		if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1)))
 			return false;
 
 		Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
@@ -463,10 +492,11 @@ public class GamePlay{
 			//Change current state to next state
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			gameSubjectObj.detachObserver(cardExchangeView);
+			detachObserver(cardExchangeView);
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
-		
+
+		setCurrentOperation("Exchanging Cards");
 		return true;
 	}
 
@@ -482,12 +512,13 @@ public class GamePlay{
 
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			gameSubjectObj.detachObserver(cardExchangeView);
+			detachObserver(cardExchangeView);
 		}
 		else {
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
 		}
+		setCurrentOperation("Player chose not to exchange cards");
 		return true;
 		
 	}
@@ -511,7 +542,7 @@ public class GamePlay{
 			// Change current state to next state
 			setCurrentState(State.attackPhase, "Attacking");
 		}
-
+		setCurrentOperation("Country "+countryName+" reinforced with "+numberOfArmies+" armies.");
 		return true;
 	}
 	
@@ -539,6 +570,7 @@ public class GamePlay{
 			Player.removePlayer(defenderName);		
 		}
 
+		setCurrentOperation("Performing normal attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	/**
@@ -566,6 +598,7 @@ public class GamePlay{
 			Player.removePlayer(defenderName);		
 		}
 
+		setCurrentOperation("Performing all-out attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	
@@ -584,8 +617,7 @@ public class GamePlay{
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
-		System.out.println("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
-
+		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
 		return true;
 	}
 
@@ -607,7 +639,7 @@ public class GamePlay{
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
+        setCurrentOperation("Fortify Amry");
 		return true;
 	}
 
@@ -624,5 +656,57 @@ public class GamePlay{
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
 
 		return true;
+	}
+
+	public double getPercentageOfMapOwnedByPlayer(String playerName){
+		if(Player.getPlayerByName(playerName) == null)
+			return -1.0;
+		 return (currentPlayerObj.getCurrentPlayer().getNumberOfCountriesOwned(playerName, getGraphObj()) * 100.00) / gamePlay.getGraphObj().getAdjList().size();
+	}
+
+ 	public Integer getTotalNumberOfArmies(String playerName){
+		try{
+//			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
+			return Player.getPlayerByName(playerName).getNumberOfArmies();
+		}
+		catch(Exception e){
+			return -1;
+		}
+	}
+
+	public String getContinentOwnership(){
+	    String output="";
+//	    int singleOwnerFound= 0;
+	    for(Continent continent: Database.getInstance().getContinentList()){
+	        for(Player player: Database.getInstance().getPlayerList()){
+                if(Continent.continentBelongToPlayer(player.getName(), continent.getName(), gamePlay.getGraphObj()) ==true){
+                    output+=continent.getName() +" : "+player.getName() +"\n";
+//                    singleOwnerFound =1;
+                    break;
+                }
+	        }
+            output+= continent.getName() + " : Multiple Owners\n";
+//	        singleOwnerFound=0;
+        }
+
+
+	    return output;
+    }
+	
+	@Override
+	public void notifyObservers() {		
+		for(IObserver itr:observerList) {
+			itr.update(this);
+		}
+	}
+
+	@Override
+	public void attachObserver(IObserver observerObj) {
+		observerList.add(observerObj);
+	}
+
+	@Override
+	public void detachObserver(IObserver observerObj) {
+		observerList.remove(observerObj);
 	}
 }
