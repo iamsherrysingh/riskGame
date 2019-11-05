@@ -380,13 +380,12 @@ public class GamePlay implements ISubject{
 	public boolean placeArmy(String country) {
 
 		Country targetCountry = Country.getCountryByName(country, graphObj);
+		
 		if (targetCountry == null) {
-
 			return false;
 		}
 
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
-
 			System.out.println("All armies are placed");
 			attachObserver(cardExchangeView);
 			// Change state of game
@@ -398,9 +397,7 @@ public class GamePlay implements ISubject{
 
 		if (targetCountry.getOwner() != null) {
 			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
-
 				System.out.println("The country does not belong to the current player");
-
 				return false;
 			}
 		}

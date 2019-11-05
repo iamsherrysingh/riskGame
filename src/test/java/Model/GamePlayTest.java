@@ -40,6 +40,47 @@ public class GamePlayTest {
         Database.getInstance().getPlayerList().clear();
     }
 
+
+    @Test
+    public void placeAll(){
+        Player.addPlayer("Morteza", 0);
+        Player.addPlayer("Sehaj", 0);
+        gamePlay.populateCountries();
+        gamePlay.placeAll();
+
+		System.out.println(Player.allPlayersRemainingArmiesExhausted());
+        
+		System.out.println("placeAll test");
+    }
+    
+    
+    @Test
+    public void placeArmy(){
+    	System.out.println("placeArmy test start");
+
+		
+        
+		//Country targetCountry = Country.getCountryByName("India", gamePlay.getGraphObj());
+
+		
+		CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
+		
+		//int numofArmies = targetCountry.getNumberOfArmies();
+		
+		
+		Player.addPlayer("Morteza", 0);
+		
+		System.out.println(currentPlayerObj.getCurrentPlayer().getName());
+		
+		//boolean result = gamePlay.placeArmy("India");
+		
+		//System.out.println(result);
+		
+		System.out.println("placeArmy test end");
+    }    
+    
+    
+    
     /**
 	 * This is a jUnit test for {@link Model.GamePlay#getCurrentPlayerObj()#calculateReinforcementArmies()}
 	 */
