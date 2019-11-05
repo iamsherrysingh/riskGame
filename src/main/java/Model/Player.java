@@ -16,7 +16,7 @@ public class Player {
     Integer number, numberOfArmies;
     ArrayList<Integer> myCountries = new ArrayList<Integer>();
     Integer exchangeCardsTimes;
-    ArrayList<Card> playerCards;
+    public ArrayList<Card> playerCards;
     static boolean countryConquered;
     static boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
@@ -470,13 +470,9 @@ public class Player {
 											System.out.println("something went wrong!!");
 										}
 										
-										System.out.println("allout is finished here.");
-										scanner.close();
+								//		scanner.close();
 										System.out.println("attackCountry command finished");
 									}
-									
-									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 								}
 							} 
 							else {
@@ -624,8 +620,7 @@ class CurrentPlayer{
 	public static CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
-
-
+	
 	private CurrentPlayer() {
 		currentPlayerItr = Database.playerList.listIterator();
 		cardPlayObj = CardPlay.getInstance();

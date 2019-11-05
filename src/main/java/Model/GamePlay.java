@@ -59,16 +59,14 @@ public class GamePlay implements ISubject{
 	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
 
 	private GamePlay() {
-		currentState = State.gameFinished;
-
+		
+		currentState = State.initializeGame;
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
     	cardExchangeView = new CardExchange();
-
-
 		observersOfGamePlay= new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
     }
@@ -638,7 +636,8 @@ public class GamePlay implements ISubject{
 			return false;
 
 		// Change current state to next state
-		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		attachObserver(cardExchangeView);
+		setCurrentState(State.exchangeCards, "exchangeCards");
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
@@ -651,9 +650,13 @@ public class GamePlay implements ISubject{
 	 * @return true in any case
 	 */
 	public boolean ignoreFortifyArmy() {
-
+		
+		// Change current player
+		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		
 		// Change current state to next state
-		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		attachObserver(cardExchangeView);
+		setCurrentState(State.exchangeCards, "exchangeCards");
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
@@ -664,7 +667,7 @@ public class GamePlay implements ISubject{
 	@Override
 	public void notifyObservers() {		
 		for(IObserver itr:observerList) {
-			itr.update(this);
+			itr.update(this, this.getCurrentPlayerObj().currentPlayer);
 		}
 	}
 
