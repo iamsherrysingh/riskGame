@@ -17,10 +17,9 @@ public class Player {
     ArrayList<Integer> myCountries = new ArrayList<Integer>();
     Integer exchangeCardsTimes;
     ArrayList<Card> playerCards;
-    boolean countryConquered;
-    boolean defenderRemoved;
+    static boolean countryConquered;
+    static boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
-
     public String getName() {
         return name;
     }
@@ -274,18 +273,15 @@ public class Player {
 						System.out.println("No more armies to defend the country");
 					}
 
-					System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
 					AttackerArmiesSelected = null;
 					DefenderArmiesSelected = null;
-					System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-					System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						
 						System.out.println("Attacker won the country " + defenderCountry.name);
 						defenderCountry.setOwner(attackerCountry.getOwner());
+						countryConquered = true;
 						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 						System.out.println("Please select a number greater than or equal to " + lastDiceSelected + " and less than " + attackerCountry.getNumberOfArmies());
 
@@ -302,14 +298,16 @@ public class Player {
 						System.out.println("allout is finished here.");
 					//	scanner.close();
 
-					} else if (attackerCountry.getNumberOfArmies() == 1) {
-
+					} 
+					else if (attackerCountry.getNumberOfArmies() == 1) {
 						System.out.println("no attack anymore possible!!!");
-					} else {
+					} 
+					else {
 						attackAllout(fromCountry, toCountry, graphObj, currentPlayerObj);
 					}
 
-				} else {
+				} 
+				else {
 					System.out.println("Attacker country and the defender country should be adjacent");
 				}
 			}
@@ -438,6 +436,7 @@ public class Player {
 										
 										System.out.println("Attacker won the country " + defenderCountry.name);
 										defenderCountry.setOwner(attackerCountry.getOwner());
+										countryConquered = true;
 										System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 										System.out.println("Please select a number greater than or equal to " + lastDiceSelected + " and less than " + attackerCountry.getNumberOfArmies());
 
