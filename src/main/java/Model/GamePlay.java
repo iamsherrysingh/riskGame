@@ -441,7 +441,6 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean placeAll() {
 		try {
-
 			while (!Player.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
 					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
@@ -472,7 +471,6 @@ public class GamePlay implements ISubject{
 		
         setCurrentState(State.exchangeCards, "exchangeCards");
         
-    //    this.detachObserver(cardExchangeView);
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
         
@@ -504,7 +502,7 @@ public class GamePlay implements ISubject{
 			setCurrentState(State.reinforcementPhase, "Reinforcement");
 			setCurrentOperation("Due to insufficient cards, exchange cards ignored");
 			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
-			//currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+			
 		}
 		else {
 			
@@ -525,7 +523,6 @@ public class GamePlay implements ISubject{
 				System.out.println("These cards do not match for exchanging.");
 				return false;
 			}
-				
 			
 			Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
 			currentPlayer.exchangeCardsTimes++;
