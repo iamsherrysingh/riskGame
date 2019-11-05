@@ -63,7 +63,7 @@ title __RISK's Class Diagram__\n
   
 
   namespace Model {
-    class Model.GameSubjectPhaseView {
+    class Model.GameSubject {
     }
   }
   
@@ -75,7 +75,7 @@ title __RISK's Class Diagram__\n
   
 
   namespace Model {
-    interface Model.ISubjectPhaseView {
+    interface Model.ISubject {
     }
   }
   
@@ -111,7 +111,7 @@ title __RISK's Class Diagram__\n
   
 
   namespace View {
-    interface View.IObserverPhaseView {
+    interface View.IObserver {
     }
   }
   
@@ -132,23 +132,21 @@ title __RISK's Class Diagram__\n
   Controller.Controller o-- Model.GamePlay : gamePlayObj
   Controller.ExtractedTasks o-- Controller.tasksEnum : name
   Model.Card o-- Model.cardType : cType
-  Model.CurrentPlayer o-- Model.Player : currentPlayer
   Model.CurrentPlayer o-- Model.CardPlay : cardPlayObj
-  Model.GamePlay .up.|> Model.ISubjectPhaseView
+  Model.CurrentPlayer o-- Model.Player : currentPlayer
   Model.GamePlay o-- View.CardExchange : cardExchangeView
-  Model.GamePlay o-- Model.GameSubjectPhaseView : gameSubjectObj
-  Model.GamePlay o-- View.PhaseView : phaseView
+  Model.GamePlay o-- Model.GameSubject : gameSubjectObj
   Model.GamePlay o-- Model.CardPlay : cardPlayObj
   Model.GamePlay o-- Model.CurrentPlayer : currentPlayerObj
   Model.GamePlay o-- Model.State : currentState
   Model.GamePlay o-- Model.Database : databaseObj
   Model.GamePlay o-- Model.Graph : graphObj
   Model.GamePlay o-- Model.Mapx : mapxObj
-  Model.GameSubjectPhaseView .up.|> Model.ISubjectPhaseView
-  Model.GameSubjectPhaseView o-- Model.State : currentState
+  Model.GameSubject .up.|> Model.ISubject
+  Model.GameSubject o-- Model.State : currentState
   Model.Mapx o-- Model.Database : database
-  View.CardExchange .up.|> View.IObserverPhaseView
-  View.PhaseView .up.|> View.IObserverPhaseView
+  View.CardExchange .up.|> View.IObserver
+  View.PhaseView .up.|> View.IObserver
 
 
 right footer

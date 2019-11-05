@@ -2,12 +2,12 @@ package Model;
 
 import java.util.ArrayList;
 
-import View.IObserverPhaseView;
+import View.IObserver;
 
-public class GameSubjectPhaseView implements ISubjectPhaseView {
+public class GameSubject implements ISubject {
 	
 	State currentState;
-	ArrayList<IObserverPhaseView> observerList = new ArrayList<IObserverPhaseView>();
+	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
 	
 	public void stateChanged(State currentState) 
     {  
@@ -17,18 +17,18 @@ public class GameSubjectPhaseView implements ISubjectPhaseView {
 	
 	@Override
 	public void notifyObservers() {		
-		for(IObserverPhaseView itr:observerList) {
+		for(IObserver itr:observerList) {
 	//		itr.update();   commented because of error   -Sehaj
 		}
 	}
 
 	@Override
-	public void attachObserver(IObserverPhaseView observerObj) {
+	public void attachObserver(IObserver observerObj) {
 		observerList.add(observerObj);
 	}
 
 	@Override
-	public void detachObserver(IObserverPhaseView observerObj) {
+	public void detachObserver(IObserver observerObj) {
 		observerList.remove(observerObj);
 	}
 }

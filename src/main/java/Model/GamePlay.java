@@ -11,14 +11,14 @@ import View.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay implements ISubjectPhaseView {
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
 	 * implementation in gamePlay mode
 	 */
 
-	ArrayList<IObserverPhaseView> observersOfGamePlay;
+	ArrayList<IObserver> observersOfGamePlay;
 
 	public PhaseView getPhaseView() {
 		return phaseView;
@@ -49,7 +49,7 @@ public class GamePlay implements ISubjectPhaseView {
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	private CurrentPlayer currentPlayerObj;
-	GameSubjectPhaseView gameSubjectObj;
+	GameSubject gameSubjectObj;
 	CardExchange cardExchangeView;
 	Integer lastDiceSelected = null;
 
@@ -67,11 +67,11 @@ public class GamePlay implements ISubjectPhaseView {
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
-    	gameSubjectObj = new GameSubjectPhaseView();
+    	gameSubjectObj = new GameSubject();
     	cardExchangeView = new CardExchange();
 
 
-		observersOfGamePlay= new ArrayList<IObserverPhaseView>();
+		observersOfGamePlay= new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
     }
 
@@ -980,18 +980,18 @@ public class GamePlay implements ISubjectPhaseView {
 
 	@Override
 	public void notifyObservers() {
-		for(IObserverPhaseView observer: observersOfGamePlay){
+		for(IObserver observer: observersOfGamePlay){
 			observer.update(this);
 		}
 	}
 
 	@Override
-	public void attachObserver(IObserverPhaseView observer) {
+	public void attachObserver(IObserver observer) {
 		observersOfGamePlay.add(observer);
 	}
 
 	@Override
-	public void detachObserver(IObserverPhaseView observer) {
+	public void detachObserver(IObserver observer) {
 		observersOfGamePlay.remove(observer);
 	}
 }

@@ -2,6 +2,6 @@ package View;
 
 import Model.GamePlay;
 
-public interface IObserverPhaseView {
+public interface IObserver {
     public void update(GamePlay gamePlay);
 }

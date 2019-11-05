@@ -2,7 +2,7 @@ package View;
 
 import Model.GamePlay;
 
-public class CardExchange implements IObserverPhaseView {
+public class CardExchange implements IObserver {
 	
 	@Override
 	public void update(GamePlay gamePlay) {
