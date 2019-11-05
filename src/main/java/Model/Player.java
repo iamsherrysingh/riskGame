@@ -299,7 +299,7 @@ public class Player {
 						} else {
 							System.out.println("something went wrong!!");
 						}
-						System.out.println("allout is finished here.");
+						System.out.println("AttackAllOut is finished here.");
 					//	scanner.close();
 
 					} else if (attackerCountry.getNumberOfArmies() == 1) {
@@ -311,6 +311,7 @@ public class Player {
 
 				} else {
 					System.out.println("Attacker country and the defender country should be adjacent");
+					return false;
 				}
 			}
 		} 
@@ -481,6 +482,7 @@ public class Player {
 				} 
 				else {
 					System.out.println("Attacker country and the defender country should be adjacent");
+					return false;
 				}
 			}
 		}
@@ -516,6 +518,8 @@ public class Player {
 		}
 		Collections.sort(attackerDices);
 		Collections.sort(defenderDices);
+		Collections.reverse(attackerDices);
+		Collections.reverse(defenderDices);
 
 		if (defenderArmies > attackerArmies) {
 			for (int i = 0; i < attackerArmies; i++) {
