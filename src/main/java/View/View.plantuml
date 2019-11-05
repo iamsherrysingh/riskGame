@@ -10,7 +10,7 @@ title __VIEW's Class Diagram__\n
   
 
   namespace View {
-    interface View.IObserver {
+    interface View.IObserverPhaseView {
         {abstract} + update()
     }
   }
@@ -18,8 +18,10 @@ title __VIEW's Class Diagram__\n
 
   namespace View {
     class View.PhaseView {
+        ~ data : String
         ~ footer : String
         ~ header : String
+        + printPhaseView()
         + update()
     }
   }
@@ -32,8 +34,8 @@ title __VIEW's Class Diagram__\n
   }
   
 
-  View.CardExchange .up.|> View.IObserver
-  View.PhaseView .up.|> View.IObserver
+  View.CardExchange .up.|> View.IObserverPhaseView
+  View.PhaseView .up.|> View.IObserverPhaseView
 
 
 right footer
