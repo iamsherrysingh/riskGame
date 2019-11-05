@@ -387,6 +387,7 @@ public class Player {
 				
 			} 
 			else {
+				
 				System.out.println("you selected a greater number than you are allowed to move from attacker country");
 				return false;
 			}
