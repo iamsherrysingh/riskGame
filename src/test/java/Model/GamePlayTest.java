@@ -88,4 +88,17 @@ public class GamePlayTest {
         }
     }
 
+    
+
+    @Test
+    public void reinforceArmy(){
+    	gamePlay.placeAll();
+ 
+        Country targetCountry = Country.getCountryByName("India", gamePlay.getGraphObj());
+        targetCountry.setOwner("Morteza");
+        
+    	gamePlay.reinforceArmy("India", 4);
+    }
+    
+    
 }
