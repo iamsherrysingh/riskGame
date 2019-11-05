@@ -226,8 +226,10 @@ public class Player {
 	 * @param numberOfArmiesDefenderCanSelect This is the integer value that a
 	 *                                        defender is allowed to select the
 	 *                                        number of armies.
-	 * @param scanner This is a scanner to take the command written by the defender as an input.
-	 * @return an integer value that is the number of armies selected by a defender to defend a country.
+	 * @param scanner                         This is a scanner to take the command
+	 *                                        written by the defender as an input.
+	 * @return an integer value that is the number of armies selected by a defender
+	 *         to defend a country.
 	 */
 	public static Integer defenderCommandInput(Integer numberOfArmiesDefenderCanSelect, Scanner scanner) {
 		String defenderCommand = "";
@@ -256,13 +258,13 @@ public class Player {
 //		return 0;
 //	}
 
-	
 	/**
-	 * This method attacks until no attack is possible using maximum number of dice to attack/defend.
+	 * This method attacks until no attack is possible using maximum number of dice
+	 * to attack/defend.
 	 * 
-	 * @param fromCountry (AttackerCountry)
-	 * @param toCountry (DefenderCountry)
-	 * @param graphObj (its graphs instance)
+	 * @param fromCountry      (AttackerCountry)
+	 * @param toCountry        (DefenderCountry)
+	 * @param graphObj         (its graphs instance)
 	 * @param currentPlayerObj (its current player's instance)
 	 * @return true if runs successfully or false in case it fails any validation
 	 */
@@ -374,9 +376,23 @@ public class Player {
 
 	}
 
-	
+	/**
+	 * This handles the attackMove command to move the right number of armies from
+	 * attacker country to defender country when attacker wins the defender country
+	 * 
+	 * @param numberOfArmiesDuringLastAttack This is an integer value that stores
+	 *                                       number of armies used by the attacker
+	 *                                       in the las battle and is used for
+	 *                                       validation.
+	 * @param scanner                        Its a scanner used to take a command as
+	 *                                       input.
+	 * @param numberOfArmiesThatAttackerHave This is an integer value that the
+	 *                                       attacker have in total in attacker
+	 *                                       country.
+	 * @return an integer value that is the number of armies an attacker selected to
+	 *         move to his new owned country.
+	 */
 	public static Integer attackMoveCommand(Integer numberOfArmiesDuringLastAttack, Scanner scanner,
-
 			Integer numberOfArmiesThatAttackerHave) {
 		Integer attackMoveNumber = null;
 		String Command = scanner.nextLine();
@@ -412,6 +428,17 @@ public class Player {
 		}
 	}
 
+	/**
+	 * This method handles the operation to remove and add the exact number of
+	 * armies selected by the currentplayer(attacker) to newly owned country.
+	 * 
+	 * @param attackerCountry This is an object for the attacker country.
+	 * @param defenderCountry This is an object for the defender country.
+	 * @param numberOfArmiesToMove an integer value selected by the attacker to move between countries.
+	 * @param attacker This is an object for the attacker player.
+	 * @param defender This is an object for defender player.
+	 * @return true(if runs successfully) or false(if fails some validation)
+	 */
 	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove,
 			Player attacker, Player defender) {
 
