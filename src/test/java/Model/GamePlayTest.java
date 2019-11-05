@@ -52,7 +52,6 @@ public class GamePlayTest {
 
 		assertTrue(Player.allPlayersRemainingArmiesExhausted());
 		
-		System.out.println("placeAll test");
     }
     
     
@@ -99,6 +98,32 @@ public class GamePlayTest {
         
     	gamePlay.reinforceArmy("India", 4);
     }
+    
+    
+    
+
+    
+
+    @Test
+    public void normalAttack(){
+
+		System.out.println("normalAttack test start");
+		
+    	gamePlay.placeAll();
+    	
+        Country originCountry = Country.getCountryByName("India", gamePlay.getGraphObj());
+        originCountry.setOwner("Morteza");
+        
+
+        Country destinationCountry = Country.getCountryByName("Siam", gamePlay.getGraphObj());
+        destinationCountry.setOwner("Sehaj");
+        
+    	assertTrue(!gamePlay.normalAttack("India", "Siam", 2));
+    	
+		System.out.println("normalAttack test end");
+    }
+    
+    
     
     
 }
