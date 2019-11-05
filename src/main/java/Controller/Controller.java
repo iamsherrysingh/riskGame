@@ -828,12 +828,18 @@ public class Controller {
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
-				if(!controller.getCommand(tasksList))
+				if(!controller.getCommand(tasksList) && controller.gamePlayObj.getCurrentState() != State.gameFinished)
 					continue;
-				if(!controller.cmdController(tasksList)) {
+				if(!controller.cmdController(tasksList) && controller.gamePlayObj.getCurrentState() != State.gameFinished) {
 					continue;
 				} 
-			}		
+			}
+			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				System.out.println("===================================");
+				System.out.println("======== THe Game Finished ========");
+				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+				System.out.println("===================================");
+			}
 		}catch (Exception e)
 		{
 			System.out.println("An error occured: "+e.getMessage());

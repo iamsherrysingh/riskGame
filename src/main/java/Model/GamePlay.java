@@ -59,7 +59,7 @@ public class GamePlay implements ISubject{
 	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
 
 	private GamePlay() {
-		currentState = State.initializeGame;
+		currentState = State.gameFinished;
 
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
