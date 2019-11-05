@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
-import View.IObserver;
+import View.*;
 
 /** 
  * This Class maintains the state of the game and current player.
@@ -18,6 +18,30 @@ public class GamePlay implements ISubject{
 	 * implementation in gamePlay mode
 	 */
 
+	ArrayList<IObserver> observersOfGamePlay;
+
+	public PhaseView getPhaseView() {
+		return phaseView;
+	}
+
+	public void setPhaseView(PhaseView phaseView) {
+		this.phaseView = phaseView;
+	}
+
+	PhaseView phaseView= new PhaseView();
+
+	public String getCurrentOperation() {
+		return currentOperation;
+	}
+
+	public void setCurrentOperation(String currentOperation) {
+		this.currentOperation = currentOperation;
+		notifyObservers();
+	}
+
+	private String currentOperation;
+
+
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private Mapx mapxObj;
@@ -28,18 +52,25 @@ public class GamePlay implements ISubject{
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
 
+
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
+	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
 
 	private GamePlay() {
 		currentState = State.initializeGame;
+
     	mapxObj = new Mapx();
     	databaseObj = Database.getInstance();
     	currentPlayerObj = CurrentPlayer.getInstance();
     	graphObj=Graph.getInstance();
     	cardPlayObj = CardPlay.getInstance();
     	cardExchangeView = new CardExchange();
+
+
+		observersOfGamePlay= new ArrayList<IObserver>();
+		this.attachObserver(phaseView);
     }
 
     public static GamePlay getInstance() {
@@ -66,10 +97,9 @@ public class GamePlay implements ISubject{
 	 * @param newStateStr
 	 */
 	private void setCurrentState(State newState, String newStateStr) {
-		System.out.println("<== State of game changed to: " + newStateStr + " ==>");
-		currentState = newState;
-		if( currentState == State.exchangeCards )
-			notifyObservers();
+		//System.out.println("<== State of game changed to: " + newStateStr + " ==>");
+		this.currentState = newState;
+		notifyObservers();
 	}
 
 	/**
@@ -82,7 +112,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.addContinent(continentName, controlValue))
 			return false;
-
+		setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
 		return true;
 	}
 
@@ -95,7 +125,7 @@ public class GamePlay implements ISubject{
 
 		if (!Continent.removeContinent(continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing continent "+ continentName );
 		return true;
 	}
 
@@ -109,7 +139,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.addCountry(countryName, continentName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ countryName + " to Continent: "+continentName);
 		return true;
 	}
 
@@ -122,7 +152,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.removeCountry(countryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ countryName);
 		return true;
 	}
 
@@ -136,7 +166,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.addNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Adding country: "+ neighborCountryName +" as a neighbour to "+countryName);
 		return true;
 	}
 
@@ -150,7 +180,7 @@ public class GamePlay implements ISubject{
 
 		if (!Country.removeNeighbour(countryName, neighborCountryName, graphObj))
 			return false;
-
+		setCurrentOperation("Removing country: "+ neighborCountryName +" as a neighbour from "+countryName);
 		return true;
 	}
 
@@ -161,6 +191,7 @@ public class GamePlay implements ISubject{
 	public boolean showMap() {
 
 		Graph.showMap();
+		setCurrentOperation("Showing Map");
 		return true;
 	}
 
@@ -179,7 +210,7 @@ public class GamePlay implements ISubject{
 			System.out.println("IO Exception Occured");
 			return false;
 		}
-
+		setCurrentOperation("Saving Map to file: \""+fileName+"\"");
 		return true;
 	}
 
@@ -193,9 +224,10 @@ public class GamePlay implements ISubject{
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
 				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+//				setCurrentOperation("Map: "+mapName+" found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();
-				System.out.println("New Game Graph created");
+				setCurrentOperation("New Game Graph created");
 
 			}
 
@@ -204,6 +236,7 @@ public class GamePlay implements ISubject{
 		} catch (IOException e) {
 			System.out.println("IOException occured");
 		}
+
 		return true;
 	}
 
@@ -232,7 +265,7 @@ public class GamePlay implements ISubject{
 			System.out.println("File not found");
 			return false;
 		}
-
+        setCurrentOperation("Loading Game Map "+fileName);
 		return true;
 	}
 
@@ -242,11 +275,11 @@ public class GamePlay implements ISubject{
 	 * @param playerName
 	 * @return
 	 */
-	public boolean addPlayer(String playerName) {
+	public 	boolean addPlayer(String playerName) {
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
-
+		setCurrentOperation("Adding Player "+playerName+" to the game.");
 		return true;
 	}
 
@@ -260,7 +293,7 @@ public class GamePlay implements ISubject{
 
 		if (!Player.removePlayer(playerName))
 			return false;
-
+		setCurrentOperation("Removing Player "+playerName+" from the game.");
 		return true;
 	}
 
@@ -327,6 +360,7 @@ public class GamePlay implements ISubject{
 		// Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Populating all countries");
 		return true;
 	}
 
@@ -351,14 +385,14 @@ public class GamePlay implements ISubject{
 			// Change state of game
 			setCurrentState(State.exchangeCards, "exchangeCards");
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-
+            setCurrentOperation("Performing PlaceArmy operation");
 			return false;
 		}
 
 		if (targetCountry.getOwner() != null) {
 			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
 
-				System.out.println("The country is not belong to the current player");
+				System.out.println("The country does not belong to the current player");
 
 				return false;
 			}
@@ -401,6 +435,7 @@ public class GamePlay implements ISubject{
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
+		setCurrentOperation("Placing armies on all countries");
 		return true;
 	}
 
@@ -453,7 +488,8 @@ public class GamePlay implements ISubject{
 			detachObserver(cardExchangeView);
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 		}
-		
+
+		setCurrentOperation("Exchanging Cards");
 		return true;
 	}
 
@@ -475,6 +511,7 @@ public class GamePlay implements ISubject{
 			System.out.println("You have more than 5 cards. You should exchange your cards.");
 			return false;
 		}
+		setCurrentOperation("Player chose not to exchange cards");
 		return true;
 		
 	}
@@ -498,7 +535,7 @@ public class GamePlay implements ISubject{
 			// Change current state to next state
 			setCurrentState(State.attackPhase, "Attacking");
 		}
-
+		setCurrentOperation("Country "+countryName+" reinforced with "+numberOfArmies+" armies.");
 		return true;
 	}
 	
@@ -526,6 +563,7 @@ public class GamePlay implements ISubject{
 			Player.removePlayer(defenderName);		
 		}
 
+		setCurrentOperation("Performing normal attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	/**
@@ -553,6 +591,7 @@ public class GamePlay implements ISubject{
 			Player.removePlayer(defenderName);		
 		}
 
+		setCurrentOperation("Performing all-out attack form "+originCountry+ " to "+ destinationCountry);
 		return true;
 	}
 	
@@ -571,8 +610,7 @@ public class GamePlay implements ISubject{
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
-		System.out.println("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
-
+		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
 		return true;
 	}
 
@@ -594,7 +632,7 @@ public class GamePlay implements ISubject{
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
+        setCurrentOperation("Fortify Amry");
 		return true;
 	}
 
@@ -616,7 +654,7 @@ public class GamePlay implements ISubject{
 	@Override
 	public void notifyObservers() {		
 		for(IObserver itr:observerList) {
-			itr.update();
+			itr.update(this);
 		}
 	}
 

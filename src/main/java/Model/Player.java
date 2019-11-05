@@ -599,7 +599,7 @@ class CurrentPlayer{
 	
 	private static CurrentPlayer currentPlayerObj = null;
 	private ListIterator<Player> currentPlayerItr;
-	private Player currentPlayer;
+	public Player currentPlayer;
 	private Integer numReinforceArmies;
 	CardPlay cardPlayObj;
 	
@@ -611,6 +611,7 @@ class CurrentPlayer{
 	private CurrentPlayer() {
 		currentPlayerItr = Database.playerList.listIterator();
 		cardPlayObj = CardPlay.getInstance();
+		//currentPlayer.setName("");
 	}
 	
 	/**
@@ -666,7 +667,6 @@ class CurrentPlayer{
 		numReinforceArmies = 0;
 		currentPlayer = currentPlayerItr.next();
 		
-		System.out.println("Current player is " + currentPlayer.getName());
 		Continent.updateContinitsOwner(gameGraph);
 		calculateReinforceentArmies();
 	}
