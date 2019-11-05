@@ -235,6 +235,10 @@ public class Player {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
+		String attackerName = attackerCountry.getOwner();
+		String defenderName = defenderCountry.getOwner();
+		Player attacker = Player.getPlayerByName(attackerName);
+		Player defender = Player.getPlayerByName(defenderName);
 
 		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
 
@@ -278,10 +282,14 @@ public class Player {
 					DefenderArmiesSelected = null;
 
 					if (defenderCountry.getNumberOfArmies() == 0) {
-						
 						System.out.println("Attacker won the country " + defenderCountry.name);
+						attacker.myCountries.add(defenderCountry.getNumber());
 						defenderCountry.setOwner(attackerCountry.getOwner());
+						defender.myCountries.remove(defenderCountry.getNumber());
 						countryConquered = true;
+						if( defender.myCountries.size() == 0 ) {
+							defenderRemoved = true;
+						}			
 						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 						System.out.println("Please select a number greater than or equal to " + lastDiceSelected + " and less than " + attackerCountry.getNumberOfArmies());
 
@@ -291,7 +299,7 @@ public class Player {
 						attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
 
 						if (attackMove != null) {
-							attackMove(attackerCountry, defenderCountry, attackMove);
+							attackMove(attackerCountry, defenderCountry, attackMove, attacker, defender);
 						} else {
 							System.out.println("something went wrong!!");
 						}
@@ -358,13 +366,17 @@ public class Player {
 		}
 	}
 
-	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
+	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove, Player attacker, Player defender) {
 
 		if (defenderCountry.getNumberOfArmies() == 0) {
 
 			if (attackerCountry.getNumberOfArmies() > numberOfArmiesToMove) {
+				
 				defenderCountry.setNumberOfArmies(numberOfArmiesToMove);
 				attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - numberOfArmiesToMove);
+				attacker.numberOfArmies += numberOfArmiesToMove;
+				defender.numberOfArmies -= numberOfArmiesToMove;
+				
 			} 
 			else {
 				System.out.println("you selected a greater number than you are allowed to move from attacker country");
@@ -383,6 +395,10 @@ public class Player {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
+		String attackerName = attackerCountry.getOwner();
+		String defenderName = defenderCountry.getOwner();
+		Player attacker = Player.getPlayerByName(attackerName);
+		Player defender = Player.getPlayerByName(defenderName);
 
 		// Owner of attackerCountry should be same as current player
 		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) { 
@@ -428,15 +444,18 @@ public class Player {
 								}
 								else {
 
-									System.out.println("A" + Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies());
-									System.out.println(Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies());
 									battle(attackerCountry, defenderCountry, numDice, defenderDice);
 
 									if (defenderCountry.getNumberOfArmies() == 0) {
 										
 										System.out.println("Attacker won the country " + defenderCountry.name);
+										attacker.myCountries.add(defenderCountry.getNumber());
 										defenderCountry.setOwner(attackerCountry.getOwner());
+										defender.myCountries.remove(defenderCountry.getNumber());
 										countryConquered = true;
+										if( defender.myCountries.size() == 0 ) {
+											defenderRemoved = true;
+										}	
 										System.out.println("Please enter a command to move armies to " + defenderCountry.name);
 										System.out.println("Please select a number greater than or equal to " + lastDiceSelected + " and less than " + attackerCountry.getNumberOfArmies());
 
@@ -445,7 +464,7 @@ public class Player {
 										attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
 
 										if (attackMove != null) {
-											attackMove(attackerCountry, defenderCountry, attackMove);
+											attackMove(attackerCountry, defenderCountry, attackMove, attacker, defender);
 										} 
 										else {
 											System.out.println("something went wrong!!");

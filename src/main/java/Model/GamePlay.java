@@ -552,7 +552,7 @@ public class GamePlay implements ISubject{
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (  currentPlayerObj.getCurrentPlayer().defenderRemoved == true ) {
+		if (  Player.defenderRemoved == true ) {
 			
 			Player defender = Player.getPlayerByName(defenderName);
 			for(Card itr: defender.playerCards) {
@@ -560,7 +560,12 @@ public class GamePlay implements ISubject{
 				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
 				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
 			}
-			Player.removePlayer(defenderName);		
+			Player.removePlayer(defenderName);	
+			if( Database.playerList.size() == 1) {
+				setCurrentState(State.gameFinished, "game Finished");
+				return true;
+			}
+			Player.defenderRemoved = false;
 		}
 
 		setCurrentOperation("Performing normal attack form "+originCountry+ " to "+ destinationCountry);
@@ -580,7 +585,7 @@ public class GamePlay implements ISubject{
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (  currentPlayerObj.getCurrentPlayer().defenderRemoved == true ) {
+		if (  Player.defenderRemoved == true ) {
 			
 			Player defender = Player.getPlayerByName(defenderName);
 			for(Card itr: defender.playerCards) {
@@ -588,7 +593,12 @@ public class GamePlay implements ISubject{
 				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
 				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
 			}
-			Player.removePlayer(defenderName);		
+			Player.removePlayer(defenderName);	
+			if( Database.playerList.size() == 1) {
+				setCurrentState(State.gameFinished, "game Finished");
+				return true;
+			}
+			Player.defenderRemoved = false;
 		}
 
 		setCurrentOperation("Performing all-out attack form "+originCountry+ " to "+ destinationCountry);
@@ -602,9 +612,9 @@ public class GamePlay implements ISubject{
 	public boolean ignoreAttack() {
 		
 		// handle picking card at turn of each player
-		if(currentPlayerObj.getCurrentPlayer().countryConquered) {
+		if(Player.countryConquered) {
 			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
-			currentPlayerObj.getCurrentPlayer().countryConquered = false;
+			Player.countryConquered = false;
 		}
 		
 		// Change current state to next state
