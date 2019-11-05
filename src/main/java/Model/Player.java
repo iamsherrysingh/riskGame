@@ -604,6 +604,32 @@ public class Player {
 
 		return true;
 	}
+
+	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph){
+		Integer numberOfCountriesOwned=0;
+
+		if(Player.getPlayerByName(playerName) == null )
+			return -1;
+		for(Country country: gameGraph.getAdjList()){
+			if(country.owner.equalsIgnoreCase(playerName)){
+				numberOfCountriesOwned+=1;
+			}
+		}
+		return numberOfCountriesOwned;
+	}
+
+	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph){
+		Integer numberOfArmies=0;
+
+		if(Player.getPlayerByName(this.name) == null )
+			return -1;
+		for(Country country: gameGraph.getAdjList()){
+			if(country.owner.equalsIgnoreCase(this.name)){
+				numberOfArmies+= country.numberOfArmies;
+			}
+		}
+		return numberOfArmies;
+	}
 }
 
 /**
@@ -616,7 +642,8 @@ class CurrentPlayer{
 	public Player currentPlayer;
 	private Integer numReinforceArmies;
 	CardPlay cardPlayObj;
-	
+
+
 	public static CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
@@ -646,7 +673,7 @@ class CurrentPlayer{
 	}
 	
 	public Player getCurrentPlayer() {
-		return this.currentPlayer;
+		return currentPlayer;
 	}
 	
 	/**

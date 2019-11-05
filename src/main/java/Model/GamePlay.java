@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
 import View.*;
+import com.sun.org.apache.xerces.internal.impl.dv.DatatypeValidator;
+
+import javax.xml.crypto.Data;
 
 /** 
  * This Class maintains the state of the game and current player.
@@ -29,6 +32,7 @@ public class GamePlay implements ISubject{
 	}
 
 	PhaseView phaseView= new PhaseView();
+	WorldDominationView worldDominationView = new WorldDominationView();
 
 	public String getCurrentOperation() {
 		return currentOperation;
@@ -56,6 +60,8 @@ public class GamePlay implements ISubject{
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
+
+
 	public String getCurrentPlayerName(){ return currentPlayerObj.currentPlayer.getName();}
 
 	private GamePlay() {
@@ -69,6 +75,7 @@ public class GamePlay implements ISubject{
     	cardExchangeView = new CardExchange();
 		observersOfGamePlay= new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
+		this.attachObserver(worldDominationView);
     }
 
     public static GamePlay getInstance() {
@@ -222,7 +229,7 @@ public class GamePlay implements ISubject{
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
 				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
-//				setCurrentOperation("Map: "+mapName+" found. Loaded for editing.");
+				setCurrentOperation("Map: "+mapName+" found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();
 				setCurrentOperation("New Game Graph created");
@@ -263,7 +270,7 @@ public class GamePlay implements ISubject{
 			System.out.println("File not found");
 			return false;
 		}
-        setCurrentOperation("Loading Game Map "+fileName);
+        //setCurrentOperation("Loading Game Map "+fileName);
 		return true;
 	}
 
@@ -663,6 +670,41 @@ public class GamePlay implements ISubject{
 
 		return true;
 	}
+
+	public double getPercentageOfMapOwnedByPlayer(String playerName){
+		if(Player.getPlayerByName(playerName) == null)
+			return -1.0;
+		 return (currentPlayerObj.getCurrentPlayer().getNumberOfCountriesOwned(playerName, getGraphObj()) * 100.00) / gamePlay.getGraphObj().getAdjList().size();
+	}
+
+ 	public Integer getTotalNumberOfArmies(String playerName){
+		try{
+//			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
+			return Player.getPlayerByName(playerName).getNumberOfArmies();
+		}
+		catch(Exception e){
+			return -1;
+		}
+	}
+
+	public String getContinentOwnership(){
+	    String output="";
+//	    int singleOwnerFound= 0;
+	    for(Continent continent: Database.getInstance().getContinentList()){
+	        for(Player player: Database.getInstance().getPlayerList()){
+                if(Continent.continentBelongToPlayer(player.getName(), continent.getName(), gamePlay.getGraphObj()) ==true){
+                    output+=continent.getName() +" : "+player.getName() +"\n";
+//                    singleOwnerFound =1;
+                    break;
+                }
+	        }
+            output+= continent.getName() + " : Multiple Owners\n";
+//	        singleOwnerFound=0;
+        }
+
+
+	    return output;
+    }
 	
 	@Override
 	public void notifyObservers() {		

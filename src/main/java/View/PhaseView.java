@@ -1,5 +1,6 @@
 package View;
 
+import Model.Database;
 import Model.GamePlay;
 import Model.Player;
 
@@ -26,6 +27,7 @@ public class PhaseView implements IObserver{
         }
 
         System.out.println(header + "\n" + data+"\n"+footer);
+
     }
 
     public void printPhaseView(){
