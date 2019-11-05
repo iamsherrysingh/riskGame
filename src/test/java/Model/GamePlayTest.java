@@ -26,6 +26,10 @@ public class GamePlayTest {
     public void setUp() throws Exception {
         gamePlay= GamePlay.getInstance();
         gamePlay.editMap("map.map");
+        
+        Player.addPlayer("Morteza", 0);
+        Player.addPlayer("Sehaj", 0);
+        gamePlay.populateCountries();
     }
 
     /**
@@ -43,11 +47,8 @@ public class GamePlayTest {
 
     @Test
     public void placeAll(){
-        Player.addPlayer("Morteza", 0);
-        Player.addPlayer("Sehaj", 0);
-        gamePlay.populateCountries();
+    	
         gamePlay.placeAll();
-
 
 		assertTrue(Player.allPlayersRemainingArmiesExhausted());
 		
@@ -57,53 +58,21 @@ public class GamePlayTest {
     
     @Test
     public void placeArmy(){
-    	System.out.println("placeArmy test start");
 
-    	//Sehaj:Please see this part:
-    	//I don't know how to work with "CurrentPlayerObj". because to run a test in this class that should be initialized.
-		System.out.println( gamePlay.getCurrentPlayerObj().getCurrentPlayer().getName() );
-
-		
-		//assertTrue(gamePlay.placeArmy("India"));
-		
-		System.out.println("placeArmy test end");
+        Country targetCountry = Country.getCountryByName("India", gamePlay.getGraphObj());
+        
+        targetCountry.setOwner("Morteza");
+ 
+		assertTrue(gamePlay.placeArmy("India"));
     }    
     
     
-    
-    
-    @Test
-    public void ignoreExchangeCards(){
-    	System.out.println("ignoreExchangeCards test start");
-
-		
-        
-		//Country targetCountry = Country.getCountryByName("India", gamePlay.getGraphObj());
-
-		
-		CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
-		
-		//int numofArmies = targetCountry.getNumberOfArmies();
-		
-		
-		Player.addPlayer("Morteza", 0);
-		
-		System.out.println(currentPlayerObj.getCurrentPlayer().getName());
-		
-		//boolean result = gamePlay.placeArmy("India");
-		
-		//System.out.println(result);
-		
-		System.out.println("placeArmy test end");
-    }     
     /**
 	 * This is a jUnit test for {@link Model.GamePlay#getCurrentPlayerObj()#calculateReinforcementArmies()}
 	 */
     @Test
     public void calculateReinforcementArmies(){
-        Player.addPlayer("seha", 0);
-        Player.addPlayer("kammu", 0);
-        gamePlay.populateCountries();
+
         gamePlay.placeAll();
         gamePlay.getCurrentPlayerObj().calculateReinforceentArmies();
 
