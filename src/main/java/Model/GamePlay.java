@@ -236,9 +236,10 @@ public class GamePlay implements ISubject{
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
 				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				setCurrentOperation("Map: "+mapName+" found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();
-				System.out.println("New Game Graph created");
+				setCurrentOperation("New Game Graph created");
 
 			}
 
@@ -247,6 +248,7 @@ public class GamePlay implements ISubject{
 		} catch (IOException e) {
 			System.out.println("IOException occured");
 		}
+
 		return true;
 	}
 
@@ -277,7 +279,7 @@ public class GamePlay implements ISubject{
 			System.out.println("File not found");
 			return false;
 		}
-
+        setCurrentOperation("Loading Game Map "+fileName);
 		return true;
 	}
 
@@ -399,7 +401,7 @@ public class GamePlay implements ISubject{
 	    	gameSubjectObj.attachObserver(cardExchangeView);
 	    	gameSubjectObj.stateChanged(getCurrentState());
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-
+            setCurrentOperation("Performing PlaceArmy operation");
 			return false;
 		}
 
@@ -450,7 +452,7 @@ public class GamePlay implements ISubject{
         //Set current player to the first player
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 
-		setCurrentOperation("Placing all countries");
+		setCurrentOperation("Placing armies on all countries");
 		return true;
 	}
 
@@ -606,7 +608,7 @@ public class GamePlay implements ISubject{
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
+        setCurrentOperation("Fortify Amry");
 		return true;
 	}
 
@@ -742,7 +744,6 @@ public class GamePlay implements ISubject{
 		}
 
 		return true;
-
 	}
 
 	public Integer attackMoveCommand(Integer numberOfArmiesDuringLastAttack, Scanner scanner,
@@ -800,6 +801,7 @@ public class GamePlay implements ISubject{
 			System.out.println("something went wrong!!");
 			return false;
 		}
+		setCurrentOperation("Attack move performed");
 		return true;
 	}
 
@@ -911,6 +913,7 @@ public class GamePlay implements ISubject{
 			return false;
 		}
 		return true;
+
 	}
 
 	public static int getRandomNumber(Integer maxDice) {
@@ -971,6 +974,7 @@ public class GamePlay implements ISubject{
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
+		setCurrentOperation("Battle operation performed");
 		return true;
 	}
 
