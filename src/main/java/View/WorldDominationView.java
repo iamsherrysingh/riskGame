@@ -21,7 +21,7 @@ public class WorldDominationView implements IObserver{
                 data += "\nPlayer " + player.getName() + " : " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
-                data += "\nPlayers not yet added\n";
+                data += "\nPlayers not yet added";
         }catch(Exception e){  data+= "\nCountries not populated yet" ; }
 
         if(Database.getInstance().getContinentList().size() !=0){
@@ -37,7 +37,7 @@ public class WorldDominationView implements IObserver{
                 data += "\nPlayer " + player.getName() + " has " + gamePlay.getTotalNumberOfArmies(player.getName()) + " armies on map";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
-                data += "\nPlayers not yet added";
+                data += "\nNo Players. So no armies on the map";
         }catch(Exception e){  data+= "\nCountries not populated yet";  }
 
         System.out.println(header + "\n" + data+"\n"+footer);
