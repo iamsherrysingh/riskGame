@@ -496,12 +496,8 @@ public class GamePlay implements ISubject{
 
 		if( currentPlayer.playerCards.size() < 3 )	{	
 			
-			System.out.println("You do not have enough cards for exchange.");
-			//Change current state to next state
-			detachObserver(cardExchangeView);
-			setCurrentState(State.reinforcementPhase, "Reinforcement");
-			setCurrentOperation("Due to insufficient cards, exchange cards ignored");
-			System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
+			System.out.println("You do not have enough cards for exchange. You should choose exchangecards -none to skip this state.");
+		//	System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
 			
 		}
 		else {
@@ -675,9 +671,6 @@ public class GamePlay implements ISubject{
 		
 		// handle picking card at turn of each player
 		if(Player.countryConquered) {
-			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
-			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
-			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
 			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
 			Player.countryConquered = false;
 		}

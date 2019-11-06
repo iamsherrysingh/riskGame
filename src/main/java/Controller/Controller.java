@@ -334,24 +334,31 @@ public class Controller {
 			}
 			
 			ExtractedTasks eTask = new ExtractedTasks();
-			String firstData = cmdItr.next();
-			if(!cmdItr.hasNext()) {
-				eTask.name = tasksEnum.ignoreexchangecards;
-				eTask.taskData.add(firstData);
+			if( command.size() == 4 ) {
+				String firstData = cmdItr.next();
+				if(!cmdItr.hasNext()) {
+					eTask.name = tasksEnum.ignoreexchangecards;
+					eTask.taskData.add(firstData);
+				}
+				else {
+					eTask.name = tasksEnum.exchangecards;
+					eTask.taskData.add(firstData);
+					eTask.taskData.add(cmdItr.next());
+					
+					if(!cmdItr.hasNext()) {
+						System.out.println("wrong Command");
+						return false;
+					}
+					eTask.taskData.add(cmdItr.next());
+				}
+				
+				tasksList.add(eTask);
 			}
 			else {
-				eTask.name = tasksEnum.exchangecards;
-				eTask.taskData.add(firstData);
-				eTask.taskData.add(cmdItr.next());
-				
-				if(!cmdItr.hasNext()) {
-					System.out.println("wrong Command");
-					return false;
-				}
-				eTask.taskData.add(cmdItr.next());
+				System.out.println("wrong Command");
+				return false;
 			}
-			
-			tasksList.add(eTask);
+
 		}
 		
 		//Command reinforce

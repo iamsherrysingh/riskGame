@@ -650,15 +650,15 @@ public class Player {
 				if (attackerDices.get(i) > defenderDices.get(i)) {
 					defenderArmiesKilled++;
 					System.out.println("--- Attacker wins the battle ---");
+					defender.numberOfArmies--;
 				} else {
 					attackerArmiesKilled++;
 					System.out.println("--- Defender wins the battle ---");
+					attacker.numberOfArmies--;
 				}
 			}
 		}
 
-		// System.out.println("AC" + attackerArmiesKilled);
-		// System.out.println("DC" + defenderArmiesKilled);
 		attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - attackerArmiesKilled);
 		defenderCountry.setNumberOfArmies(defenderCountry.getNumberOfArmies() - defenderArmiesKilled);
 
