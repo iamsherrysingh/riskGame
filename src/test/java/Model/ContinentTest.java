@@ -10,7 +10,7 @@ import org.junit.Test;
  * 
  * It contains different Junit tests for the methods defined in {@link Model.Continent}
  * 
- * @see Continent.java
+ * @see Model.Continent
  * @author birjotsingh17
  * 
  *
