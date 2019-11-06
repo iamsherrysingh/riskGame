@@ -104,6 +104,7 @@ public class Continent {
 	 * if the entered continent exists, it removes all the countries under that continent and after that removes that continent from the Database.continentList
 	 *
 	 * @param continentToRemove Name of the continent to be removed
+	 * @param gameGraph game graph
 	 * @return true(If the continent is present and is successfully removed) or false(If the continent is absent from the list)
 	 */
 	public static boolean removeContinent(String continentToRemove, Graph gameGraph) {
@@ -209,7 +210,7 @@ public class Continent {
 	
 	/**
 	 * This updates the owner of the continent
-	 * @param gameGraph
+	 * @param gameGraph gameGraph that holds
 	 */
 	
     public static void updateContinitsOwner(Graph gameGraph) {
