@@ -49,8 +49,8 @@ public class Controller {
 	
 	/**
 	 * parse input Instruction -> Command , Switch, Data
-	 * @param tasksList
-	 * @return
+	 * @param tasksList 
+	 * @return 
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
@@ -436,7 +436,7 @@ public class Controller {
 			}
 			
 			//Detect type of fortify according its number of data
-			//If it has only 1 data, the task will be "ignorfortify"
+			//If it has only 1 data, the task will be "ignorefortify"
 			//If it has 3 data, the task will be "fortify"
 			//Otherwise, it is a wrong command
 			ExtractedTasks eTask = new ExtractedTasks();
@@ -468,7 +468,7 @@ public class Controller {
 	}
 	
 	/**
-	 * Check if the command is valid In the current sate of the game or not.
+	 * Check if the command is valid In the current state of the game or not.
 	 * @param tasksList
 	 * @return
 	 */
