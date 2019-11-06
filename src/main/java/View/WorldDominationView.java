@@ -1,5 +1,6 @@
 package View;
 
+import Model.Continent;
 import Model.Database;
 import Model.GamePlay;
 import Model.Player;
@@ -20,14 +21,14 @@ public class WorldDominationView implements IObserver{
                 data += "\nPlayer " + player.getName() + " : " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
-                data += "\nPlayers not yet added";
+                data += "\nPlayers not yet added\n";
         }catch(Exception e){  data+= "\nCountries not populated yet" ; }
 
-
+        if(Database.getInstance().getContinentList().size() !=0){
         try {
             data+= "\n\nContinent Ownership:\n";
             data += gamePlay.getContinentOwnership();
-        }catch(Exception e){  }
+        }catch(Exception e){  }}
 
 
         try {

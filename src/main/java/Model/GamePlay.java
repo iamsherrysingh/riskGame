@@ -778,7 +778,7 @@ public class GamePlay implements ISubject{
                     break;
                 }
 	        }
-            output+= continent.getName() + " : Multiple Owners\n";
+            output+= continent.getName() + " : No Owner\n";
 //	        singleOwnerFound=0;
         }
 
