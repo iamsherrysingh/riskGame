@@ -19,7 +19,7 @@ public class Graph {
 
     /**
      * Singleton implementation of Database class
-     * @return
+     * @return The object of class Graph
      */
     public static Graph getInstance(){
         if(gameGraph==null)
