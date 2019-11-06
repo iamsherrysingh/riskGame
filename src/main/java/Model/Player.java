@@ -811,6 +811,7 @@ class CurrentPlayer {
 		if (currentPlayerItr.hasNext()) {
 
 			numReinforceArmies = 0;
+			
 			currentPlayer = currentPlayerItr.next();
 
 			// System.out.println("Current player is " + currentPlayer.getName());
