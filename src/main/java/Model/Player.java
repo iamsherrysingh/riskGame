@@ -271,11 +271,11 @@ public class Player {
 	 * This method attacks until no attack is possible using maximum number of dice
 	 * to attack/defend.
 	 * 
-	 * @param fromCountry      (AttackerCountry)
-	 * @param toCountry        (DefenderCountry)
-	 * @param graphObj         (its graphs instance)
-	 * @param currentPlayerObj (its current player's instance)
-	 * @return true if runs successfully or false in case it fails any validation
+	 * @param fromCountry      AttackerCountry
+	 * @param toCountry        DefenderCountry
+	 * @param graphObj         its graphs instance
+	 * @param currentPlayerObj its current player's instance
+	 * @return true(if runs successfully) or false(in case it fails any validation)
 	 */
 	public static boolean attackAllout(String fromCountry, String toCountry, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
@@ -473,6 +473,16 @@ public class Player {
 		return true;
 	}
 
+	/**
+	 * This method attacks from attackerCountry to defenderCountry with number of armies selected. 
+	 * 
+	 * @param fromCountry This is a attackerCountry.
+	 * @param toCountry This is a defenderCountry.
+	 * @param numDice Its an integer value for number of armies attacker choose to attack with.
+	 * @param graphObj This is the object of the Graph.
+	 * @param currentPlayerObj This is the object of currentPlayer.
+	 * @return true(if runs successfully) or false(in case it fails any validation)
+	 */
 	public static boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
@@ -604,12 +614,28 @@ public class Player {
 		return true;
 	}
 
+	
+	/**
+	 * This gives a random number whenever dice is rolled upto maxDice.
+	 * @param maxDice its an integer value upto which we want a number.
+	 * @return a random number
+	 */
 	public static int getRandomNumber(Integer maxDice) {
 		Random randomGenerator;
 		randomGenerator = new Random();
 		return randomGenerator.nextInt(maxDice) + 1;
 	}
 
+	
+	/**
+	 * This method manages the battle between attackerCountry and defenderCountry and declares whoever wins the battle.
+	 * 
+	 * @param attackerCountry object of the country that attacks the other country.
+	 * @param defenderCountry object of the country that is attacked.
+	 * @param attackerArmies Integer value, number of armies selected by attacker to attack.
+	 * @param defenderArmies Integer value, number of armies selected by defender to defend.
+	 * @return true(if runs successfully)
+	 */
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies) {
 
