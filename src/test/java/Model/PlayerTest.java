@@ -167,7 +167,7 @@ public class PlayerTest {
 		Player attacker = Player.getPlayerByName(Country.getCountryByName("Quebec", gamePlay.getGraphObj()).getOwner());
 		Player defender = Player.getPlayerByName(Country.getCountryByName("Greenland", gamePlay.getGraphObj()).getOwner());
 		Player.attackMove(Country.getCountryByName("Quebec", gamePlay.getGraphObj()),
-				Country.getCountryByName("Greenland", gamePlay.getGraphObj()), 2, attacker, defender);
+				Country.getCountryByName("Greenland", gamePlay.getGraphObj()), 2);
 		Integer AttackerArmiesAfter = Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies();
 		Integer DefenderArmiesAfter = Country.getCountryByName("Greenland", Graph.getInstance()).getNumberOfArmies();
 		Integer attackMoveOutput = AttackerArmiesBefore - 2;
