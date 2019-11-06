@@ -768,7 +768,7 @@ public class Controller {
 					break;
 				}
 				case exchangecards:{
-					if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
+					if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(0)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
 						return false;
 					
 					break;
@@ -828,9 +828,9 @@ public class Controller {
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
-				if(!controller.getCommand(tasksList) && controller.gamePlayObj.getCurrentState() != State.gameFinished)
+				if(!controller.getCommand(tasksList))
 					continue;
-				if(!controller.cmdController(tasksList) && controller.gamePlayObj.getCurrentState() != State.gameFinished) {
+				if(!controller.cmdController(tasksList)) {
 					continue;
 				} 
 			}

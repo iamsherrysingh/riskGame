@@ -530,17 +530,23 @@ public class GamePlay implements ISubject{
 
 			System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
 
-			Card card1 = currentPlayer.playerCards.get(cardNumber1 - 1);
-			Card card2 = currentPlayer.playerCards.get(cardNumber2 - 1);
-			Card card3 = currentPlayer.playerCards.get(cardNumber3 - 1);
+			Card[] cardItem = new Card[3];
+			
+			cardItem[0] = currentPlayer.playerCards.get(cardNumber1 - 1);
+			cardItem[1] = currentPlayer.playerCards.get(cardNumber2 - 1);
+			cardItem[2] = currentPlayer.playerCards.get(cardNumber3 - 1);
+			
+			for(int item=0; item<3; item++) {
+				for(int Index=0; Index <currentPlayer.playerCards.size(); Index++) {
+					if( cardItem[item].getIdCard() == currentPlayer.playerCards.get(Index).getIdCard()) {
+						currentPlayer.playerCards.remove(Index);
+					}
+				}
+			}
 
-			currentPlayer.playerCards.remove(cardNumber1 - 1);
-			currentPlayer.playerCards.remove(cardNumber2 - 1);
-			currentPlayer.playerCards.remove(cardNumber3 - 1);
-
-			cardPlayObj.refundCard(card1);
-			cardPlayObj.refundCard(card2);
-			cardPlayObj.refundCard(card3);
+			for(int item=0; item<3; item++) {
+				cardPlayObj.refundCard(cardItem[item]);
+			}
 
 			setCurrentOperation("Exchanging Cards");
 		
@@ -669,6 +675,9 @@ public class GamePlay implements ISubject{
 		
 		// handle picking card at turn of each player
 		if(Player.countryConquered) {
+			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
+			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
+			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
 			currentPlayerObj.getCurrentPlayer().playerCards.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
 			Player.countryConquered = false;
 		}
