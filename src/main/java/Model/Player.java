@@ -330,7 +330,7 @@ public class Player {
 							+ Country.getCountryByName(attackerCountry.name, Graph.getInstance()).getNumberOfArmies());
 					System.out.println("Defender Armies : "
 							+ Country.getCountryByName(defenderCountry.name, Graph.getInstance()).getNumberOfArmies());
-					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected);
+					battle(attackerCountry, defenderCountry, AttackerArmiesSelected, DefenderArmiesSelected, attacker, defender);
 					AttackerArmiesSelected = null;
 					DefenderArmiesSelected = null;
 					System.out.println("After Atack");
@@ -359,7 +359,7 @@ public class Player {
 						attackMove = attackMoveCommand(lastDiceSelected, scanner, attackerCountry.getNumberOfArmies());
 
 						if (attackMove != null) {
-							attackMove(attackerCountry, defenderCountry, attackMove, attacker, defender);
+							attackMove(attackerCountry, defenderCountry, attackMove);
 						} else {
 							System.out.println("something went wrong!!");
 						}
@@ -450,8 +450,7 @@ public class Player {
 	 * @param defender This is an object for defender player.
 	 * @return true(if runs successfully) or false(if fails some validation)
 	 */
-	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove,
-			Player attacker, Player defender) {
+	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
 
 		if (defenderCountry.getNumberOfArmies() == 0) {
 
@@ -459,8 +458,6 @@ public class Player {
 
 				defenderCountry.setNumberOfArmies(numberOfArmiesToMove);
 				attackerCountry.setNumberOfArmies(attackerCountry.getNumberOfArmies() - numberOfArmiesToMove);
-				attacker.numberOfArmies += numberOfArmiesToMove;
-				defender.numberOfArmies -= numberOfArmiesToMove;
 
 			} else {
 
@@ -536,7 +533,7 @@ public class Player {
 											+ Country.getCountryByName(defenderCountry.name, Graph.getInstance())
 													.getNumberOfArmies());
 
-									battle(attackerCountry, defenderCountry, numDice, defenderDice);
+									battle(attackerCountry, defenderCountry, numDice, defenderDice,attacker,defender);
 									System.out.println("After Atack");
 									System.out.println("Attacker Armies : "
 											+ Country.getCountryByName(attackerCountry.name, Graph.getInstance())
@@ -568,8 +565,7 @@ public class Player {
 												attackerCountry.getNumberOfArmies());
 
 										if (attackMove != null) {
-											attackMove(attackerCountry, defenderCountry, attackMove, attacker,
-													defender);
+											attackMove(attackerCountry, defenderCountry, attackMove);
 										} else {
 											System.out.println("something went wrong!!");
 										}
@@ -613,7 +609,7 @@ public class Player {
 	}
 
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
-			Integer defenderArmies) {
+			Integer defenderArmies, Player attacker, Player defender) {
 
 		lastDiceSelected = attackerArmies;
 		Integer index = 0;
@@ -640,9 +636,11 @@ public class Player {
 				if (attackerDices.get(i) > defenderDices.get(i)) {
 					defenderArmiesKilled++;
 					System.out.println("--- Attacker wins the battle ---");
+					defender.numberOfArmies--;
 				} else {
 					attackerArmiesKilled++;
 					System.out.println("--- Defender wins the battle ---");
+					attacker.numberOfArmies--;
 				}
 			}
 		} else {
