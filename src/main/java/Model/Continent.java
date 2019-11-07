@@ -213,7 +213,7 @@ public class Continent {
 	
 	/**
 	 * This updates the owner of the continent
-	 * @param gameGraph gameGraph that holds
+	 * @param gameGraph It is an object of the class Graph
 	 */
 	
     public static void updateContinentOwner(Graph gameGraph) {

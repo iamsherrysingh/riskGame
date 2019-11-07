@@ -49,8 +49,8 @@ public class Controller {
 	
 	/**
 	 * parse input Instruction -> Command , Switch, Data
-	 * @param tasksList 
-	 * @return 
+	 * @param tasksList It is an Array List that has all the commands
+	 * @return true(If the method runs successfully) or false(If the command entered is invalid)
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
