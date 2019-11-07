@@ -147,6 +147,12 @@ public class PlayerTest {
 				gamePlay.getCurrentPlayerObj());
 		assertFalse(attackAlloutOutput);
 	}
+	
+	@Test
+	public void EndGame() {
+		Player.addPlayer("Birjot", 7);
+		
+	}
 
 	/**
 	 * This is a JUnit test for
