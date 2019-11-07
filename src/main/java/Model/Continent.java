@@ -93,6 +93,9 @@ public class Continent {
 				Database.getInstance().getContinentList().add(newContinent);
 				return true;
 			}
+			else{
+				System.out.println("Continent "+continentName+" already exists");
+			}
 			return false;
 		} else {
 			System.out.println("Please enter a valid control value");
