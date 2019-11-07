@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * It contains different Junit tests for the methods defined in
  * {@link Model.Player}
  * 
- * @see Player.java
+ * @see Model.Player
  * @author birjotsingh17
  */
 
@@ -23,7 +23,7 @@ public class PlayerTest {
 	 * This method runs before every test method and creates an object for GamePlay
 	 * and also loads a map
 	 * 
-	 * @throws Exception
+	 * @throws Exception throws exception to caller
 	 */
 	@Before
 	public void before() throws Exception {
@@ -35,7 +35,7 @@ public class PlayerTest {
 	 * This method runs after each and every test method and clears the instance
 	 * changed by the test method
 	 * 
-	 * @throws Exception
+	 * @throws Exception  throws exception to caller
 	 */
 	@After
 	public void after() throws Exception {

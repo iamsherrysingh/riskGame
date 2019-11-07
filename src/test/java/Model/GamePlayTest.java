@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * It contains different Junit tests for the methods defined in {@link Model.GamePlay}
  * 
- * @see GamePlay.java
+ * @see Model.GamePlay
  * @author birjotsingh17
  */
 
@@ -41,7 +41,7 @@ public class GamePlayTest {
     }
 
     /**
-	 * This is a jUnit test for {@link Model.GamePlay#getCurrentPlayerObj()#calculateReinforcementArmies()}
+	 * This is a jUnit test for {@link Model.Player}
 	 */
     @Test
     public void calculateReinforcementArmies(){
