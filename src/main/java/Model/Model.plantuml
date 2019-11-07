@@ -3,308 +3,345 @@
 title __MODEL's Class Diagram__\n
 
   namespace Model {
-    class Model.Card {
-        - idCard : Integer
-        - owner : Integer
-        + Card()
-        + getCardType()
-        + getIdCard()
-        + getOwner()
-        + setCardType()
-        + setIdCard()
-        + setOwner()
+    namespace Model {
+      class Model.Card {
+          - idCard : Integer
+          - owner : Integer
+          + Card()
+          + getCardType()
+          + getIdCard()
+          + getOwner()
+          + setCardType()
+          + setIdCard()
+          + setOwner()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.CardPlay {
-        {static} - cardPlayObj : CardPlay
-        - cardsList : ArrayList<Card>
-        + checkExchangeCardsValidation()
-        {static} + getInstance()
-        + pickCard()
-        + refundCard()
-        - CardPlay()
-        - initilizaGamecards()
+    namespace Model {
+      class Model.CardPlay {
+          {static} - cardPlayObj : CardPlay
+          - cardsList : ArrayList<Card>
+          + checkExchangeCardsValidation()
+          {static} + getInstance()
+          + pickCard()
+          + refundCard()
+          - CardPlay()
+          - initilizaGamecards()
+      }
+    }
+  }
+  
+
+  namespace  Model {
+    namespace Model {
+      class Model.Continent {
+          ~ color : String
+          ~ controlValue : Integer
+          ~ name : String
+          ~ number : Integer
+          ~ owner : String
+          + Continent()
+          {static} + addContinent()
+          {static} + checkExistenceOfContinent()
+          {static} + continentBelongToPlayer()
+          + getColor()
+          {static} + getContinentById()
+          {static} + getContinentByName()
+          + getControlValue()
+          {static} + getCountryList()
+          + getName()
+          + getNumber()
+          + getOwner()
+          {static} + removeContinent()
+          + setColor()
+          + setControlValue()
+          + setName()
+          + setNumber()
+          + setOwner()
+          {static} + updateContinentOwner()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.Continent {
-        ~ color : String
-        ~ controlValue : Integer
-        ~ name : String
-        ~ number : Integer
-        ~ owner : String
-        + Continent()
-        {static} + addContinent()
-        {static} + checkExistenceOfContinent()
-        {static} + continentBelongToPlayer()
-        + getColor()
-        {static} + getContinentById()
-        {static} + getContinentByName()
-        + getControlValue()
-        {static} + getCountryList()
-        + getName()
-        + getNumber()
-        + getOwner()
-        {static} + removeContinent()
-        + setColor()
-        + setControlValue()
-        + setName()
-        + setNumber()
-        + setOwner()
-        {static} + updateContinitsOwner()
+    namespace Model {
+      class Model.Country {
+          ~ coOrdinate1 : Integer
+          ~ getCoOrdinate2 : Integer
+          ~ inContinent : Integer
+          ~ name : String
+          ~ neighbours : ArrayList<Integer>
+          ~ number : Integer
+          ~ numberOfArmies : Integer
+          ~ owner : String
+          + Country()
+          {static} + addArmiesToCountry()
+          {static} + addCountry()
+          {static} + addNeighbour()
+          {static} + allCountriesPopulated()
+          {static} + assignOwner()
+          {static} + changeOwner()
+          {static} + checkExistenceOfCountry()
+          + getCoOrdinate1()
+          {static} + getCountryByName()
+          {static} + getCountryByNumber()
+          + getGetCoOrdinate2()
+          + getInContinent()
+          + getName()
+          + getNeighbours()
+          + getNumber()
+          + getNumberOfArmies()
+          + getOwner()
+          {static} + removeArmiesFromCountry()
+          {static} + removeCountry()
+          {static} + removeNeighbour()
+          + setCoOrdinate1()
+          + setGetCoOrdinate2()
+          + setInContinent()
+          + setName()
+          + setNeighbours()
+          + setNumber()
+          + setNumberOfArmies()
+          + setOwner()
+          {static} + updatePlayerListAndDeclareWinner()
+          ~ addNeighbour()
+          ~ removeNeighbour()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.Country {
-        ~ coOrdinate1 : Integer
-        ~ getCoOrdinate2 : Integer
-        ~ inContinent : Integer
-        ~ name : String
-        ~ neighbours : ArrayList<Integer>
-        ~ number : Integer
-        ~ numberOfArmies : Integer
-        ~ owner : String
-        + Country()
-        {static} + addArmiesToCountry()
-        {static} + addCountry()
-        {static} + addNeighbour()
-        {static} + allCountriesPopulated()
-        {static} + assignOwner()
-        {static} + changeOwner()
-        {static} + checkExistenceOfCountry()
-        + getCoOrdinate1()
-        {static} + getCountryByName()
-        {static} + getCountryByNumber()
-        + getGetCoOrdinate2()
-        + getInContinent()
-        + getName()
-        + getNeighbours()
-        + getNumber()
-        + getNumberOfArmies()
-        + getOwner()
-        {static} + removeArmiesFromCountry()
-        {static} + removeCountry()
-        {static} + removeNeighbour()
-        + setCoOrdinate1()
-        + setGetCoOrdinate2()
-        + setInContinent()
-        + setName()
-        + setNeighbours()
-        + setNumber()
-        + setNumberOfArmies()
-        + setOwner()
-        {static} + updatePlayerListAndDeclareWinner()
-        ~ addNeighbour()
-        ~ removeNeighbour()
+    namespace Model {
+      class Model.CurrentPlayer {
+          - currentPlayerItr : ListIterator<Player>
+          {static} - currentPlayerObj : CurrentPlayer
+          - numReinforceArmies : Integer
+          + calculateReinforceentArmies()
+          + decreaseReinforceentArmies()
+          + getCurrentPlayer()
+          {static} + getCurrentPlayerObj()
+          {static} + getInstance()
+          + getNumReinforceArmies()
+          + goToFirstPlayer()
+          + goToNextPlayer()
+          + increaseCurrentPlayerArmies()
+          + setNumReinforceArmies()
+          - CurrentPlayer()
+      }
+    }
+  }
+  
+
+  namespace  Model{
+    namespace Model {
+      class Model.Database {
+          {static} ~ continentList : ArrayList<Continent>
+          {static} ~ playerList : ArrayList<Player>
+          {static} - dbobj : Database
+          + getContinentList()
+          {static} + getInstance()
+          + getPlayerList()
+          + printContinentList()
+          + setContinentList()
+          + setPlayerList()
+          - Database()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.CurrentPlayer {
-        - currentPlayerItr : ListIterator<Player>
-        {static} - currentPlayerObj : CurrentPlayer
-        - numReinforceArmies : Integer
-        + calculateReinforceentArmies()
-        + decreaseReinforceentArmies()
-        + getCurrentPlayer()
-        {static} + getCurrentPlayerObj()
-        {static} + getInstance()
-        + getNumReinforceArmies()
-        + goToFirstPlayer()
-        + goToNextPlayer()
-        + increaseCurrentPlayerArmies()
-        + setNumReinforceArmies()
-        - CurrentPlayer()
+    namespace Model {
+      class Model.GamePlay {
+          ~ observerList : ArrayList<IObserver>
+          ~ observersOfGamePlay : ArrayList<IObserver>
+          - currentOperation : String
+          {static} - gamePlay : GamePlay
+          + addContinent()
+          + addCountry()
+          + addNeighbor()
+          + addPlayer()
+          + alloutAttack()
+          + attachObserver()
+          + checkEndGame()
+          + detachObserver()
+          + editMap()
+          + exchangeCards()
+          + fortifyArmy()
+          + getContinentOwnership()
+          + getCurrentOperation()
+          + getCurrentPlayerName()
+          + getCurrentPlayerObj()
+          + getCurrentState()
+          + getGraphObj()
+          {static} + getInstance()
+          + getMapxObj()
+          + getPercentageOfMapOwnedByPlayer()
+          + getPhaseView()
+          + getTotalNumberOfArmies()
+          + getWorldDominationView()
+          + ignoreAttack()
+          + ignoreExchangeCards()
+          + ignoreFortifyArmy()
+          + loadGameMap()
+          + normalAttack()
+          + notifyObservers()
+          + placeAll()
+          + placeArmy()
+          + populateCountries()
+          + reinforceArmy()
+          + removeContinent()
+          + removeCountry()
+          + removeNeighbor()
+          + removePlayer()
+          + saveMap()
+          + setCurrentOperation()
+          + setPhaseView()
+          + setWorldDominationView()
+          + showMap()
+          + validateMap()
+          - GamePlay()
+          - setCurrentState()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.Database {
-        {static} ~ continentList : ArrayList<Continent>
-        {static} ~ playerList : ArrayList<Player>
-        {static} - dbobj : Database
-        + getContinentList()
-        {static} + getInstance()
-        + getPlayerList()
-        + printContinentList()
-        + setContinentList()
-        + setPlayerList()
-        - Database()
+    namespace Model {
+      class Model.Graph {
+          {static} + adjList : ArrayList<Country>
+          {static} - gameGraph : Graph
+          + getAdjList()
+          {static} + getInstance()
+          {static} + showMap()
+          - Graph()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.GamePlay {
-        ~ lastDiceSelected : Integer
-        {static} - gamePlay : GamePlay
-        + addContinent()
-        + addCountry()
-        + addNeighbor()
-        + addPlayer()
-        + alloutAttack()
-        + attackAllout()
-        + attackCountry()
-        + attackMove()
-        + attackMoveCommand()
-        + battle()
-        + defenderArmiesSelectionForAllout()
-        + defenderCommandInput()
-        + editMap()
-        + exchangeCards()
-        + fortifyArmy()
-        + getCurrentPlayerObj()
-        + getCurrentState()
-        + getGraphObj()
-        {static} + getInstance()
-        + getMapxObj()
-        {static} + getRandomNumber()
-        + ignoreAttack()
-        + ignoreExchangeCards()
-        + ignoreFortifyArmy()
-        + loadGameMap()
-        + normalAttack()
-        + placeAll()
-        + placeArmy()
-        + populateCountries()
-        + reinforceArmy()
-        + removeContinent()
-        + removeCountry()
-        + removeNeighbor()
-        + removePlayer()
-        + saveMap()
-        + showMap()
-        + validateMap()
-        - GamePlay()
-        - setCurrentState()
+    namespace Model {
+      interface Model.ISubject {
+          {abstract} + attachObserver()
+          {abstract} + detachObserver()
+          {abstract} + notifyObservers()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.GameSubject {
-        ~ observerList : ArrayList<IObserver>
-        + attachObserver()
-        + detachObserver()
-        + notifyObservers()
-        + stateChanged()
+    namespace Model {
+      class Model.Mapx {
+          - borders : String
+          - continents : String
+          - countries : String
+          {static} + createFile()
+          + loadMap()
+          + saveMap()
+          {static} + validateMap()
+          - readMapIntoVariables()
+      }
     }
   }
   
 
   namespace Model {
-    class Model.Graph {
-        {static} + adjList : ArrayList<Country>
-        {static} - gameGraph : Graph
-        + getAdjList()
-        {static} + getInstance()
-        {static} + showMap()
-        - Graph()
+    namespace Model {
+      class Model.Player {
+          + playerCards : ArrayList<Card>
+          {static} ~ countryConquered : boolean
+          {static} ~ defenderRemoved : boolean
+          ~ exchangeCardsTimes : Integer
+          {static} ~ lastDiceSelected : Integer
+          ~ myCountries : ArrayList<Integer>
+          ~ name : String
+          ~ number : Integer
+          ~ numberOfArmies : Integer
+          ~ numberOfFreeArmies : Integer
+          {static} + addPlayer()
+          {static} + allPlayersRemainingArmiesExhausted()
+          {static} + attackAllout()
+          {static} + attackCountry()
+          {static} + attackMove()
+          {static} + attackMoveCommand()
+          {static} + battle()
+          {static} + defenderCommandInput()
+          {static} + fortify()
+          + getMyCountries()
+          + getName()
+          + getNumber()
+          + getNumberOfArmies()
+          + getNumberOfCountriesOwned()
+          + getNumberOfFreeArmies()
+          {static} + getOwnedCountryList()
+          {static} + getPlayerByName()
+          {static} + getPlayerByNumber()
+          {static} + getRandomNumber()
+          + getTotalArmiesOwnedByPlayer()
+          {static} + printAllPlayers()
+          {static} + reinforcement()
+          {static} + removePlayer()
+          + setMyCountries()
+          + setName()
+          + setNumberOfArmies()
+          + setNumberOfFreeArmies()
+          - Player()
+      }
     }
   }
   
 
   namespace Model {
-    interface Model.ISubject {
-        {abstract} + attachObserver()
-        {abstract} + detachObserver()
-        {abstract} + notifyObservers()
+    namespace Model {
+      enum State {
+        attackPhase
+        editPlayer
+        exchangeCards
+        fortificationPhase
+        gameFinished
+        initializeGame
+        mapEditor
+        reinforcementPhase
+        startupPhase
+        troopArmies
+      }
     }
   }
   
 
   namespace Model {
-    class Model.Mapx {
-        - borders : String
-        - continents : String
-        - countries : String
-        {static} + createFile()
-        + loadMap()
-        + saveMap()
-        {static} + validateMap()
-        - readMapIntoVariables()
-    }
-  }
-  
-
-  namespace Model {
-    class Model.Player {
-        ~ countryConquered : boolean
-        ~ exchangeCardsTimes : Integer
-        ~ myCountries : ArrayList<Integer>
-        ~ name : String
-        ~ number : Integer
-        ~ numberOfArmies : Integer
-        ~ playerCards : ArrayList<Card>
-        {static} + addPlayer()
-        {static} + allPlayersRemainingArmiesExhausted()
-        {static} + fortify()
-        + getMyCountries()
-        + getName()
-        + getNumber()
-        + getNumberOfArmies()
-        {static} + getOwnedCountryList()
-        {static} + getPlayerByName()
-        {static} + getPlayerByNumber()
-        {static} + printAllPlayers()
-        {static} + reinforcement()
-        {static} + removePlayer()
-        + setMyCountries()
-        + setName()
-        + setNumberOfArmies()
-        - Player()
-    }
-  }
-  
-
-  namespace Model {
-    enum State {
-      attackPhase
-      editPlayer
-      exchangeCards
-      fortificationPhase
-      gameFinished
-      initializeGame
-      mapEditor
-      reinforcementPhase
-      startupPhase
-      troopArmies
-    }
-  }
-  
-
-  namespace Model {
-    enum cardType {
-      Artillery
-      Cavalry
-      Infantry
-      Wild
+    namespace Model {
+      enum cardType {
+        Artillery
+        Cavalry
+        Infantry
+        Wild
+      }
     }
   }
   
 
   Model.Card o-- Model.cardType : cType
-  Model.CurrentPlayer o-- Model.CardPlay : cardPlayObj
   Model.CurrentPlayer o-- Model.Player : currentPlayer
+  Model.CurrentPlayer o-- Model.CardPlay : cardPlayObj
+  Model.GamePlay .up.|> Model.ISubject
   Model.GamePlay o-- View.CardExchange : cardExchangeView
-  Model.GamePlay o-- Model.GameSubject : gameSubjectObj
+  Model.GamePlay o-- View.PhaseView : phaseView
+  Model.GamePlay o-- View.WorldDominationView : worldDominationView
   Model.GamePlay o-- Model.CardPlay : cardPlayObj
   Model.GamePlay o-- Model.CurrentPlayer : currentPlayerObj
   Model.GamePlay o-- Model.State : currentState
   Model.GamePlay o-- Model.Database : databaseObj
   Model.GamePlay o-- Model.Graph : graphObj
   Model.GamePlay o-- Model.Mapx : mapxObj
-  Model.GameSubject .up.|> Model.ISubject
-  Model.GameSubject o-- Model.State : currentState
   Model.Mapx o-- Model.Database : database
 
 
