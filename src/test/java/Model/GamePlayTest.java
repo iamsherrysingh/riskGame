@@ -62,6 +62,24 @@ public class GamePlayTest {
             assertTrue(true);
         }
     }
+    
+
+	/**
+	 * This is a JUnit test for {@link Model.GamePlay#checkEndGame()}. This checks the state of the game, if its gameFinished.
+	 */
+	@Test
+	public void EndGame() {
+		Player.addPlayer("Birjot", 7);
+		
+		boolean check; 
+		if(Database.getInstance().getPlayerList().size()==1) {
+			check = true;
+		}else {
+			check =false;
+		}
+		
+		assertEquals(check, gamePlay.checkEndGame());		
+	}
 
     @Test
     public void startupPhase(){
