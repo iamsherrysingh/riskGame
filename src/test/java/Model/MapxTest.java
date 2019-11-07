@@ -9,8 +9,8 @@ import java.io.*;
 
 /**
  * It contains different Junit tests for the methods defined in {@link Model.Mapx}
- *
- * @see Model.Mapx
+ * 
+ * @see Mapx.java
  * @author birjotsingh17
  */
 
@@ -39,7 +39,7 @@ public class MapxTest {
    
     /**
      *  This is a jUnit test for {@link Model.Mapx#loadMap(String, Graph)}
-     * @throws Exception This throws exception to caller method
+     * @throws Exception
      */
     @Test
     public void loadMap() throws Exception {
@@ -54,7 +54,7 @@ public class MapxTest {
 
     /**
      *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}
-     * @throws IOException This throws IOexception to caller method
+     * @throws IOException
      */
     @Test
     public void saveMap1() throws IOException {
@@ -69,7 +69,7 @@ public class MapxTest {
 
     /**
      *  This is a jUnit test for {@link Model.Mapx#validateMap(Graph)}
-     * @throws IOException This throws IOexception to caller method
+     * @throws IOException
      */
     @Test
     public void validateMap() throws IOException {
@@ -81,7 +81,7 @@ public class MapxTest {
 
     /**
      *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}
-     * @throws IOException This throws IOexception to caller method
+     * @throws IOException
      */
     @Test
     public void saveMap2() throws IOException {

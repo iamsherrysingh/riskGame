@@ -5,9 +5,6 @@ import Model.Database;
 import Model.GamePlay;
 import Model.Player;
 
-/**
- * This is a concrete observer that implements WorldDominationView
- */
 public class WorldDominationView implements IObserver{
     String header=          "================================================"  + "\n" +
                             "==============WORLD DOMINATION VIEW=============";
@@ -15,12 +12,6 @@ public class WorldDominationView implements IObserver{
 
 
     String data="";
-
-    /**
-     * This method prints the phase view on console
-     * @param gamePlay is an object of Model.GamePlay
-     * @param playerobj is an object of Model.Player
-     */
     @Override
     public void update(GamePlay gamePlay, Player playerobj) {
 
