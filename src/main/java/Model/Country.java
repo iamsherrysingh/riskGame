@@ -369,7 +369,7 @@ public class Country {
 	 * @param ownerName The name of the owner to whom the country is to be assigned
 	 * @param countryName The name of country to be assigned
 	 * @param g It is the object of class Graph
-	 * @return true or false(
+	 * @return true(If the method runs successfully and the country is assigned an owner) or false(If the country name or owner name is not present)
 	 */
 	public static boolean assignOwner(String ownerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
