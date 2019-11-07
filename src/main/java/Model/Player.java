@@ -71,9 +71,9 @@ public class Player {
 	/**
 	 * This adds a new player in Database.playerlist
 	 * 
-	 * @param playerName
-	 * @param noOfArmies
-	 * @return true or false
+	 * @param playerName The name of the player that is to be added
+	 * @param noOfArmies The integer number of armies of the player
+	 * @return true(If the conditions are satisfied and the player is added) or false(If player already exists or if no name of player is entered)
 	 */
 	public static boolean addPlayer(String playerName, Integer noOfArmies) {
 		if (Player.getPlayerByName(playerName) != null) {
@@ -93,8 +93,8 @@ public class Player {
 	/**
 	 * This removes a player from Database.playerlist
 	 * 
-	 * @param playerName
-	 * @return true or false
+	 * @param playerName The name of the player to be removed
+	 * @return true(If the player is removed successfully) or false(The player is absent)
 	 */
 	public static boolean removePlayer(String playerName) {
 		Player player = Player.getPlayerByName(playerName);
@@ -116,7 +116,7 @@ public class Player {
 	 * This returns the instance of the player where a player is saved in
 	 * Database.playerlist using player's name
 	 * 
-	 * @param playerName
+	 * @param playerName The name of the player
 	 * @return instance of the player
 	 */
 	public static Player getPlayerByName(String playerName) {
@@ -132,7 +132,7 @@ public class Player {
 	 * This returns the instance of the player where a player is saved in
 	 * Database.playerlist using player's number
 	 * 
-	 * @param playerNumber
+	 * @param playerNumber The integer number of the player
 	 * @return instance of the player
 	 */
 	public static Player getPlayerByNumber(Integer playerNumber) {
@@ -148,7 +148,7 @@ public class Player {
 	 * check if the number of remaining armies that can be placed is equal to zero
 	 * for every player
 	 * 
-	 * @return true or false
+	 * @return true(If there are no more armies present) or false(If the number of armies to be placed are still not zero)
 	 */
 	public static boolean allPlayersRemainingArmiesExhausted() {
 		for (Player player : Database.getInstance().getPlayerList()) {
@@ -172,8 +172,8 @@ public class Player {
 	/**
 	 * this provides the list of countries owned by a particular player
 	 * 
-	 * @param playerName
-	 * @param gameGraph
+	 * @param playerName The name of the player
+	 * @param gameGraph This the object of the class Graph
 	 * @return list of countries owned by a player
 	 */
 	public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph) {
@@ -192,7 +192,7 @@ public class Player {
 	 * @param numberOfArmies This is an integer parameter which specify the number of armies for reinforcement
 	 * @param graphObj This is an object which pass the game graph.
 	 * @param currentPlayerObj This is an object which is current player of the game.
-	 * @return true if runs successfully or false in case it fails any validation
+	 * @return true(if runs successfully or false in case it fails any validation)
 	 */
 	public static boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
@@ -695,11 +695,11 @@ public class Player {
 	 * This allows a player to move any number of armies from his owned country to
 	 * any of his owned neighbor country, leaving behind at least 1 army unit.
 	 *
-	 * @param fromCname
-	 * @param toCountryName
-	 * @param numberOfArmies
-	 * @param gameGraph
-	 * @return true or false
+	 * @param fromCname The name of the country from where the armies are to be moved
+	 * @param toCountryName The name of the country to which the armies are to be moved
+	 * @param numberOfArmies The total number of armies to be moved
+	 * @param gameGraph This is an object of the class Graph
+	 * @return true(If all the conditions are satisfied and the desired country is fortified) or false(If the countries specified are absent or it does not fulfill the requirements) 
 	 */
 	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
@@ -728,7 +728,12 @@ public class Player {
 
 		return true;
 	}
-
+/**
+ * This method returns the total number of countries owned by the players.
+ * @param playerName The name of the player
+ * @param gameGraph This is an object of the class Graph
+ * @return An integer value that is equal to the total number of countries owned by the player
+ */
 	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
 		Integer numberOfCountriesOwned = 0;
 
@@ -741,7 +746,11 @@ public class Player {
 		}
 		return numberOfCountriesOwned;
 	}
-
+/**
+ * This method returns the total number of armies owned by the players.
+ * @param gameGraph It is an object of the class Graph
+ * @returnAn integer value that is equal to the total number of armies owned by the player
+ */
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		Integer numberOfArmies = 0;
 
@@ -780,7 +789,7 @@ class CurrentPlayer {
 	/**
 	 * Current Player get Instance method with SingleTone design
 	 * 
-	 * @return
+	 * @return It returns an instance of the class Currentplayer
 	 */
 	public static CurrentPlayer getInstance() {
 		if (currentPlayerObj == null)
@@ -803,8 +812,8 @@ class CurrentPlayer {
 	/**
 	 * Go to next player.
 	 * 
-	 * @param currentState
-	 * @param gameGraph
+	 * @param currentState It is an object of the class currentState
+	 * @param gameGraph It is an object of the class Graph
 	 */
 	public void goToNextPlayer(State currentState, Graph gameGraph) {
 
@@ -825,8 +834,8 @@ class CurrentPlayer {
 	/**
 	 * Reset players turn whenever it comes to the end of the players list.
 	 * 
-	 * @param currentState
-	 * @param gameGraph
+	 * @param currentState It is an object of the class currentState
+	 * @param gameGraph It is an object of the class Graph
 	 */
 	public void goToFirstPlayer(State currentState, Graph gameGraph) {
 		currentPlayerItr = Database.playerList.listIterator();
@@ -857,7 +866,7 @@ class CurrentPlayer {
 	/**
 	 * Decrease Reinforcement Armies.
 	 * 
-	 * @param numOfArmies
+	 * @param numOfArmies The number of armies in Integer form that are to be decreased.
 	 */
 	public void decreaseReinforceentArmies(Integer numOfArmies) {
 		numReinforceArmies -= numOfArmies;
@@ -866,7 +875,7 @@ class CurrentPlayer {
 	/**
 	 * Update The number of players for current Player.
 	 * 
-	 * @param numArmies
+	 * @param numArmies The number of armies that are to be added
 	 */
 	public void increaseCurrentPlayerArmies(Integer numArmies) {
 		currentPlayer.setNumberOfArmies(currentPlayer.getNumberOfArmies() + numArmies);

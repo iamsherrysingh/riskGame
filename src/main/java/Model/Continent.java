@@ -93,6 +93,9 @@ public class Continent {
 				Database.getInstance().getContinentList().add(newContinent);
 				return true;
 			}
+			else{
+				System.out.println("Continent "+continentName+" already exists");
+			}
 			return false;
 		} else {
 			System.out.println("Please enter a valid control value");
@@ -210,7 +213,7 @@ public class Continent {
 	
 	/**
 	 * This updates the owner of the continent
-	 * @param gameGraph gameGraph that holds
+	 * @param gameGraph It is an object of the class Graph
 	 */
 	
     public static void updateContinentOwner(Graph gameGraph) {

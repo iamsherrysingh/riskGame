@@ -3,12 +3,18 @@ import Model.Card;
 import Model.GamePlay;
 import Model.Player;
 
+/**
+ * 
+ * @author jaskaransodhi
+ *
+ */
 public class CardExchange implements IObserver {
 	
     String header =          "=============================================="  + "\n" +
             			 	 "============== Card Exchange View ============";
     String footer =          "==============================================";
     
+
 	@Override
 	public void update(GamePlay gameplay, Player player) {
 

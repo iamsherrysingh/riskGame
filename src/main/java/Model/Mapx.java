@@ -20,9 +20,9 @@ public class Mapx {
 	 * in their variables This is used by loadMap(). The variables generated
 	 * by this method are used throughout the game.
 	 *
-	 * @param mapFile
-	 * @throws FileNotFoundException
-	 * @return true or false
+	 * @param mapFile It is the name of the map file that is to be executed
+	 * @throws FileNotFoundException Throws an exception if the file is not found
+	 * @return true(If the method is executed completely)
 	 */
 	private boolean readMapIntoVariables(String mapFile) throws FileNotFoundException {
 		// Read Continents
@@ -130,8 +130,9 @@ public class Mapx {
 	 * is the most important variable in the whole game gameGraph is a Graph that
 	 * holds an ArrayList of countries
 	 *
-	 * @param mapFile
-	 * @return true or false
+	 * @param mapFile It is the name of the map file that is to be executed
+	 * @param gameGraph This is an object of the class Graph
+	 * @return true(If after executing, we are able to load the desired map.
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
 		try {
@@ -173,9 +174,9 @@ public class Mapx {
 	/**
 	 * This is a utility method that creates a plain text file
 	 *
-	 * @param mapName
-	 * @return file 
-	 * @throws IOException
+	 * @param mapName Name of the map
+	 * @return file  
+	 * @throws IOException If the Input or Output file is invalid 
 	 */
 	public static File createFile(String mapName) throws IOException {
 		Scanner sc1 = new Scanner(System.in);
@@ -210,9 +211,9 @@ public class Mapx {
 	/**
 	 * This method operates on the gameGraph variable and converts it to map file.
 	 *
-	 * @param gameGraph
-	 * @throws IOException
-	 * @return true or false
+	 * @param gameGraph It is the object of the class Graph
+	 * @throws IOException If the Input or Output file is invalid
+	 * @return true(If the method executes and the map is saved) or false(If no map name is entered or is invalid)
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
         if(validateMap(gameGraph) == false){
@@ -298,8 +299,8 @@ public class Mapx {
 	/**
 	 * This method checks the gameGraph for graph connectivity
 	 *
-	 * @param gameGraph
-	 * @return true or false
+	 * @param gameGraph It is an object of the class Graph
+	 * @return true(If the total count equals the total number of countries; Map is validated) or false(If the map is not connected) 
 	 */
 	public static boolean validateMap(Graph gameGraph) {
 		Integer startPosition = 1;
