@@ -334,7 +334,7 @@ public class Controller {
 			}
 			
 			ExtractedTasks eTask = new ExtractedTasks();
-			if( command.size() == 4 ) {
+			if( command.size() == 4 || command.size() == 2 ) {
 				String firstData = cmdItr.next();
 				if(!cmdItr.hasNext()) {
 					eTask.name = tasksEnum.ignoreexchangecards;
