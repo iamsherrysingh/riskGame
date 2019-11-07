@@ -597,6 +597,15 @@ public class GamePlay implements ISubject{
 		return true;
 	}
 	
+	public boolean checkEndGame() {
+		if( Database.playerList.size() == 1) {
+			setCurrentState(State.gameFinished, "game Finished");
+			return true;
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * when player decided normal attack
 	 * @return true if implemented
@@ -619,10 +628,15 @@ public class GamePlay implements ISubject{
 				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
 			}
 			Player.removePlayer(defenderName);	
-			if( Database.playerList.size() == 1) {
-				setCurrentState(State.gameFinished, "game Finished");
+			
+			boolean checkEndGameStatus = checkEndGame();
+			if(checkEndGameStatus==true) {
 				return true;
 			}
+//			if( Database.playerList.size() == 1) {
+//				setCurrentState(State.gameFinished, "game Finished");
+//				return true;
+//			}
 			Player.defenderRemoved = false;
 		}
 
@@ -651,11 +665,15 @@ public class GamePlay implements ISubject{
 				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
 				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
 			}
-			Player.removePlayer(defenderName);	
-			if( Database.playerList.size() == 1) {
-				setCurrentState(State.gameFinished, "game Finished");
+			Player.removePlayer(defenderName);
+			boolean checkEndGameStatus = checkEndGame();
+			if(checkEndGameStatus==true) {
 				return true;
 			}
+//			if( Database.playerList.size() == 1) {
+//				setCurrentState(State.gameFinished, "game Finished");
+//				return true;
+//			}
 			Player.defenderRemoved = false;
 		}
 
