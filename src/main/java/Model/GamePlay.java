@@ -30,6 +30,15 @@ public class GamePlay implements ISubject{
 	}
 
 	PhaseView phaseView= new PhaseView();
+
+	public WorldDominationView getWorldDominationView() {
+		return worldDominationView;
+	}
+
+	public void setWorldDominationView(WorldDominationView worldDominationView) {
+		this.worldDominationView = worldDominationView;
+	}
+
 	WorldDominationView worldDominationView = new WorldDominationView();
 
 	public String getCurrentOperation() {
