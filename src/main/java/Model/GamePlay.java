@@ -646,7 +646,9 @@ public class GamePlay implements ISubject {
 
 	/**
 	 * when player decided normal attack
-	 * 
+	 * @param originCountry attackerCountry
+	 * @param destinationCountry defenderCountry
+	 * @param numeOfDice Number of armies
 	 * @return true if implemented
 	 */
 	public boolean normalAttack(String originCountry, String destinationCountry, Integer numeOfDice) {
@@ -683,10 +685,12 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
+	
 	/**
 	 * when player decided all out attack
-	 * 
-	 * @return true if implemented
+	 * @param originCountry attackerCountry
+	 * @param destinationCountry defenderCountry
+	 * @return  true if implemented
 	 */
 	public boolean alloutAttack(String originCountry, String destinationCountry) {
 
