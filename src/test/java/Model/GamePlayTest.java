@@ -83,9 +83,6 @@ public class GamePlayTest {
 
     @Test
     public void startupPhase(){
-//        loadmap filename
-//        gameplayer -add playername -remove playername
-//                populatecountries
         gamePlay.addPlayer("Chakshu");
         gamePlay.removePlayer("Chakshu");
         boolean output= gamePlay.populateCountries();
