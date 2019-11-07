@@ -814,7 +814,7 @@ class CurrentPlayer {
 			currentPlayer = currentPlayerItr.next();
 
 			// System.out.println("Current player is " + currentPlayer.getName());
-			Continent.updateContinitsOwner(gameGraph);
+			Continent.updateContinentOwner(gameGraph);
 			calculateReinforceentArmies();
 		} else {
 			goToFirstPlayer(currentState, gameGraph);
@@ -832,7 +832,7 @@ class CurrentPlayer {
 		numReinforceArmies = 0;
 		currentPlayer = currentPlayerItr.next();
 
-		Continent.updateContinitsOwner(gameGraph);
+		Continent.updateContinentOwner(gameGraph);
 		calculateReinforceentArmies();
 	}
 
