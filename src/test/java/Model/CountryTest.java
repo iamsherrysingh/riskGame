@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  * It contains different Junit tests for the methods defined in
  * {@link Model.Country}
  * 
- * @see Country.java
+ * @see Model.Country
  * @author birjotsingh17
  */
 
@@ -70,7 +70,7 @@ public class CountryTest {
 	}
 
 	/**
-	 * This is a jUnit test for {@link Model.Country#removeNeighbour(String, String, Graph))}
+	 * This is a jUnit test for {@link Model.Country#removeNeighbour(String, String, Graph)}
 	 */
 	@Test
 	public void removeNeighbour1() {
@@ -81,7 +81,7 @@ public class CountryTest {
 	}
 
 	/**
-	 * This is a jUnit test for {@link Model.Country#removeNeighbour(String, String, Graph))}
+	 * This is a jUnit test for {@link Model.Country#removeNeighbour(String, String, Graph)}
 	 */
 	@Test
 	public void removeNeighbour2() {
@@ -89,7 +89,7 @@ public class CountryTest {
 	}
 
 	/**
-	 * This is a jUnit test for {@link Model.Country#checkExistenceOfCountry(String, Graph))}
+	 * This is a jUnit test for {@link Model.Country#checkExistenceOfCountry(String, Graph)}
 	 */
 	@Test
 	public void checkExistenceOfCountry() {
@@ -97,7 +97,7 @@ public class CountryTest {
 	}
 
 	/**
-	 * This is a jUnit test for {@link Model.Country#checkExistenceOfCountry(String, Graph))}
+	 * This is a jUnit test for {@link Model.Country#checkExistenceOfCountry(String, Graph)}
 	 */
 	@Test
 	public void checkExistenceOfCountry2() {

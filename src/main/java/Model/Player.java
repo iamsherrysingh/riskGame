@@ -446,8 +446,6 @@ public class Player {
 	 * @param attackerCountry This is an object for the attacker country.
 	 * @param defenderCountry This is an object for the defender country.
 	 * @param numberOfArmiesToMove an integer value selected by the attacker to move between countries.
-	 * @param attacker This is an object for the attacker player.
-	 * @param defender This is an object for defender player.
 	 * @return true(if runs successfully) or false(if fails some validation)
 	 */
 	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
@@ -632,6 +630,7 @@ public class Player {
 	 * @param defenderCountry object of the country that is attacked.
 	 * @param attackerArmies Integer value, number of armies selected by attacker to attack.
 	 * @param defenderArmies Integer value, number of armies selected by defender to defend.
+	 * @param defender player on defence object
 	 * @return true(if runs successfully)
 	 */
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
@@ -749,7 +748,7 @@ public class Player {
 /**
  * This method returns the total number of armies owned by the players.
  * @param gameGraph It is an object of the class Graph
- * @returnAn integer value that is equal to the total number of armies owned by the player
+ * @return integer value that is equal to the total number of armies owned by the player
  */
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		Integer numberOfArmies = 0;

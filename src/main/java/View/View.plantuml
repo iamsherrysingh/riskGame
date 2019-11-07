@@ -3,37 +3,63 @@
 title __VIEW's Class Diagram__\n
 
   namespace View {
-    class View.CardExchange {
-        + update()
+    namespace View {
+      class View.CardExchange {
+          ~ footer : String
+          ~ header : String
+          + update()
+      }
     }
   }
   
 
   namespace View {
-    interface View.IObserver {
-        {abstract} + update()
+    namespace View {
+      interface View.IObserver {
+          {abstract} + update()
+      }
     }
   }
   
 
   namespace View {
-    class View.PhaseView {
-        ~ footer : String
-        ~ header : String
-        + update()
+    namespace View {
+      class View.PhaseView {
+          ~ data : String
+          ~ footer : String
+          ~ header : String
+          + printPhaseView()
+          + update()
+      }
     }
   }
   
 
   namespace View {
-    class View.Runner {
-        {static} + main()
+    namespace View {
+      class View.Runner {
+          {static} + main()
+      }
+    }
+  }
+  
+
+  namespace View  {
+    namespace View {
+      class View.WorldDominationView {
+          ~ data : String
+          ~ footer : String
+          ~ header : String
+          + printWorldDomiantionView()
+          + update()
+      }
     }
   }
   
 
   View.CardExchange .up.|> View.IObserver
   View.PhaseView .up.|> View.IObserver
+  View.WorldDominationView .up.|> View.IObserver
 
 
 right footer

@@ -9,8 +9,8 @@ import java.io.*;
 
 /**
  * It contains different Junit tests for the methods defined in {@link Model.Mapx}
- * 
- * @see Mapx.java
+ *
+ * @see Model.Mapx
  * @author birjotsingh17
  */
 
