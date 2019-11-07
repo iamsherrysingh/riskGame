@@ -8,12 +8,22 @@ enum cardType {
 	Artillery,
 	Wild
 }
+/** 
+ * This Class maintains data for each cards.
+ * The methods of this class are called by GamePlay.
+ * @author Mehrnoosh Amjadi
+ */
 public class Card {
 	
 	private cardType cType;
 	private Integer idCard;
 	private Integer owner;
 	
+	/** 
+	 * Constructor of the Card Class.
+	 * @param cType is the type for each card
+	 * @param
+	 */
 	public Card(cardType cType, Integer idCard, Integer owner) {
 		this.cType = cType;
 		this.idCard = idCard;
