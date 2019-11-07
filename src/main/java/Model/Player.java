@@ -630,6 +630,7 @@ public class Player {
 	 * @param defenderCountry object of the country that is attacked.
 	 * @param attackerArmies Integer value, number of armies selected by attacker to attack.
 	 * @param defenderArmies Integer value, number of armies selected by defender to defend.
+	 * @param attacker player on attacker object
 	 * @param defender player on defence object
 	 * @return true(if runs successfully)
 	 */
