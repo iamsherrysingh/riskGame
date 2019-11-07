@@ -98,8 +98,8 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Set Current State of the game
-	 * @param newState
-	 * @param newStateStr
+	 * @param newState Object of the class state
+	 * @param newStateStr The new state
 	 */
 	private void setCurrentState(State newState, String newStateStr) {
 		
@@ -111,8 +111,8 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Add Continent Function
-	 * @param continentName
-	 * @param controlValue
+	 * @param continentName The name of the continent to be added
+	 * @param controlValue The integer control value of the continent
 	 * @return true if addContinent function return true in Continent class
 	 */
 	public boolean addContinent(String continentName, Integer controlValue) {
@@ -125,7 +125,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Remove Continent Function
-	 * @param continentName
+	 * @param continentName The name of the continent to be removed
 	 * @return true if removeContinent function return true in Continent class
 	 */
 	public boolean removeContinent(String continentName) {
@@ -138,9 +138,9 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Add Country Function
-	 * @param countryName
-	 * @param continentName
-	 * @return true if addCountry function return true in Country class
+	 * @param countryName The name of the country to be added
+	 * @param continentName The name of the continent to which the country is to be added
+	 * @return true(if addCountry function return true in Country class)
 	 */
 	public boolean addCountry(String countryName, String continentName) {
 
@@ -152,8 +152,8 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Remove Country Function 
-	 * @param countryName
-	 * @return true if removeCountry function return true in Country class
+	 * @param countryName The name if the country to be removed
+	 * @return(true if removeCountry function returns true in Country class)
 	 */
 	public boolean removeCountry(String countryName) {
 
@@ -165,8 +165,8 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Add Neighbor Function
-	 * @param countryName
-	 * @param neighborCountryName
+	 * @param countryName The name of the country to which a neighbor is to be added
+	 * @param neighborCountryName The name of the neighbor country
 	 * @return true if addNeighbour function return true in Country class
 	 */
 	public boolean addNeighbor(String countryName, String neighborCountryName) {
@@ -179,9 +179,9 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Remove Neighbor Function
-	 * @param countryName
-	 * @param neighborCountryName
-	 * @return true if removeNeighbor function return true in Country class
+	 * @param countryName The name of the country who's neighbor has to be removed
+	 * @param neighborCountryName The name of the neighboring country that is to be removed
+	 * @return true(if removeNeighbor function return true in Country class)
 	 */
 	public boolean removeNeighbor(String countryName, String neighborCountryName) {
 
@@ -193,7 +193,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Show map Function
-	 * @return true in any case
+	 * @return true(in any case)
 	 */
 	public boolean showMap() {
 
@@ -204,7 +204,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Save Map Function
-	 * @param fileName
+	 * @param fileName The name of the file that is to be saved
 	 * @return true if file successfully saved and IO Exception does not occur.
 	 */
 	public boolean saveMap(String fileName) {
@@ -223,7 +223,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Edit Map Function
-	 * @param mapName
+	 * @param mapName The name of the map that is to be edited
 	 * @return true if IO exception does not occur.
 	 */
 	public boolean editMap(String mapName) {
@@ -249,7 +249,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Validate Map Function 
-	 * @return true if the map is
+	 * @return true if the map is validated
 	 */
 	public boolean validateMap() {
 
@@ -261,7 +261,7 @@ public class GamePlay implements ISubject{
 
 	/**
 	 * Load Game Map Function
-	 * @param fileName
+	 * @param fileName The name of the map file that is to be loaded
 	 * @return true if file exist
 	 */
 	public boolean loadGameMap(String fileName) {
@@ -279,8 +279,8 @@ public class GamePlay implements ISubject{
 	/**
 	 * Add Player Function
 	 * 
-	 * @param playerName
-	 * @return
+	 * @param playerName The name of the player that is to be added
+	 * @return true(If the player is successfully added) or false (If the player already exists)
 	 */
 	public 	boolean addPlayer(String playerName) {
 
@@ -293,8 +293,8 @@ public class GamePlay implements ISubject{
 	/**
 	 * Remove Player Function
 	 * 
-	 * @param playerName
-	 * @return
+	 * @param playerName The name of the player that is to be removed
+	 * @return true(If the player is removed from the game successfully) or false(If the player name is absent and the method can not perform the desired operation)
 	 */
 	public boolean removePlayer(String playerName) {
 
@@ -307,7 +307,7 @@ public class GamePlay implements ISubject{
 	/**
 	 * Populate Countries Function
 	 * 
-	 * @return
+	 * @return true(If the method executes in the desired way and populates the countries or false(If the number of players are invalid)
 	 */
 	public boolean populateCountries() {
 
@@ -375,8 +375,8 @@ public class GamePlay implements ISubject{
 	/**
 	 * Place Army Function
 	 * 
-	 * @param country
-	 * @return
+	 * @param country The name of the country in which armies are to be placed
+	 * @return true(If all the requirements are fulfilled and the countries are populated) or false(If the country is absent or the country does not belong to the player in turn)
 	 */
 	public boolean placeArmy(String country) {
 
@@ -437,7 +437,7 @@ public class GamePlay implements ISubject{
 	/**
 	 * Place All Function
 	 * 
-	 * @return
+	 * @return true(If the method executes and armies are placed successfully
 	 */
 	public boolean placeAll() {
 		try {
@@ -482,12 +482,12 @@ public class GamePlay implements ISubject{
 	}
 
 	/**
-	 * Exchange Cards Function
+	 * This method is used to perform the exchange cards function
 	 * 
-	 * @param cardNumber1
-	 * @param cardNumber2
-	 * @param cardNumber3
-	 * @return
+	 * @param cardNumber1 The integer number of the first card
+	 * @param cardNumber2 The integer number of the second card
+	 * @param cardNumber3 The integer number of the third card
+	 * @return true(If the method executes and cards are exchanged successfully) or false(Cards entered are duplicate or can not be exchanged or if any other validation fails)
 	 */
 	public boolean exchangeCards(Integer cardNumber1, Integer cardNumber2, Integer cardNumber3) {
 
@@ -552,9 +552,9 @@ public class GamePlay implements ISubject{
 	}
 
 	/**
-	 * Fortify none Function
+	 * Fortify none Function used to cover the function of the player not wanting to exchange the cards
 	 * 
-	 * @return
+	 * @return true(If the player does not want to exchange cards and is allowed to do so) or false(If the player has more than 5 cards)
 	 */
 	public boolean ignoreExchangeCards() {
 		
@@ -577,9 +577,9 @@ public class GamePlay implements ISubject{
 	/**
 	 * Reinforce Army Function
 	 * 
-	 * @param countryName
-	 * @param numberOfArmies
-	 * @return
+	 * @param countryName The name of the country that is to be reinforced
+	 * @param numberOfArmies The number of armies that are to be reinforced
+	 * @return true(If the player succeeds in reinforcing their armies) or false(If the countries are not adjacent or the country does not belong to the player or if any other validation fails)
 	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
 
@@ -685,10 +685,10 @@ public class GamePlay implements ISubject{
 	/**
 	 * Fortify Army Function
 	 * 
-	 * @param sourceCountry
-	 * @param destinationCountry
-	 * @param numberOfArmy
-	 * @return
+	 * @param sourceCountry The name of the origin country
+	 * @param destinationCountry The name of the destination country
+	 * @param numberOfArmy The total number of armies in the form of an integer
+	 * @return true(If Fortify Army is implemented successfully)
 	 */
 	public boolean fortifyArmy(String sourceCountry, String destinationCountry, Integer numberOfArmy) {
 

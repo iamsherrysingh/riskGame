@@ -40,8 +40,6 @@ public class Database {
 		this.continentList = continentList;
 	}
 
-
-
 	public void printContinentList(){
 		for(Continent continent: continentList){
 			System.out.println(continent.getNumber()+" "+continent.getName()+" "+continent.getControlValue()+" "+continent.getColor());

@@ -21,7 +21,7 @@ public class ContinentTest {
 	/**
 	 * This method runs before every test method and creates an object for GamePlay and also loads a map
 	 * 
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	@Before
 	public void before() throws Exception {
