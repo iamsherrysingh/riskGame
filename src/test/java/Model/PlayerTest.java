@@ -148,11 +148,6 @@ public class PlayerTest {
 		assertFalse(attackAlloutOutput);
 	}
 	
-	@Test
-	public void EndGame() {
-		Player.addPlayer("Birjot", 7);
-		
-	}
 
 	/**
 	 * This is a JUnit test for
