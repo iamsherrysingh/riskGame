@@ -213,7 +213,7 @@ public class Continent {
 	 * @param gameGraph gameGraph that holds
 	 */
 	
-    public static void updateContinitsOwner(Graph gameGraph) {
+    public static void updateContinentOwner(Graph gameGraph) {
     	
     	for(Continent continentItr : Database.continentList) {
     		
