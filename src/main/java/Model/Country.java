@@ -108,10 +108,10 @@ public class Country {
 	/**
 	 * Add a new country object to gameGraph adjacency list
 	 *
-	 * @param newCountry
-	 * @param inContinent
-	 * @param gameGraph
-	 * @return true or false
+	 * @param newCountry Specifies the name of the country to be added
+	 * @param inContinent Specifies the name of the continent in which the country is to be added
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If addCountry method runs successfully) or false(If continent is not found or the country already exists)
 	 */
 	public static boolean addCountry(String newCountry, String inContinent, Graph gameGraph) {
 		if (newCountry.length() == 0) {
@@ -144,14 +144,14 @@ public class Country {
 	}
 
 	/**
-	 * This adds new neighhbor country number in ArrayList of neighbors in
+	 * This adds new neighbour country number in ArrayList of neighbors in
 	 * country.adjlist.neighbours and also adds the country's number in new
 	 * neighbor's Arraylist of neighbors
 	 *
-	 * @param countryWithNewNeighbour
-	 * @param neighbour
-	 * @param gameGraph
-	 * @return true or false
+	 * @param countryWithNewNeighbour Name of the country to which neighbours are to be added
+	 * @param neighbour Name of the neighbour to be added
+	 * @param gameGraph gameGraph It is the object of class Graph
+	 * @return true(If addNeighbour runs and neighbour is added successfully) or false(If either country or the neighbour is absent from the map)
 	 */
 	public static boolean addNeighbour(String countryWithNewNeighbour, String neighbour, Graph gameGraph) {
 		Integer numberOfCountryWithNewNeighbour = -1;
@@ -195,9 +195,9 @@ public class Country {
 	 * This method removes a country from the gameGraph list, and makes the
 	 * necessary changes to the list
 	 *
-	 * @param NameOfCountryToRemove
-	 * @param gameGraph
-	 * @return true or false
+	 * @param NameOfCountryToRemove Name of a country that is to be removed
+	 * @param gameGraph Object of the class Graph
+	 * @return true(If removeCountry executes successfully) or false(If the country is not present in the map)
 	 */
 	public static boolean removeCountry(String NameOfCountryToRemove, Graph gameGraph) {
 		Country countryToRemove = null;
@@ -244,10 +244,10 @@ public class Country {
 	 * This method removes a neighbour from a country that exists in the gameGraph
 	 * variable
 	 *
-	 * @param firstCountryName
-	 * @param secondCountryName
-	 * @param gameGraph
-	 * @return true or false
+	 * @param firstCountryName Name of the first country
+	 * @param secondCountryName Name of the second country
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If the method runs successfully and the neighbour is removed as required) or false(If the country is absent from the map or if the one of the countries is not the neighbour of the other
 	 */
 	public static boolean removeNeighbour(String firstCountryName, String secondCountryName, Graph gameGraph) {
 
@@ -331,8 +331,8 @@ public class Country {
 	/**
 	 * this returns the instance where the country is saved in Database.adjlist
 	 *
-	 * @param countryName
-	 * @param gameGraph
+	 * @param countryName Name of the country 
+	 * @param gameGraph It is the object of class Graph
 	 * @return instance of country
 	 */
 	public static Country getCountryByName(String countryName, Graph gameGraph) {
@@ -348,8 +348,8 @@ public class Country {
 	/**
 	 * this returns the instance where the country is saved in Database.adjlist
 	 *
-	 * @param countryNumber
-	 * @param gameGraph
+	 * @param countryNumber The number assigned to the country
+	 * @param gameGraph It is the object of class Graph
 	 * @return instance of country
 	 */
 	public static Country getCountryByNumber(Integer countryNumber, Graph gameGraph) {
@@ -366,10 +366,10 @@ public class Country {
 	/**
 	 * this assign an owner to a country without owner
 	 *
-	 * @param ownerName
-	 * @param countryName
-	 * @param g
-	 * @return true or false
+	 * @param ownerName The name of the owner to whom the country is to be assigned
+	 * @param countryName The name of country to be assigned
+	 * @param g It is the object of class Graph
+	 * @return true or false(
 	 */
 	public static boolean assignOwner(String ownerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
@@ -388,10 +388,10 @@ public class Country {
 	/**
 	 * this updates the owner name for a country in Database.adjlist
 	 *
-	 * @param newOwnerName
-	 * @param countryName
-	 * @param g
-	 * @return true or false
+	 * @param newOwnerName Name of the new owner of a country
+	 * @param countryName Name of the country
+	 * @param g It is the object of class Graph
+	 * @return true(If the method executes and an owner is assigned) or false(If the country is not present)
 	 */
 	public static boolean changeOwner(String newOwnerName, String countryName, Graph g) {
 		Country country = Country.getCountryByName(countryName, g);
@@ -405,9 +405,9 @@ public class Country {
 	/**
 	 * checks the existence of the country in Database.adjlist
 	 *
-	 * @param countryToCheck
-	 * @param gameGraph
-	 * @return true or false
+	 * @param countryToCheck Name of the country
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If the country is present) or false(If the method runs successfully)
 	 */
 	public static boolean checkExistenceOfCountry(String countryToCheck, Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
@@ -421,8 +421,8 @@ public class Country {
 	/**
 	 * checks if all the countries has an owner
 	 *
-	 * @param gameGraph
-	 * @return true or false
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If all the countries have an owner) or false(IF any country does not have an owner)
 	 */
 	public static boolean allCountriesPopulated(Graph gameGraph) {
 		for (Country country : gameGraph.getAdjList()) {
@@ -436,10 +436,10 @@ public class Country {
 	/**
 	 * This method adds additional army units to a country object in gameGraph
 	 *
-	 * @param countryName
-	 * @param numberOfArmies
-	 * @param gameGraph
-	 * @return true or false
+	 * @param countryName Name of the country
+	 * @param numberOfArmies Number of army units to be added
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If the method runs successfully and the countries are reinforced) or false(If the country is absent)
 	 */
 	public static boolean addArmiesToCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
 		Country countryToReinforce = null;
@@ -459,10 +459,10 @@ public class Country {
 	/**
 	 * This method removes army units from a country object in the gameGraph
 	 *
-	 * @param countryName
-	 * @param numberOfArmies
-	 * @param gameGraph
-	 * @return true or false
+	 * @param countryName Name of the country
+	 * @param numberOfArmies Number of army units 
+	 * @param gameGraph It is the object of class Graph
+	 * @return true(If the method executes successfully and armies are removed) or false(If the country is not on the map)
 	 */
 	public static boolean removeArmiesFromCountry(String countryName, Integer numberOfArmies, Graph gameGraph) {
 		Country countryToWeaken = null;
@@ -488,7 +488,7 @@ public class Country {
 	 * player or declares winner if every country in Database.adjlist is owned by a
 	 * single player
 	 *
-	 * @param g
+	 * @param g It is the object of class Graph
 	 */
 	public static void updatePlayerListAndDeclareWinner(Graph g) {
 

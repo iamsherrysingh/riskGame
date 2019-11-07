@@ -19,7 +19,7 @@ public class CountryTest {
 	 * This method runs before every test method and creates an object for GamePlay
 	 * and also loads a map
 	 * 
-	 * @throws Exception
+	 * @throws Exception  throws Exception to caller method
 	 */
 	@Before
 	public void setUp() throws Exception {
@@ -31,7 +31,7 @@ public class CountryTest {
 	 * This method runs after each and every test method and clears the instance
 	 * changed by the test method
 	 * 
-	 * @throws Exception
+	 * @throws Exception  throws Exception to caller method
 	 */
 	@After
 	public void tearDown() throws Exception {

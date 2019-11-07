@@ -10,7 +10,14 @@ public class Continent {
     String name, color;
     Integer number,controlValue;
     String owner;
-    
+   
+   /**
+    *  
+    * @param number Number of the continent
+    * @param name Name of the continent
+    * @param controlValue An integer corresponding to the control value of the continent
+    * @param color Name of the color
+    */
     public Continent(Integer number, String name, Integer controlValue, String color) {
         this.number= number;
         this.name = name;
@@ -56,8 +63,8 @@ public class Continent {
     /**
 	 * This checks whether a continent exist or not in Database.continentList
 	 *
-	 * @param continentToCheck
-	 * @return true or false
+	 * @param continentToCheck Name of continent to be checked
+	 * @return true(If continent is found) or false(IF continent is not found)
 	 */
     public static boolean checkExistenceOfContinent(String continentToCheck) {
 		for (Continent singleContinent : Database.getInstance().getContinentList()) {
@@ -71,9 +78,9 @@ public class Continent {
 	/**
 	 * This adds a new continent to the Database.continentList
 	 *
-	 * @param continentName
-	 * @param controlValue
-	 * @return true or false
+	 * @param continentName Name of the continent to be added
+	 * @param controlValue The continents control value in Integer form
+	 * @return true(If the continent is not present) or false(If continent name is invalid or if the control value is null)
 	 */
 	public static boolean addContinent(String continentName, Integer controlValue) {
 		if (controlValue > 0 && controlValue!=null) {
@@ -96,8 +103,9 @@ public class Continent {
 	/**
 	 * if the entered continent exists, it removes all the countries under that continent and after that removes that continent from the Database.continentList
 	 *
-	 * @param continentToRemove
-	 * @return true or false
+	 * @param continentToRemove Name of the continent to be removed
+	 * @param gameGraph game graph
+	 * @return true(If the continent is present and is successfully removed) or false(If the continent is absent from the list)
 	 */
 	public static boolean removeContinent(String continentToRemove, Graph gameGraph) {
 		Integer serialNumberOfContinentToRemove = -1;
@@ -129,9 +137,10 @@ public class Continent {
 
 	
 	/**
-	 * This create and returns list of countries in a continent
-	 *
-	 *@return ArrayList of countries in a continent
+	 * This creates and returns list of countries in a continent
+	 * @param continent It is the object of the class Continent
+	 * @param gameGraph It is the object of the class Graph
+	 * @return ArrayList of countries in a continent
 	 */
 	public static ArrayList<Country> getCountryList(Continent continent, Graph gameGraph) {
 		ArrayList<Country> countryList = new ArrayList<Country>();
@@ -147,7 +156,7 @@ public class Continent {
 	/**
 	 * This provides with the instance at which a particular continent is present in Database.continentList  using continentNumber
 	 *
-	 * @param continentNumber
+	 * @param continentNumber The number of the continent as an Integer
 	 * @return instance for continentNumber
 	 */
 	public static Continent getContinentById(Integer continentNumber) {
@@ -163,7 +172,7 @@ public class Continent {
 	/**
 	 * This provides with the instance at which a particular continent is present in Database.continentList using continentName 
 	 *
-	 * @param continentName
+	 * @param continentName The name of the continent
 	 * @return instance for continentName
 	 */
 	public static Continent getContinentByName(String continentName) {
@@ -176,7 +185,14 @@ public class Continent {
 		return continent;
 	}
 
-
+	/**
+	 * This method checks if a given continent belongs to a player
+	 * 
+	 * @param playerName The name of the player 
+	 * @param continentName The name of the continent to be checked
+	 * @param gameGraph It is the object of the class Graph
+	 * @return true(If the continent belongs to the particular player)  or false(If the continent does not belong to the player mentioned) 
+	 */
 	public static boolean continentBelongToPlayer(String playerName, String continentName, Graph gameGraph) {
 		Continent continentInQuestion = Continent.getContinentByName(continentName);
 
@@ -194,7 +210,7 @@ public class Continent {
 	
 	/**
 	 * This updates the owner of the continent
-	 * @param gameGraph
+	 * @param gameGraph gameGraph that holds
 	 */
 	
     public static void updateContinitsOwner(Graph gameGraph) {

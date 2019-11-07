@@ -1,5 +1,6 @@
 package View;
 
+import Model.Continent;
 import Model.Database;
 import Model.GamePlay;
 import Model.Player;
@@ -23,11 +24,11 @@ public class WorldDominationView implements IObserver{
                 data += "\nPlayers not yet added";
         }catch(Exception e){  data+= "\nCountries not populated yet" ; }
 
-
+        if(Database.getInstance().getContinentList().size() !=0){
         try {
             data+= "\n\nContinent Ownership:\n";
             data += gamePlay.getContinentOwnership();
-        }catch(Exception e){  }
+        }catch(Exception e){  }}
 
 
         try {
@@ -36,7 +37,7 @@ public class WorldDominationView implements IObserver{
                 data += "\nPlayer " + player.getName() + " has " + gamePlay.getTotalNumberOfArmies(player.getName()) + " armies on map";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
-                data += "\nPlayers not yet added";
+                data += "\nNo Players. So no armies on the map";
         }catch(Exception e){  data+= "\nCountries not populated yet";  }
 
         System.out.println(header + "\n" + data+"\n"+footer);

@@ -10,7 +10,7 @@ import org.junit.Test;
  * 
  * It contains different Junit tests for the methods defined in {@link Model.Continent}
  * 
- * @see Continent.java
+ * @see Model.Continent
  * @author birjotsingh17
  * 
  *
@@ -21,7 +21,7 @@ public class ContinentTest {
 	/**
 	 * This method runs before every test method and creates an object for GamePlay and also loads a map
 	 * 
-	 * @throws Exception
+	 * @throws Exception can throw an exception to caller method
 	 */
 	@Before
 	public void before() throws Exception {
@@ -31,7 +31,7 @@ public class ContinentTest {
 
 	/**
 	 * This method runs after each and every test method and clears the instance changed by the test method
-	 * @throws Exception
+	 * @throws Exception throws Exception to caller method
 	 */
 	@After
 	public void after() throws Exception {
