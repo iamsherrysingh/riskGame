@@ -2,57 +2,63 @@
 
 title __CONTROLLER's Class Diagram__\n
 
-  namespace Controller {
-    class Controller.Controller {
-        ~ continentName : String
-        ~ countryName : String
-        ~ editPlayerFinished : boolean
-        ~ mapFile : String
-        ~ neighborCountryName : String
-        ~ playerName : String
-        {static} + main()
-        ~ checkValidityOfTasksList()
-        ~ cmdController()
-        ~ getCommand()
+  namespace  Controller{
+    namespace Controller {
+      class Controller.Controller {
+          ~ continentName : String
+          ~ countryName : String
+          ~ editPlayerFinished : boolean
+          ~ mapFile : String
+          ~ neighborCountryName : String
+          ~ playerName : String
+          {static} + main()
+          ~ checkValidityOfTasksList()
+          ~ cmdController()
+          ~ getCommand()
+      }
     }
   }
   
 
-  namespace Controller {
-    class Controller.ExtractedTasks {
-        + taskData : ArrayList<String>
-        + ExtractedTasks()
+  namespace  Controller{
+    namespace Controller {
+      class Controller.ExtractedTasks {
+          + taskData : ArrayList<String>
+          + ExtractedTasks()
+      }
     }
   }
   
 
-  namespace Controller {
-    enum tasksEnum {
-      addcontinent
-      addcountry
-      addneighbor
-      addplayer
-      alloutattack
-      editmap
-      exchangecards
-      fortify
-      ignoreattack
-      ignoreexchangecards
-      ignorefortify
-      loadmap
-      normalattack
-      placeall
-      placearmy
-      populatecountries
-      reinforce
-      removecontinent
-      removecountry
-      removeneighbor
-      removeplayer
-      savemap
-      showmap
-      unknown
-      validatemap
+  namespace  Controller{
+    namespace Controller {
+      enum tasksEnum {
+        addcontinent
+        addcountry
+        addneighbor
+        addplayer
+        alloutattack
+        editmap
+        exchangecards
+        fortify
+        ignoreattack
+        ignoreexchangecards
+        ignorefortify
+        loadmap
+        normalattack
+        placeall
+        placearmy
+        populatecountries
+        reinforce
+        removecontinent
+        removecountry
+        removeneighbor
+        removeplayer
+        savemap
+        showmap
+        unknown
+        validatemap
+      }
     }
   }
   

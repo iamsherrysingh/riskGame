@@ -1,5 +1,4 @@
-package Model;
-
+import Model.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 /**
@@ -9,6 +8,6 @@ import org.junit.runners.Suite;
  * @author birjotsingh17
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ContinentTest.class, CountryTest.class, PlayerTest.class, MapxTest.class, GamePlayTest.class})
+@Suite.SuiteClasses({View.ViewTestSuite.class, Model.ModelTestSuite.class})
 public class TestSuite {
 }
