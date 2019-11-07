@@ -4,7 +4,7 @@ import Model.GamePlay;
 import Model.Player;
 
 /**
- * Card exchange is a concrete observer that implements card exchange view.
+ * 
  * @author jaskaransodhi
  *
  */
