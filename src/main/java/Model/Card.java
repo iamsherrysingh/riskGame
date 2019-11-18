@@ -8,12 +8,23 @@ enum cardType {
 	Artillery,
 	Wild
 }
+/** 
+ * This Class maintains data for each cards.
+ * The methods of this class are called by GamePlay.
+ * @author Mehrnoosh Amjadi
+ */
 public class Card {
 	
 	private cardType cType;
 	private Integer idCard;
 	private Integer owner;
 	
+	/** 
+	 * Constructor of the Card Class.
+	 * @param cType is the type for each card
+	 * @param idCard is the card id which is unique.
+	 * @param owner it holds the owner of the card.
+	 */
 	public Card(cardType cType, Integer idCard, Integer owner) {
 		this.cType = cType;
 		this.idCard = idCard;
@@ -45,11 +56,20 @@ public class Card {
 	}
 }
 
+/** 
+ * This Class maintains the list of all the cards in the game. and initialize them
+ * The methods of this class are called by GamePlay.
+ * This class is implemented with Singleton Design pattern.
+ * @author Mehrnoosh Amjadi
+ */
 class CardPlay{
 	
 	private static CardPlay cardPlayObj = null;
 	private ArrayList<Card> cardsList;
 	
+	/** 
+	 * Constructor of the CardPlay Class.
+	 */
 	private CardPlay() {
     	cardsList = new ArrayList<Card>();
     	initilizaGamecards();
@@ -60,8 +80,12 @@ class CardPlay{
         	cardPlayObj = new CardPlay();
         return cardPlayObj;
     }
-    
-  private void initilizaGamecards() {
+  
+	/** 
+	 * This method Initialize all the cards in the game: 
+	 * 14 for Infantry, 14 for Cavalry, 14 Artillery and 2 wild cards.  
+	 */
+    private void initilizaGamecards() {
     	
     	Card cardObj;
     	
@@ -86,6 +110,11 @@ class CardPlay{
     	}
     }
   
+	/** 
+	 * PickCard method is called whenever a player conquered a country 
+	 * @param playerId by this parameter, we can set the owner of the card.
+	 * @return it returns an object of Card.
+	 */
   	public Card pickCard(Integer playerId) {
   		
         double randomNumber = Math.random();
@@ -98,6 +127,10 @@ class CardPlay{
         return tempCard;
   	}
   	
+	/** 
+	 * refundCard method is called a player wants to exchange cards so the cards should back to stock.
+	 * @param cardObj by this parameter, we can reset the data and back the card.
+	 */
   	public void refundCard(Card cardObj) {
   		
   		cardObj.setOwner(0);
@@ -105,6 +138,13 @@ class CardPlay{
   		
   	}
   	
+	/** 
+	 * This method check the validation of 3 cards requested for exchange.
+	 * @param cardObj1 This refers to first card.
+	 * @param cardObj2 This refers to second card.
+	 * @param cardObj3 This refers to third card.
+	 * @return true if the cards are based on risk game rule for exchange or return false whenever exchange cards is invalid.
+	 */
   	public boolean checkExchangeCardsValidation(Card cardObj1, Card cardObj2, Card cardObj3) {
   		
   		if( cardObj1.getCardType() == cardType.Wild || 

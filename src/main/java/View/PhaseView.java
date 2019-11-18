@@ -4,6 +4,9 @@ import Model.Database;
 import Model.GamePlay;
 import Model.Player;
 
+/**
+ * This is a concrete observer that implements phase view
+ */
 public class PhaseView implements IObserver{
     String header=          "================================================"  + "\n" +
                             "===================PHASE VIEW===================";
@@ -11,8 +14,14 @@ public class PhaseView implements IObserver{
 
 
     String data;
+
+    /**
+     * This method prints the phase view on console
+     * @param gamePlay is an object of Model.GamePlay
+     * @param player is an object of Model.Player
+     */
     @Override
-    public void update(GamePlay gamePlay) {
+    public void update(GamePlay gamePlay, Player player) {
         data= "Current State is :  "+gamePlay.getCurrentState().toString();
         try {
             data += "\nCurrent Player is: " + gamePlay.getCurrentPlayerName();

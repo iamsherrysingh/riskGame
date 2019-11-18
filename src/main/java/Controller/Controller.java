@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
-import View.CardExchange;
+//import View.CardExchange;
 
 enum tasksEnum {
 	unknown,
@@ -53,8 +53,8 @@ public class Controller {
 	
 	/**
 	 * parse input Instruction -> Command , Switch, Data
-	 * @param tasksList
-	 * @return
+	 * @param tasksList It is an Array List that has all the commands
+	 * @return true(If the method runs successfully) or false(If the command entered is invalid)
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
@@ -338,24 +338,31 @@ public class Controller {
 			}
 			
 			ExtractedTasks eTask = new ExtractedTasks();
-			String firstData = cmdItr.next();
-			if(!cmdItr.hasNext()) {
-				eTask.name = tasksEnum.ignoreexchangecards;
-				eTask.taskData.add(firstData);
+			if( command.size() == 4 || command.size() == 2 ) {
+				String firstData = cmdItr.next();
+				if(!cmdItr.hasNext()) {
+					eTask.name = tasksEnum.ignoreexchangecards;
+					eTask.taskData.add(firstData);
+				}
+				else {
+					eTask.name = tasksEnum.exchangecards;
+					eTask.taskData.add(firstData);
+					eTask.taskData.add(cmdItr.next());
+					
+					if(!cmdItr.hasNext()) {
+						System.out.println("wrong Command");
+						return false;
+					}
+					eTask.taskData.add(cmdItr.next());
+				}
+				
+				tasksList.add(eTask);
 			}
 			else {
-				eTask.name = tasksEnum.exchangecards;
-				eTask.taskData.add(firstData);
-				eTask.taskData.add(cmdItr.next());
-				
-				if(!cmdItr.hasNext()) {
-					System.out.println("wrong Command");
-					return false;
-				}
-				eTask.taskData.add(cmdItr.next());
+				System.out.println("wrong Command");
+				return false;
 			}
-			
-			tasksList.add(eTask);
+
 		}
 		
 		//Command reinforce
@@ -433,7 +440,7 @@ public class Controller {
 			}
 			
 			//Detect type of fortify according its number of data
-			//If it has only 1 data, the task will be "ignorfortify"
+			//If it has only 1 data, the task will be "ignorefortify"
 			//If it has 3 data, the task will be "fortify"
 			//Otherwise, it is a wrong command
 			ExtractedTasks eTask = new ExtractedTasks();
@@ -465,7 +472,7 @@ public class Controller {
 	}
 	
 	/**
-	 * Check if the command is valid In the current sate of the game or not.
+	 * Check if the command is valid In the current state of the game or not.
 	 * @param tasksList
 	 * @return
 	 */
@@ -772,7 +779,7 @@ public class Controller {
 					break;
 				}
 				case exchangecards:{
-					if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
+					if(!gamePlayObj.exchangeCards(Integer.parseInt(itr.taskData.get(0)),Integer.parseInt(itr.taskData.get(1)),Integer.parseInt(itr.taskData.get(2))))
 						return false;
 					
 					break;
@@ -823,6 +830,7 @@ public class Controller {
 		return true;
 	}
 		
+	
     public static void main(String[] args) throws IOException {
 		try {
 			Controller controller = new Controller();
@@ -837,7 +845,13 @@ public class Controller {
 				if(!controller.cmdController(tasksList)) {
 					continue;
 				} 
-			}		
+			}
+			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				System.out.println("===================================");
+				System.out.println("======== THe Game Finished ========");
+				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+				System.out.println("===================================");
+			}
 		}catch (Exception e)
 		{
 			System.out.println("An error occured: "+e.getMessage());
