@@ -619,7 +619,7 @@ public class GamePlay implements ISubject {
             System.out.println("Reinforcement armies should be a positive number");
             return false;
         }
-	    
+
 		if (!Player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
 			return false;
 

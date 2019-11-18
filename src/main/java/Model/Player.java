@@ -11,7 +11,7 @@ import java.util.Scanner;
  * This file holds data members and all the methods which are related to player.
  * This has singleton implementation.
  */
-public class Player {
+public class Player implements IPlayer {
 
     String name;
     Integer number, numberOfArmies, numberOfFreeArmies;
