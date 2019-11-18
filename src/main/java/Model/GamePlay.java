@@ -615,7 +615,11 @@ public class GamePlay implements ISubject {
 	 *         player or if any other validation fails)
 	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
-
+	    if(numberOfArmies <= 0) {
+            System.out.println("Reinforcement armies should be a positive number");
+            return false;
+        }
+	    
 		if (!Player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
 			return false;
 
