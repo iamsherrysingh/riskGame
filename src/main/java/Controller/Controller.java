@@ -273,11 +273,13 @@ public class Controller {
 					eTask.name = tasksEnum.addplayer;
 					
 					//get data related to addPlayer task
-					if(!cmdItr.hasNext()) {
-						System.out.println("wrong Command");
-						return false;
+					for(int i=0;i<2;i++) {
+						if(!cmdItr.hasNext()) {
+							System.out.println("wrong Command");
+							return false;
+						}
+						eTask.taskData.add(cmdItr.next());
 					}
-					eTask.taskData.add(cmdItr.next());
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
@@ -532,6 +534,10 @@ public class Controller {
 				case showmap:
 					break;
 				case addplayer:	
+					if( !itr.taskData.get(1).equals("aggressive") || !itr.taskData.get(1).equals("benevolent") || !itr.taskData.get(1).equals("cheater") || !itr.taskData.get(1).equals("human") || !itr.taskData.get(1).equals("random") ) {
+						System.out.println(itr.taskData.get(1)+" Strategy is not valid.");
+						return false;
+					}
 					break;
 				case removeplayer:
 					break;
@@ -745,7 +751,7 @@ public class Controller {
 					break;
 				}
 				case addplayer:{
-					if(!gamePlayObj.addPlayer(itr.taskData.get(0)))
+					if(!gamePlayObj.addPlayer(itr.taskData.get(0),itr.taskData.get(1)))
 						return false;
 					
 					break;

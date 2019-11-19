@@ -282,7 +282,7 @@ public class GamePlay implements ISubject{
 	 * @param playerName The name of the player that is to be added
 	 * @return true(If the player is successfully added) or false (If the player already exists)
 	 */
-	public 	boolean addPlayer(String playerName) {
+	public 	boolean addPlayer(String playerName, String Strategy) {
 
 		if (!Player.addPlayer(playerName, 0))
 			return false;
