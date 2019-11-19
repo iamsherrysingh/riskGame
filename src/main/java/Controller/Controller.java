@@ -6,6 +6,7 @@ import java.util.*;
 import Model.*;
 //import View.CardExchange;
 
+
 enum tasksEnum {
 	unknown,
 	addcontinent,
