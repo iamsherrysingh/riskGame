@@ -43,7 +43,7 @@ public class MapxTest {
      */
     @Test
     public void loadMap() throws Exception {
-        gamePlay.loadGameMap("map.map");
+        gamePlay.loadGameMap("conquestmap.map");
         Integer numberOfCountries=0;
         numberOfCountries= gamePlay.getGraphObj().getAdjList().size();
         if(numberOfCountries > 0)
@@ -52,6 +52,23 @@ public class MapxTest {
             assertTrue(false);
     }
 
+    
+    @Test
+    public void loadMapConquest() throws Exception {
+
+		System.out.println("------------ loadMapConquest test-");
+        gamePlay.loadGameMap("map.map");
+		
+        Integer numberOfCountries=0;
+        numberOfCountries= gamePlay.getGraphObj().getAdjList().size();
+        if(numberOfCountries > 0)
+            assertTrue(true);
+        else
+            assertTrue(false);
+    }
+
+    
+    
     /**
      *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}
      * @throws IOException This throws IOexception to caller method

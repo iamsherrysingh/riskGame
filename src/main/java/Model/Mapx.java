@@ -14,7 +14,9 @@ import java.util.*;
  * This file holds most of the logic of the game
  */
 public class Mapx {
-	private String continents, countries, borders;
+	private String continents;
+	private String countries;
+	private String borders;
 	Database database = Database.getInstance();
 
 	/**
@@ -124,7 +126,132 @@ public class Mapx {
 
 		return true;
 	}
+	
 
+
+	
+	
+	private boolean readMapConquest(String mapFile) throws FileNotFoundException {
+		System.out.println(" readMapConquest started-----");
+		
+		ArrayList<Continent> continentList= new ArrayList<Continent>();
+		
+
+		String continents;
+		String territories;
+		
+		
+		
+		// Read Continents
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine().trim();
+
+			int continentsEncountered = 0;
+			while (line != null) {
+				
+				if (line.equals("[Continents]")) {
+					continentsEncountered = 1;
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+				
+				if (continentsEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				if (line.equals("[Territories]"))
+					break;
+			}
+			
+		System.out.println(" 1: " + sb);
+		System.out.println(" end 1 : " );
+		Thread.sleep(1000);
+
+			continents = sb.toString();
+			continents = continents.trim();
+
+			String continentLine[] = continents.split("\n");
+			for (int i = 1; i < continentLine.length; i++) {
+				continentLine[i] = continentLine[i].trim();
+				String split[] = continentLine[i].split(" ");
+				Continent continent = new Continent(Database.getInstance().getContinentList().size() + 1, split[0],
+						Integer.parseInt(split[1]), split[2]);
+				continentList.add(continent);
+			}
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+
+		System.out.println("continents size is:" + continentList.size());
+		System.out.println("continents are:" + continentList);
+		
+		
+		// Read Territories
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			int countriesEncountered = 0;
+			
+		for(int i=0; i<continentList.size();i++) {
+			System.out.println("for loop :" + i );
+	
+			while (line != null) {
+				
+				if (line.equals("[countries]")) {
+					countriesEncountered = 1;
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+
+
+				if (countriesEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				
+				
+			}
+			
+		}
+			countries = sb.toString();
+			countries = countries.trim();
+			
+			/*
+			System.out.println(" 1: " + countries);
+			System.out.println(" end 1 : " );
+			Thread.sleep(1000);
+			*/
+		
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+
+
+		System.out.println(" 1: " + countries);
+		System.out.println(" end 1 : " );
+		//Thread.sleep(1000);
+		
+		
+
+		return true;
+	}
+	
+
+
+	
+	
 	/**
 	 * creates gameGraph of the map file provided gameGraph returned by this method
 	 * is the most important variable in the whole game gameGraph is a Graph that
@@ -137,7 +264,10 @@ public class Mapx {
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
 		try {
-			readMapIntoVariables(mapFile);
+			//origin : readMapIntoVariables(mapFile);
+			
+			readMapConquest(mapFile);
+			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 			return false;
