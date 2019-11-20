@@ -42,7 +42,7 @@ public class MapxTest {
      * @throws Exception This throws exception to caller method
      */
     
-/*
+
     @Test
     public void loadMap() throws Exception {
         gamePlay.loadGameMap("map.map");
@@ -53,7 +53,7 @@ public class MapxTest {
         else
             assertTrue(false);
     }
-*/
+
     
     @Test
     public void loadMapConquest() throws Exception {

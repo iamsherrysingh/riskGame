@@ -142,95 +142,16 @@ public class Mapx {
 	
 	
 	private boolean readMapConquest(String mapFile) throws FileNotFoundException {
-		
-		
-		String continents = null;
-		String territories = null;
-		
-		
-		
-		// Read Continents
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
-			StringBuilder sb = new StringBuilder();
-			
-			String line = br.readLine().trim();
-
-			int continentsEncountered = 0;
-			while (line != null) {
-
-				line = br.readLine();
-				
-				if (line.equals("[Continents]")) {
-					continentsEncountered = 1;
-				}
-				else if(line.equals("[Territories]")){
-				break;
-				}
-
-
-				if (continentsEncountered == 1) {
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-		
-			    continents = sb.toString().trim();
-			
-			}
-			
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (Exception e) {
-
-		}
-		
-  /*
-		System.out.println(" end of reading continents " + continents);
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-*/
-		
-		
-		// Read Territories
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
-			StringBuilder sb = new StringBuilder();
-			
-			String line = br.readLine();
-			
-			int countriesEncountered = 0;
-			while (line != null) {
-				
-				if (line.equals("[Territories]")) {
-					countriesEncountered = 1;
-				}
-				line = br.readLine();
-
-
-				if (countriesEncountered == 1 && line!=null) {
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				
-				
-			}
 	
-			territories = sb.toString();
-			territories = territories.trim();
-			
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (Exception e) {
-
-		}
-
+		String continents;
+		String territories;
 		
-		//System.out.println(territories);
+		
+		ConquestMapFile conquestMapFile = new ConquestMapFile();
+		conquestMapFile.readMapConquest(mapFile);
+		
+		continents = conquestMapFile.getContinents();
+		territories = conquestMapFile.getTerritories();
 		
 //===================================================================================================================
 		System.out.println(" read Map Conquest started-----");
@@ -253,12 +174,6 @@ public class Mapx {
 		System.out.println("========start of territories========" );
 		System.out.println(database.getContinentList());
 		System.out.println("========end of territories========" );
-		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
 		*/
 		
 		
@@ -290,9 +205,11 @@ public class Mapx {
 			countryName[i] = split[0];
 		}
 
+		/*
 		System.out.println("========start of countries========" );
 		System.out.println(countries);
 		System.out.println("========end of countries========" );
+		*/
 	
 
 		int numOfCountries = territoriesLine.length;
@@ -325,26 +242,11 @@ public class Mapx {
 		
 		}		
 		
-
+/*
 		System.out.println("========start of borders========" );
 		System.out.println(borders);
 		System.out.println("========end of borders========" );
-	
-
-		
-		
-		
-		
-		
-
-		
-		try {
-			Thread.sleep(1000000000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-				
-		
+*/
 		
         /*
 		System.out.println(territories);
@@ -374,25 +276,34 @@ public class Mapx {
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
 		try {
+
+			System.out.println("========start of readMapConquest========" );
+			
 			//origin : readMapIntoVariables(mapFile);
 			
 			readMapConquest(mapFile);
+			System.out.println("========end of readMapConquest========" );
+
 			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 			return false;
 		}
+		
 		gameGraph.getAdjList().clear(); // Clearing gameGraph before laoding new map
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
+
 		while (countryScanner.hasNext()) {
 			String lineCountry = countryScanner.nextLine();
 			lineCountry = lineCountry.trim();
 			String countryLineSubstrings[] = lineCountry.split(" ");
-
+			
 			ArrayList<Integer> neighbours = new ArrayList<Integer>();
 			Scanner borderScanner = new Scanner(this.borders);
 			borderScanner.nextLine(); // Ignoring first line of this.borders
+			
+			
 			while (borderScanner.hasNext()) {
 				String lineBorder = borderScanner.nextLine();
 				lineBorder = lineBorder.trim();
@@ -404,11 +315,15 @@ public class Mapx {
 					break;
 				}
 			}
+			
 			Country country = new Country(Integer.parseInt(countryLineSubstrings[0]), countryLineSubstrings[1],
 					Integer.parseInt(countryLineSubstrings[2]), null, 0, Integer.parseInt(countryLineSubstrings[3]),
 					Integer.parseInt(countryLineSubstrings[4]), neighbours);
 			gameGraph.getAdjList().add(country);
+			
 		}
+		
+		
 		return true;
 	}
 
