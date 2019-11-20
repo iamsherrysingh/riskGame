@@ -193,6 +193,47 @@ public class GamePlay implements ISubject{
 
 				}
 			}
+			if( itrList.equals("-G")) {
+				if(!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				
+				itrList = itr.next();
+				
+				if( itrList.charAt(0) == '-') {
+					System.out.println("Wrong command. You should enter a digit for number of games.");
+					return false;
+				}
+				else {
+					if( itrList.length() == 1 ) {
+						if(!Character.isDigit(itrList.charAt(0))) {
+							System.out.println("Wrong command. The input is incorrect for the number of games.");
+							return false;
+						}
+						else {
+							gameNumber = Integer.parseInt(itrList);
+							if( gameNumber < 1 || gameNumber > 5 ) {
+								System.out.println("Wrong command. The number of games can only be between 1 and 5");
+								return false;
+							}
+						}
+					}
+					else {
+						System.out.println("Wrong command. The input is incorrect for the number of games.");
+						return false;
+					}
+				}
+				
+				if( itr.hasNext() ) {
+					itrList = itr.next();
+					if( itrList.charAt(0) != '-') {
+						System.out.println("Wrong command. The input related to number of games is incorrect.");
+						return false;
+					}
+				}
+
+			}
 		}
 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
