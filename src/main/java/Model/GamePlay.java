@@ -197,7 +197,7 @@ public class GamePlay implements ISubject{
 				if(!itr.hasNext()) {
 					System.out.println("wrong Command");
 					return false;
-				}
+				}		
 				
 				itrList = itr.next();
 				
@@ -205,22 +205,16 @@ public class GamePlay implements ISubject{
 					System.out.println("Wrong command. You should enter a digit for number of games.");
 					return false;
 				}
-				else {
-					if( itrList.length() == 1 ) {
-						if(!Character.isDigit(itrList.charAt(0))) {
+				else {		
+					for(int j=0; j<itrList.length(); i++) {
+						if(!Character.isDigit(itrList.charAt(j))){
 							System.out.println("Wrong command. The input is incorrect for the number of games.");
 							return false;
 						}
-						else {
-							gameNumber = Integer.parseInt(itrList);
-							if( gameNumber < 1 || gameNumber > 5 ) {
-								System.out.println("Wrong command. The number of games can only be between 1 and 5");
-								return false;
-							}
-						}
-					}
-					else {
-						System.out.println("Wrong command. The input is incorrect for the number of games.");
+					}			
+					gameNumber = Integer.parseInt(itrList);
+					if( gameNumber < 1 || gameNumber > 5 ) {
+						System.out.println("Wrong command. The number of games can only be between 1 and 5");
 						return false;
 					}
 				}
