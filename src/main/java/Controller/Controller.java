@@ -55,7 +55,14 @@ public class Controller {
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
-		//System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
+		if(gamePlayObj.getCurrentState() == State.initializeGame ) {
+			System.out.println("Specify your game mode with below commands:\n");
+			System.out.println("_____Single Mode_____    _____Tournament Mode_____");
+			System.out.println("_ editmap                - tournament");
+			System.out.println("_ loadmap");
+			System.out.println("_ loadgame");
+			System.out.println("__________________________________________________");
+		}
 		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();
