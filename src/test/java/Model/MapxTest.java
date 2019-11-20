@@ -36,14 +36,16 @@ public class MapxTest {
         gamePlay = null;
     }
 
-   
+ 
     /**
      *  This is a jUnit test for {@link Model.Mapx#loadMap(String, Graph)}
      * @throws Exception This throws exception to caller method
      */
+    
+/*
     @Test
     public void loadMap() throws Exception {
-        gamePlay.loadGameMap("conquestmap.map");
+        gamePlay.loadGameMap("map.map");
         Integer numberOfCountries=0;
         numberOfCountries= gamePlay.getGraphObj().getAdjList().size();
         if(numberOfCountries > 0)
@@ -51,13 +53,12 @@ public class MapxTest {
         else
             assertTrue(false);
     }
-
+*/
     
     @Test
     public void loadMapConquest() throws Exception {
 
-		System.out.println("------------ loadMapConquest test-");
-        gamePlay.loadGameMap("map.map");
+        gamePlay.loadGameMap("conquestmap.map");
 		
         Integer numberOfCountries=0;
         numberOfCountries= gamePlay.getGraphObj().getAdjList().size();

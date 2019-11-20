@@ -96,6 +96,12 @@ public class Mapx {
 
 		}
 
+		System.out.println("-----------countries of dominate start---------");
+		System.out.println(countries);
+		System.out.println("-----------countries of dominate end-----------");
+
+		
+		
 		// Read Borders
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(mapFile));
@@ -124,6 +130,10 @@ public class Mapx {
 
 		}
 
+
+		System.out.println("-----------borders of dominate start---------");
+		System.out.println(borders);
+		System.out.println("-----------borders of dominate end-----------");
 		return true;
 	}
 	
@@ -132,55 +142,41 @@ public class Mapx {
 	
 	
 	private boolean readMapConquest(String mapFile) throws FileNotFoundException {
-		System.out.println(" readMapConquest started-----");
 		
-		ArrayList<Continent> continentList= new ArrayList<Continent>();
 		
-
-		String continents;
-		String territories;
+		String continents = null;
+		String territories = null;
 		
 		
 		
 		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
+			
 			String line = br.readLine().trim();
 
 			int continentsEncountered = 0;
 			while (line != null) {
+
+				line = br.readLine();
 				
 				if (line.equals("[Continents]")) {
 					continentsEncountered = 1;
-					sb.append(line);
-					sb.append(System.lineSeparator());
 				}
-				line = br.readLine();
-				
+				else if(line.equals("[Territories]")){
+				break;
+				}
+
+
 				if (continentsEncountered == 1) {
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
-
-				if (line.equals("[Territories]"))
-					break;
+		
+			    continents = sb.toString().trim();
+			
 			}
 			
-		System.out.println(" 1: " + sb);
-		System.out.println(" end 1 : " );
-		Thread.sleep(1000);
-
-			continents = sb.toString();
-			continents = continents.trim();
-
-			String continentLine[] = continents.split("\n");
-			for (int i = 1; i < continentLine.length; i++) {
-				continentLine[i] = continentLine[i].trim();
-				String split[] = continentLine[i].split(" ");
-				Continent continent = new Continent(Database.getInstance().getContinentList().size() + 1, split[0],
-						Integer.parseInt(split[1]), split[2]);
-				continentList.add(continent);
-			}
 		} catch (FileNotFoundException e) {
 
 		} catch (IOException e) {
@@ -188,48 +184,43 @@ public class Mapx {
 		} catch (Exception e) {
 
 		}
-
-		System.out.println("continents size is:" + continentList.size());
-		System.out.println("continents are:" + continentList);
+		
+  /*
+		System.out.println(" end of reading continents " + continents);
+		try {
+			Thread.sleep(100000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+*/
 		
 		
 		// Read Territories
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-			int countriesEncountered = 0;
 			
-		for(int i=0; i<continentList.size();i++) {
-			System.out.println("for loop :" + i );
-	
+			String line = br.readLine();
+			
+			int countriesEncountered = 0;
 			while (line != null) {
 				
-				if (line.equals("[countries]")) {
+				if (line.equals("[Territories]")) {
 					countriesEncountered = 1;
-					sb.append(line);
-					sb.append(System.lineSeparator());
 				}
 				line = br.readLine();
 
 
-				if (countriesEncountered == 1) {
+				if (countriesEncountered == 1 && line!=null) {
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
 				
 				
 			}
+	
+			territories = sb.toString();
+			territories = territories.trim();
 			
-		}
-			countries = sb.toString();
-			countries = countries.trim();
-			
-			/*
-			System.out.println(" 1: " + countries);
-			System.out.println(" end 1 : " );
-			Thread.sleep(1000);
-			*/
-		
 		} catch (FileNotFoundException e) {
 
 		} catch (IOException e) {
@@ -238,13 +229,132 @@ public class Mapx {
 
 		}
 
+		
+		//System.out.println(territories);
+		
+//===================================================================================================================
+		System.out.println(" read Map Conquest started-----");
 
-		System.out.println(" 1: " + countries);
-		System.out.println(" end 1 : " );
-		//Thread.sleep(1000);
+		String continentLine[] = continents.split("\n");
+		for (int i = 1; i < continentLine.length; i++) {
+
+			continentLine[i] = continentLine[i].trim();
+
+			String split[] = continentLine[i].split("=");
+
+			Continent continent = new Continent
+			(Database.getInstance().getContinentList().size() + 1, split[0], Integer.parseInt(split[1]), "red");
+
+			database.getContinentList().add(continent);
+			
+		}
+
+		/*
+		System.out.println("========start of territories========" );
+		System.out.println(database.getContinentList());
+		System.out.println("========end of territories========" );
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		*/
 		
 		
+		countries ="[countries]";
+		countries += "\n";
+		
+		int sizeOfContinents = database.getContinentList().size();
+		
+		String territoriesLine[] = territories.split("\n");
+		String[] countryName= new String[territoriesLine.length];
+		for (int i = 0; i < territoriesLine.length; i++) {
 
+			territoriesLine[i] = territoriesLine[i].trim();
+
+			String split[] = territoriesLine[i].split(",");
+
+			int continetIndx = 0;
+			for(int j=0; j<sizeOfContinents;j++) {
+				
+				Continent continent = database.getContinentList().get(j);
+				if( continent.getName().equalsIgnoreCase(split[3]) ) {
+					continetIndx = j+1;
+				}
+				
+			}
+			
+			countries += i+1 + " " + split[0] + "," + continetIndx + ","  + split[1] + "," + split[2] + "\n";
+			
+			countryName[i] = split[0];
+		}
+
+		System.out.println("========start of countries========" );
+		System.out.println(countries);
+		System.out.println("========end of countries========" );
+	
+
+		int numOfCountries = territoriesLine.length;
+
+		borders = "[borders]";
+		borders += "\n";
+		for (int i = 0; i < numOfCountries; i++) {
+		
+			borders += i+1 + " ";
+
+			territoriesLine[i] = territoriesLine[i].trim();
+			String split[] = territoriesLine[i].split(",");
+
+			for(int j=4; j<split.length;j++) {
+				String name1 = split[j];
+				
+				for (int k = 0; k < numOfCountries; k++) {
+					String name2 = countryName[k];
+
+					if( name1.equalsIgnoreCase(name2) ) {
+						borders += k+1 + " ";
+						break;
+					}
+					
+				}
+
+			}
+			
+			borders += "\n";
+		
+		}		
+		
+
+		System.out.println("========start of borders========" );
+		System.out.println(borders);
+		System.out.println("========end of borders========" );
+	
+
+		
+		
+		
+		
+		
+
+		
+		try {
+			Thread.sleep(1000000000);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+				
+		
+		
+        /*
+		System.out.println(territories);
+		System.out.println(" end of territories " );
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		*/
 		return true;
 	}
 	
