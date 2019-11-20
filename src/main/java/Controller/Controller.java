@@ -18,6 +18,7 @@ enum tasksEnum {
 	editmap,
 	validatemap,
 	showmap,
+	tournament,
 	loadmap,
 	addplayer,
 	removeplayer,
@@ -242,6 +243,57 @@ public class Controller {
 			eTask.name = tasksEnum.showmap;
 			tasksList.add(eTask);
 		}
+		
+		//Command Tournament
+		else if(cmdStr.equalsIgnoreCase("tournament")){
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			ExtractedTasks eTask = new ExtractedTasks();
+			eTask.name = tasksEnum.tournament;
+			
+			boolean flagM = false, flagP = false, flagG = false, flagD = false;
+			
+			while(cmdItr.hasNext()){		
+				cmdStr = cmdItr.next();
+				eTask.taskData.add(cmdStr);
+				if( cmdStr.equals("-M") ) {
+					if( flagM ){
+						System.out.println("wrong Command");
+						return false;
+					}	
+					flagM = true;
+				}
+				if( cmdStr.equals("-P") ) {
+					if( flagP ){
+						System.out.println("wrong Command");
+						return false;
+					}
+					flagP = true;
+				}
+				if( cmdStr.equals("-G") ) {
+					if( flagG ){
+						System.out.println("wrong Command");
+						return false;
+					}
+					flagG = true;
+				}
+				if( cmdStr.equals("-D") ) {
+					if( flagD ){
+						System.out.println("wrong Command");
+						return false;
+					}
+					flagD = true;
+				}
+			}
+			if( flagM == false || flagP == false || flagG == false || flagD == false ) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			tasksList.add(eTask);
+		}
+			
 		//Command loadmap
 		else if(cmdStr.equalsIgnoreCase("loadmap")){
 			if(!cmdItr.hasNext()) {
