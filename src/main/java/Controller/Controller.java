@@ -19,6 +19,7 @@ enum tasksEnum {
 	validatemap,
 	showmap,
 	tournament,
+	loadgame,
 	loadmap,
 	addplayer,
 	removeplayer,
@@ -265,34 +266,41 @@ public class Controller {
 			while(cmdItr.hasNext()){		
 				cmdStr = cmdItr.next();
 				eTask.taskData.add(cmdStr);
-				if( cmdStr.equals("-M") ) {
-					if( flagM ){
-						System.out.println("wrong Command");
-						return false;
-					}	
-					flagM = true;
-				}
-				if( cmdStr.equals("-P") ) {
-					if( flagP ){
+				if( cmdStr.charAt(0) == '-') {
+					if( cmdStr.equals("-M") ) {
+						if( flagM ){
+							System.out.println("wrong Command");
+							return false;
+						}	
+						flagM = true;
+					}
+					else if( cmdStr.equals("-P") ) {
+						if( flagP ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagP = true;
+					}
+					else if( cmdStr.equals("-G") ) {
+						if( flagG ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagG = true;
+					}
+					else if( cmdStr.equals("-D") ) {
+						if( flagD ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagD = true;
+					}
+					else {
 						System.out.println("wrong Command");
 						return false;
 					}
-					flagP = true;
 				}
-				if( cmdStr.equals("-G") ) {
-					if( flagG ){
-						System.out.println("wrong Command");
-						return false;
-					}
-					flagG = true;
-				}
-				if( cmdStr.equals("-D") ) {
-					if( flagD ){
-						System.out.println("wrong Command");
-						return false;
-					}
-					flagD = true;
-				}
+				
 			}
 			if( flagM == false || flagP == false || flagG == false || flagD == false ) {
 				System.out.println("wrong Command");
@@ -538,11 +546,14 @@ public class Controller {
 		// check commands that are valid in state of startGame
 		if( gamePlayObj.getCurrentState() == State.initializeGame) {
 			for(ExtractedTasks itr:tasksList) {
-				switch (itr.name){	
-				
+				switch (itr.name){		
+					case tournament:
+						break;
 					case editmap:
 						break;
 					case loadmap:
+						break;
+					case loadgame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -789,6 +800,11 @@ public class Controller {
 					if(!gamePlayObj.editMap(itr.taskData.get(0)))
 					return false;
 					
+					break;
+				}
+				case tournament:{
+			//		if(!gamePlayObj.tournament(itr.taskData))
+			//		return false;			
 					break;
 				}
 				case validatemap:{

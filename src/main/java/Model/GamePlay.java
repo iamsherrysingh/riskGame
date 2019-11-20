@@ -109,6 +109,13 @@ public class GamePlay implements ISubject{
 			notifyObservers();
 	}
 
+	public boolean tournament(ArrayList<String> tournamentData) {
+
+
+	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
+		return true;
+	}
+	
 	/**
 	 * Add Continent Function
 	 * @param continentName The name of the continent to be added
