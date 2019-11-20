@@ -259,13 +259,11 @@ public class Controller {
 				return false;
 			}
 			ExtractedTasks eTask = new ExtractedTasks();
-			eTask.name = tasksEnum.tournament;
-			
+			eTask.name = tasksEnum.tournament;	
 			boolean flagM = false, flagP = false, flagG = false, flagD = false;
 			
-			while(cmdItr.hasNext()){		
+			while(cmdItr.hasNext()){	
 				cmdStr = cmdItr.next();
-				eTask.taskData.add(cmdStr);
 				if( cmdStr.charAt(0) == '-') {
 					if( cmdStr.equals("-M") ) {
 						if( flagM ){
@@ -300,7 +298,11 @@ public class Controller {
 						return false;
 					}
 				}
-				
+				else {
+					System.out.println("wrong Command");
+					return false;
+				}
+				eTask.taskData.add(cmdStr);
 			}
 			if( flagM == false || flagP == false || flagG == false || flagD == false ) {
 				System.out.println("wrong Command");

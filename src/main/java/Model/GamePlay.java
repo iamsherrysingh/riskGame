@@ -110,7 +110,15 @@ public class GamePlay implements ISubject{
 	}
 
 	public boolean tournament(ArrayList<String> tournamentData) {
-
+		
+		ArrayList<String> mapList = new ArrayList<String>();
+		ArrayList<PlayerStrategy> StrategyList = new ArrayList<PlayerStrategy>();
+		int gameNumber;
+		int gameTurn;
+		
+		for(int i=0; i < tournamentData.size(); i++) {
+			
+		}
 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
 		return true;
