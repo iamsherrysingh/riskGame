@@ -116,8 +116,83 @@ public class GamePlay implements ISubject{
 		int gameNumber;
 		int gameTurn;
 		
-		for(int i=0; i < tournamentData.size(); i++) {
+		Iterator<String> itr = tournamentData.iterator(); 
+		String itrList = itr.next();
+		boolean aggressiveFlag = false, benevolentFlag = false, randomFlag = false, cheaterFlag = false;
+		
+		for(int i=0; i < 4; i++) {
 			
+			if( itrList.equals("-M")) {
+				if(!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				while(true) {
+					itrList = itr.next();
+					if( itrList.charAt(0) == '-') {
+						if( mapList.size() < 1 || mapList.size() > 5) {
+							System.out.println("Wrong command. The number of map file is out of range.");
+							return false;
+						}
+						break;
+					}
+					mapList.add(itrList);
+				}
+			}
+			else if( itrList.equals("-P")) {
+				if(!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+				while(true) {
+					itrList = itr.next();
+					if( itrList.charAt(0) == '-') {
+						if( mapList.size() < 2 || mapList.size() > 4) {
+							System.out.println("Wrong command. The number of Strategy is out of range.");
+							return false;
+						}
+						break;
+					}
+					
+					if( itrList.equalsIgnoreCase("Aggressive")) {
+						if( aggressiveFlag ) {
+							System.out.println("Wrong command. Aggresive Strategy cannot be more than one.");
+							return false;
+						}
+						aggressiveFlag = true;
+						StrategyList.add(PlayerStrategy.aggressive);
+					}
+					else if( itrList.equalsIgnoreCase("Benevolent")) {
+						if( benevolentFlag ) {
+							System.out.println("Wrong command. Benevolent Strategy cannot be more than one.");
+							return false;
+						}
+						benevolentFlag = true;
+						StrategyList.add(PlayerStrategy.benevolent);
+					}
+					else if( itrList.equalsIgnoreCase("Random")) {
+						if( randomFlag ) {
+							System.out.println("Wrong command. Random Strategy cannot be more than one.");
+							return false;
+						}
+						randomFlag = true;
+						StrategyList.add(PlayerStrategy.random);
+					}
+					else if( itrList.equalsIgnoreCase("Cheater")) {
+						if( cheaterFlag ) {
+							System.out.println("Wrong command. Cheater Strategy cannot be more than one.");
+							return false;
+						}
+						cheaterFlag = true;
+						StrategyList.add(PlayerStrategy.cheater);
+					}
+					else {
+						System.out.println("Wrong command. Player Strategies can only be Aggressive, Benevolent, Random or Cheater.");
+						return false;
+					}
+
+				}
+			}
 		}
 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
