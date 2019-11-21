@@ -123,10 +123,14 @@ public class GamePlay implements ISubject{
 		for(int i=0; i < 4; i++) {
 			
 			if( itrList.equals("-M")) {
+				
+				// if there is no data for map list return false.
 				if(!itr.hasNext()) {
 					System.out.println("wrong Command");
 					return false;
 				}
+				
+				// Get all the map list.
 				while(true) {
 					itrList = itr.next();
 					if( itrList.charAt(0) == '-') {
@@ -140,10 +144,14 @@ public class GamePlay implements ISubject{
 				}
 			}
 			else if( itrList.equals("-P")) {
+				
+				// if there is no data for Strategy return false.
 				if(!itr.hasNext()) {
 					System.out.println("wrong Command");
 					return false;
 				}
+				
+				// Get all the Strategy list.
 				while(true) {
 					itrList = itr.next();
 					if( itrList.charAt(0) == '-') {
@@ -194,6 +202,8 @@ public class GamePlay implements ISubject{
 				}
 			}
 			if( itrList.equals("-G")) {
+				
+				// if there is no data for number of games return false and this switch is the last one.
 				if(!itr.hasNext()) {
 					System.out.println("wrong Command");
 					return false;
@@ -201,11 +211,14 @@ public class GamePlay implements ISubject{
 				
 				itrList = itr.next();
 				
+				// if there is no data for Strategy return false and this switch is not the last one.
 				if( itrList.charAt(0) == '-') {
 					System.out.println("Wrong command. You should enter a digit for number of games.");
 					return false;
 				}
-				else {		
+				else {	
+					
+					// Check if the number of games is numeric.
 					for(int j=0; j<itrList.length(); i++) {
 						if(!Character.isDigit(itrList.charAt(j))){
 							System.out.println("Wrong command. The input is incorrect for the number of games.");
@@ -213,12 +226,15 @@ public class GamePlay implements ISubject{
 						}
 					}			
 					gameNumber = Integer.parseInt(itrList);
+					
+					// Check if the number of games is out of range.
 					if( gameNumber < 1 || gameNumber > 5 ) {
 						System.out.println("Wrong command. The number of games can only be between 1 and 5");
 						return false;
 					}
 				}
 				
+				// Check if the data related to number of games is more than one.
 				if( itr.hasNext() ) {
 					itrList = itr.next();
 					if( itrList.charAt(0) != '-') {
