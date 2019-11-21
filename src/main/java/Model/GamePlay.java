@@ -120,6 +120,7 @@ public class GamePlay implements ISubject{
 		String itrList = itr.next();
 		boolean aggressiveFlag = false, benevolentFlag = false, randomFlag = false, cheaterFlag = false;
 		
+		// Extract all the data related to 4 parts of tournament and check validation of data.
 		for(int i=0; i < 4; i++) {
 			
 			if( itrList.equals("-M")) {
@@ -155,7 +156,7 @@ public class GamePlay implements ISubject{
 				while(true) {
 					itrList = itr.next();
 					if( itrList.charAt(0) == '-') {
-						if( mapList.size() < 2 || mapList.size() > 4) {
+						if( StrategyList.size() < 2 || StrategyList.size() > 4) {
 							System.out.println("Wrong command. The number of Strategy is out of range.");
 							return false;
 						}
@@ -201,7 +202,7 @@ public class GamePlay implements ISubject{
 
 				}
 			}
-			if( itrList.equals("-G")) {
+			else if( itrList.equals("-G")) {
 				
 				// if there is no data for number of games return false and this switch is the last one.
 				if(!itr.hasNext()) {
@@ -211,7 +212,7 @@ public class GamePlay implements ISubject{
 				
 				itrList = itr.next();
 				
-				// if there is no data for Strategy return false and this switch is not the last one.
+				// if there is no data for number of games return false and this switch is not the last one.
 				if( itrList.charAt(0) == '-') {
 					System.out.println("Wrong command. You should enter a digit for number of games.");
 					return false;
@@ -219,7 +220,7 @@ public class GamePlay implements ISubject{
 				else {	
 					
 					// Check if the number of games is numeric.
-					for(int j=0; j<itrList.length(); i++) {
+					for(int j=0; j<itrList.length(); j++) {
 						if(!Character.isDigit(itrList.charAt(j))){
 							System.out.println("Wrong command. The input is incorrect for the number of games.");
 							return false;
@@ -239,6 +240,49 @@ public class GamePlay implements ISubject{
 					itrList = itr.next();
 					if( itrList.charAt(0) != '-') {
 						System.out.println("Wrong command. The input related to number of games is incorrect.");
+						return false;
+					}
+				}
+
+			}
+			else if( itrList.equals("-D")) {
+				
+				// if there is no data for number of turns for each game return false and this switch is the last one.
+				if(!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}		
+				
+				itrList = itr.next();
+				
+				// if there is no data for number of turns for each game return false and this switch is not the last one.
+				if( itrList.charAt(0) == '-') {
+					System.out.println("Wrong command. You should enter number of turns for each game.");
+					return false;
+				}
+				else {	
+					
+					// Check if the number of turns is numeric.
+					for(int j=0; j<itrList.length(); j++) {
+						if(!Character.isDigit(itrList.charAt(j))){
+							System.out.println("Wrong command. The input is incorrect for the number turns.");
+							return false;
+						}
+					}			
+					gameTurn = Integer.parseInt(itrList);
+					
+					// Check if the number of games is out of range.
+					if( gameTurn < 10 || gameTurn > 50 ) {
+						System.out.println("Wrong command. The number of turns can only be between 10 and 50");
+						return false;
+					}
+				}
+				
+				// Check if the data related to number of turns is more than one.
+				if( itr.hasNext() ) {
+					itrList = itr.next();
+					if( itrList.charAt(0) != '-') {
+						System.out.println("Wrong command. The input related to number of turns is incorrect.");
 						return false;
 					}
 				}

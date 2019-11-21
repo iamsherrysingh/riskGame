@@ -261,9 +261,17 @@ public class Controller {
 			ExtractedTasks eTask = new ExtractedTasks();
 			eTask.name = tasksEnum.tournament;	
 			boolean flagM = false, flagP = false, flagG = false, flagD = false;
+			cmdStr = cmdItr.next();
 			
-			while(cmdItr.hasNext()){	
-				cmdStr = cmdItr.next();
+			// command should start with switch
+			if( cmdStr.charAt(0) != '-') {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			// Check if -M, -P, -G, -D switches exist and there is no duplicate switches.
+			while(true){	
+				
 				if( cmdStr.charAt(0) == '-') {
 					if( cmdStr.equals("-M") ) {
 						if( flagM ){
@@ -298,11 +306,11 @@ public class Controller {
 						return false;
 					}
 				}
-				else {
-					System.out.println("wrong Command");
-					return false;
-				}
-				eTask.taskData.add(cmdStr);
+				eTask.taskData.add(cmdStr);	
+				if( !cmdItr.hasNext() ) 
+					break;
+				
+				cmdStr = cmdItr.next();
 			}
 			if( flagM == false || flagP == false || flagG == false || flagD == false ) {
 				System.out.println("wrong Command");
@@ -800,13 +808,13 @@ public class Controller {
 				}
 				case editmap:{
 					if(!gamePlayObj.editMap(itr.taskData.get(0)))
-					return false;
+						return false;
 					
 					break;
 				}
 				case tournament:{
-			//		if(!gamePlayObj.tournament(itr.taskData))
-			//		return false;			
+					if(!gamePlayObj.tournament(itr.taskData))
+						return false;			
 					break;
 				}
 				case validatemap:{
