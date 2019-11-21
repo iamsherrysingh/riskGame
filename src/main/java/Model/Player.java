@@ -68,6 +68,9 @@ public class Player implements IPlayer {
 		myCountries.add(number);
 	}
 
+	public PlayerStrategy getPlayerStrategy() {
+		return PlayerStrategy.human;
+	}
 	/**
 	 * This adds a new player in Database.playerlist
 	 * 
