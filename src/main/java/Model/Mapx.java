@@ -177,7 +177,7 @@ public class Mapx {
 		*/
 		
 		
-		countries ="[countries]";
+		countries = "[countries]";
 		countries += "\n";
 		
 		int sizeOfContinents = database.getContinentList().size();
@@ -246,17 +246,13 @@ public class Mapx {
 		System.out.println("========start of borders========" );
 		System.out.println(borders);
 		System.out.println("========end of borders========" );
-*/
-		
-        /*
-		System.out.println(territories);
-		System.out.println(" end of territories " );
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-		*/
+*/
+
 		return true;
 	}
 	
