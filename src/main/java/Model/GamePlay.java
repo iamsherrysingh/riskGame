@@ -609,6 +609,8 @@ public class GamePlay implements ISubject{
 	        this.attachObserver(worldDominationView);
 	        
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+			
+			// Call auto playing game for computer players.
 			while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
 				handleAutoPlayer();
 			}
@@ -677,6 +679,7 @@ public class GamePlay implements ISubject{
         
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);   
 		
+		// Call auto playing game for computer players.
 		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
 			handleAutoPlayer();
 		}
@@ -1050,6 +1053,8 @@ public class GamePlay implements ISubject{
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		
+		// Call auto playing game for computer players.
 		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
 			handleAutoPlayer();
 		}
@@ -1084,6 +1089,8 @@ public class GamePlay implements ISubject{
 		
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		
+		// Call auto playing game for computer players.
 		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
 			handleAutoPlayer();
 		}
