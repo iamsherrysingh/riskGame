@@ -913,10 +913,10 @@ public class Controller {
 	public static void handleGame() {
 		
 		Controller controller = new Controller();
-		GamePlay gamePlayObj = GamePlay.getInstance();
+		controller.gamePlayObj = GamePlay.getInstance();
 		ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 		
-		if( gamePlayObj.getCurrentState() == State.initializeGame ) {
+		if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
 			System.out.println("Specify your game mode with below commands:\n");
 			System.out.println("_____Single Mode_____    _____Tournament Mode_____");
 			System.out.println("_ editmap                - tournament");
@@ -925,7 +925,7 @@ public class Controller {
 			System.out.println("__________________________________________________");
 		}
 		
-		while( ( gamePlayObj.getCurrentState() != State.startupPhase ) || ( gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+		while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
 			
 			if(!controller.getCommand(tasksList))
 				continue;
@@ -934,30 +934,30 @@ public class Controller {
 			} 
 			
 		}
-		if(gamePlayObj.getCurrentState() == State.gameFinished) {
+		if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
 			return;
 		}
 		
-		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-		gamePlayObj.CardobserverOperations();
+		controller.gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
+		controller.gamePlayObj.CardobserverOperations();
 		
-		while(gamePlayObj.getCurrentState() != State.gameFinished) {
+		while(controller.gamePlayObj.getCurrentState() != State.gameFinished) {
 			
-			if( gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy() != PlayerStrategy.human ) {
+			if( controller.gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy() != PlayerStrategy.human ) {
 				
-				gamePlayObj.handleAutoPlayer();
+				controller.gamePlayObj.handleAutoPlayer();
 				
-				if( gamePlayObj.checkEndGame())
+				if( controller.gamePlayObj.checkEndGame())
 					break;
 				
-				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-				gamePlayObj.CardobserverOperations();
+				controller.gamePlayObj.getCurrentPlayerObj().goToNextPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
+				controller.gamePlayObj.CardobserverOperations();
 			}
 			else {
 				
-				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				controller.gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
 				
-				while( gamePlayObj.getCurrentState() != State.newTurn ) {
+				while( controller.gamePlayObj.getCurrentState() != State.newTurn ) {
 					
 					if(!controller.getCommand(tasksList))
 						continue;
@@ -967,18 +967,18 @@ public class Controller {
 					
 				}
 				
-				if( gamePlayObj.checkEndGame())
+				if( controller.gamePlayObj.checkEndGame())
 					break;
 				
-				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-				gamePlayObj.CardobserverOperations();
+				controller.gamePlayObj.getCurrentPlayerObj().goToNextPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
+				controller.gamePlayObj.CardobserverOperations();
 			}
 		}
 		
-		if(gamePlayObj.getCurrentState() == State.gameFinished) {
+		if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
 			System.out.println("===================================");
 			System.out.println("======== THe Game Finished ========");
-			System.out.println("======== " + gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+			System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
 			System.out.println("===================================");
 		}
 	}
