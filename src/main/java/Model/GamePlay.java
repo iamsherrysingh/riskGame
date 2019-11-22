@@ -481,7 +481,25 @@ public class GamePlay implements ISubject{
 	 * @return true(If the player is successfully added) or false (If the player already exists)
 	 */
 	public 	boolean addPlayer(String playerName, String Strategy) {
-
+		
+		PlayerStrategy pStrategy = null;
+		
+		if( Strategy.equalsIgnoreCase("human")) {
+			pStrategy = PlayerStrategy.human;
+		}
+		else if( Strategy.equalsIgnoreCase("aggressive")) {
+			pStrategy = PlayerStrategy.aggressive;
+		}
+		else if( Strategy.equalsIgnoreCase("benevolent")) {
+			pStrategy = PlayerStrategy.benevolent;
+		}
+		else if( Strategy.equalsIgnoreCase("cheater")) {
+			pStrategy = PlayerStrategy.cheater;
+		}
+		else if( Strategy.equalsIgnoreCase("random")) {
+			pStrategy = PlayerStrategy.random;
+		}
+		
 		if (!Player.addPlayer(playerName, 0))
 			return false;
 		setCurrentOperation("Adding Player "+playerName+" to the game.");
@@ -587,26 +605,7 @@ public class GamePlay implements ISubject{
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-			
-			this.detachObserver(phaseView);
-			this.detachObserver(worldDominationView);
-			
-	        setCurrentState(State.exchangeCards, "exchangeCards");
-	        
-	        this.attachObserver(phaseView);
-	        this.attachObserver(worldDominationView);
-	        
-			setCurrentOperation("Performing PlaceArmy operations");
-			
-	        this.attachObserver(cardExchangeView);
-			this.detachObserver(phaseView);
-			this.detachObserver(worldDominationView);
-			
-	        setCurrentState(State.exchangeCards, "exchangeCards");
-	        
-//	        this.detachObserver(cardExchangeView);
-	        this.attachObserver(phaseView);
-	        this.attachObserver(worldDominationView);
+			observerOperations("Performing PlaceArmy operations");
 	        
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 			
@@ -658,25 +657,8 @@ public class GamePlay implements ISubject{
 			System.out.println("errrroeee: " + e.getMessage());
 		}
         
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
+		observerOperations("Placing armies on all countries");
 		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
-        this.attachObserver(phaseView);
-        this.attachObserver(worldDominationView);
-        
-		setCurrentOperation("Placing armies on all countries");
-		
-        this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
-        this.attachObserver(phaseView);
-        this.attachObserver(worldDominationView);
-        
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);   
 		
 		// Call auto playing game for computer players.
@@ -1059,24 +1041,7 @@ public class GamePlay implements ISubject{
 			handleAutoPlayer();
 		}
 		
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
-        this.attachObserver(phaseView);
-        this.attachObserver(worldDominationView);
-        
-		setCurrentOperation("Fortify Army");
-		
-        this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
-        this.attachObserver(phaseView);
-        this.attachObserver(worldDominationView);
+        observerOperations("Fortify Army");
         
 		return true;
 	}
@@ -1095,6 +1060,13 @@ public class GamePlay implements ISubject{
 			handleAutoPlayer();
 		}
 		
+		observerOperations("Performing Fortify None");
+		
+		return true;
+	}
+
+	public void observerOperations(String operation) {
+		
 		this.detachObserver(phaseView);
 		this.detachObserver(worldDominationView);
 		
@@ -1103,7 +1075,7 @@ public class GamePlay implements ISubject{
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
         
-		setCurrentOperation("Performing Fortify None");
+		setCurrentOperation(operation);
 		
         this.attachObserver(cardExchangeView);
 		this.detachObserver(phaseView);
@@ -1113,10 +1085,9 @@ public class GamePlay implements ISubject{
         
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
-
-		return true;
+		
 	}
-
+	
 	public double getPercentageOfMapOwnedByPlayer(String playerName){
 		if(Player.getPlayerByName(playerName) == null)
 			return -1.0;
