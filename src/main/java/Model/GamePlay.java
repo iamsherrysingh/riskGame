@@ -114,9 +114,12 @@ public class GamePlay implements ISubject{
 	
 	public void handleAutoPlayer() {
 		autoExchangeCards();
-		autoReinforceArmy();
-		autoAttack();
-		autoFortify();
+		
+		//playerStrategy.reinforcement();
+		
+		//playerStrategy.attack();
+		
+		//playerStrategy.fortify();
 	}
 
 	/**
@@ -818,27 +821,6 @@ public class GamePlay implements ISubject{
 		return true;
 		
 	}
-	
-	/**
-	 * This method is used to perform Reinforcement function automatically for computer players. 
-	 */
-	public void autoReinforceArmy() {
-		
-		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
-		
-		if( strategy == PlayerStrategy.aggressive) {
-		//	aggressivePlayer.reinforcement();
-		}
-		if( strategy == PlayerStrategy.benevolent) {
-		//	benevolentPlayer.reinforcement();
-		}
-		if( strategy == PlayerStrategy.cheater) {
-		//	cheaterPlayer.reinforcement();
-		}
-		if( strategy == PlayerStrategy.random) {
-		//	randomPlayer.reinforcement();
-		}
-	}
 
 	/**
 	 * Reinforce Army Function
@@ -873,27 +855,6 @@ public class GamePlay implements ISubject{
 			return true;
 		}
 		return false;
-	}
-	
-	/**
-	 * This method is used to perform attack function automatically for computer players. 
-	 */
-	public void autoAttack() {
-		
-		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
-		
-		if( strategy == PlayerStrategy.aggressive) {
-		//	aggressivePlayer.attack();
-		}
-		if( strategy == PlayerStrategy.benevolent) {
-		//	benevolentPlayer.attack();
-		}
-		if( strategy == PlayerStrategy.cheater) {
-		//	cheaterPlayer.attack();
-		}
-		if( strategy == PlayerStrategy.random) {
-		//	randomPlayer.attack();
-		}
 	}
 	
 	/**
@@ -988,27 +949,6 @@ public class GamePlay implements ISubject{
 
 		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
 		return true;
-	}
-
-	/**
-	 * This method is used to perform Fortification function automatically for computer players. 
-	 */
-	public void autoFortify() {
-		
-		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
-		
-		if( strategy == PlayerStrategy.aggressive) {
-		//	aggressivePlayer.fortify();
-		}
-		if( strategy == PlayerStrategy.benevolent) {
-		//	benevolentPlayer.fortify();
-		}
-		if( strategy == PlayerStrategy.cheater) {
-		//	cheaterPlayer.fortify();
-		}
-		if( strategy == PlayerStrategy.random) {
-		//	randomPlayer.fortify();
-		}
 	}
 	
 	/**
