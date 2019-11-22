@@ -11,7 +11,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class ConquestMapFile {
+
+public class ConquestMapFile{
 
 	private String continents;
 	private String territories;
@@ -115,4 +116,37 @@ public class ConquestMapFile {
 		return true;
 	}
 
+	/*
+	public boolean writeMapConquest(Graph gameGraph, String mp) throws IOException {
+
+				// Create the file
+				File f = createFile(mapName);
+				FileWriter writer = new FileWriter(f);
+				writer.write("name " + mp + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[files]" + System.getProperty("line.separator"));
+				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+				writer.write("map sample.gif" + System.getProperty("line.separator"));
+				writer.write("crd sample.cards" + System.getProperty("line.separator"));
+				writer.write("prv world.jpg" + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				
+				
+				
+				
+				writer.write("[continents]" + System.getProperty("line.separator"));
+				writer.write(continents + System.getProperty("line.separator"));
+				
+				writer.write("[Territories]" + System.getProperty("line.separator"));
+				writer.write(territories + System.getProperty("line.separator"));
+				
+				
+				writer.close();
+				return true;
+
+
+
+	}
+	*/
+	
 }
