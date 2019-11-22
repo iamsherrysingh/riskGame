@@ -679,7 +679,6 @@ public class GamePlay implements ISubject{
 	
 	/**
 	 * This method is used to perform the exchange cards function automatically for computer players. 
-	 * @return true If the method executes and cards are exchanged successfully
 	 */
 	public void autoExchangeCards() {
 
@@ -837,6 +836,27 @@ public class GamePlay implements ISubject{
 		return true;
 		
 	}
+	
+	/**
+	 * This method is used to perform Reinforcement function automatically for computer players. 
+	 */
+	public void autoReinforceArmy() {
+		
+		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
+		
+		if( strategy == PlayerStrategy.aggressive) {
+		//	aggressivePlayer.reinforcement();
+		}
+		if( strategy == PlayerStrategy.benevolent) {
+		//	benevolentPlayer.reinforcement();
+		}
+		if( strategy == PlayerStrategy.cheater) {
+		//	cheaterPlayer.reinforcement();
+		}
+		if( strategy == PlayerStrategy.random) {
+		//	randomPlayer.reinforcement();
+		}
+	}
 
 	/**
 	 * Reinforce Army Function
@@ -872,7 +892,6 @@ public class GamePlay implements ISubject{
 		}
 		return false;
 	}
-	
 	
 	/**
 	 * when player decided normal attack
