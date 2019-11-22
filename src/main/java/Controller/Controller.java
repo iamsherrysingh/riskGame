@@ -940,30 +940,56 @@ public class Controller {
 		
 		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
 		gamePlayObj.CardobserverOperations();
+		
+		while(gamePlayObj.getCurrentState() != State.gameFinished) {
+			
+			if( gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy() != PlayerStrategy.human ) {
+				
+				gamePlayObj.handleAutoPlayer();
+				
+				if( gamePlayObj.checkEndGame())
+					break;
+				
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.CardobserverOperations();
+			}
+			else {
+				
+				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				
+				while( gamePlayObj.getCurrentState() != State.newTurn ) {
+					
+					if(!controller.getCommand(tasksList))
+						continue;
+					if(!controller.cmdController(tasksList)) {
+						continue;
+					} 
+					
+				}
+				
+				if( gamePlayObj.checkEndGame())
+					break;
+				
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.CardobserverOperations();
+			}
+		}
+		
+		if(gamePlayObj.getCurrentState() == State.gameFinished) {
+			System.out.println("===================================");
+			System.out.println("======== THe Game Finished ========");
+			System.out.println("======== " + gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+			System.out.println("===================================");
+		}
 	}
 	
     public static void main(String[] args) throws IOException {
 		try {
-
-			//controller.gamePlayObj.attachObserver(controller.gamePlayObj.getPhaseView());
-	    	
-			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
-				
-				
-				if(!controller.getCommand(tasksList))
-					continue;
-				if(!controller.cmdController(tasksList)) {
-					continue;
-				} 
-			}
-			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
-				System.out.println("===================================");
-				System.out.println("======== THe Game Finished ========");
-				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
-				System.out.println("===================================");
-			}
-		}catch (Exception e)
-		{
+			
+			handleGame();
+			
+		}
+		catch (Exception e){
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }

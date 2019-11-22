@@ -101,7 +101,7 @@ public class GamePlay implements ISubject{
 	 * @param newState Object of the class state
 	 * @param newStateStr The new state
 	 */
-	private void setCurrentState(State newState, String newStateStr) {
+	public void setCurrentState(State newState, String newStateStr) {
 		
 		this.currentState = newState;
 		
