@@ -108,7 +108,21 @@ public class GamePlay implements ISubject{
 		if( newState == State.exchangeCards)
 			notifyObservers();
 	}
+	
+	public void handleAuthoPlayer() {
+		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
+		
+		if( strategy == PlayerStrategy.aggressive) {
+			
+		}
+	}
 
+	/**
+	 * Extract data related to tournament and check validation of data
+	 * This method also do the automatic game.
+	 * @param tournamentData maintain a list of data with all the switches.
+	 * @return true if the whole data is valid otherwise return false.
+	 */
 	public boolean tournament(ArrayList<String> tournamentData) {
 		
 		ArrayList<String> mapList = new ArrayList<String>();
@@ -659,11 +673,76 @@ public class GamePlay implements ISubject{
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
         
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-		
-
-        
+		currentPlayerObj.goToFirstPlayer(currentState, graphObj);   
 		return true;
+	}
+	
+	/**
+	 * This method is used to perform the exchange cards function automatically for computer players. 
+	 * @return true If the method executes and cards are exchanged successfully
+	 */
+	public void autoExchangeCards() {
+
+		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
+		
+		if( currentPlayer.playerCards.size() < 3 )	{		
+			System.out.println( currentPlayer.name +" does not have enough cards for exchange.");
+			return;			
+		}
+		
+		while(  currentPlayer.playerCards.size() >= 3) {
+			
+			Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
+			int card1=0, card2= card1 + 1, card3= card1 + 2;
+			boolean findMatchCards = false;
+			
+			for(card1=0; card1 < currentPlayerCardsListSize-2; card1++) {
+				for(card2= card1 + 1; card2 < currentPlayerCardsListSize-1; card2++) {
+					for(card3= card2 + 1; card3 < currentPlayerCardsListSize; card3++) {
+						if (cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(card1), currentPlayer.playerCards.get(card2), currentPlayer.playerCards.get(card3))) {
+							findMatchCards = true;
+							break;
+						}
+					}
+					if(findMatchCards)
+						break;
+				}
+				if(findMatchCards)
+					break;
+			}
+			
+			if(findMatchCards) {
+				Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
+				currentPlayer.exchangeCardsTimes++;
+				currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
+				System.out.println(currentPlayer.name + " exchanged his cards with " + exchageArmies + " armies.");
+				
+				Card[] cardItem = new Card[3];
+				
+				cardItem[0] = currentPlayer.playerCards.get(card1);
+				cardItem[1] = currentPlayer.playerCards.get(card2);
+				cardItem[2] = currentPlayer.playerCards.get(card3);
+				
+				for(int item=0; item<3; item++) {
+					for(int Index=0; Index <currentPlayer.playerCards.size(); Index++) {
+						if( cardItem[item].getIdCard() == currentPlayer.playerCards.get(Index).getIdCard()) {
+							currentPlayer.playerCards.remove(Index);
+						}
+					}
+				}
+				
+				for(int item=0; item<3; item++) {
+					cardPlayObj.refundCard(cardItem[item]);
+				}
+			}
+			else {
+				System.out.println("No match cards found.");
+				break;
+			}
+			
+			
+		}	
+		setCurrentOperation("Exchanging Cards");
 	}
 
 	/**
