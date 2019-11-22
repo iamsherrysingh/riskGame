@@ -894,6 +894,27 @@ public class GamePlay implements ISubject{
 	}
 	
 	/**
+	 * This method is used to perform attack function automatically for computer players. 
+	 */
+	public void autoattack() {
+		
+		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
+		
+		if( strategy == PlayerStrategy.aggressive) {
+		//	aggressivePlayer.attack();
+		}
+		if( strategy == PlayerStrategy.benevolent) {
+		//	benevolentPlayer.attack();
+		}
+		if( strategy == PlayerStrategy.cheater) {
+		//	cheaterPlayer.attack();
+		}
+		if( strategy == PlayerStrategy.random) {
+		//	randomPlayer.attack();
+		}
+	}
+	
+	/**
 	 * when player decided normal attack
 	 * @return true if implemented
 	 */
