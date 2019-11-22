@@ -896,7 +896,7 @@ public class GamePlay implements ISubject{
 	/**
 	 * This method is used to perform attack function automatically for computer players. 
 	 */
-	public void autoattack() {
+	public void autoAttack() {
 		
 		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
 		
@@ -1008,6 +1008,27 @@ public class GamePlay implements ISubject{
 		return true;
 	}
 
+	/**
+	 * This method is used to perform Fortification function automatically for computer players. 
+	 */
+	public void autoFortify() {
+		
+		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
+		
+		if( strategy == PlayerStrategy.aggressive) {
+		//	aggressivePlayer.fortify();
+		}
+		if( strategy == PlayerStrategy.benevolent) {
+		//	benevolentPlayer.fortify();
+		}
+		if( strategy == PlayerStrategy.cheater) {
+		//	cheaterPlayer.fortify();
+		}
+		if( strategy == PlayerStrategy.random) {
+		//	randomPlayer.fortify();
+		}
+	}
+	
 	/**
 	 * Fortify Army Function
 	 * 
