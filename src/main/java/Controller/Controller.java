@@ -914,7 +914,7 @@ public class Controller {
 		
 		Controller controller = new Controller();
 		controller.gamePlayObj = GamePlay.getInstance();
-		ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+		ArrayList<ExtractedTasks> tasksList;
 		
 		if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
 			System.out.println("Specify your game mode with below commands:\n");
@@ -927,6 +927,7 @@ public class Controller {
 		
 		while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
 			
+			tasksList = new ArrayList<ExtractedTasks>();
 			if(!controller.getCommand(tasksList))
 				continue;
 			if(!controller.cmdController(tasksList)) {
@@ -955,6 +956,7 @@ public class Controller {
 			}
 			else {
 				
+				tasksList = new ArrayList<ExtractedTasks>();
 				controller.gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
 				
 				while( controller.gamePlayObj.getCurrentState() != State.newTurn ) {
