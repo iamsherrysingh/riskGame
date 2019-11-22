@@ -605,9 +605,6 @@ public class GamePlay implements ISubject{
 
 			System.out.println("All armies are placed");
 			setCurrentState(State.startupPhase, "Startup Phase"); 
-		//	CardobserverOperations("Performing PlaceArmy operations");
-	        
-			
 			return false;
 		}
 
@@ -650,9 +647,9 @@ public class GamePlay implements ISubject{
 		} catch (Exception e) {
 			System.out.println("errrroeee: " + e.getMessage());
 		}
-        
-	//	CardobserverOperations("Placing armies on all countries");
+
 		setCurrentState(State.startupPhase, "Startup Phase");  
+		setCurrentOperation("Performing PlaceAll operations");
 
 		return true;
 	}
