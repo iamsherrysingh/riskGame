@@ -910,85 +910,92 @@ public class Controller {
 		return true;
 	}
 	
-	public static void handleGame() {
+	public void handleGame() {
 		
-		Controller controller = new Controller();
-		controller.gamePlayObj = GamePlay.getInstance();
-		ArrayList<ExtractedTasks> tasksList;
+		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+		gamePlayObj.CardobserverOperations();
 		
-		if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
-			System.out.println("Specify your game mode with below commands:\n");
-			System.out.println("_____Single Mode_____    _____Tournament Mode_____");
-			System.out.println("_ editmap                - tournament");
-			System.out.println("_ loadmap");
-			System.out.println("_ loadgame");
-			System.out.println("__________________________________________________");
-		}
-		
-		while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+		while(gamePlayObj.getCurrentState() != State.gameFinished) {
 			
-			tasksList = new ArrayList<ExtractedTasks>();
-			if(!controller.getCommand(tasksList))
-				continue;
-			if(!controller.cmdController(tasksList)) {
-				continue;
-			} 
+			PlayerStrategy currentPlayerStrategy = gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy(); 
+			gamePlayObj.setPlayerStrategy();
 			
-		}
-		if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
-			return;
-		}
-		
-		controller.gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
-		controller.gamePlayObj.CardobserverOperations();
-		
-		while(controller.gamePlayObj.getCurrentState() != State.gameFinished) {
-			
-			if( controller.gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy() != PlayerStrategy.human ) {
+			if( currentPlayerStrategy == PlayerStrategy.human ) {
 				
-				controller.gamePlayObj.handleAutoPlayer();
+				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				
-				if( controller.gamePlayObj.checkEndGame())
-					break;
+				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
 				
-				controller.gamePlayObj.getCurrentPlayerObj().goToNextPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
-				controller.gamePlayObj.CardobserverOperations();
+				while( gamePlayObj.getCurrentState() != State.newTurn ) {
+					
+					if(!getCommand(tasksList))
+						continue;
+					if(!cmdController(tasksList)) {
+						continue;
+					} 
+				
+				}
 			}
 			else {
 				
-				tasksList = new ArrayList<ExtractedTasks>();
-				controller.gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+					gamePlayObj.handleAutoPlayer();
 				
-				while( controller.gamePlayObj.getCurrentState() != State.newTurn ) {
-					
-					if(!controller.getCommand(tasksList))
-						continue;
-					if(!controller.cmdController(tasksList)) {
-						continue;
-					} 
+					if( gamePlayObj.checkEndGame())
+						break;
+				
+					gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+					gamePlayObj.CardobserverOperations();
 					
 				}
 				
-				if( controller.gamePlayObj.checkEndGame())
+				if( gamePlayObj.checkEndGame())
 					break;
 				
-				controller.gamePlayObj.getCurrentPlayerObj().goToNextPlayer(controller.gamePlayObj.getCurrentState(), controller.gamePlayObj.getGraphObj());
-				controller.gamePlayObj.CardobserverOperations();
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.CardobserverOperations();
 			}
-		}
 		
-		if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
-			System.out.println("===================================");
-			System.out.println("======== THe Game Finished ========");
-			System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
-			System.out.println("===================================");
-		}
 	}
 	
     public static void main(String[] args) throws IOException {
 		try {
 			
-			handleGame();
+			Controller controller = new Controller();
+			controller.gamePlayObj = GamePlay.getInstance();
+			
+			if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
+				System.out.println("Specify your game mode with below commands:\n");
+				System.out.println("_____Single Mode_____    _____Tournament Mode_____");
+				System.out.println("_ editmap                - tournament");
+				System.out.println("_ loadmap");
+				System.out.println("_ loadgame");
+				System.out.println("__________________________________________________");
+			}
+			
+			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+				
+				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+				
+				if(!controller.getCommand(tasksList))
+					continue;
+				if(!controller.cmdController(tasksList)) {
+					continue;
+				} 
+				
+			}
+			
+			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				return;
+			}
+			
+			controller.handleGame();
+			
+			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				System.out.println("===================================");
+				System.out.println("======== THe Game Finished ========");
+				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+				System.out.println("===================================");
+			}
 			
 		}
 		catch (Exception e){

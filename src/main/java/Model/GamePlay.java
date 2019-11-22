@@ -55,7 +55,12 @@ public class GamePlay implements ISubject{
 	private CurrentPlayer currentPlayerObj;
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
-
+	
+	private IPlayer playerStrategy;
+	
+	public void setPlayerStrategy() {
+		this.playerStrategy = currentPlayerObj.currentPlayer;
+	}
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
