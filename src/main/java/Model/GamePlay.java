@@ -109,12 +109,11 @@ public class GamePlay implements ISubject{
 			notifyObservers();
 	}
 	
-	public void handleAuthoPlayer() {
-		PlayerStrategy strategy = currentPlayerObj.currentPlayer.getPlayerStrategy();
-		
-		if( strategy == PlayerStrategy.aggressive) {
-			
-		}
+	public void handleAutoPlayer() {
+		autoExchangeCards();
+		autoReinforceArmy();
+		autoAttack();
+		autoFortify();
 	}
 
 	/**
@@ -610,6 +609,9 @@ public class GamePlay implements ISubject{
 	        this.attachObserver(worldDominationView);
 	        
 			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+			while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
+				handleAutoPlayer();
+			}
 
 			return false;
 		}
@@ -674,6 +676,10 @@ public class GamePlay implements ISubject{
         this.attachObserver(worldDominationView);
         
 		currentPlayerObj.goToFirstPlayer(currentState, graphObj);   
+		
+		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
+			handleAutoPlayer();
+		}
 		return true;
 	}
 	
@@ -1044,6 +1050,9 @@ public class GamePlay implements ISubject{
 
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
+			handleAutoPlayer();
+		}
 		
 		this.detachObserver(phaseView);
 		this.detachObserver(worldDominationView);
@@ -1075,6 +1084,9 @@ public class GamePlay implements ISubject{
 		
 		// Change current player
 		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
+			handleAutoPlayer();
+		}
 		
 		this.detachObserver(phaseView);
 		this.detachObserver(worldDominationView);
