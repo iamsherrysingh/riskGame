@@ -105,8 +105,6 @@ public class GamePlay implements ISubject{
 		
 		this.currentState = newState;
 		
-		if( newState == State.exchangeCards)
-			notifyObservers();
 	}
 	
 	public void handleAutoPlayer() {
@@ -303,6 +301,7 @@ public class GamePlay implements ISubject{
 			}
 		}
 
+		setCurrentState(State.gameFinished, "Game Finished"); 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
 		return true;
 	}
@@ -605,15 +604,10 @@ public class GamePlay implements ISubject{
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-			observerOperations("Performing PlaceArmy operations");
+			setCurrentState(State.startupPhase, "Startup Phase"); 
+		//	CardobserverOperations("Performing PlaceArmy operations");
 	        
-			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
 			
-			// Call auto playing game for computer players.
-			while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
-				handleAutoPlayer();
-			}
-
 			return false;
 		}
 
@@ -657,14 +651,9 @@ public class GamePlay implements ISubject{
 			System.out.println("errrroeee: " + e.getMessage());
 		}
         
-		observerOperations("Placing armies on all countries");
-		
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);   
-		
-		// Call auto playing game for computer players.
-		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
-			handleAutoPlayer();
-		}
+	//	CardobserverOperations("Placing armies on all countries");
+		setCurrentState(State.startupPhase, "Startup Phase");  
+
 		return true;
 	}
 	
@@ -1033,16 +1022,7 @@ public class GamePlay implements ISubject{
 		if (!Player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-		
-		// Call auto playing game for computer players.
-		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
-			handleAutoPlayer();
-		}
-		
-        observerOperations("Fortify Army");
-        
+		setCurrentState(State.newTurn, "New Turn");
 		return true;
 	}
 
@@ -1052,37 +1032,19 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean ignoreFortifyArmy() {
 		
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-		
-		// Call auto playing game for computer players.
-		while( currentPlayerObj.currentPlayer.getPlayerStrategy() != PlayerStrategy.human ) {
-			handleAutoPlayer();
-		}
-		
-		observerOperations("Performing Fortify None");
-		
+		setCurrentState(State.newTurn, "New Turn");
 		return true;
 	}
 
-	public void observerOperations(String operation) {
+	public void CardobserverOperations() {
 		
 		this.detachObserver(phaseView);
 		this.detachObserver(worldDominationView);
+		this.attachObserver(cardExchangeView);
 		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
-        this.attachObserver(phaseView);
-        this.attachObserver(worldDominationView);
-        
-		setCurrentOperation(operation);
+		notifyObservers();
 		
-        this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-		
-        setCurrentState(State.exchangeCards, "exchangeCards");
-        
+		this.detachObserver(cardExchangeView);
         this.attachObserver(phaseView);
         this.attachObserver(worldDominationView);
 		

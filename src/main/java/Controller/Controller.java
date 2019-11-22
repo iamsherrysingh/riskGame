@@ -57,14 +57,6 @@ public class Controller {
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
-		if(gamePlayObj.getCurrentState() == State.initializeGame ) {
-			System.out.println("Specify your game mode with below commands:\n");
-			System.out.println("_____Single Mode_____    _____Tournament Mode_____");
-			System.out.println("_ editmap                - tournament");
-			System.out.println("_ loadmap");
-			System.out.println("_ loadgame");
-			System.out.println("__________________________________________________");
-		}
 		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();
@@ -615,7 +607,7 @@ public class Controller {
 				case showmap:
 					break;
 				case addplayer:	
-					if( !itr.taskData.get(1).equals("aggressive") || !itr.taskData.get(1).equals("benevolent") || !itr.taskData.get(1).equals("cheater") || !itr.taskData.get(1).equals("human") || !itr.taskData.get(1).equals("random") ) {
+					if( !itr.taskData.get(1).equals("aggressive") && !itr.taskData.get(1).equals("benevolent") && !itr.taskData.get(1).equals("cheater") && !itr.taskData.get(1).equals("human") && !itr.taskData.get(1).equals("random") ) {
 						System.out.println(itr.taskData.get(1)+" Strategy is not valid.");
 						return false;
 					}
@@ -917,17 +909,47 @@ public class Controller {
 		} 	
 		return true;
 	}
+	
+	public static void handleGame() {
 		
+		Controller controller = new Controller();
+		GamePlay gamePlayObj = GamePlay.getInstance();
+		ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+		
+		if( gamePlayObj.getCurrentState() == State.initializeGame ) {
+			System.out.println("Specify your game mode with below commands:\n");
+			System.out.println("_____Single Mode_____    _____Tournament Mode_____");
+			System.out.println("_ editmap                - tournament");
+			System.out.println("_ loadmap");
+			System.out.println("_ loadgame");
+			System.out.println("__________________________________________________");
+		}
+		
+		while( ( gamePlayObj.getCurrentState() != State.startupPhase ) || ( gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+			
+			if(!controller.getCommand(tasksList))
+				continue;
+			if(!controller.cmdController(tasksList)) {
+				continue;
+			} 
+			
+		}
+		if(gamePlayObj.getCurrentState() == State.gameFinished) {
+			return;
+		}
+		
+		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+		gamePlayObj.CardobserverOperations();
+	}
 	
     public static void main(String[] args) throws IOException {
 		try {
-			Controller controller = new Controller();
-			controller.gamePlayObj = GamePlay.getInstance();
+
 			//controller.gamePlayObj.attachObserver(controller.gamePlayObj.getPhaseView());
 	    	
 			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
 				
-				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+				
 				if(!controller.getCommand(tasksList))
 					continue;
 				if(!controller.cmdController(tasksList)) {
