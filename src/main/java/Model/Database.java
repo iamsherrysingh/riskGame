@@ -47,6 +47,47 @@ public class Database {
 		}
 		return null;
 	}
+	
+	/**
+	 * This returns the instance of the player where a player is saved in
+	 * Database.playerlist using player's number
+	 * 
+	 * @param playerNumber The integer number of the player
+	 * @return instance of the player
+	 */
+	public static IPlayer getPlayerByNumber(Integer playerNumber) {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			if (player.getNumber() == playerNumber) {
+				return player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * check if the number of remaining armies that can be placed is equal to zero
+	 * for every player
+	 * 
+	 * @return true(If there are no more armies present) or false(If the number of armies to be placed are still not zero)
+	 */
+	public static boolean allPlayersRemainingArmiesExhausted() {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			if (player.getNumberOfFreeArmies() > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * This prints all the details for each and every player in Database.playerlist
+	 */
+	public static void printAllPlayers() {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			System.out.println(player.getNumber() + " " + player.getName() + " " + player.getNumberOfArmies());
+		}
+		System.out.println();
+	}
 
 	public ArrayList<Continent> getContinentList() {
 		return continentList;
