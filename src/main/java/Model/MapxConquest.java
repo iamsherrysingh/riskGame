@@ -13,11 +13,13 @@ public class MapxConquest extends Mapx{
 	 
 	  private ConquestMapFile conquestMap;
 
+	  /*
 	  public MapxConquest(ConquestMapFile conquestMap) {
 	    this.conquestMap = conquestMap;
 	    }
+	    */
 
-	  boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
+	  boolean readMap(String mapFile) throws FileNotFoundException{
 		  
 		  conquestMap.readMapConquest(mapFile);
 		  

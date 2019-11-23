@@ -20,7 +20,6 @@ public class Mapx {
 	Database database = Database.getInstance();
 
 	
-	
 
 	/**
 	 * This reads the maps file and stores the country, continent and border details
@@ -156,15 +155,14 @@ public class Mapx {
 			//readMapIntoVariables(mapFile);
 			
 			//ConquestMapFile conquestMapFile = new ConquestMapFile();
-			//Mapx map = new MapxConquest(conquestMapFile);
-			
-			readMapIntoVariables(mapFile);
+			MapxConquest mapConquest = new MapxConquest();
+			mapConquest.readMap(mapFile);
 			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 			return false;
 		}
-		
+		// loadmap conquestmap.map
 		gameGraph.getAdjList().clear(); // Clearing gameGraph before laoding new map
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
