@@ -764,10 +764,9 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean exchangeCards(Integer cardNumber1, Integer cardNumber2, Integer cardNumber3) {
 
-		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
-		Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
+		IPlayer currentPlayer = currentPlayerObj.getCurrentPlayer();
 
-		if( currentPlayer.playerCards.size() < 3 )	{	
+		if( currentPlayer.getPlayerCards().size() < 3 )	{	
 			
 			System.out.println("You do not have enough cards for exchange. You should choose exchangecards -none to skip this state.");
 		//	System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies");
@@ -775,9 +774,9 @@ public class GamePlay implements ISubject{
 		}
 		else {
 			
-			if (((cardNumber1 > currentPlayerCardsListSize) || (cardNumber1 < 1))
-					|| ((cardNumber2 > currentPlayerCardsListSize) || (cardNumber2 < 1))
-					|| ((cardNumber3 > currentPlayerCardsListSize) || (cardNumber3 < 1))) {
+			if (((cardNumber1 > currentPlayer.getPlayerCards().size()) || (cardNumber1 < 1))
+					|| ((cardNumber2 > currentPlayer.getPlayerCards().size()) || (cardNumber2 < 1))
+					|| ((cardNumber3 > currentPlayer.getPlayerCards().size()) || (cardNumber3 < 1))) {
 
 				System.out.println("Input Numbers is wrong");
 				return false;
@@ -788,27 +787,27 @@ public class GamePlay implements ISubject{
 				return false;
 			}
 			
-			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1), currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1))) {
+			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.getPlayerCards().get(cardNumber1 - 1), currentPlayer.getPlayerCards().get(cardNumber2 - 1), currentPlayer.getPlayerCards().get(cardNumber3 - 1))) {
 				System.out.println("These cards do not match for exchanging.");
 				return false;
 			}
 			
-			Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
-			currentPlayer.exchangeCardsTimes++;
+			Integer exchageArmies = (currentPlayer.getExchangeCardsTimes() + 1) * 5;
+			currentPlayer.setExchangeCardsTimes(currentPlayer.getExchangeCardsTimes() + 1);
 			currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
 
 			System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
 
 			Card[] cardItem = new Card[3];
 			
-			cardItem[0] = currentPlayer.playerCards.get(cardNumber1 - 1);
-			cardItem[1] = currentPlayer.playerCards.get(cardNumber2 - 1);
-			cardItem[2] = currentPlayer.playerCards.get(cardNumber3 - 1);
+			cardItem[0] = currentPlayer.getPlayerCards().get(cardNumber1 - 1);
+			cardItem[1] = currentPlayer.getPlayerCards().get(cardNumber2 - 1);
+			cardItem[2] = currentPlayer.getPlayerCards().get(cardNumber3 - 1);
 			
 			for(int item=0; item<3; item++) {
-				for(int Index=0; Index <currentPlayer.playerCards.size(); Index++) {
-					if( cardItem[item].getIdCard() == currentPlayer.playerCards.get(Index).getIdCard()) {
-						currentPlayer.playerCards.remove(Index);
+				for(int Index=0; Index <currentPlayer.getPlayerCards().size(); Index++) {
+					if( cardItem[item].getIdCard() == currentPlayer.getPlayerCards().get(Index).getIdCard()) {
+						currentPlayer.getPlayerCards().remove(Index);
 					}
 				}
 			}
