@@ -489,7 +489,7 @@ public class GamePlay implements ISubject{
 	 */
 	public 	boolean addPlayer(String playerName, String Strategy) {
 
-		if (Player.getPlayerByName(playerName) != null) {
+		if (Database.getPlayerByName(playerName) != null) {
 			System.out.println("=======> This player exists <========");
 			return false;
 		} else if (playerName.trim().length() == 0) {
@@ -582,9 +582,9 @@ public class GamePlay implements ISubject{
 			return false;
 		}
 
-		for (Player iter : Database.playerList) {
-			iter.numberOfArmies = numArmies;
-			iter.numberOfFreeArmies = numArmies;
+		for (IPlayer iter : Database.playerList) {
+			iter.setNumberOfArmies(numArmies);
+			iter.setNumberOfFreeArmies(numArmies);
 		}
 
 		Integer playerNumberToBeAssigned = 1;
