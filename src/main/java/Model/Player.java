@@ -17,9 +17,9 @@ public class Player implements IPlayer {
     private Integer number, numberOfArmies, numberOfFreeArmies;
 	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
 	private Integer exchangeCardsTimes;
-	public ArrayList<Card> playerCards;
-	static boolean countryConquered;
-	static boolean defenderRemoved;
+	private ArrayList<Card> playerCards;
+	private boolean countryConquered;
+	private boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
 	private Player(Integer number, String name, Integer numberOfArmies) {
@@ -82,6 +82,30 @@ public class Player implements IPlayer {
 	
 	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
 		this.exchangeCardsTimes = exchangeCardsTimes;
+	}
+	
+	public ArrayList<Card> getPlayerCards(){
+		return playerCards;
+	}
+	
+	public void setPlayerCards(Card card) {
+		playerCards.add(card);
+	}
+	
+	public boolean getCountryConquered() {
+		return countryConquered;
+	}
+	
+	public void setCountryConquered(boolean countryConquered) {
+		this.countryConquered = countryConquered;
+	}
+	
+	public boolean getDefenderRemoved() {
+		return defenderRemoved;
+	}
+	
+	public void setDefenderRemoved(boolean defenderRemoved) {
+		this.defenderRemoved = defenderRemoved;
 	}
 
 	/**

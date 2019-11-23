@@ -17,5 +17,12 @@ public interface IPlayer {
 	public ArrayList<Integer> getMyCountries();
 	public Integer getExchangeCardsTimes();
 	public void setExchangeCardsTimes(Integer exchangeCardsTimes);
+	public ArrayList<Card> getPlayerCards();
+	public void setPlayerCards(Card card);
+	public boolean getCountryConquered();
+	public void setCountryConquered(boolean countryConquered);
+	public boolean getDefenderRemoved();
+	public void setDefenderRemoved(boolean countryConquered);
+	
 }
 
