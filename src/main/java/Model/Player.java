@@ -51,6 +51,14 @@ public class Player implements IPlayer {
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
+	
+	public Integer getNumberOfArmies() {
+		return numberOfArmies;
+	}
+	
+	public void setNumberOfArmies(Integer numberOfArmies) {
+		this.numberOfArmies = numberOfArmies;
+	}
 
     public Integer getNumberOfFreeArmies() {
         return numberOfFreeArmies;
@@ -59,14 +67,6 @@ public class Player implements IPlayer {
     public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
         this.numberOfFreeArmies = numberOfFreeArmies;
     }
-    
-	public Integer getNumberOfArmies() {
-		return numberOfArmies;
-	}
-
-	public void setNumberOfArmies(Integer numberOfArmies) {
-		this.numberOfArmies = numberOfArmies;
-	}
 
 	public ArrayList<Integer> getMyCountries() {
 		return myCountries;
@@ -74,6 +74,14 @@ public class Player implements IPlayer {
 
 	public void setMyCountries(Integer number) {
 		myCountries.add(number);
+	}
+	
+	public Integer getExchangeCardsTimes() {
+		return exchangeCardsTimes;
+	}
+	
+	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
+		this.exchangeCardsTimes = exchangeCardsTimes;
 	}
 
 	/**
