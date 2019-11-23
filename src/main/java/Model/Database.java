@@ -88,6 +88,42 @@ public class Database {
 		}
 		System.out.println();
 	}
+	
+	/**
+	 * this provides the list of countries owned by a particular player
+	 * 
+	 * @param playerName The name of the player
+	 * @param gameGraph This the object of the class Graph
+	 * @return list of countries owned by a player
+	 */
+	public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph) {
+		ArrayList<Country> countryList = new ArrayList<Country>();
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getOwner().equalsIgnoreCase(playerName)) {
+				countryList.add(country);
+			}
+		}
+		return countryList;
+	}
+	
+	/**
+	 * This method returns the total number of countries owned by the players.
+	 * @param playerName The name of the player
+	 * @param gameGraph This is an object of the class Graph
+	 * @return An integer value that is equal to the total number of countries owned by the player
+	 */
+		public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+			Integer numberOfCountriesOwned = 0;
+
+			if (Database.getPlayerByName(playerName) == null)
+				return -1;
+			for (Country country : gameGraph.getAdjList()) {
+				if (country.owner.equalsIgnoreCase(playerName)) {
+					numberOfCountriesOwned += 1;
+				}
+			}
+			return numberOfCountriesOwned;
+		}
 
 	public ArrayList<Continent> getContinentList() {
 		return continentList;

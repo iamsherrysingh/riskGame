@@ -108,103 +108,6 @@ public class Player implements IPlayer {
 		this.defenderRemoved = defenderRemoved;
 	}
 
-	
-	/**
-	 * This removes a player from Database.playerlist
-	 * 
-	 * @param playerName The name of the player to be removed
-	 * @return true(If the player is removed successfully) or false(The player is absent)
-	 */
-	public static boolean removePlayer(String playerName) {
-		Player player = Player.getPlayerByName(playerName);
-		if (player == null) {
-			return false;
-		}
-		Database.playerList.remove(player);
-
-		Integer playerNumber = 1;
-		for (Player player1 : Database.getInstance().getPlayerList()) {
-			player1.number = playerNumber;
-			playerNumber++;
-		}
-
-		return true;
-	}
-
-	/**
-	 * This returns the instance of the player where a player is saved in
-	 * Database.playerlist using player's name
-	 * 
-	 * @param playerName The name of the player
-	 * @return instance of the player
-	 */
-	public static Player getPlayerByName(String playerName) {
-		for (Player player : Database.playerList) {
-			if (player.getName().equalsIgnoreCase(playerName)) {
-				return player;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * This returns the instance of the player where a player is saved in
-	 * Database.playerlist using player's number
-	 * 
-	 * @param playerNumber The integer number of the player
-	 * @return instance of the player
-	 */
-	public static Player getPlayerByNumber(Integer playerNumber) {
-		for (Player player : Database.getInstance().getPlayerList()) {
-			if (player.getNumber() == playerNumber) {
-				return player;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * check if the number of remaining armies that can be placed is equal to zero
-	 * for every player
-	 * 
-	 * @return true(If there are no more armies present) or false(If the number of armies to be placed are still not zero)
-	 */
-	public static boolean allPlayersRemainingArmiesExhausted() {
-		for (Player player : Database.getInstance().getPlayerList()) {
-			if (player.getNumberOfFreeArmies() > 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * This prints all the details for each and every player in Database.playerlist
-	 */
-	public static void printAllPlayers() {
-		for (Player player : Database.getInstance().getPlayerList()) {
-			System.out.println(player.getNumber() + " " + player.getName() + " " + player.getNumberOfArmies());
-		}
-		System.out.println();
-	}
-
-	/**
-	 * this provides the list of countries owned by a particular player
-	 * 
-	 * @param playerName The name of the player
-	 * @param gameGraph This the object of the class Graph
-	 * @return list of countries owned by a player
-	 */
-	public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph) {
-		ArrayList<Country> countryList = new ArrayList<Country>();
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.getOwner().equalsIgnoreCase(playerName)) {
-				countryList.add(country);
-			}
-		}
-		return countryList;
-	}
-
 	/**
 	 * This method check validation of reinforcements and do reinforce.
 	 * @param countryName This is an string which specified by user for reinforcement
@@ -213,7 +116,7 @@ public class Player implements IPlayer {
 	 * @param currentPlayerObj This is an object which is current player of the game.
 	 * @return true(if runs successfully or false in case it fails any validation)
 	 */
-	public static boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
+	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
 		// check: if target country is not exist, return false
 		Country targetCountry = Country.getCountryByName(countryName, graphObj);
@@ -283,10 +186,6 @@ public class Player implements IPlayer {
 			return defenderCommandInput(numberOfArmiesDefenderCanSelect, scanner);
 		}
 	}
-//
-//	public Integer defenderArmiesSelectionForAllout() {
-//		return 0;
-//	}
 
 	/**
 	 * This method attacks until no attack is possible using maximum number of dice
@@ -298,19 +197,19 @@ public class Player implements IPlayer {
 	 * @param currentPlayerObj its current player's instance
 	 * @return true(if runs successfully) or false(in case it fails any validation)
 	 */
-	public static boolean attackAllout(String fromCountry, String toCountry, Graph graphObj,
+	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
 		String attackerName = attackerCountry.getOwner();
 		String defenderName = defenderCountry.getOwner();
-		Player attacker = Player.getPlayerByName(attackerName);
-		Player defender = Player.getPlayerByName(defenderName);
+		IPlayer attacker = Database.getPlayerByName(attackerName);
+		IPlayer defender = Database.getPlayerByName(defenderName);
 
-		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
 
-			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
 
 				System.out.println("You can only attack the countries that are owned by some other player");
 				return false;
@@ -361,11 +260,11 @@ public class Player implements IPlayer {
 
 					if (defenderCountry.getNumberOfArmies() == 0) {
 						System.out.println("Attacker won the country " + defenderCountry.name);
-						attacker.myCountries.add(defenderCountry.getNumber());
+						attacker.setMyCountries(defenderCountry.getNumber());
 						defenderCountry.setOwner(attackerCountry.getOwner());
-						defender.myCountries.remove(defenderCountry.getNumber());
-						countryConquered = true;
-						if (defender.myCountries.size() == 0) {
+						defender.getMyCountries().remove(defenderCountry.getNumber());
+						setCountryConquered(true);
+						if (defender.getMyCountries().size() == 0) {
 							defenderRemoved = true;
 						}
 						System.out.println("Please enter a command to move armies to " + defenderCountry.name);
@@ -397,7 +296,7 @@ public class Player implements IPlayer {
 				}
 			}
 		} else {
-			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().name
+			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().getName()
 					+ ") as attackerCountry");
 			return false;
 		}
@@ -501,21 +400,21 @@ public class Player implements IPlayer {
 	 * @param currentPlayerObj This is the object of currentPlayer.
 	 * @return true(if runs successfully) or false(in case it fails any validation)
 	 */
-	public static boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
 		String attackerName = attackerCountry.getOwner();
 		String defenderName = defenderCountry.getOwner();
-		Player attacker = Player.getPlayerByName(attackerName);
-		Player defender = Player.getPlayerByName(defenderName);
+		IPlayer attacker = Database.getPlayerByName(attackerName);
+		IPlayer defender = Database.getPlayerByName(defenderName);
 
 		// Owner of attackerCountry should be same as current player
-		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+		if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
 
 			// Owner of defender Country cannot be currentPlayer
-			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().name)) {
+			if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
 
 				System.out.println("You can only attack the countries that are owned by some other player");
 				return false;
@@ -575,11 +474,11 @@ public class Player implements IPlayer {
 									if (defenderCountry.getNumberOfArmies() == 0) {
 
 										System.out.println("Attacker won the country " + defenderCountry.name);
-										attacker.myCountries.add(defenderCountry.getNumber());
+										attacker.setMyCountries(defenderCountry.getNumber());
 										defenderCountry.setOwner(attackerCountry.getOwner());
-										defender.myCountries.remove(defenderCountry.getNumber());
-										countryConquered = true;
-										if (defender.myCountries.size() == 0) {
+										defender.getMyCountries().remove(defenderCountry.getNumber());
+										setCountryConquered(true);
+										if (defender.getMyCountries().size() == 0) {
 											defenderRemoved = true;
 										}
 										System.out.println(
@@ -624,7 +523,7 @@ public class Player implements IPlayer {
 				}
 			}
 		} else {
-			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().name
+			System.out.println("Please select the country owned by you(" + currentPlayerObj.getCurrentPlayer().getName()
 					+ ") as attackerCountry");
 			return false;
 		}
@@ -654,7 +553,7 @@ public class Player implements IPlayer {
 	 * @return true(if runs successfully)
 	 */
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
-			Integer defenderArmies, Player attacker, Player defender) {
+			Integer defenderArmies, IPlayer attacker, IPlayer defender) {
 
 		lastDiceSelected = attackerArmies;
 		Integer index = 0;
@@ -681,11 +580,11 @@ public class Player implements IPlayer {
 				if (attackerDices.get(i) > defenderDices.get(i)) {
 					defenderArmiesKilled++;
 					System.out.println("--- Attacker wins the battle ---");
-					defender.numberOfArmies--;
+					defender.setNumberOfArmies(defender.getNumberOfArmies()-1);
 				} else {
 					attackerArmiesKilled++;
 					System.out.println("--- Defender wins the battle ---");
-					attacker.numberOfArmies--;
+					attacker.setNumberOfArmies(defender.getNumberOfArmies()-1);
 				}
 			}
 		} else {
@@ -695,11 +594,11 @@ public class Player implements IPlayer {
 				if (attackerDices.get(i) > defenderDices.get(i)) {
 					defenderArmiesKilled++;
 					System.out.println("--- Attacker wins the battle ---");
-					defender.numberOfArmies--;
+					defender.setNumberOfArmies(defender.getNumberOfArmies()-1);
 				} else {
 					attackerArmiesKilled++;
 					System.out.println("--- Defender wins the battle ---");
-					attacker.numberOfArmies--;
+					attacker.setNumberOfArmies(defender.getNumberOfArmies()-1);
 				}
 			}
 		}
@@ -720,7 +619,7 @@ public class Player implements IPlayer {
 	 * @param gameGraph This is an object of the class Graph
 	 * @return true(If all the conditions are satisfied and the desired country is fortified) or false(If the countries specified are absent or it does not fulfill the requirements) 
 	 */
-	public static boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
+	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
 		Country fromcountry = Country.getCountryByName(fromCname, gameGraph);
 
@@ -747,24 +646,7 @@ public class Player implements IPlayer {
 
 		return true;
 	}
-/**
- * This method returns the total number of countries owned by the players.
- * @param playerName The name of the player
- * @param gameGraph This is an object of the class Graph
- * @return An integer value that is equal to the total number of countries owned by the player
- */
-	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-		Integer numberOfCountriesOwned = 0;
 
-		if (Player.getPlayerByName(playerName) == null)
-			return -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.owner.equalsIgnoreCase(playerName)) {
-				numberOfCountriesOwned += 1;
-			}
-		}
-		return numberOfCountriesOwned;
-	}
 /**
  * This method returns the total number of armies owned by the players.
  * @param gameGraph It is an object of the class Graph
@@ -773,7 +655,7 @@ public class Player implements IPlayer {
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		Integer numberOfArmies = 0;
 
-		if (Player.getPlayerByName(this.name) == null)
+		if (Database.getPlayerByName(this.name) == null)
 			return -1;
 		for (Country country : gameGraph.getAdjList()) {
 			if (country.owner.equalsIgnoreCase(this.name)) {
