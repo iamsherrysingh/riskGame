@@ -830,7 +830,7 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean ignoreExchangeCards() {
 		
-		if( currentPlayerObj.getCurrentPlayer().playerCards.size() < 5 ) {
+		if( currentPlayerObj.getCurrentPlayer().getPlayerCards().size() < 5 ) {
 			
 			//Change current state to next state
 			detachObserver(cardExchangeView);
