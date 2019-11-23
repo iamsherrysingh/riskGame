@@ -938,7 +938,8 @@ public class Controller {
 			}
 			else {
 				
-					gamePlayObj.handleAutoPlayer();
+					gamePlayObj.autoExchangeCards();
+					gamePlayObj.reinforceArmy();
 				
 					if( gamePlayObj.checkEndGame())
 						break;

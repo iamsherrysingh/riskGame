@@ -110,16 +110,6 @@ public class GamePlay implements ISubject{
 		this.currentState = newState;
 		
 	}
-	
-	public void handleAutoPlayer() {
-		autoExchangeCards();
-		
-		//playerStrategy.reinforcement();
-		
-		//playerStrategy.attack();
-		
-		//playerStrategy.fortify();
-	}
 
 	/**
 	 * Extract data related to tournament and check validation of data
@@ -854,12 +844,13 @@ public class GamePlay implements ISubject{
 	 * @return true(If the player succeeds in reinforcing their armies) or false(If the countries are not adjacent or the country does not belong to the player or if any other validation fails)
 	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
-	    if(numberOfArmies <= 0) {
+	    
+		if(numberOfArmies <= 0) {
             System.out.println("Reinforcement armies should be a positive number");
             return false;
         }
 
-		if (!Player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
+		if (!playerStrategy.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
 			return false;
 
 		if (currentPlayerObj.getNumReinforceArmies() > 0) {
@@ -870,6 +861,13 @@ public class GamePlay implements ISubject{
 			setCurrentState(State.attackPhase, "Attacking");
 		}
 		setCurrentOperation("Country "+countryName+" reinforced with "+numberOfArmies+" armies.");
+		return true;
+	}
+	
+	public boolean reinforceArmy() {
+		
+		//playerStrategy.reinforcement();
+		//other works
 		return true;
 	}
 	
