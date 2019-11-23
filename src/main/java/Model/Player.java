@@ -22,7 +22,7 @@ public class Player implements IPlayer {
 	private boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
-	private Player(Integer number, String name, Integer numberOfArmies) {
+	public Player(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
 		this.name = name;
 		this.numberOfArmies = numberOfArmies;
@@ -108,28 +108,7 @@ public class Player implements IPlayer {
 		this.defenderRemoved = defenderRemoved;
 	}
 
-	/**
-	 * This adds a new player in Database.playerlist
-	 * 
-	 * @param playerName The name of the player that is to be added
-	 * @param noOfArmies The integer number of armies of the player
-	 * @return true(If the conditions are satisfied and the player is added) or false(If player already exists or if no name of player is entered)
-	 */
-	public static boolean addPlayer(String playerName, Integer noOfArmies) {
-		if (Player.getPlayerByName(playerName) != null) {
-			System.out.println("=======> This player exists <========");
-			return false;
-		} else if (playerName.trim().length() == 0) {
-			System.out.println("=======> Please enter a name for the player <========");
-			return false;
-		}
-		Integer id = Database.getInstance().getPlayerList().size() + 1;
-
-		Player player = new Player(id, playerName, noOfArmies);
-		Database.playerList.add(player);
-		return true;
-	}
-
+	
 	/**
 	 * This removes a player from Database.playerlist
 	 * 

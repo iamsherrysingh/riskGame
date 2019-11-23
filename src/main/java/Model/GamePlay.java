@@ -481,33 +481,49 @@ public class GamePlay implements ISubject{
 	}
 
 	/**
-	 * Add Player Function
+	 * This adds a new player in Database.playerlist
 	 * 
 	 * @param playerName The name of the player that is to be added
-	 * @return true(If the player is successfully added) or false (If the player already exists)
+	 * @param noOfArmies The integer number of armies of the player
+	 * @return true(If the conditions are satisfied and the player is added) or false(If player already exists or if no name of player is entered)
 	 */
 	public 	boolean addPlayer(String playerName, String Strategy) {
-		
-		PlayerStrategy pStrategy = null;
+
+		if (Player.getPlayerByName(playerName) != null) {
+			System.out.println("=======> This player exists <========");
+			return false;
+		} else if (playerName.trim().length() == 0) {
+			System.out.println("=======> Please enter a name for the player <========");
+			return false;
+		}
+		Integer id = Database.getInstance().getPlayerList().size() + 1;
 		
 		if( Strategy.equalsIgnoreCase("human")) {
-			pStrategy = PlayerStrategy.human;
+			
+			Player player = new Player(id, playerName, 0);
+			Database.playerList.add(player);
 		}
 		else if( Strategy.equalsIgnoreCase("aggressive")) {
-			pStrategy = PlayerStrategy.aggressive;
+			
+		//	AggressivePlayer aggressivePlayer = new AggressivePlayer(id, playerName, 0);
+		//	Database.playerList.add(aggressivePlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("benevolent")) {
-			pStrategy = PlayerStrategy.benevolent;
+			
+		//	BenevolentPlayer benevolentPlayer = new BenevolentPlayer(id, playerName, 0);
+		//	Database.playerList.add(benevolentPlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("cheater")) {
-			pStrategy = PlayerStrategy.cheater;
+			
+		//	CheaterPlayer cheaterPlayer = new CheaterPlayer(id, playerName, 0);
+		//	Database.playerList.add(cheaterPlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("random")) {
-			pStrategy = PlayerStrategy.random;
+			
+		//	RandomPlayer randomPlayer = new RandomPlayer(id, playerName, 0);
+		//	Database.playerList.add(randomPlayer);
 		}
 		
-		if (!Player.addPlayer(playerName, 0))
-			return false;
 		setCurrentOperation("Adding Player "+playerName+" to the game.");
 		return true;
 	}
