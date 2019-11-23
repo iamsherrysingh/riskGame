@@ -257,7 +257,7 @@ public class Mapx {
 		}
 		ArrayList<Country> ct = gameGraph.adjList;
 		String[] DefaultMaps = { "map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
-				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" };
+				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
 		Iterator itr = ct.iterator();
 		Scanner scCreate = new Scanner(System.in);
 		String mapName = mp.trim();
