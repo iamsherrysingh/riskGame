@@ -31,6 +31,22 @@ public class Database {
 	public void setPlayerList(ArrayList<IPlayer> playerList) {
 		Database.playerList = playerList;
 	}
+	
+	/**
+	 * This returns the instance of the player where a player is saved in
+	 * Database.playerlist using player's name
+	 * 
+	 * @param playerName The name of the player
+	 * @return instance of the player
+	 */
+	public static IPlayer getPlayerByName(String playerName) {
+		for (IPlayer player : playerList) {
+			if (player.getName().equalsIgnoreCase(playerName)) {
+				return player;
+			}
+		}
+		return null;
+	}
 
 	public ArrayList<Continent> getContinentList() {
 		return continentList;

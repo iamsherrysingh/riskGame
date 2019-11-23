@@ -529,15 +529,25 @@ public class GamePlay implements ISubject{
 	}
 
 	/**
-	 * Remove Player Function
+	 * This removes a player from Database.playerlist
 	 * 
-	 * @param playerName The name of the player that is to be removed
-	 * @return true(If the player is removed from the game successfully) or false(If the player name is absent and the method can not perform the desired operation)
+	 * @param playerName The name of the player to be removed
+	 * @return true(If the player is removed successfully) or false(The player is absent)
 	 */
 	public boolean removePlayer(String playerName) {
-
-		if (!Player.removePlayer(playerName))
+		
+		IPlayer player = Database.getPlayerByName(playerName);
+		if (player == null) {
 			return false;
+		}
+		Database.playerList.remove(player);
+
+		Integer playerNumber = 1;
+		for (IPlayer player1 : Database.getInstance().getPlayerList()) {
+			player1.setNumber(playerNumber);
+			playerNumber++;
+		}
+
 		setCurrentOperation("Removing Player "+playerName+" from the game.");
 		return true;
 	}
