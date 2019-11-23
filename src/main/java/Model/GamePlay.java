@@ -596,7 +596,7 @@ public class GamePlay implements ISubject{
 
 			Country countryToBePopulated = Country.getCountryByNumber(randomCountryNumber, graphObj);
 			if (countryToBePopulated.getOwner() == null) {
-				Player assignedPlayer = Player.getPlayerByNumber(playerNumberToBeAssigned);
+				IPlayer assignedPlayer = Database.getPlayerByNumber(playerNumberToBeAssigned);
 				countryToBePopulated.setOwner(assignedPlayer.getName());
 				assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
 				playerNumberToBeAssigned++;
@@ -667,9 +667,9 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean placeAll() {
 		try {
-			while (!Player.allPlayersRemainingArmiesExhausted()) {
+			while (!Database.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
-					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
+					IPlayer playerThatOwnsThisCountry = Database.getPlayerByName(thisCountry.getOwner());
 					if (playerThatOwnsThisCountry.getNumberOfArmies() > 0) {
 						thisCountry.setNumberOfArmies(thisCountry.getNumberOfArmies() + 1);
 						playerThatOwnsThisCountry.setNumberOfFreeArmies(playerThatOwnsThisCountry.getNumberOfFreeArmies() - 1);
@@ -692,23 +692,23 @@ public class GamePlay implements ISubject{
 	 */
 	public void autoExchangeCards() {
 
-		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
+		IPlayer currentPlayer = currentPlayerObj.getCurrentPlayer();
 		
-		if( currentPlayer.playerCards.size() < 3 )	{		
-			System.out.println( currentPlayer.name +" does not have enough cards for exchange.");
+		if( currentPlayer.getPlayerCards().size() < 3 )	{		
+			System.out.println( currentPlayer.getName() +" does not have enough cards for exchange.");
 			return;			
 		}
 		
-		while(  currentPlayer.playerCards.size() >= 3) {
+		while( currentPlayer.getPlayerCards().size() >= 3) {
 			
-			Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
+			Integer currentPlayerCardsListSize = currentPlayer.getPlayerCards().size();
 			int card1=0, card2= card1 + 1, card3= card1 + 2;
 			boolean findMatchCards = false;
 			
 			for(card1=0; card1 < currentPlayerCardsListSize-2; card1++) {
 				for(card2= card1 + 1; card2 < currentPlayerCardsListSize-1; card2++) {
 					for(card3= card2 + 1; card3 < currentPlayerCardsListSize; card3++) {
-						if (cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(card1), currentPlayer.playerCards.get(card2), currentPlayer.playerCards.get(card3))) {
+						if (cardPlayObj.checkExchangeCardsValidation(currentPlayer.getPlayerCards().get(card1), currentPlayer.getPlayerCards().get(card2), currentPlayer.getPlayerCards().get(card3))) {
 							findMatchCards = true;
 							break;
 						}
@@ -721,21 +721,21 @@ public class GamePlay implements ISubject{
 			}
 			
 			if(findMatchCards) {
-				Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
-				currentPlayer.exchangeCardsTimes++;
+				Integer exchageArmies = (currentPlayer.getExchangeCardsTimes() + 1) * 5;
+				currentPlayer.setExchangeCardsTimes(currentPlayer.getExchangeCardsTimes() + 1);
 				currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
-				System.out.println(currentPlayer.name + " exchanged his cards with " + exchageArmies + " armies.");
+				System.out.println(currentPlayer.getName() + " exchanged his cards with " + exchageArmies + " armies.");
 				
 				Card[] cardItem = new Card[3];
 				
-				cardItem[0] = currentPlayer.playerCards.get(card1);
-				cardItem[1] = currentPlayer.playerCards.get(card2);
-				cardItem[2] = currentPlayer.playerCards.get(card3);
+				cardItem[0] = currentPlayer.getPlayerCards().get(card1);
+				cardItem[1] = currentPlayer.getPlayerCards().get(card2);
+				cardItem[2] = currentPlayer.getPlayerCards().get(card3);
 				
 				for(int item=0; item<3; item++) {
-					for(int Index=0; Index <currentPlayer.playerCards.size(); Index++) {
-						if( cardItem[item].getIdCard() == currentPlayer.playerCards.get(Index).getIdCard()) {
-							currentPlayer.playerCards.remove(Index);
+					for(int Index=0; Index < currentPlayer.getPlayerCards().size(); Index++) {
+						if( cardItem[item].getIdCard() == currentPlayer.getPlayerCards().get(Index).getIdCard()) {
+							currentPlayer.getPlayerCards().remove(Index);
 						}
 					}
 				}
