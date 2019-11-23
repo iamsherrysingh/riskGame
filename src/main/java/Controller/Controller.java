@@ -946,15 +946,14 @@ public class Controller {
 					gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
 					gamePlayObj.CardobserverOperations();
 					
-				}
-				
-				if( gamePlayObj.checkEndGame())
-					break;
-				
-				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-				gamePlayObj.CardobserverOperations();
 			}
-		
+				
+			if( gamePlayObj.checkEndGame())
+				break;
+				
+			gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+			gamePlayObj.CardobserverOperations();
+		}	
 	}
 	
     public static void main(String[] args) throws IOException {

@@ -22,13 +22,13 @@ public class Database {
 	}
 
 	static ArrayList<Continent> continentList= new ArrayList<Continent>();
-	static ArrayList<Player> playerList= new ArrayList<Player>();
+	static ArrayList<IPlayer> playerList= new ArrayList<IPlayer>();
 
-	public ArrayList<Player> getPlayerList() {
+	public ArrayList<IPlayer> getPlayerList() {
 		return playerList;
 	}
 
-	public void setPlayerList(ArrayList<Player> playerList) {
+	public void setPlayerList(ArrayList<IPlayer> playerList) {
 		Database.playerList = playerList;
 	}
 

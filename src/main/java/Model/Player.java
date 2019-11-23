@@ -13,18 +13,14 @@ import java.util.Scanner;
  */
 public class Player implements IPlayer {
 
-    String name;
-    Integer number, numberOfArmies, numberOfFreeArmies;
-	ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	Integer exchangeCardsTimes;
+    private String name;
+    private Integer number, numberOfArmies, numberOfFreeArmies;
+	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
+	private Integer exchangeCardsTimes;
 	public ArrayList<Card> playerCards;
 	static boolean countryConquered;
 	static boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
-
-	public String getName() {
-		return name;
-	}
 
 	private Player(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
@@ -35,13 +31,25 @@ public class Player implements IPlayer {
 		countryConquered = false;
 		defenderRemoved = false;
 	}
+	
+	public PlayerStrategy getPlayerStrategy() {
+		return PlayerStrategy.human;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Integer getNumber() {
 		return number;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
     public Integer getNumberOfFreeArmies() {
@@ -68,9 +76,6 @@ public class Player implements IPlayer {
 		myCountries.add(number);
 	}
 
-	public PlayerStrategy getPlayerStrategy() {
-		return PlayerStrategy.human;
-	}
 	/**
 	 * This adds a new player in Database.playerlist
 	 * 
