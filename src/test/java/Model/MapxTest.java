@@ -68,7 +68,7 @@ public class MapxTest {
             assertTrue(false);
     }
 
-    
+
     
     /**
      *  This is a jUnit test for {@link Model.Mapx#saveMap(Graph, String)}

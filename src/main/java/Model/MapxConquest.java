@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MapxConquest extends Mapx{
 
@@ -29,7 +30,19 @@ public class MapxConquest extends Mapx{
 	  }
 
 	  
-	  
+		public boolean saveMap(Graph gameGraph, String mapFile) throws IOException {
+			
+			convertDominateToConquest(gameGraph);
+			
+			conquestMap.setContinents(continents);
+			conquestMap.setTerritories(territories);
+			
+			conquestMap.writeMapConquest(mapFile);
+			
+		    return true;
+	  }
+
+	  	  
 	  
 	  private boolean convertConquestToDominate() {
 			System.out.println(" convertConquestToDominate started-----");
@@ -127,7 +140,30 @@ public class MapxConquest extends Mapx{
 
 			return true;
 		}
-		
+  
+	  
+	  
+	  private boolean convertDominateToConquest(Graph gameGraph) {
+
+			continents = "[Continents]";
+			countries += "\n";
+			for (Continent continent : Database.getInstance().getContinentList()) {
+				continents += continent.getName() + "=" +  continent.getControlValue() + "\n";
+			}
+			
+			
+			territories = "[Territories]" + "\n";
+			for (Country country : gameGraph.getAdjList()) {
+				territories += country.getName() + "," + 
+			                   country.getCoOrdinate1() + "," + 
+				               country.getCoOrdinate2 + "," +  
+				               country.getInContinent() + "," +
+				               country.getNeighbours() + "\n";
+			}
+			
+			return true;
+		}
+			
 	}
 
 
