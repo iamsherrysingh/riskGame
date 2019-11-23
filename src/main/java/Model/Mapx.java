@@ -153,6 +153,11 @@ public class Mapx {
 	public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
 		try {
 
+			//readMapIntoVariables(mapFile);
+			
+			//ConquestMapFile conquestMapFile = new ConquestMapFile();
+			//Mapx map = new MapxConquest(conquestMapFile);
+			
 			readMapIntoVariables(mapFile);
 			
 		} catch (FileNotFoundException f) {
