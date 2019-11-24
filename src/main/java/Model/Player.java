@@ -1,9 +1,7 @@
 package Model;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.ListIterator;
 import java.util.Random;
 import java.util.Scanner;
 
