@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
 import View.*;
-import com.sun.org.apache.xerces.internal.impl.dv.DatatypeValidator;
-import javax.xml.crypto.Data;
 
 /** 
  * This Class maintains the state of the game and current player.
