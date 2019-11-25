@@ -39,6 +39,9 @@ public class ConquestMapFile{
 
 	public boolean readMapConquest(String mapFile) throws FileNotFoundException {
 		
+
+		  System.out.println(" readMapConquest started-----");
+		  
 		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();

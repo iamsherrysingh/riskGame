@@ -23,6 +23,7 @@ public class MapxConquest extends Mapx{
 		  
 		  conquestMap.readMapConquest(mapFile);
 		  
+		  
 		  continents  = conquestMap.getContinents();
 		  territories = conquestMap.getTerritories();
 			
@@ -31,7 +32,7 @@ public class MapxConquest extends Mapx{
 		  return true;
 	  }
 
-	  
+	  //  loadmap conquestmap.map
 		public boolean saveMap(Graph gameGraph, String mapFile) throws IOException {
 			
 			convertDominateToConquest(gameGraph);
