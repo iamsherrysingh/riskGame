@@ -120,7 +120,7 @@ public class GamePlay implements ISubject{
 		ArrayList<String> mapList = new ArrayList<String>();
 		ArrayList<String> StrategyList = new ArrayList<String>();
 		int gameNumber = 0;
-		int gameTurn;
+		int gameTurn = 0;
 		
 		Iterator<String> itr = tournamentData.iterator(); 
 		String itrList = itr.next();
@@ -320,9 +320,23 @@ public class GamePlay implements ISubject{
 				}
 				
 				populateCountries();
-				placeAll();
-				
+				placeAll();	
 				currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
+				setPlayerStrategy();
+				
+				// Playing game with duration for computer players.
+				for(int turnCount = 0; turnCount < gameTurn; turnCount++ ) {
+					autoExchangeCards();
+					reinforceArmy();
+					// attack();
+					
+					if ( checkEndGame() ) {
+						gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
+						break;
+					}
+					
+					// fortify;
+				}
 				
 			}
 		}
@@ -917,8 +931,7 @@ public class GamePlay implements ISubject{
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 		
-		if (!
-)
+		if (!Player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.
