@@ -492,7 +492,7 @@ public class Country {
 	 */
 	public static void updatePlayerListAndDeclareWinner(Graph g) {
 
-		for (Player player : Database.getInstance().getPlayerList()) {
+		for (IPlayer player : Database.getInstance().getPlayerList()) {
 			Integer NumberOfCountriesOwned = 0;
 			for (Country country : g.getAdjList()) {
 

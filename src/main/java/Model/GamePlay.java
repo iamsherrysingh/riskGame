@@ -472,7 +472,6 @@ public class GamePlay implements ISubject{
 	 * This adds a new player in Database.playerlist
 	 * 
 	 * @param playerName The name of the player that is to be added
-	 * @param noOfArmies The integer number of armies of the player
 	 * @return true(If the conditions are satisfied and the player is added) or false(If player already exists or if no name of player is entered)
 	 */
 	public 	boolean addPlayer(String playerName, String Strategy) {
@@ -967,7 +966,7 @@ public class GamePlay implements ISubject{
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
-		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
+		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName() + " decided not to attack");
 		return true;
 	}
 	
@@ -1032,7 +1031,7 @@ public class GamePlay implements ISubject{
 	    String output="";
 //	    int singleOwnerFound= 0;
 	    for(Continent continent: Database.getInstance().getContinentList()){
-	        for(Player player: Database.getInstance().getPlayerList()){
+	        for(IPlayer player: Database.getInstance().getPlayerList()){
                 if(Continent.continentBelongToPlayer(player.getName(), continent.getName(), gamePlay.getGraphObj()) ==true){
                     output+=continent.getName() +" : "+player.getName() +"\n";
 //                    singleOwnerFound =1;
