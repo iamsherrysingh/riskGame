@@ -13,7 +13,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setName(String name) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setNumber(Integer number) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setNumberOfArmies(Integer numberOfArmies) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setMyCountries(Integer number) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setPlayerCards(Card card) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setCountryConquered(boolean countryConquered) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -115,14 +115,63 @@ public abstract class AggresivePlayer implements IPlayer {
 	@Override
 	public void setDefenderRemoved(boolean countryConquered) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
+	public boolean reinforcement( Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		Integer numberOfArmies=currentPlayerObj.getNumReinforceArmies();
+		Country strongestCountry = null;
+		
+		for (Country country : graphObj.getAdjList()) {
+			
+			if(country.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
+				if(strongestCountry==null) {
+					strongestCountry=country;
+					//countryName=country.getName();
+				}else {
+					if(country.getNumberOfArmies()>strongestCountry.getNumberOfArmies()) {
+						strongestCountry=country;
+					}
+				}
+			}
+		}
+		
+		
+		// check: if target country is not exist, return false
+		Country targetCountry = strongestCountry;
+
+		if (targetCountry == null) {
+			System.out.println("This country does not exist.");
+			return false;
+		}
+
+		// check: if country does not belong to the currentPlayer, return false
+		if (targetCountry.getOwner() != null) {
+			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
+				System.out.println("The country is not belong to the current player");
+				return false;
+			}
+		}
+
+		// check: if numberOfArmy is more than allocated army, return false
+		if (numberOfArmies > currentPlayerObj.getNumReinforceArmies()) {
+			System.out.println(
+					"The current player can reinforce just " + currentPlayerObj.getNumReinforceArmies() + "armies");
+			return false;
+		}
+
+		// Reinforce armies in the target country
+		targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + numberOfArmies);
+
+		// increase the number of armies belong to the player
+		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
+		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
+
+		return true;
 	}
 
 	@Override
@@ -143,5 +192,4 @@ public abstract class AggresivePlayer implements IPlayer {
 		return null;
 	}
 
-	
 }
