@@ -105,25 +105,6 @@ public class Database {
 		}
 		return countryList;
 	}
-	
-	/**
-	 * This method returns the total number of countries owned by the players.
-	 * @param playerName The name of the player
-	 * @param gameGraph This is an object of the class Graph
-	 * @return An integer value that is equal to the total number of countries owned by the player
-	 */
-		public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-			Integer numberOfCountriesOwned = 0;
-
-			if (Database.getPlayerByName(playerName) == null)
-				return -1;
-			for (Country country : gameGraph.getAdjList()) {
-				if (country.owner.equalsIgnoreCase(playerName)) {
-					numberOfCountriesOwned += 1;
-				}
-			}
-			return numberOfCountriesOwned;
-		}
 
 	public ArrayList<Continent> getContinentList() {
 		return continentList;
