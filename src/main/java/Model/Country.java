@@ -503,6 +503,7 @@ public class Country {
 
 			if (NumberOfCountriesOwned == 0) {
 				GamePlay.getInstance().removePlayer(player.getName());
+				
 			} else if (NumberOfCountriesOwned == g.getAdjList().size()) {
 				System.out.println(player.getName() + "wins the game!");
 			}
