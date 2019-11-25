@@ -11,7 +11,7 @@ import View.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class 	GamePlay implements ISubject{
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
@@ -118,9 +118,9 @@ public class 	GamePlay implements ISubject{
 	public boolean tournament(ArrayList<String> tournamentData) {
 		
 		ArrayList<String> mapList = new ArrayList<String>();
-		ArrayList<PlayerStrategy> StrategyList = new ArrayList<PlayerStrategy>();
-		int gameNumber;
-		int gameTurn;
+		ArrayList<String> StrategyList = new ArrayList<String>();
+		int gameNumber = 0;
+		int gameTurn = 0;
 		
 		Iterator<String> itr = tournamentData.iterator(); 
 		String itrList = itr.next();
@@ -175,7 +175,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						aggressiveFlag = true;
-						StrategyList.add(PlayerStrategy.aggressive);
+						StrategyList.add("aggressive");
 					}
 					else if( itrList.equalsIgnoreCase("Benevolent")) {
 						if( benevolentFlag ) {
@@ -183,7 +183,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						benevolentFlag = true;
-						StrategyList.add(PlayerStrategy.benevolent);
+						StrategyList.add("benevolent");
 					}
 					else if( itrList.equalsIgnoreCase("Random")) {
 						if( randomFlag ) {
@@ -191,7 +191,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						randomFlag = true;
-						StrategyList.add(PlayerStrategy.random);
+						StrategyList.add("random");
 					}
 					else if( itrList.equalsIgnoreCase("Cheater")) {
 						if( cheaterFlag ) {
@@ -199,7 +199,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						cheaterFlag = true;
-						StrategyList.add(PlayerStrategy.cheater);
+						StrategyList.add("cheater");
 					}
 					else {
 						System.out.println("Wrong command. Player Strategies can only be Aggressive, Benevolent, Random or Cheater.");
@@ -295,6 +295,52 @@ public class 	GamePlay implements ISubject{
 
 			}
 		}
+		
+		String[][] gameResult = new String[mapList.size()][gameNumber];
+		// Tournament Game Procedure
+		for(int mapCounter=0; mapCounter < mapList.size(); mapCounter++) {
+			
+			if(!loadGameMap(mapList.get(mapCounter))) {	
+				System.out.println("Your input map does not exist.");
+				return false;
+			}
+			
+			for(int gameCounter=0; gameCounter < gameNumber; gameCounter++) {
+				
+				// Reset PlayerList 
+				if( Database.playerList.size() != 0) {	
+					for(int i=0; i < Database.playerList.size(); i++) {
+						removePlayer(StrategyList.get(i));
+					} 			
+				}
+				
+				// Add Players to the List
+				for(int i=0; i < StrategyList.size(); i++) {		
+					addPlayer(StrategyList.get(i), StrategyList.get(i));		
+				}
+				
+				populateCountries();
+				placeAll();	
+				currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
+				setPlayerStrategy();
+				
+				// Playing game with duration for computer players.
+				for(int turnCount = 0; turnCount < gameTurn; turnCount++ ) {
+					autoExchangeCards();
+					reinforceArmy();
+					// attack();
+					
+					if ( checkEndGame() ) {
+						gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
+						break;
+					}
+					
+					// fortify;
+				}
+				
+			}
+		}
+		
 
 		setCurrentState(State.gameFinished, "Game Finished"); 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
