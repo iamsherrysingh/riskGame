@@ -16,8 +16,8 @@ public class Player implements IPlayer {
 	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
 	private Integer exchangeCardsTimes;
 	private ArrayList<Card> playerCards;
-	private boolean countryConquered;
-	private boolean defenderRemoved;
+	public boolean countryConquered;
+	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
 	public Player(Integer number, String name, Integer numberOfArmies) {
