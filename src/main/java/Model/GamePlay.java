@@ -296,27 +296,37 @@ public class GamePlay implements ISubject{
 			}
 		}
 		
+		String[][] gameResult = new String[mapList.size()][gameNumber];
 		// Tournament Game Procedure
-		for(int gamecounter=0; gamecounter < gameNumber; gamecounter++) {
+		for(int mapCounter=0; mapCounter < mapList.size(); mapCounter++) {
 			
-			// Reset PlayerList 
-			if( Database.playerList.size() != 0) {	
-				for(int i=0; i < Database.playerList.size(); i++) {
-					removePlayer(StrategyList.get(i));
-				} 			
+			if(!loadGameMap(mapList.get(mapCounter))) {	
+				System.out.println("Your input map does not exist.");
+				return false;
 			}
 			
-			// Add Players to the List
-			for(int i=0; i < StrategyList.size(); i++) {		
-				addPlayer(StrategyList.get(i), StrategyList.get(i));		
+			for(int gameCounter=0; gameCounter < gameNumber; gameCounter++) {
+				
+				// Reset PlayerList 
+				if( Database.playerList.size() != 0) {	
+					for(int i=0; i < Database.playerList.size(); i++) {
+						removePlayer(StrategyList.get(i));
+					} 			
+				}
+				
+				// Add Players to the List
+				for(int i=0; i < StrategyList.size(); i++) {		
+					addPlayer(StrategyList.get(i), StrategyList.get(i));		
+				}
+				
+				populateCountries();
+				placeAll();
+				
+				currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
+				
 			}
-			
-			populateCountries();
-			placeAll();
-			
-			currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
-			
 		}
+		
 
 		setCurrentState(State.gameFinished, "Game Finished"); 
 	//	setCurrentOperation("Adding continent "+ continentName + " with control value "+controlValue);
