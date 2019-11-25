@@ -10,7 +10,6 @@ public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
 	String name, owner;
 	ArrayList<Integer> neighbours;
-	static GamePlay gamePlayObj = GamePlay.getInstance();
 
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
 			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
@@ -503,7 +502,8 @@ public class Country {
 			}
 
 			if (NumberOfCountriesOwned == 0) {
-				gamePlayObj.removePlayer(player.getName());
+				GamePlay.getInstance().removePlayer(player.getName());
+				
 			} else if (NumberOfCountriesOwned == g.getAdjList().size()) {
 				System.out.println(player.getName() + "wins the game!");
 			}

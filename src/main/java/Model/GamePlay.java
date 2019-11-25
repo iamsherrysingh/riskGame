@@ -11,7 +11,7 @@ import View.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay implements ISubject{
+public class 	GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
@@ -472,7 +472,6 @@ public class GamePlay implements ISubject{
 	 * This adds a new player in Database.playerlist
 	 * 
 	 * @param playerName The name of the player that is to be added
-	 * @param noOfArmies The integer number of armies of the player
 	 * @return true(If the conditions are satisfied and the player is added) or false(If player already exists or if no name of player is entered)
 	 */
 	public 	boolean addPlayer(String playerName, String Strategy) {
