@@ -11,7 +11,7 @@ import View.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class GamePlay implements ISubject{
+public class 	GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
