@@ -153,8 +153,8 @@ public class Mapx {
 		  convertConquestToDominate();
 		  
 			System.out.println("========here========" );
-			System.out.println(continents);
-			System.out.println(territories);
+			System.out.println(countries);
+			System.out.println(borders);
 		  
 			/*
 		// Read Continents
