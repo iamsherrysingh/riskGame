@@ -334,8 +334,11 @@ public class GamePlay implements ISubject{
 						gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
 						break;
 					}
-					
+					else if ( !checkEndGame() && ( turnCount == (gameTurn - 1)  ) ) {
+						gameResult[mapCounter][gameCounter] = "Draw";
+					}
 					// fortify;
+					currentPlayerObj.goToNextPlayer(this.getCurrentState(), this.getGraphObj());
 				}
 				
 			}

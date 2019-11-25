@@ -572,7 +572,7 @@ public class Controller {
 						//check if control value is numeric
 						for(int i=0; i<controlValueStr.length(); i++) {
 							if(!Character.isDigit(controlValueStr.charAt(i))){
-								System.out.println("Invalid Command: Control Value shoud be digit");
+								System.out.println("Invalid Command: Your input for Control Value is not valid.");
 								return false;
 							}
 						}
@@ -649,7 +649,7 @@ public class Controller {
 							//check if the data related to the card's numbers in exchange cards command is numeric
 							for(int i=0; i<cardNumber.length(); i++) {
 								if(!Character.isDigit(cardNumber.charAt(i))){
-									System.out.println("Invalid command: Card's Number should be digit");
+									System.out.println("Invalid command: Your Input for Card's Number is not valid.");
 									return false;
 								}
 							}
@@ -676,6 +676,14 @@ public class Controller {
 					case showmap:
 						break;
 					case reinforce:
+						String rnfcNumber = itr.taskData.get(2);	
+						//check if the data related to the number of dice in attack command is numeric
+						for(int i=0; i<rnfcNumber.length(); i++) {
+							if(!Character.isDigit(rnfcNumber.charAt(i))){
+								System.out.println("Invalid command: Your Input for number is not valid.");
+								return false;
+							}
+						}
 						break;	
 					default:
 						System.out.println("Invalid command in the current state");
@@ -697,7 +705,7 @@ public class Controller {
 						//check if the data related to the number of dice in attack command is numeric
 						for(int i=0; i<numOfDice.length(); i++) {
 							if(!Character.isDigit(numOfDice.charAt(i))){
-								System.out.println("Invalid command: Number of dice should be digit");
+								System.out.println("Invalid command: Your Input for number is not valid.");
 								return false;
 							}
 						}
@@ -721,7 +729,7 @@ public class Controller {
 						//check if the data related to the number of army in fortify command is numeric
 						for(int i=0; i<numOfFortify.length(); i++) {
 							if(!Character.isDigit(numOfFortify.charAt(i))){
-								System.out.println("Invalid command: Number of army should be digit");
+								System.out.println("Invalid command: Your Input for number is not valid.");
 								return false;
 							}
 						}
