@@ -1,9 +1,6 @@
 package View;
 
-import Model.Continent;
-import Model.Database;
-import Model.GamePlay;
-import Model.Player;
+import Model.*;
 
 public class WorldDominationView implements IObserver{
     String header=          "================================================"  + "\n" +
@@ -13,11 +10,11 @@ public class WorldDominationView implements IObserver{
 
     String data="";
     @Override
-    public void update(GamePlay gamePlay, Player playerobj) {
+    public void update(GamePlay gamePlay, IPlayer playerobj) {
 
         try {
             data= "Map Ownership:";
-            for(Player player: Database.getInstance().getPlayerList()) {
+            for(IPlayer player: Database.getInstance().getPlayerList()) {
                 data += "\nPlayer " + player.getName() + " : " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
@@ -33,7 +30,7 @@ public class WorldDominationView implements IObserver{
 
         try {
             data+="\nArmies on map:";
-            for(Player player: Database.getInstance().getPlayerList()) {
+            for(IPlayer player: Database.getInstance().getPlayerList()) {
                 data += "\nPlayer " + player.getName() + " has " + gamePlay.getTotalNumberOfArmies(player.getName()) + " armies on map";
             }
             if(Database.getInstance().getPlayerList().size() ==0)

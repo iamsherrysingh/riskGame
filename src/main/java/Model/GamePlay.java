@@ -892,6 +892,7 @@ public class GamePlay implements ISubject{
 		// if defender lost all of his country, attacker will owned all of his cards.
 		if (  playerStrategy.getDefenderRemoved() == true ) {
 			
+			
 			IPlayer defender = Database.getPlayerByName(defenderName);
 			for(Card itr: defender.getPlayerCards()) {
 				Card tempcard = itr;
@@ -1017,7 +1018,7 @@ public class GamePlay implements ISubject{
  	public Integer getTotalNumberOfArmies(String playerName){
 		try{
 //			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
-			return Player.getPlayerByName(playerName).getNumberOfArmies();
+			return Database.getPlayerByName(playerName).getNumberOfArmies();
 		}
 		catch(Exception e){
 			return -1;
@@ -1028,7 +1029,7 @@ public class GamePlay implements ISubject{
 	    String output="";
 //	    int singleOwnerFound= 0;
 	    for(Continent continent: Database.getInstance().getContinentList()){
-	        for(Player player: Database.getInstance().getPlayerList()){
+	        for(IPlayer player: Database.getInstance().getPlayerList()){
                 if(Continent.continentBelongToPlayer(player.getName(), continent.getName(), gamePlay.getGraphObj()) ==true){
                     output+=continent.getName() +" : "+player.getName() +"\n";
 //                    singleOwnerFound =1;

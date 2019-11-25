@@ -26,6 +26,7 @@ public interface IPlayer {
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj);
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj);
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph);
+	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph);
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph);
 	
 }
