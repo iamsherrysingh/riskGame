@@ -912,6 +912,7 @@ public class Controller {
 	public void handleGame() {
 		
 		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+		//maybe exchanging cards state here and world domination view
 		gamePlayObj.CardobserverOperations();
 		
 		while(gamePlayObj.getCurrentState() != State.gameFinished) {
@@ -937,14 +938,14 @@ public class Controller {
 			}
 			else {
 				
-					gamePlayObj.autoExchangeCards();
-					gamePlayObj.reinforceArmy();
+				gamePlayObj.autoExchangeCards();
+				gamePlayObj.reinforceArmy();
 				
-					if( gamePlayObj.checkEndGame())
-						break;
+				if( gamePlayObj.checkEndGame())
+					break;
 				
-					gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-					gamePlayObj.CardobserverOperations();
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.CardobserverOperations();
 					
 			}
 				

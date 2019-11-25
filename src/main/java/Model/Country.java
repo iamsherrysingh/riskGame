@@ -10,6 +10,7 @@ public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
 	String name, owner;
 	ArrayList<Integer> neighbours;
+	static GamePlay gamePlayObj = GamePlay.getInstance();
 
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
 			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
@@ -492,7 +493,7 @@ public class Country {
 	 */
 	public static void updatePlayerListAndDeclareWinner(Graph g) {
 
-		for (Player player : Database.getInstance().getPlayerList()) {
+		for (IPlayer player : Database.getInstance().getPlayerList()) {
 			Integer NumberOfCountriesOwned = 0;
 			for (Country country : g.getAdjList()) {
 
@@ -502,7 +503,7 @@ public class Country {
 			}
 
 			if (NumberOfCountriesOwned == 0) {
-				Player.removePlayer(player.getName());
+				gamePlayObj.removePlayer(player.getName());
 			} else if (NumberOfCountriesOwned == g.getAdjList().size()) {
 				System.out.println(player.getName() + "wins the game!");
 			}
