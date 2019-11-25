@@ -11,7 +11,7 @@ import View.*;
  * The methods of this class are called by Controller.
  * This class has singleton implementation.
  */
-public class 	GamePlay implements ISubject{
+public class GamePlay implements ISubject{
 	
 	/**
 	 * This file holds most of the utility functions that call other methods for
@@ -118,8 +118,8 @@ public class 	GamePlay implements ISubject{
 	public boolean tournament(ArrayList<String> tournamentData) {
 		
 		ArrayList<String> mapList = new ArrayList<String>();
-		ArrayList<PlayerStrategy> StrategyList = new ArrayList<PlayerStrategy>();
-		int gameNumber;
+		ArrayList<String> StrategyList = new ArrayList<String>();
+		int gameNumber = 0;
 		int gameTurn;
 		
 		Iterator<String> itr = tournamentData.iterator(); 
@@ -175,7 +175,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						aggressiveFlag = true;
-						StrategyList.add(PlayerStrategy.aggressive);
+						StrategyList.add("aggressive");
 					}
 					else if( itrList.equalsIgnoreCase("Benevolent")) {
 						if( benevolentFlag ) {
@@ -183,7 +183,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						benevolentFlag = true;
-						StrategyList.add(PlayerStrategy.benevolent);
+						StrategyList.add("benevolent");
 					}
 					else if( itrList.equalsIgnoreCase("Random")) {
 						if( randomFlag ) {
@@ -191,7 +191,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						randomFlag = true;
-						StrategyList.add(PlayerStrategy.random);
+						StrategyList.add("random");
 					}
 					else if( itrList.equalsIgnoreCase("Cheater")) {
 						if( cheaterFlag ) {
@@ -199,7 +199,7 @@ public class 	GamePlay implements ISubject{
 							return false;
 						}
 						cheaterFlag = true;
-						StrategyList.add(PlayerStrategy.cheater);
+						StrategyList.add("cheater");
 					}
 					else {
 						System.out.println("Wrong command. Player Strategies can only be Aggressive, Benevolent, Random or Cheater.");
@@ -294,6 +294,28 @@ public class 	GamePlay implements ISubject{
 				}
 
 			}
+		}
+		
+		// Tournament Game Procedure
+		for(int gamecounter=0; gamecounter < gameNumber; gamecounter++) {
+			
+			// Reset PlayerList 
+			if( Database.playerList.size() != 0) {	
+				for(int i=0; i < Database.playerList.size(); i++) {
+					removePlayer(StrategyList.get(i));
+				} 			
+			}
+			
+			// Add Players to the List
+			for(int i=0; i < StrategyList.size(); i++) {		
+				addPlayer(StrategyList.get(i), StrategyList.get(i));		
+			}
+			
+			populateCountries();
+			placeAll();
+			
+			currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
+			
 		}
 
 		setCurrentState(State.gameFinished, "Game Finished"); 
@@ -885,7 +907,8 @@ public class 	GamePlay implements ISubject{
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 		
-		if (!Player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
+		if (!
+)
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.

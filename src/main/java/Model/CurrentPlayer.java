@@ -72,7 +72,7 @@ public class CurrentPlayer {
 	/**
 	 * Reset players turn whenever it comes to the end of the players list.
 	 * 
-	 * @param currentState It is an object of the class currentState
+	 * @param currentState It is an enumerator parameter of currentState enum.
 	 * @param gameGraph It is an object of the class Graph
 	 */
 	public void goToFirstPlayer(State currentState, Graph gameGraph) {
