@@ -103,6 +103,54 @@ public class BenevolentPlayer implements IPlayer {
         return false;
     }
 
+    public boolean reinforcement( Graph graphObj, CurrentPlayer currentPlayerObj) {
+        // TODO Auto-generated method stub
+
+        Integer numberOfArmies=currentPlayerObj.getNumReinforceArmies();
+        Country weakestCountry = null;
+
+        for (Country country : graphObj.getAdjList()) {
+
+            if(country.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
+                if(weakestCountry==null) {
+                    weakestCountry=country;
+                    //countryName=country.getName();
+                }else {
+                    if(country.getNumberOfArmies() < weakestCountry.getNumberOfArmies()) {
+                        weakestCountry=country;
+                    }
+                }
+            }
+        }
+
+        // check: if target country is not existent, return false
+        Country targetCountry = weakestCountry;
+
+        if (targetCountry == null) {
+            System.out.println("This country does not exist.");
+            return false;
+        }
+
+        // check: if country does not belong to the currentPlayer, return false
+        if (targetCountry.getOwner() != null) {
+            if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
+                System.out.println("The country does not belong to the current player");
+                return false;
+            }
+        }
+
+        // Reinforce armies in the target country
+        targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + numberOfArmies);
+
+        // increase the number of armies belong to the player
+        currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
+        currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
+
+        return true;
+    }
+
+
+
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
         return false;
