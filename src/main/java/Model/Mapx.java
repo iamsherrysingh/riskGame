@@ -48,7 +48,7 @@ public class Mapx {
 			else if (fileType=="Conquest") {
 				System.out.println("input file is in Conquest format");
 			    ConquestMapFile conquestMap = new ConquestMapFile();
-			    MapreadWriteAdaptter readMapFile = new MapreadWriteAdaptter(conquestMap);
+			    MapReadWriteAdaptter readMapFile = new MapReadWriteAdaptter(conquestMap);
 			    readMapFile.readMapIntoVariables(mapFile);
 			}
 			
@@ -217,28 +217,33 @@ public class Mapx {
 	 *         name is entered or is invalid)
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
+		
 		if (validateMap(gameGraph) == false) {
 			return false;
 		}
-		mp = mp.trim();
-		if (mp.length() == 0) {
+
+		if (mp.trim().length() == 0) {
 			System.out.println("Please enter a name for the map");
 			return false;
 		}
-		ArrayList<Country> ct = gameGraph.adjList;
+		
+
+		
 		String[] DefaultMaps = { "map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
-		Iterator itr = ct.iterator();
-		Scanner scCreate = new Scanner(System.in);
+		
+
+
 		String mapName = mp.trim();
 		boolean testEmptyString = "".equals(mapName);
+		
 		if (testEmptyString == false) {
 
 			if (Arrays.asList(DefaultMaps).contains(mapName)) {
 				System.out.println("you cannot edit a default map");
 				return false;
 			} else {
-				// Create the file
+				
 				File f = createFile(mapName);
 				
 				DominationMapFile dominationMapFile = new DominationMapFile();
@@ -292,10 +297,10 @@ public class Mapx {
 					}
 					writer.write(countIterator + borderString + System.getProperty("line.separator"));
 				}
-				writer.close();
-				return true;
-				
+				writer.close();				
 				*/
+				
+				return true;
 			}
 		} else {
 			System.out.println("Please enter a valid map name!");

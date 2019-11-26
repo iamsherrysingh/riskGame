@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MapreadWriteAdaptter extends DominationMapFile{
+public class MapReadWriteAdaptter extends DominationMapFile{
 	
 	  Database database = Database.getInstance();
 
@@ -13,7 +14,7 @@ public class MapreadWriteAdaptter extends DominationMapFile{
 	  private ConquestMapFile conquestMap;
 
 	
-	  public MapreadWriteAdaptter(ConquestMapFile conquestMap) {
+	  public MapReadWriteAdaptter(ConquestMapFile conquestMap) {
 	    this.conquestMap = conquestMap;
 	    }
 
@@ -32,7 +33,18 @@ public class MapreadWriteAdaptter extends DominationMapFile{
 	  }
 
   
-	  
+
+
+	  public boolean writeMapFile(Graph gameGraph, String mapName, File f) throws IOException{
+		  
+		  convertDominateToConquest(gameGraph);
+		  
+		  conquestMap.writeMapConquest(mapName, f);
+		  
+		  return true;
+	  }
+
+  
 	  private boolean convertConquestToDominate() {
 			System.out.println(" convertConquestToDominate started-----");
 

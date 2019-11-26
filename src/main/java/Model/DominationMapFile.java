@@ -131,4 +131,82 @@ public class DominationMapFile {
 			return true;
 		}
 
+		
+		
+		
+
+		/**
+		 * This method operates on the gameGraph variable and converts it to map file.
+		 *
+		 * @param gameGraph It is the object of the class Graph
+		  * @param mp name of map
+		 * @throws IOException If the Input or Output file is invalid
+		 * @return true(If the method executes and the map is saved) or false(If no map
+		 *         name is entered or is invalid)
+		 */
+		public boolean writeMapFile(Graph gameGraph, String mp, File f) throws IOException {
+
+					FileWriter writer = new FileWriter(f);
+					
+					writer.write("name " + mp + System.getProperty("line.separator"));
+					writer.write(System.getProperty("line.separator"));
+					writer.write("[files]" + System.getProperty("line.separator"));
+					writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+					writer.write("map sample.gif" + System.getProperty("line.separator"));
+					writer.write("crd sample.cards" + System.getProperty("line.separator"));
+					writer.write("prv world.jpg" + System.getProperty("line.separator"));
+					writer.write(System.getProperty("line.separator"));
+					writer.write("[continents]" + System.getProperty("line.separator"));
+					
+					
+					for (int i = 0; i < database.getContinentList().size(); i++) {
+						Continent continent = database.getContinentList().get(i);
+						writer.write(continent.getName() + " " + continent.getControlValue() + " " + continent.getColor());
+						if (i < database.getContinentList().size() - 1) {
+							writer.write(System.getProperty("line.separator"));
+						}
+					}
+					
+					
+					writer.write(System.getProperty("line.separator"));
+					writer.write(System.getProperty("line.separator"));
+					writer.write("[countries]" + System.getProperty("line.separator"));
+					
+					
+					int cnt = 0;
+					for (Country country : gameGraph.getAdjList()) {
+						cnt++;
+						String  CountryName = country.name;
+						Integer ContiNumber = country.inContinent;
+						Integer coordinateOne = country.coOrdinate1;
+						Integer coordinateTwo = country.getCoOrdinate2;
+						writer.write(cnt + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " "
+								+ coordinateTwo + System.getProperty("line.separator"));
+					}
+					
+					
+					writer.write(System.getProperty("line.separator"));
+					writer.write("[borders]" + System.getProperty("line.separator"));
+
+
+					cnt = 0;
+					for (Country country : gameGraph.getAdjList()) {
+						cnt++;
+						ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
+						NeighbourList = country.neighbours;
+						String borderString = "";
+						for (int i = 0; i < NeighbourList.size(); i++) {
+							borderString = borderString + " " + NeighbourList.get(i);
+						}
+						writer.write(cnt + borderString + System.getProperty("line.separator"));
+					}
+					
+					
+					writer.close();
+					
+					
+					
+					return true;
+
+		}
 }
