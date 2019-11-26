@@ -36,13 +36,21 @@ public class Mapx {
 	public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
 		try {
 
-			//DominationMapFile readMapFile = new DominationMapFile();
-			//readMapFile.readMapIntoVariables(mapFile);
-			
+			String fileType = recognizeFileType(mapFile);
 
+			System.out.println("file format is: " + fileType);
+			
+			if (fileType=="Domination") {
+				System.out.println("input file is in Domonation format");
+			DominationMapFile readMapFile = new DominationMapFile();
+			readMapFile.readMapIntoVariables(mapFile);
+			}
+			else if (fileType=="Conquest") {
+				System.out.println("input file is in Conquest format");
 			ConquestMapFile conquestMap = new ConquestMapFile();
 			MapreadWriteAdaptter readMapFile = new MapreadWriteAdaptter(conquestMap);
 			readMapFile.readMapIntoVariables(mapFile);
+			}
 			
 			System.out.println("executed");
 			
@@ -55,7 +63,7 @@ public class Mapx {
 			System.out.println(f.getMessage());
 			return false;
 		}
-		// loadmap conquestmap.map
+
 		gameGraph.getAdjList().clear(); // Clearing gameGraph before laoding new map
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
@@ -92,6 +100,38 @@ public class Mapx {
 		
 		return true;
 	}
+
+	private String recognizeFileType(String mapFile) {
+		
+		String fileType = null;
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+
+			String line = br.readLine().trim();
+
+			while (line != null) {
+
+				line = br.readLine();
+				
+				if (line.equals("[countries]")) {
+					return fileType = "Domination";
+				}
+				else if(line.equals("[Territories]")){
+					return fileType = "Conquest";
+				}
+
+			}
+			
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+		return fileType;
+        
+	}
+	
 
 	/**
 	 * This is a utility method that creates a plain text file
