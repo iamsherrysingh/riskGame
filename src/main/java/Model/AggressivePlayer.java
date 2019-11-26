@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 public class AggressivePlayer implements IPlayer {
 
