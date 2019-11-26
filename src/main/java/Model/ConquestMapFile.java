@@ -39,10 +39,6 @@ public class ConquestMapFile extends DominationMapFile{
 
 	public boolean readMapConquest(String mapFile) throws FileNotFoundException {
 		
-
-		  System.out.println(" readMapConquest started-----");
-		  
-		// Read Continents
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
 			
@@ -78,17 +74,7 @@ public class ConquestMapFile extends DominationMapFile{
 
 		}
 		
-	/*
-		System.out.println(" end of reading continents " + continents);
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-	*/
 		
-		
-		// Read Territories
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 			StringBuilder sb = new StringBuilder();
 			
@@ -123,15 +109,12 @@ public class ConquestMapFile extends DominationMapFile{
 		}
 
 		
-		//System.out.println(territories);
-		
 		return true;
 	}
 
 	
-	public boolean writeMapConquest(String mapName) throws IOException {
+	public boolean writeMapConquest(String mapName, File f) throws IOException {
 
-			File f = Mapx.createFile(mapName);
 			FileWriter writer = new FileWriter(f);
 			writer.write("name " + mapName + System.getProperty("line.separator"));
 			writer.write(System.getProperty("line.separator"));

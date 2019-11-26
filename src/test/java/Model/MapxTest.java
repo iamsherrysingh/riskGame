@@ -54,20 +54,6 @@ public class MapxTest {
             assertTrue(false);
     }
 
-    
-    @Test
-    public void loadMapConquest() throws Exception {
-
-        gamePlay.loadGameMap("conquestmap.map");
-		
-        Integer numberOfCountries=0;
-        numberOfCountries= gamePlay.getGraphObj().getAdjList().size();
-        if(numberOfCountries > 0)
-            assertTrue(true);
-        else
-            assertTrue(false);
-    }
-
 
     
     /**
@@ -85,6 +71,30 @@ public class MapxTest {
         assertTrue(exists == false);
     }
 
+    
+    
+  
+    
+    
+    
+    @Test
+    public void saveMapInFile() throws IOException {
+
+        gamePlay.loadGameMap("map.map");
+        mapx.saveMap(gamePlay.getGraphObj(), "newfile");
+        String path = "src/main/resources/.map";
+        File file = new File(path);
+        boolean exists = file.exists();
+        assertTrue(exists == false);
+        
+    }
+
+    
+    
+    
+    
+    
+    
     /**
      *  This is a jUnit test for {@link Model.Mapx#validateMap(Graph)}
      * @throws IOException This throws IOexception to caller method
