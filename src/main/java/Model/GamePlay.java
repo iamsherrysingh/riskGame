@@ -547,7 +547,7 @@ public class GamePlay implements ISubject {
 
 		if (Database.playerList.size() >= graphObj.getAdjList().size()) {
 			System.out.println(
-					"You cannot add player as the number of players cannot be more than the number of countries.");
+					"Number of players cannot be more than the number of countries.");
 			return false;
 		} else {
 			if (Database.getPlayerByName(playerName) != null) {
@@ -581,13 +581,12 @@ public class GamePlay implements ISubject {
 				Database.playerList.add(randomPlayer);
 			}
 
-			setCurrentOperation("Adding Player " + playerName + " to the game.");
+			setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
 			return true;
 		}
 
 		
-		setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
-		return true;
+		
 
 	}
 
