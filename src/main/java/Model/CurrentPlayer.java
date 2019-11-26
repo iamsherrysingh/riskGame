@@ -53,7 +53,7 @@ public class CurrentPlayer {
 	 * @param currentState It is an object of the class currentState
 	 * @param gameGraph It is an object of the class Graph
 	 */
-	public void goToNextPlayer(State currentState, Graph gameGraph) {
+	public void goToNextPlayer(Graph gameGraph) {
 
 		if (currentPlayerItr.hasNext()) {
 
@@ -64,7 +64,7 @@ public class CurrentPlayer {
 			Continent.updateContinentOwner(gameGraph);
 			calculateReinforceentArmies();
 		} else {
-			goToFirstPlayer(currentState, gameGraph);
+			goToFirstPlayer(gameGraph);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class CurrentPlayer {
 	 * @param currentState It is an enumerator parameter of currentState enum.
 	 * @param gameGraph It is an object of the class Graph
 	 */
-	public void goToFirstPlayer(State currentState, Graph gameGraph) {
+	public void goToFirstPlayer(Graph gameGraph) {
 		currentPlayerItr = Database.playerList.listIterator();
 		numReinforceArmies = 0;
 		currentPlayer = currentPlayerItr.next();

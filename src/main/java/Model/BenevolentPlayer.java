@@ -3,105 +3,30 @@ package Model;
 import java.util.ArrayList;
 
 public class BenevolentPlayer implements IPlayer {
-    @Override
-    public PlayerStrategy getPlayerStrategy() {
-        return null;
+
+    private String name;
+    private Integer number, numberOfArmies, numberOfFreeArmies;
+    private ArrayList<Integer> myCountries = new ArrayList<Integer>();
+    private Integer exchangeCardsTimes;
+    public ArrayList<Card> playerCards;
+    public boolean countryConquered;
+    public boolean defenderRemoved;
+    static Integer lastDiceSelected = null;
+
+    public void setMyCountries(ArrayList<Integer> myCountries) {
+        this.myCountries = myCountries;
     }
 
-    @Override
-    public void setName(String name) {
-
+    public BenevolentPlayer(Integer number, String name, Integer numberOfArmies) {
+        this.number = number;
+        this.name = name;
+        this.numberOfArmies = numberOfArmies;
+        playerCards = new ArrayList<Card>();
+        exchangeCardsTimes = 0;
+        countryConquered = false;
+        defenderRemoved = false;
     }
 
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public void setNumber(Integer number) {
-
-    }
-
-    @Override
-    public Integer getNumber() {
-        return null;
-    }
-
-    @Override
-    public void setNumberOfArmies(Integer numberOfArmies) {
-
-    }
-
-    @Override
-    public Integer getNumberOfArmies() {
-        return null;
-    }
-
-    @Override
-    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-
-    }
-
-    @Override
-    public Integer getNumberOfFreeArmies() {
-        return null;
-    }
-
-    @Override
-    public void setMyCountries(Integer number) {
-
-    }
-
-    @Override
-    public ArrayList<Integer> getMyCountries() {
-        return null;
-    }
-
-    @Override
-    public Integer getExchangeCardsTimes() {
-        return null;
-    }
-
-    @Override
-    public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-
-    }
-
-    @Override
-    public ArrayList<Card> getPlayerCards() {
-        return null;
-    }
-
-    @Override
-    public void setPlayerCards(Card card) {
-
-    }
-
-    @Override
-    public boolean getCountryConquered() {
-        return false;
-    }
-
-    @Override
-    public void setCountryConquered(boolean countryConquered) {
-
-    }
-
-    @Override
-    public boolean getDefenderRemoved() {
-        return false;
-    }
-
-    @Override
-    public void setDefenderRemoved(boolean countryConquered) {
-
-    }
-
-    @Override
-    public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
-    }
 
     public boolean reinforcement( Graph graphObj, CurrentPlayer currentPlayerObj) {
         // TODO Auto-generated method stub
@@ -149,11 +74,122 @@ public class BenevolentPlayer implements IPlayer {
         return true;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
 
+    @Override
+    public PlayerStrategy getPlayerStrategy() {
+        return PlayerStrategy.benevolent; //Done
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Integer getNumber() {
+        return number;
+    }
+
+    @Override
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    @Override
+    public Integer getNumberOfArmies() {
+        return numberOfArmies;
+    }
+
+    @Override
+    public void setNumberOfArmies(Integer numberOfArmies) {
+        this.numberOfArmies = numberOfArmies;
+    }
+
+    @Override
+    public Integer getNumberOfFreeArmies() {
+        return numberOfFreeArmies;
+    }
+
+    @Override
+    public void setMyCountries(Integer number) {
+        myCountries.add(number);
+    }
+
+    @Override
+    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+        this.numberOfFreeArmies = numberOfFreeArmies;
+    }
+
+    @Override
+    public ArrayList<Integer> getMyCountries() {
+        return myCountries;
+    }
+
+    @Override
+    public Integer getExchangeCardsTimes() {
+        return exchangeCardsTimes;
+    }
+
+    @Override
+    public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
+        this.exchangeCardsTimes = exchangeCardsTimes;
+    }
+
+    @Override
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    @Override
+    public void setPlayerCards(Card card) {
+        playerCards.add(card);
+    }
+
+    @Override
+    public boolean getCountryConquered() {
+        return false;
+    }
+
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    public boolean isCountryConquered() {
+        return countryConquered;
+    }
+
+    @Override
+    public void setCountryConquered(boolean countryConquered) {
+        this.countryConquered = countryConquered;
+    }
+
+    @Override
+    public boolean getDefenderRemoved() {
+        return false;
+    }
+
+    public boolean isDefenderRemoved() {
+        return defenderRemoved;
+    }
+
+    @Override
+    public void setDefenderRemoved(boolean defenderRemoved) {
+        this.defenderRemoved = defenderRemoved;
+    }
+
+    @Override
+    public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
 
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
+        //Do nothing
+        return true;
     }
 
     @Override
@@ -162,7 +198,55 @@ public class BenevolentPlayer implements IPlayer {
     }
 
     @Override
+    /**
+     * This method returns the total number of countries owned by the players.
+     * @param playerName The name of the player
+     * @param gameGraph This is an object of the class Graph
+     * @return An integer value that is equal to the total number of countries owned by the player
+     */
+    public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+        Integer numberOfCountriesOwned = 0;
+
+        if (Database.getPlayerByName(playerName) == null)
+            return -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.owner.equalsIgnoreCase(playerName)) {
+                numberOfCountriesOwned += 1;
+            }
+        }
+        return numberOfCountriesOwned;
+    }
+
+    @Override
+
+    /**
+     * This method returns the total number of armies owned by the players.
+     * @param gameGraph It is an object of the class Graph
+     * @returnAn integer value that is equal to the total number of armies owned by the player
+     */
     public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-        return null;
+        Integer numberOfArmies = 0;
+
+        if (Database.getPlayerByName(this.name) == null)
+            return -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.owner.equalsIgnoreCase(this.name)) {
+                numberOfArmies += country.numberOfArmies;
+            }
+        }
+        return numberOfArmies;
+    }
+
+    @Override
+    public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
+
+    public static Integer getLastDiceSelected() {
+        return lastDiceSelected;
+    }
+
+    public static void setLastDiceSelected(Integer lastDiceSelected) {
+        BenevolentPlayer.lastDiceSelected = lastDiceSelected;
     }
 }

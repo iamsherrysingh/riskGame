@@ -19,6 +19,7 @@ enum tasksEnum {
 	validatemap,
 	showmap,
 	tournament,
+	savegame,
 	loadgame,
 	loadmap,
 	addplayer,
@@ -310,7 +311,23 @@ public class Controller {
 			}
 			tasksList.add(eTask);
 		}
+		
+		//Command loadgame
+		else if(cmdStr.equalsIgnoreCase("loadgame")){
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
 			
+			ExtractedTasks eTask = new ExtractedTasks();
+			eTask.name = tasksEnum.loadgame;
+			
+			//get data related to loadgame task
+			eTask.taskData.add(cmdItr.next());
+			
+			tasksList.add(eTask);
+		}
+		
 		//Command loadmap
 		else if(cmdStr.equalsIgnoreCase("loadmap")){
 			if(!cmdItr.hasNext()) {
@@ -606,7 +623,7 @@ public class Controller {
 				case showmap:
 					break;
 				case addplayer:	
-					if( !itr.taskData.get(1).equals("aggressive") && !itr.taskData.get(1).equals("benevolent") && !itr.taskData.get(1).equals("cheater") && !itr.taskData.get(1).equals("human") && !itr.taskData.get(1).equals("random") ) {
+					if( !itr.taskData.get(1).equalsIgnoreCase("aggressive") && !itr.taskData.get(1).equalsIgnoreCase("benevolent") && !itr.taskData.get(1).equalsIgnoreCase("cheater") && !itr.taskData.get(1).equalsIgnoreCase("human") && !itr.taskData.get(1).equalsIgnoreCase("random") ) {
 						System.out.println(itr.taskData.get(1)+" Strategy is not valid.");
 						return false;
 					}
@@ -614,7 +631,9 @@ public class Controller {
 				case removeplayer:
 					break;
 				case populatecountries:
-					break;		
+					break;	
+				case savegame:
+					break;
 				default:
 					System.out.println("Invalid command in the current state");
 					return false;		
@@ -631,6 +650,8 @@ public class Controller {
 						break;	
 					case placeall:
 						break;	
+					case savegame:
+						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;
@@ -662,6 +683,8 @@ public class Controller {
 							return false;
 						}
 						break;
+					case savegame:
+						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;
@@ -684,7 +707,9 @@ public class Controller {
 								return false;
 							}
 						}
-						break;	
+						break;
+					case savegame:
+						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;
@@ -711,6 +736,8 @@ public class Controller {
 						}
 						break;
 					case ignoreattack:
+						break;
+					case savegame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -740,6 +767,8 @@ public class Controller {
 							System.out.println("Invalid Command: For withdraw of moving in fortify state should use \"-none\"");
 							return false;
 						}
+						break;
+					case savegame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -815,6 +844,16 @@ public class Controller {
 				case tournament:{
 					if(!gamePlayObj.tournament(itr.taskData))
 						return false;			
+					break;
+				}
+				case savegame:{
+			//		if(!gamePlayObj.savegame(itr.taskData))
+			//			return false;			
+					break;
+				}
+				case loadgame:{
+			//		if(!gamePlayObj.loadgame(itr.taskData))
+			//			return false;			
 					break;
 				}
 				case validatemap:{
@@ -919,7 +958,7 @@ public class Controller {
 	
 	public void handleGame() {
 		
-		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getGraphObj());
 		//maybe exchanging cards state here and world domination view
 		gamePlayObj.CardobserverOperations();
 		
@@ -948,20 +987,16 @@ public class Controller {
 				
 				gamePlayObj.autoExchangeCards();
 				gamePlayObj.reinforceArmy();
+				gamePlayObj.alloutAttack();
+				gamePlayObj.fortifyArmy();
 				
 				if( gamePlayObj.checkEndGame())
 					break;
 				
-				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
 				gamePlayObj.CardobserverOperations();
 					
 			}
-				
-			if( gamePlayObj.checkEndGame())
-				break;
-				
-			gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
-			gamePlayObj.CardobserverOperations();
 		}	
 	}
 	
@@ -980,7 +1015,7 @@ public class Controller {
 				System.out.println("__________________________________________________");
 			}
 			
-			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				
@@ -989,6 +1024,7 @@ public class Controller {
 				if(!controller.cmdController(tasksList)) {
 					continue;
 				} 
+				
 				
 			}
 			
