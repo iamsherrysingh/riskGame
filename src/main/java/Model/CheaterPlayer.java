@@ -24,135 +24,128 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
 	public PlayerStrategy getPlayerStrategy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setNumber(Integer number) {
-		// TODO Auto-generated method stub
-		
+		this.name = name;
 	}
 
 	@Override
 	public Integer getNumber() {
-		// TODO Auto-generated method stub
-		return null;
+		return number;
 	}
 
 	@Override
-	public void setNumberOfArmies(Integer numberOfArmies) {
-		// TODO Auto-generated method stub
-		
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	@Override
 	public Integer getNumberOfArmies() {
-		// TODO Auto-generated method stub
-		return null;
+		return numberOfArmies;
 	}
 
 	@Override
-	public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-		// TODO Auto-generated method stub
-		
+	public void setNumberOfArmies(Integer numberOfArmies) {
+		this.numberOfArmies = numberOfArmies;
 	}
 
 	@Override
 	public Integer getNumberOfFreeArmies() {
-		// TODO Auto-generated method stub
-		return null;
+		return numberOfFreeArmies;
 	}
 
 	@Override
 	public void setMyCountries(Integer number) {
-		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+		this.numberOfFreeArmies = numberOfFreeArmies;
 	}
 
 	@Override
 	public ArrayList<Integer> getMyCountries() {
-		// TODO Auto-generated method stub
-		return null;
+		return myCountries;
+	}
+
+	public void setMyCountries(ArrayList<Integer> myCountries) {
+		this.myCountries = myCountries;
 	}
 
 	@Override
 	public Integer getExchangeCardsTimes() {
-		// TODO Auto-generated method stub
-		return null;
+		return exchangeCardsTimes;
 	}
 
 	@Override
 	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-		// TODO Auto-generated method stub
-		
+		this.exchangeCardsTimes = exchangeCardsTimes;
 	}
 
 	@Override
 	public ArrayList<Card> getPlayerCards() {
-		// TODO Auto-generated method stub
-		return null;
+		return playerCards;
 	}
 
 	@Override
 	public void setPlayerCards(Card card) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean getCountryConquered() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void setPlayerCards(ArrayList<Card> playerCards) {
+		this.playerCards = playerCards;
+	}
+
+	public boolean isCountryConquered() {
+		return countryConquered;
 	}
 
 	@Override
 	public void setCountryConquered(boolean countryConquered) {
-		// TODO Auto-generated method stub
-		
+		this.countryConquered = countryConquered;
 	}
 
 	@Override
 	public boolean getDefenderRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
-	public void setDefenderRemoved(boolean countryConquered) {
-		// TODO Auto-generated method stub
-		
+	public boolean isDefenderRemoved() {
+		return defenderRemoved;
 	}
 
 	@Override
-	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
-			CurrentPlayer currentPlayerObj) {
-		// TODO Auto-generated method stub
+	public void setDefenderRemoved(boolean defenderRemoved) {
+		this.defenderRemoved = defenderRemoved;
+	}
+
+	@Override
+	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
 		return false;
 	}
 
 	@Override
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -163,7 +156,6 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -172,4 +164,11 @@ public class CheaterPlayer implements IPlayer {
 		return false;
 	}
 
+	public static Integer getLastDiceSelected() {
+		return lastDiceSelected;
+	}
+
+	public static void setLastDiceSelected(Integer lastDiceSelected) {
+		CheaterPlayer.lastDiceSelected = lastDiceSelected;
+	}
 }
