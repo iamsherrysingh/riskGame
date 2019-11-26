@@ -116,7 +116,7 @@ public class BenevolentPlayer implements IPlayer {
 
     @Override
     public void setMyCountries(Integer number) {
-
+        myCountries.add(number);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class BenevolentPlayer implements IPlayer {
 
     @Override
     public void setPlayerCards(Card card) {
-
+        playerCards.add(card);
     }
 
     @Override

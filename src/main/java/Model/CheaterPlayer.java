@@ -65,7 +65,7 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public void setMyCountries(Integer number) {
-
+		myCountries.add(number);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public void setPlayerCards(Card card) {
-
+		playerCards.add(card);
 	}
 
 	@Override

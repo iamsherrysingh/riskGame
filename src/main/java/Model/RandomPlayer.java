@@ -65,8 +65,8 @@ public class RandomPlayer implements IPlayer {
 
     @Override
     public void setMyCountries(Integer number) {
-
-    }
+        myCountries.add(number);
+            }
 
     @Override
     public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
@@ -99,7 +99,7 @@ public class RandomPlayer implements IPlayer {
 
     @Override
     public void setPlayerCards(Card card) {
-
+        playerCards.add(card);
     }
 
     @Override
