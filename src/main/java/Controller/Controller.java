@@ -960,7 +960,6 @@ public class Controller {
 		
 		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getGraphObj());
 		//maybe exchanging cards state here and world domination view
-		gamePlayObj.CardobserverOperations();
 		
 		while(gamePlayObj.getCurrentState() != State.gameFinished) {
 			
@@ -969,11 +968,12 @@ public class Controller {
 			
 			if( currentPlayerStrategy == PlayerStrategy.human ) {
 				
-				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
-				
 				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				gamePlayObj.CardobserverOperations();
 				
-				while( gamePlayObj.getCurrentState() != State.newTurn ) {
+				while( gamePlayObj.getCurrentState() != State.gameFinished ) {
+					
+					ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 					
 					if(!getCommand(tasksList))
 						continue;
@@ -984,7 +984,8 @@ public class Controller {
 				}
 			}
 			else {
-				
+				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				gamePlayObj.CardobserverOperations();
 				gamePlayObj.autoExchangeCards();
 				gamePlayObj.reinforceArmy();
 				gamePlayObj.alloutAttack();
@@ -994,7 +995,6 @@ public class Controller {
 					break;
 				
 				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
-				gamePlayObj.CardobserverOperations();
 					
 			}
 		}	
@@ -1016,6 +1016,10 @@ public class Controller {
 			}
 			
 			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
+				
+				if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+					return;
+				}
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				

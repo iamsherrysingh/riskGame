@@ -960,6 +960,7 @@ public class GamePlay implements ISubject {
 		player.reinforcement("",0,graphObj, currentPlayerObj);
 		setCurrentState(State.attackPhase, "Attacking");
 //		setCurrentOperation("Country " + countryName + " reinforced with " + numberOfArmies + " armies.");
+		System.out.println("reinforce is done.");
 		return true;
 	}
 
@@ -1057,6 +1058,7 @@ public class GamePlay implements ISubject {
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 	//	setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
+		System.out.println("alloutattack is done.");
 		return true;
 	}
 
@@ -1095,7 +1097,7 @@ public class GamePlay implements ISubject {
 		if (!player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
-		setCurrentState(State.newTurn, "New Turn");
+		setCurrentState(State.exchangeCards, "Exchange Cards");
 		return true;
 	}
 
@@ -1106,7 +1108,7 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean ignoreFortifyArmy() {
 
-		setCurrentState(State.newTurn, "New Turn");
+		setCurrentState(State.exchangeCards, "Exchange Cards");
 		return true;
 	}
 	
@@ -1115,8 +1117,8 @@ public class GamePlay implements ISubject {
 		player.fortify("", "",0, graphObj);
 		
 		// Change current state to next state
-		setCurrentState(State.newTurn, "New Turn");
-		
+		setCurrentState(State.exchangeCards, "Exchange Cards");
+		System.out.println("fortify is done.");
 		return true;
 	}
 
