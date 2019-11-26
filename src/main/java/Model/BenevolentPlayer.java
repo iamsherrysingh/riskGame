@@ -188,7 +188,7 @@ public class BenevolentPlayer implements IPlayer {
 
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        //Do nothing0
+        //Do nothing
         return true;
     }
 
