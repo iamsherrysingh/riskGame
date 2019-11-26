@@ -606,7 +606,7 @@ public class Controller {
 				case showmap:
 					break;
 				case addplayer:	
-					if( !itr.taskData.get(1).equals("aggressive") && !itr.taskData.get(1).equals("benevolent") && !itr.taskData.get(1).equals("cheater") && !itr.taskData.get(1).equals("human") && !itr.taskData.get(1).equals("random") ) {
+					if( !itr.taskData.get(1).equalsIgnoreCase("aggressive") && !itr.taskData.get(1).equalsIgnoreCase("benevolent") && !itr.taskData.get(1).equalsIgnoreCase("cheater") && !itr.taskData.get(1).equalsIgnoreCase("human") && !itr.taskData.get(1).equalsIgnoreCase("random") ) {
 						System.out.println(itr.taskData.get(1)+" Strategy is not valid.");
 						return false;
 					}
