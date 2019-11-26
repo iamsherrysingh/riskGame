@@ -13,6 +13,10 @@ public class BenevolentPlayer implements IPlayer {
     public boolean defenderRemoved;
     static Integer lastDiceSelected = null;
 
+    public void setMyCountries(ArrayList<Integer> myCountries) {
+        this.myCountries = myCountries;
+    }
+
     public BenevolentPlayer(Integer number, String name, Integer numberOfArmies) {
         this.number = number;
         this.name = name;
@@ -22,105 +26,7 @@ public class BenevolentPlayer implements IPlayer {
         countryConquered = false;
         defenderRemoved = false;
     }
-    @Override
-    public PlayerStrategy getPlayerStrategy() {
-        return null;
-    }
 
-    @Override
-    public void setName(String name) {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public void setNumber(Integer number) {
-
-    }
-
-    @Override
-    public Integer getNumber() {
-        return null;
-    }
-
-    @Override
-    public void setNumberOfArmies(Integer numberOfArmies) {
-
-    }
-
-    @Override
-    public Integer getNumberOfArmies() {
-        return null;
-    }
-
-    @Override
-    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-
-    }
-
-    @Override
-    public Integer getNumberOfFreeArmies() {
-        return null;
-    }
-
-    @Override
-    public void setMyCountries(Integer number) {
-
-    }
-
-    @Override
-    public ArrayList<Integer> getMyCountries() {
-        return null;
-    }
-
-    @Override
-    public Integer getExchangeCardsTimes() {
-        return null;
-    }
-
-    @Override
-    public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-
-    }
-
-    @Override
-    public ArrayList<Card> getPlayerCards() {
-        return null;
-    }
-
-    @Override
-    public void setPlayerCards(Card card) {
-
-    }
-
-    @Override
-    public boolean getCountryConquered() {
-        return false;
-    }
-
-    @Override
-    public void setCountryConquered(boolean countryConquered) {
-
-    }
-
-    @Override
-    public boolean getDefenderRemoved() {
-        return false;
-    }
-
-    @Override
-    public void setDefenderRemoved(boolean countryConquered) {
-
-    }
-
-    @Override
-    public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
-    }
 
     public boolean reinforcement( Graph graphObj, CurrentPlayer currentPlayerObj) {
         // TODO Auto-generated method stub
@@ -168,7 +74,117 @@ public class BenevolentPlayer implements IPlayer {
         return true;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
 
+    @Override
+    public PlayerStrategy getPlayerStrategy() {
+        return null;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Integer getNumber() {
+        return number;
+    }
+
+    @Override
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    @Override
+    public Integer getNumberOfArmies() {
+        return numberOfArmies;
+    }
+
+    @Override
+    public void setNumberOfArmies(Integer numberOfArmies) {
+        this.numberOfArmies = numberOfArmies;
+    }
+
+    @Override
+    public Integer getNumberOfFreeArmies() {
+        return numberOfFreeArmies;
+    }
+
+    @Override
+    public void setMyCountries(Integer number) {
+
+    }
+
+    @Override
+    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+        this.numberOfFreeArmies = numberOfFreeArmies;
+    }
+
+    @Override
+    public ArrayList<Integer> getMyCountries() {
+        return myCountries;
+    }
+
+    @Override
+    public Integer getExchangeCardsTimes() {
+        return exchangeCardsTimes;
+    }
+
+    @Override
+    public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
+        this.exchangeCardsTimes = exchangeCardsTimes;
+    }
+
+    @Override
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
+    }
+
+    @Override
+    public void setPlayerCards(Card card) {
+
+    }
+
+    @Override
+    public boolean getCountryConquered() {
+        return false;
+    }
+
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    public boolean isCountryConquered() {
+        return countryConquered;
+    }
+
+    @Override
+    public void setCountryConquered(boolean countryConquered) {
+        this.countryConquered = countryConquered;
+    }
+
+    @Override
+    public boolean getDefenderRemoved() {
+        return false;
+    }
+
+    public boolean isDefenderRemoved() {
+        return defenderRemoved;
+    }
+
+    @Override
+    public void setDefenderRemoved(boolean defenderRemoved) {
+        this.defenderRemoved = defenderRemoved;
+    }
+
+    @Override
+    public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
 
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
@@ -193,5 +209,13 @@ public class BenevolentPlayer implements IPlayer {
     @Override
     public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
         return false;
+    }
+
+    public static Integer getLastDiceSelected() {
+        return lastDiceSelected;
+    }
+
+    public static void setLastDiceSelected(Integer lastDiceSelected) {
+        BenevolentPlayer.lastDiceSelected = lastDiceSelected;
     }
 }
