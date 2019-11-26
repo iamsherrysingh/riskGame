@@ -567,7 +567,7 @@ public class GamePlay implements ISubject{
 			Database.playerList.add(randomPlayer);
 		}
 		
-		setCurrentOperation("Adding Player "+playerName+" to the game.");
+		setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
 		return true;
 	}
 
