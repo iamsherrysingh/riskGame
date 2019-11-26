@@ -19,6 +19,7 @@ enum tasksEnum {
 	validatemap,
 	showmap,
 	tournament,
+	savegame,
 	loadgame,
 	loadmap,
 	addplayer,
