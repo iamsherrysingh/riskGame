@@ -30,7 +30,7 @@ public class AggressivePlayer implements IPlayer {
 
     @Override
     public PlayerStrategy getPlayerStrategy() {
-        return null;
+        return PlayerStrategy.aggressive; //Done
     }
 
     @Override
