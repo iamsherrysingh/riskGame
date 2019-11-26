@@ -819,7 +819,12 @@ public class GamePlay implements ISubject {
 			}
 
 		}
+		
+		// Change current state to next state
+		detachObserver(cardExchangeView);
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
 		setCurrentOperation("Exchanging Cards");
+		System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies for reinforcement");
 	}
 
 	/**
@@ -952,9 +957,9 @@ public class GamePlay implements ISubject {
 
 	public boolean reinforceArmy() {
 
-		// player.reinforcement();
-		setCurrentOperation("Reinforce Phase is done.");
-		// other works
+		player.reinforcement("",0,graphObj, currentPlayerObj);
+		setCurrentState(State.attackPhase, "Attacking");
+//		setCurrentOperation("Country " + countryName + " reinforced with " + numberOfArmies + " armies.");
 		return true;
 	}
 
@@ -1038,6 +1043,22 @@ public class GamePlay implements ISubject {
 		setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
 		return true;
 	}
+	
+	public boolean alloutAttack() {
+
+		player.attackAllout("", "", graphObj, currentPlayerObj);
+		
+		// handle picking card at turn of each player
+		if (player.getCountryConquered()) {
+			currentPlayerObj.getCurrentPlayer().setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
+			player.setDefenderRemoved(false);
+		}
+		
+		// Change current state to next state
+		setCurrentState(State.fortificationPhase, "Fortification");
+	//	setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
+		return true;
+	}
 
 	/**
 	 * when player decided no attack
@@ -1048,8 +1069,7 @@ public class GamePlay implements ISubject {
 
 		// handle picking card at turn of each player
 		if (player.getCountryConquered()) {
-			currentPlayerObj.getCurrentPlayer()
-					.setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
+			currentPlayerObj.getCurrentPlayer().setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
 			player.setDefenderRemoved(false);
 		}
 
@@ -1087,6 +1107,16 @@ public class GamePlay implements ISubject {
 	public boolean ignoreFortifyArmy() {
 
 		setCurrentState(State.newTurn, "New Turn");
+		return true;
+	}
+	
+	public boolean fortifyArmy() {
+
+		player.fortify("", "",0, graphObj);
+		
+		// Change current state to next state
+		setCurrentState(State.newTurn, "New Turn");
+		
 		return true;
 	}
 

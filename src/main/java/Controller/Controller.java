@@ -987,8 +987,8 @@ public class Controller {
 				
 				gamePlayObj.autoExchangeCards();
 				gamePlayObj.reinforceArmy();
-				// gamePlayObj.attack();
-				// gamePlayObj.fortify();
+				gamePlayObj.alloutAttack();
+				gamePlayObj.fortifyArmy();
 				
 				if( gamePlayObj.checkEndGame())
 					break;
@@ -997,12 +997,6 @@ public class Controller {
 				gamePlayObj.CardobserverOperations();
 					
 			}
-				
-			if( gamePlayObj.checkEndGame())
-				break;
-				
-			gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
-			gamePlayObj.CardobserverOperations();
 		}	
 	}
 	
@@ -1021,7 +1015,7 @@ public class Controller {
 				System.out.println("__________________________________________________");
 			}
 			
-			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) || ( controller.gamePlayObj.getCurrentState() != State.gameFinished ) ) {
+			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				
@@ -1030,6 +1024,7 @@ public class Controller {
 				if(!controller.cmdController(tasksList)) {
 					continue;
 				} 
+				
 				
 			}
 			
