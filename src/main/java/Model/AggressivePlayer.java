@@ -438,4 +438,5 @@ public class AggressivePlayer implements IPlayer {
 	public static void setLastDiceSelected(Integer lastDiceSelected) {
 		AggressivePlayer.lastDiceSelected = lastDiceSelected;
 	}
+
 }
