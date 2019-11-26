@@ -4,170 +4,171 @@ import java.util.ArrayList;
 
 public class AggressivePlayer implements IPlayer {
 
-	private String name;
-	private Integer number, numberOfArmies, numberOfFreeArmies;
-	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	private Integer exchangeCardsTimes;
-	public ArrayList<Card> playerCards;
-	public boolean countryConquered;
-	public boolean defenderRemoved;
-	public AggressivePlayer(Integer number, String name, Integer numberOfArmies) {
-		this.number = number;
-		this.name = name;
-		this.numberOfArmies = numberOfArmies;
-		playerCards = new ArrayList<Card>();
-		exchangeCardsTimes = 0;
-		countryConquered = false;
-		defenderRemoved = false;
-	}
-	@Override
-	public PlayerStrategy getPlayerStrategy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    private String name;
+    private Integer number, numberOfArmies, numberOfFreeArmies;
+    private ArrayList<Integer> myCountries = new ArrayList<Integer>();
+    private Integer exchangeCardsTimes;
+    public ArrayList<Card> playerCards;
+    public boolean countryConquered;
+    public boolean defenderRemoved;
+    static Integer lastDiceSelected = null;
 
-	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
+    public AggressivePlayer(Integer number, String name, Integer numberOfArmies) {
+        this.number = number;
+        this.name = name;
+        this.numberOfArmies = numberOfArmies;
+        playerCards = new ArrayList<Card>();
+        exchangeCardsTimes = 0;
+        countryConquered = false;
+        defenderRemoved = false;
+    }
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public void setNumber(Integer number) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public PlayerStrategy getPlayerStrategy() {
+        return null;
+    }
 
-	@Override
-	public Integer getNumber() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public void setNumberOfArmies(Integer numberOfArmies) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Integer getNumber() {
+        return number;
+    }
 
-	@Override
-	public Integer getNumberOfArmies() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
-	@Override
-	public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Integer getNumberOfArmies() {
+        return numberOfArmies;
+    }
 
-	@Override
-	public Integer getNumberOfFreeArmies() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void setNumberOfArmies(Integer numberOfArmies) {
+        this.numberOfArmies = numberOfArmies;
+    }
 
-	@Override
-	public void setMyCountries(Integer number) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Integer getNumberOfFreeArmies() {
+        return numberOfFreeArmies;
+    }
 
-	@Override
-	public ArrayList<Integer> getMyCountries() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void setMyCountries(Integer number) {
 
-	@Override
-	public Integer getExchangeCardsTimes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    }
 
-	@Override
-	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+        this.numberOfFreeArmies = numberOfFreeArmies;
+    }
 
-	@Override
-	public ArrayList<Card> getPlayerCards() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ArrayList<Integer> getMyCountries() {
+        return myCountries;
+    }
 
-	@Override
-	public void setPlayerCards(Card card) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setMyCountries(ArrayList<Integer> myCountries) {
+        this.myCountries = myCountries;
+    }
 
-	@Override
-	public boolean getCountryConquered() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public Integer getExchangeCardsTimes() {
+        return exchangeCardsTimes;
+    }
 
-	@Override
-	public void setCountryConquered(boolean countryConquered) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
+        this.exchangeCardsTimes = exchangeCardsTimes;
+    }
 
-	@Override
-	public boolean getDefenderRemoved() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public ArrayList<Card> getPlayerCards() {
+        return playerCards;
+    }
 
-	@Override
-	public void setDefenderRemoved(boolean countryConquered) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setPlayerCards(Card card) {
 
-	@Override
-	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
-			CurrentPlayer currentPlayerObj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    }
 
-	@Override
-	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean getCountryConquered() {
+        return false;
+    }
 
-	@Override
-	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
 
-	@Override
-	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-		return null;
-	}
+    public boolean isCountryConquered() {
+        return countryConquered;
+    }
 
-	@Override
-	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void setCountryConquered(boolean countryConquered) {
+        this.countryConquered = countryConquered;
+    }
 
-	@Override
-	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		return false;
-	}
+    @Override
+    public boolean getDefenderRemoved() {
+        return false;
+    }
 
+    public boolean isDefenderRemoved() {
+        return defenderRemoved;
+    }
 
+    @Override
+    public void setDefenderRemoved(boolean defenderRemoved) {
+        this.defenderRemoved = defenderRemoved;
+    }
+
+    @Override
+    public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
+
+    @Override
+    public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
+
+    @Override
+    public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
+        return false;
+    }
+
+    @Override
+    public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+        return null;
+    }
+
+    @Override
+    public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
+        return null;
+    }
+
+    @Override
+    public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
+
+    public static Integer getLastDiceSelected() {
+        return lastDiceSelected;
+    }
+
+    public static void setLastDiceSelected(Integer lastDiceSelected) {
+        AggressivePlayer.lastDiceSelected = lastDiceSelected;
+    }
 }

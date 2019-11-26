@@ -22,6 +22,12 @@ public class RandomPlayer implements IPlayer {
         countryConquered = false;
         defenderRemoved = false;
     }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
     @Override
     public PlayerStrategy getPlayerStrategy() {
         return null;
@@ -29,42 +35,32 @@ public class RandomPlayer implements IPlayer {
 
     @Override
     public void setName(String name) {
-
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public void setNumber(Integer number) {
-
+        this.name = name;
     }
 
     @Override
     public Integer getNumber() {
-        return null;
+        return number;
     }
 
     @Override
-    public void setNumberOfArmies(Integer numberOfArmies) {
-
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     @Override
     public Integer getNumberOfArmies() {
-        return null;
+        return numberOfArmies;
     }
 
     @Override
-    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-
+    public void setNumberOfArmies(Integer numberOfArmies) {
+        this.numberOfArmies = numberOfArmies;
     }
 
     @Override
     public Integer getNumberOfFreeArmies() {
-        return null;
+        return numberOfFreeArmies;
     }
 
     @Override
@@ -73,23 +69,32 @@ public class RandomPlayer implements IPlayer {
     }
 
     @Override
+    public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
+        this.numberOfFreeArmies = numberOfFreeArmies;
+    }
+
+    @Override
     public ArrayList<Integer> getMyCountries() {
-        return null;
+        return myCountries;
+    }
+
+    public void setMyCountries(ArrayList<Integer> myCountries) {
+        this.myCountries = myCountries;
     }
 
     @Override
     public Integer getExchangeCardsTimes() {
-        return null;
+        return exchangeCardsTimes;
     }
 
     @Override
     public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-
+        this.exchangeCardsTimes = exchangeCardsTimes;
     }
 
     @Override
     public ArrayList<Card> getPlayerCards() {
-        return null;
+        return playerCards;
     }
 
     @Override
@@ -102,9 +107,17 @@ public class RandomPlayer implements IPlayer {
         return false;
     }
 
+    public void setPlayerCards(ArrayList<Card> playerCards) {
+        this.playerCards = playerCards;
+    }
+
+    public boolean isCountryConquered() {
+        return countryConquered;
+    }
+
     @Override
     public void setCountryConquered(boolean countryConquered) {
-
+        this.countryConquered = countryConquered;
     }
 
     @Override
@@ -112,9 +125,13 @@ public class RandomPlayer implements IPlayer {
         return false;
     }
 
-    @Override
-    public void setDefenderRemoved(boolean countryConquered) {
+    public boolean isDefenderRemoved() {
+        return defenderRemoved;
+    }
 
+    @Override
+    public void setDefenderRemoved(boolean defenderRemoved) {
+        this.defenderRemoved = defenderRemoved;
     }
 
     @Override
@@ -145,5 +162,13 @@ public class RandomPlayer implements IPlayer {
     @Override
     public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
         return false;
+    }
+
+    public static Integer getLastDiceSelected() {
+        return lastDiceSelected;
+    }
+
+    public static void setLastDiceSelected(Integer lastDiceSelected) {
+        RandomPlayer.lastDiceSelected = lastDiceSelected;
     }
 }

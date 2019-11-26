@@ -584,6 +584,11 @@ public class GamePlay implements ISubject {
 			setCurrentOperation("Adding Player " + playerName + " to the game.");
 			return true;
 		}
+
+		
+		setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
+		return true;
+
 	}
 
 	/**
