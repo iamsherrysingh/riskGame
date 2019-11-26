@@ -4,6 +4,25 @@ import java.util.ArrayList;
 
 public class CheaterPlayer implements IPlayer {
 
+	private String name;
+	private Integer number, numberOfArmies, numberOfFreeArmies;
+	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
+	private Integer exchangeCardsTimes;
+	public ArrayList<Card> playerCards;
+	public boolean countryConquered;
+	public boolean defenderRemoved;
+	static Integer lastDiceSelected = null;
+
+	public CheaterPlayer(Integer number, String name, Integer numberOfArmies) {
+		this.number = number;
+		this.name = name;
+		this.numberOfArmies = numberOfArmies;
+		playerCards = new ArrayList<Card>();
+		exchangeCardsTimes = 0;
+		countryConquered = false;
+		defenderRemoved = false;
+	}
+
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
 		// TODO Auto-generated method stub
