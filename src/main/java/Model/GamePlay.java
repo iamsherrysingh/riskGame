@@ -58,7 +58,7 @@ public class GamePlay implements ISubject{
 	public void setPlayerStrategy() {
 		this.playerStrategy = currentPlayerObj.currentPlayer;
 	}
-
+	
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
 	}
@@ -108,7 +108,7 @@ public class GamePlay implements ISubject{
 		this.currentState = newState;
 		
 	}
-
+	
 	/**
 	 * Extract data related to tournament and check validation of data
 	 * This method also do the automatic game.
