@@ -643,6 +643,26 @@ public class Player implements IPlayer {
 		return true;
 	}
 	
+
+	/**
+	 * This method returns the total number of armies owned by the players.
+	 * @param gameGraph It is an object of the class Graph
+	 * @returnAn integer value that is equal to the total number of armies owned by the player
+	 */
+	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
+		Integer numberOfArmies = 0;
+
+		if (Database.getPlayerByName(this.name) == null)
+			return -1;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.owner.equalsIgnoreCase(this.name)) {
+				numberOfArmies += country.numberOfArmies;
+			}
+		}
+		return numberOfArmies;
+	}
+
+	@Override
 	/**
 	 * This method returns the total number of countries owned by the players.
 	 * @param playerName The name of the player
@@ -660,24 +680,6 @@ public class Player implements IPlayer {
 			}
 		}
 		return numberOfCountriesOwned;
-	}
-		
-	/**
-	 * This method returns the total number of armies owned by the players.
-	 * @param gameGraph It is an object of the class Graph
-	 * @returnAn integer value that is equal to the total number of armies owned by the player
-	 */
-	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-		Integer numberOfArmies = 0;
-
-		if (Database.getPlayerByName(this.name) == null)
-			return -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.owner.equalsIgnoreCase(this.name)) {
-				numberOfArmies += country.numberOfArmies;
-			}
-		}
-		return numberOfArmies;
 	}
 }
 
