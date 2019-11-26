@@ -42,22 +42,18 @@ public class Mapx {
 			
 			if (fileType=="Domination") {
 				System.out.println("input file is in Domonation format");
-			DominationMapFile readMapFile = new DominationMapFile();
-			readMapFile.readMapIntoVariables(mapFile);
+			    DominationMapFile readMapFile = new DominationMapFile();
+			    readMapFile.readMapIntoVariables(mapFile);
 			}
 			else if (fileType=="Conquest") {
 				System.out.println("input file is in Conquest format");
-			ConquestMapFile conquestMap = new ConquestMapFile();
-			MapreadWriteAdaptter readMapFile = new MapreadWriteAdaptter(conquestMap);
-			readMapFile.readMapIntoVariables(mapFile);
+			    ConquestMapFile conquestMap = new ConquestMapFile();
+			    MapreadWriteAdaptter readMapFile = new MapreadWriteAdaptter(conquestMap);
+			    readMapFile.readMapIntoVariables(mapFile);
 			}
 			
-			System.out.println("executed");
-			
-			
-			//ConquestMapFile conquestMapFile = new ConquestMapFile();
-			//MapxConquest mapConquest = new MapxConquest();
-			//mapConquest.readMap(mapFile);
+			System.out.println("read file finished");
+	
 			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
@@ -170,6 +166,47 @@ public class Mapx {
 		return file;
 	}
 
+
+	/**
+	 * This method checks the gameGraph for graph connectivity
+	 *
+	 * @param gameGraph It is an object of the class Graph
+	 * @return true(If the total count equals the total number of countries; Map is
+	 *         validated) or false(If the map is not connected)
+	 */
+	public static boolean validateMap(Graph gameGraph) {
+		Integer startPosition = 1;
+		int count = 0;
+		boolean visited[] = new boolean[gameGraph.getAdjList().size() + 1];
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(startPosition);
+
+		while (stack.empty() == false) {
+			Integer topElement = stack.peek();
+			stack.pop();
+			if (visited[topElement] == false) {
+				count++;
+				visited[topElement] = true;
+			}
+
+			Iterator<Integer> itr = gameGraph.getAdjList().get(topElement - 1).getNeighbours().iterator();
+			while (itr.hasNext()) {
+				Integer next = itr.next();
+				if (visited[next] == false) {
+					stack.push(next);
+				}
+			}
+		}
+		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
+			System.out.println("This map is valid.");
+			return true;
+		}
+		System.out.println("This map is not connected.");
+		return false;
+	}
+
+	
+
 	/**
 	 * This method operates on the gameGraph variable and converts it to map file.
 	 *
@@ -203,6 +240,11 @@ public class Mapx {
 			} else {
 				// Create the file
 				File f = createFile(mapName);
+				
+				DominationMapFile dominationMapFile = new DominationMapFile();
+				dominationMapFile.writeMapFile(gameGraph, mp, f);
+				
+				/*
 				FileWriter writer = new FileWriter(f);
 				writer.write("name " + mp + System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
@@ -252,50 +294,14 @@ public class Mapx {
 				}
 				writer.close();
 				return true;
+				
+				*/
 			}
 		} else {
 			System.out.println("Please enter a valid map name!");
 			return false;
 		}
 
-	}
-
-	/**
-	 * This method checks the gameGraph for graph connectivity
-	 *
-	 * @param gameGraph It is an object of the class Graph
-	 * @return true(If the total count equals the total number of countries; Map is
-	 *         validated) or false(If the map is not connected)
-	 */
-	public static boolean validateMap(Graph gameGraph) {
-		Integer startPosition = 1;
-		int count = 0;
-		boolean visited[] = new boolean[gameGraph.getAdjList().size() + 1];
-		Stack<Integer> stack = new Stack<Integer>();
-		stack.push(startPosition);
-
-		while (stack.empty() == false) {
-			Integer topElement = stack.peek();
-			stack.pop();
-			if (visited[topElement] == false) {
-				count++;
-				visited[topElement] = true;
-			}
-
-			Iterator<Integer> itr = gameGraph.getAdjList().get(topElement - 1).getNeighbours().iterator();
-			while (itr.hasNext()) {
-				Integer next = itr.next();
-				if (visited[next] == false) {
-					stack.push(next);
-				}
-			}
-		}
-		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
-			System.out.println("This map is valid.");
-			return true;
-		}
-		System.out.println("This map is not connected.");
-		return false;
 	}
 
 }
