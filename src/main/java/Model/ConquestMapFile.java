@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 
-public class ConquestMapFile{
+public class ConquestMapFile extends DominationMapFile{
 
 	private String continents;
 	private String territories;
@@ -128,7 +128,7 @@ public class ConquestMapFile{
 		return true;
 	}
 
-
+	
 	public boolean writeMapConquest(String mapName) throws IOException {
 
 			File f = Mapx.createFile(mapName);

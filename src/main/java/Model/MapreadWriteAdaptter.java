@@ -3,7 +3,9 @@ package Model;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MapxConquest extends Mapx{
+public class MapreadWriteAdaptter extends DominationMapFile{
+	
+	Database database = Database.getInstance();
 
 	// Mapx map = new MapxConquest(conquestMap);
 	
@@ -13,13 +15,13 @@ public class MapxConquest extends Mapx{
 	 
 	  private ConquestMapFile conquestMap;
 
-	  /*
-	  public MapxConquest(ConquestMapFile conquestMap) {
+	
+	  public MapreadWriteAdaptter(ConquestMapFile conquestMap) {
 	    this.conquestMap = conquestMap;
 	    }
-	    */
 
-	  boolean readMap(String mapFile) throws FileNotFoundException{
+
+	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
 		  
 		  conquestMap.readMapConquest(mapFile);
 		  
@@ -32,20 +34,7 @@ public class MapxConquest extends Mapx{
 		  return true;
 	  }
 
-	  //  loadmap conquestmap.map
-		public boolean saveMap(Graph gameGraph, String mapFile) throws IOException {
-			
-			convertDominateToConquest(gameGraph);
-			
-			conquestMap.setContinents(continents);
-			conquestMap.setTerritories(territories);
-			
-			conquestMap.writeMapConquest(mapFile);
-			
-		    return true;
-	  }
-
-	  	  
+  
 	  
 	  private boolean convertConquestToDominate() {
 			System.out.println(" convertConquestToDominate started-----");
