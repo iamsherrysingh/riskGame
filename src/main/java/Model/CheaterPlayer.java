@@ -138,6 +138,11 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
+	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+		return null;
+	}
+
+	@Override
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		// TODO Auto-generated method stub
 		return null;
