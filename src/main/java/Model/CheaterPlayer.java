@@ -160,7 +160,7 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
-	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
 		return false;
 	}
 

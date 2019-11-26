@@ -362,8 +362,6 @@ public class Player implements IPlayer {
 	 * @param attackerCountry This is an object for the attacker country.
 	 * @param defenderCountry This is an object for the defender country.
 	 * @param numberOfArmiesToMove an integer value selected by the attacker to move between countries.
-	 * @param attacker This is an object for the attacker player.
-	 * @param defender This is an object for defender player.
 	 * @return true(if runs successfully) or false(if fails some validation)
 	 */
 	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
@@ -398,8 +396,8 @@ public class Player implements IPlayer {
 	 * @param currentPlayerObj This is the object of currentPlayer.
 	 * @return true(if runs successfully) or false(in case it fails any validation)
 	 */
-	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
-			CurrentPlayer currentPlayerObj) {
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+								CurrentPlayer currentPlayerObj) {
 
 		Country attackerCountry = Country.getCountryByName(fromCountry, graphObj);
 		Country defenderCountry = Country.getCountryByName(toCountry, graphObj);
@@ -497,7 +495,7 @@ public class Player implements IPlayer {
 										}
 
 										// scanner.close();
-										System.out.println("attackCountry command finished");
+										System.out.println("normalAttack command finished");
 									}
 
 								}

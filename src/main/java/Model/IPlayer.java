@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public interface IPlayer {
-	
+
 	public PlayerStrategy getPlayerStrategy();
 	public void setName(String name);
 	public String getName();
@@ -28,8 +28,8 @@ public interface IPlayer {
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph);
 	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph);
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph);
-	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
-								 CurrentPlayer currentPlayerObj);
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+								CurrentPlayer currentPlayerObj);
 	
 }
 

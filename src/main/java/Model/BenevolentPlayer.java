@@ -188,7 +188,8 @@ public class BenevolentPlayer implements IPlayer {
 
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
+        //Do nothing0
+        return true;
     }
 
     @Override
@@ -207,7 +208,7 @@ public class BenevolentPlayer implements IPlayer {
     }
 
     @Override
-    public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+    public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
         return false;
     }
 
