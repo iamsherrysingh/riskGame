@@ -548,23 +548,23 @@ public class GamePlay implements ISubject{
 		}
 		else if( Strategy.equalsIgnoreCase("aggressive")) {
 			
-		//	AggressivePlayer aggressivePlayer = new AggressivePlayer(id, playerName, 0);
-		//	Database.playerList.add(aggressivePlayer);
+			AggressivePlayer aggressivePlayer = new AggressivePlayer(id, playerName, 0);
+			Database.playerList.add(aggressivePlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("benevolent")) {
 			
-		//	BenevolentPlayer benevolentPlayer = new BenevolentPlayer(id, playerName, 0);
-		//	Database.playerList.add(benevolentPlayer);
+			BenevolentPlayer benevolentPlayer = new BenevolentPlayer(id, playerName, 0);
+			Database.playerList.add(benevolentPlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("cheater")) {
 			
-		//	CheaterPlayer cheaterPlayer = new CheaterPlayer(id, playerName, 0);
-		//	Database.playerList.add(cheaterPlayer);
+			CheaterPlayer cheaterPlayer = new CheaterPlayer(id, playerName, 0);
+			Database.playerList.add(cheaterPlayer);
 		}
 		else if( Strategy.equalsIgnoreCase("random")) {
 			
-		//	RandomPlayer randomPlayer = new RandomPlayer(id, playerName, 0);
-		//	Database.playerList.add(randomPlayer);
+			RandomPlayer randomPlayer = new RandomPlayer(id, playerName, 0);
+			Database.playerList.add(randomPlayer);
 		}
 		
 		setCurrentOperation("Adding Player "+playerName+" to the game.");

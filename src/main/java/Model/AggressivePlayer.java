@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class AggresivePlayer implements IPlayer {
+public class AggressivePlayer implements IPlayer {
 
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
