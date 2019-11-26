@@ -919,7 +919,7 @@ public class Controller {
 	
 	public void handleGame() {
 		
-		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getGraphObj());
 		//maybe exchanging cards state here and world domination view
 		gamePlayObj.CardobserverOperations();
 		
@@ -948,11 +948,13 @@ public class Controller {
 				
 				gamePlayObj.autoExchangeCards();
 				gamePlayObj.reinforceArmy();
+				// gamePlayObj.attack();
+				// gamePlayObj.fortify();
 				
 				if( gamePlayObj.checkEndGame())
 					break;
 				
-				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
 				gamePlayObj.CardobserverOperations();
 					
 			}
@@ -960,7 +962,7 @@ public class Controller {
 			if( gamePlayObj.checkEndGame())
 				break;
 				
-			gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getCurrentState(), gamePlayObj.getGraphObj());
+			gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
 			gamePlayObj.CardobserverOperations();
 		}	
 	}

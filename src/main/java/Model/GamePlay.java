@@ -297,9 +297,11 @@ public class GamePlay implements ISubject{
 		}
 		
 		String[][] gameResult = new String[mapList.size()][gameNumber];
+		
 		// Tournament Game Procedure
 		for(int mapCounter=0; mapCounter < mapList.size(); mapCounter++) {
 			
+			databaseObj.getContinentList().clear();
 			if(!loadGameMap(mapList.get(mapCounter))) {	
 				System.out.println("Your input map does not exist.");
 				return false;
@@ -321,24 +323,29 @@ public class GamePlay implements ISubject{
 				
 				populateCountries();
 				placeAll();	
-				currentPlayerObj.goToFirstPlayer(this.getCurrentState(), this.getGraphObj());
-				setPlayerStrategy();
+				currentPlayerObj.goToFirstPlayer(this.getGraphObj());
 				
 				// Playing game with duration for computer players.
 				for(int turnCount = 0; turnCount < gameTurn; turnCount++ ) {
+					
+					setPlayerStrategy();
 					autoExchangeCards();
 					reinforceArmy();
 					// attack();
+					// fortify;
 					
 					if ( checkEndGame() ) {
-						gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
 						break;
 					}
-					else if ( !checkEndGame() && ( turnCount == (gameTurn - 1)  ) ) {
-						gameResult[mapCounter][gameCounter] = "Draw";
-					}
-					// fortify;
-					currentPlayerObj.goToNextPlayer(this.getCurrentState(), this.getGraphObj());
+					currentPlayerObj.goToNextPlayer(this.getGraphObj());
+					
+				}
+				
+				if ( Database.playerList.size() == 1 ) {
+					gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
+				}
+				else {
+					gameResult[mapCounter][gameCounter] = "Draw";
 				}
 				
 			}
@@ -650,7 +657,7 @@ public class GamePlay implements ISubject{
 		setCurrentState(State.troopArmies, "Troop Armies");
 
 		// Set current player to the first player
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+		currentPlayerObj.goToFirstPlayer(graphObj);
 
 		setCurrentOperation("Populating all countries");
 		return true;
@@ -913,6 +920,7 @@ public class GamePlay implements ISubject{
 	public boolean reinforceArmy() {
 		
 		//playerStrategy.reinforcement();
+		setCurrentOperation("Reinforce Phase is done.");
 		//other works
 		return true;
 	}
