@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.crypto.Data;
+
 
 /**
  * It contains different Junit tests for the methods defined in
@@ -134,7 +136,7 @@ public class PlayerTest {
 	 */
 	@Test
 	public void attackAllOutSameOwner() {
-		Player.addPlayer("birjot", 9);
+		player.addPlayer("birjot", 9);
 		Player.addPlayer("jaskaran", 6);
 		gamePlay.populateCountries();
 		gamePlay.placeAll();
@@ -155,8 +157,8 @@ public class PlayerTest {
 	 */
 	@Test
 	public void attackMove() {
-		Player.addPlayer("birjot", 9);
-		Player.addPlayer("jaskaran", 6);
+		gamePlay.addPlayer("birjot", "Benevolent");
+		gamePlay.addPlayer("jaskaran", "Benevolent");
 		gamePlay.populateCountries();
 		gamePlay.placeAll();
 		Country.getCountryByName("Quebec", Graph.getInstance()).setOwner("birjot");
@@ -164,8 +166,8 @@ public class PlayerTest {
 		Country.getCountryByName("Quebec", Graph.getInstance()).setNumberOfArmies(10);
 		Country.getCountryByName("Greenland", Graph.getInstance()).setNumberOfArmies(0);
 		Integer AttackerArmiesBefore = Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies();
-		Player attacker = Player.getPlayerByName(Country.getCountryByName("Quebec", gamePlay.getGraphObj()).getOwner());
-		Player defender = Player.getPlayerByName(Country.getCountryByName("Greenland", gamePlay.getGraphObj()).getOwner());
+		IPlayer attacker = Database.getPlayerByName(Country.getCountryByName("Quebec", gamePlay.getGraphObj()).getOwner());
+		IPlayer defender = Database.getPlayerByName(Country.getCountryByName("Greenland", gamePlay.getGraphObj()).getOwner());
 		Player.attackMove(Country.getCountryByName("Quebec", gamePlay.getGraphObj()),
 				Country.getCountryByName("Greenland", gamePlay.getGraphObj()), 2);
 		Integer AttackerArmiesAfter = Country.getCountryByName("Quebec", Graph.getInstance()).getNumberOfArmies();

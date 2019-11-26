@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public abstract class AggresivePlayer implements IPlayer {
+public class AggresivePlayer implements IPlayer {
 
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
@@ -138,10 +138,20 @@ public abstract class AggresivePlayer implements IPlayer {
 	}
 
 	@Override
+	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+		return null;
+	}
+
+	@Override
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
+	@Override
+	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+		return false;
+	}
+
+
 }

@@ -53,10 +53,10 @@ public class GamePlay implements ISubject{
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>(); 
 	
-	private IPlayer playerStrategy;
+	private IPlayer player;
 	
 	public void setPlayerStrategy() {
-		this.playerStrategy = currentPlayerObj.currentPlayer;
+		this.player = currentPlayerObj.currentPlayer;
 	}
 	
 	public CurrentPlayer getCurrentPlayerObj() {
@@ -903,7 +903,7 @@ public class GamePlay implements ISubject{
             return false;
         }
 
-		if (!playerStrategy.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
+		if (!player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
 			return false;
 
 		if (currentPlayerObj.getNumReinforceArmies() > 0) {
@@ -919,7 +919,7 @@ public class GamePlay implements ISubject{
 	
 	public boolean reinforceArmy() {
 		
-		//playerStrategy.reinforcement();
+		//player.reinforcement();
 		setCurrentOperation("Reinforce Phase is done.");
 		//other works
 		return true;
@@ -942,11 +942,11 @@ public class GamePlay implements ISubject{
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 		
-		if (!Player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
+		if (!player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (  playerStrategy.getDefenderRemoved() == true ) {
+		if (  player.getDefenderRemoved() == true ) {
 			
 			
 			IPlayer defender = Database.getPlayerByName(defenderName);
@@ -961,7 +961,7 @@ public class GamePlay implements ISubject{
 			if(checkEndGameStatus==true) {
 				return true;
 			}
-			playerStrategy.setDefenderRemoved(false);
+			player.setDefenderRemoved(false);
 		}
 
 		setCurrentOperation("Performing normal attack form "+originCountry+ " to "+ destinationCountry);
@@ -977,11 +977,11 @@ public class GamePlay implements ISubject{
 		String defenderName = defenderCountry.getOwner();
 
 		
-		if (!playerStrategy.attackAllout(originCountry, destinationCountry, graphObj, currentPlayerObj))
+		if (!player.attackAllout(originCountry, destinationCountry, graphObj, currentPlayerObj))
 			return false;
 		
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (  playerStrategy.getDefenderRemoved() == true ) {
+		if (  player.getDefenderRemoved() == true ) {
 			
 			IPlayer defender = Database.getPlayerByName(defenderName);
 			for(Card itr: defender.getPlayerCards()) {
@@ -998,7 +998,7 @@ public class GamePlay implements ISubject{
 //				setCurrentState(State.gameFinished, "game Finished");
 //				return true;
 //			}
-			playerStrategy.setDefenderRemoved(false);
+			player.setDefenderRemoved(false);
 		}
 
 		setCurrentOperation("Performing all-out attack form "+originCountry+ " to "+ destinationCountry);
@@ -1012,9 +1012,9 @@ public class GamePlay implements ISubject{
 	public boolean ignoreAttack() {
 		
 		// handle picking card at turn of each player
-		if(playerStrategy.getCountryConquered()) {
+		if(player.getCountryConquered()) {
 			currentPlayerObj.getCurrentPlayer().setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
-			playerStrategy.setDefenderRemoved(false);
+			player.setDefenderRemoved(false);
 		}
 		
 		// Change current state to next state
@@ -1034,7 +1034,7 @@ public class GamePlay implements ISubject{
 	 */
 	public boolean fortifyArmy(String sourceCountry, String destinationCountry, Integer numberOfArmy) {
 
-		if (!playerStrategy.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
+		if (!player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
 		setCurrentState(State.newTurn, "New Turn");
