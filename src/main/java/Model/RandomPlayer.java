@@ -122,4 +122,9 @@ public class RandomPlayer implements IPlayer {
     public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
         return null;
     }
+
+    @Override
+    public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
 }

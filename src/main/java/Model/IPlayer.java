@@ -28,6 +28,8 @@ public interface IPlayer {
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph);
 	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph);
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph);
+	public boolean attackCountry(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+								 CurrentPlayer currentPlayerObj);
 	
 }
 
