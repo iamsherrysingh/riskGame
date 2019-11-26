@@ -30,7 +30,7 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
-		return null;
+		return PlayerStrategy.cheater; //Done
 	}
 
 	@Override

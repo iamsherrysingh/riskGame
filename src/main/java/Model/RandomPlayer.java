@@ -30,7 +30,7 @@ public class RandomPlayer implements IPlayer {
 
     @Override
     public PlayerStrategy getPlayerStrategy() {
-        return null;
+        return PlayerStrategy.random; //Done
     }
 
     @Override

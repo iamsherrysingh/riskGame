@@ -81,7 +81,7 @@ public class BenevolentPlayer implements IPlayer {
 
     @Override
     public PlayerStrategy getPlayerStrategy() {
-        return null;
+        return PlayerStrategy.benevolent; //Done
     }
 
     @Override
