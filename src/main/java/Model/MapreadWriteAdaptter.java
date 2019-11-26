@@ -5,11 +5,8 @@ import java.io.IOException;
 
 public class MapreadWriteAdaptter extends DominationMapFile{
 	
-	Database database = Database.getInstance();
+	  Database database = Database.getInstance();
 
-	// Mapx map = new MapxConquest(conquestMap);
-	
-	
 	  private String continents;
 	  private String territories;
 	 
@@ -157,20 +154,3 @@ public class MapreadWriteAdaptter extends DominationMapFile{
 		}
 			
 	}
-
-
-	
-		
-		
-		
-/*
-		System.out.println("========start of borders========" );
-		System.out.println(borders);
-		System.out.println("========end of borders========" );
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-*/
-
