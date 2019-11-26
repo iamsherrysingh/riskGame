@@ -976,7 +976,7 @@ public class GamePlay implements ISubject {
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 
-		if (!player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
+		if (!player.normalAttack(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
 			return false;
 
 		// if defender lost all of his country, attacker will owned all of his cards.
