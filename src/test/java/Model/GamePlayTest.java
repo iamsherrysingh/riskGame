@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * It contains different Junit tests for the methods defined in {@link Model.GamePlay}
  * 
- * @see GamePlay.java
+ * @see GamePlay
  * @author birjotsingh17
  */
 
@@ -45,8 +45,8 @@ public class GamePlayTest {
 	 */
     @Test
     public void calculateReinforcementArmies(){
-        Player.addPlayer("seha", 0);
-        Player.addPlayer("kammu", 0);
+        gamePlay.addPlayer("seha", "Benevolent");
+        gamePlay.addPlayer("kammu", "Benevolent");
         gamePlay.populateCountries();
         gamePlay.placeAll();
         gamePlay.getCurrentPlayerObj().calculateReinforceentArmies();
@@ -69,7 +69,7 @@ public class GamePlayTest {
 	 */
 	@Test
 	public void EndGame() {
-		Player.addPlayer("Birjot", 7);
+		gamePlay.addPlayer("Birjot", "Benevolent");
 		
 		boolean check; 
 		if(Database.getInstance().getPlayerList().size()==1) {
@@ -83,7 +83,7 @@ public class GamePlayTest {
 
     @Test
     public void startupPhase(){
-        gamePlay.addPlayer("Chakshu");
+        gamePlay.addPlayer("Chakshu",  "Benevolent");
         gamePlay.removePlayer("Chakshu");
         boolean output= gamePlay.populateCountries();
 
