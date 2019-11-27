@@ -21,118 +21,7 @@ public class Mapx {
 
 	private String territories;
 
-	/**
-	 * This reads the maps file and stores the country, continent and border details
-	 * in their variables This is used by loadMap(). The variables generated
-	 * by this method are used throughout the game.
-	 *
-	 * @param mapFile It is the name of the map file that is to be executed
-	 * @throws FileNotFoundException Throws an exception if the file is not found
-	 * @return true(If the method is executed completely)
-	 */
-	private boolean readMapIntoVariables(String mapFile) throws FileNotFoundException {
-		// Read Continents
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine().trim();
-			int continentsEncountered = 0;
-			while (line != null) {
-				if (line.equals("[countries]"))
-					break;
-				if (continentsEncountered == 1) {
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
 
-				if (line.equals("[continents]")) {
-					continentsEncountered = 1;
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				line = br.readLine();
-			}
-			continents = sb.toString();
-			continents = continents.trim();
-			String continentLine[] = continents.split("\n");
-			for (int i = 1; i < continentLine.length; i++) {
-				continentLine[i] = continentLine[i].trim();
-				String split[] = continentLine[i].split(" ");
-				Continent continent = new Continent(Database.getInstance().getContinentList().size() + 1, split[0],Integer.parseInt(split[1]), split[2]);
-				database.getContinentList().add(continent);
-			}
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		}
-		catch(Exception e){
-
-		}
-
-		// Read countries
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-			int countriesEncountered = 0;
-			while (line != null) {
-				if (line.equals("[borders]"))
-					break;
-				if (countriesEncountered == 1) {
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				if (line.equals("[countries]")) {
-					countriesEncountered = 1;
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				line = br.readLine();
-			}
-			countries = sb.toString();
-			countries = countries.trim();
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		}
-		catch(Exception e){
-
-		}
-
-		// Read Borders
-		try{
-			BufferedReader br = new BufferedReader(new FileReader(mapFile));
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-			int bordersEncountered = 0;
-			while (line != null) {
-				if (bordersEncountered == 1) {
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				if (line.equals("[borders]")) {
-					bordersEncountered = 1;
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				line = br.readLine();
-			}
-			borders = sb.toString();
-			borders = borders.trim();
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		}
-		catch(Exception e){
-
-		}
-
-		return true;
-	}
-
-
-	
 	/**
 	 * creates gameGraph of the map file provided gameGraph returned by this method
 	 * is the most important variable in the whole game gameGraph is a Graph that
@@ -168,9 +57,6 @@ public class Mapx {
 				borders=readMapFile.borders;
 			}
 
-			System.out.println(continents);
-			System.out.println(countries);
-			System.out.println(borders);
 			System.out.println("read file finished");
 	
 			

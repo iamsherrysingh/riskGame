@@ -11,7 +11,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
-
+/** 
+ * This Class read and write data from/to file in the conquest format.
+ */
 public class ConquestMapFile extends DominationMapFile{
 
 	public String continents;
