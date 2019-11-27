@@ -173,7 +173,35 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		return false;
+
+		boolean neighbourWithDifferentOwner = false;
+
+		for (Country country : gameGraph.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+
+				for (int i = 0; i < country.neighbours.size(); i++) {
+
+					if (!Country.getCountryByNumber(country.neighbours.get(i), gameGraph).getOwner()
+							.equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+
+						neighbourWithDifferentOwner = true;
+						break;
+
+					}
+
+				}
+
+				if (neighbourWithDifferentOwner = true) {
+					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+					neighbourWithDifferentOwner=false;
+				}
+
+			}
+
+		}
+
+		return true;
 	}
 
 	@Override
