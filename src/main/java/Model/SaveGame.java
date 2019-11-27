@@ -40,7 +40,7 @@ public class SaveGame implements SaveLoadBuilder {
 	}
 	
 	@Override
-	public void currentPlayer() {
+	public void handleCurrentPlayer() {
 		
 	}
 }

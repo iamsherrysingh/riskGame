@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface SaveLoadBuilder {
@@ -9,6 +10,7 @@ public interface SaveLoadBuilder {
 	public void  handlePlayers();
 	public void  handleFreeCards();
 	public void  handleCurrentState();
-	public void  currentPlayer();
+	public void  handleCurrentPlayer();
+	public void  setFile(String fileName) throws IOException;
 	
 }

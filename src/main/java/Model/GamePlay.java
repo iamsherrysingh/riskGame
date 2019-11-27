@@ -476,16 +476,33 @@ public class GamePlay implements ISubject {
 	 * 
 	 * @param fileName The name of the Game file that is to be saved
 	 * @return true if file successfully saved.
+	 * @throws IOException 
 	 */
-	public boolean SaveGame(String fileName) {
-		try {
-			if (!mapxObj.saveMap(graphObj, fileName))
-				return false;
-		} catch (IOException io) {
-			System.out.println("IO Exception Occured");
-			return false;
-		}
-		setCurrentOperation("Saving Game to file: \"" + fileName + "\"");
+	public boolean SaveGame(String fileName) throws IOException {
+		
+		saveGameObj.setFile(fileName);
+		
+		saveGameObj.handleContinent();
+		saveGameObj.handleCountry();
+		saveGameObj.handlePlayers();
+		saveGameObj.handleFreeCards();
+		saveGameObj.handleCurrentState();
+		saveGameObj.handleCurrentPlayer();
+		
+		return true;
+	}
+	
+	public boolean LoadGame(String fileName) throws IOException {
+		
+		loadGameObj.setFile(fileName);
+		
+		loadGameObj.handleContinent();
+		loadGameObj.handleCountry();
+		loadGameObj.handlePlayers();
+		loadGameObj.handleFreeCards();
+		loadGameObj.handleCurrentState();
+		loadGameObj.handleCurrentPlayer();
+		
 		return true;
 	}
 	

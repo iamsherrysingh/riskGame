@@ -39,7 +39,7 @@ private BufferedReader gameFile;
 	}
 	
 	@Override
-	public void currentPlayer() {
+	public void handleCurrentPlayer() {
 		
 	}
 	
