@@ -7,7 +7,13 @@ public class ConquestMapAdapter implements IMap {
 
     @Override
     public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
-        return false;
+        try{
+        conquestMap.loadMap(mapFile,gameGraph);
+        return true;}
+        catch(Exception e){
+            System.out.println("Error loading ConquestMap");
+            return false;
+        }
     }
 
     @Override
