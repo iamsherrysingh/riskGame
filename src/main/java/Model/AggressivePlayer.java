@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * This class implements the IPlayer interface and follows the strategy pattern
+ * This is one type of behaviour of the player
+ */
 public class AggressivePlayer implements IPlayer {
 
 	private String name;
@@ -144,15 +148,16 @@ public class AggressivePlayer implements IPlayer {
 		this.defenderRemoved = defenderRemoved;
 	}
 
-	/**
-	 * This method is used to reinforce a players country
-	 * @param countryName This is the name of the country to be reinforced and is of the type String
-	 * @param numberOfArmies This denotes the integer of armies
-	 * @param graphObj It is an object of the class Graph
-	 * @param currentPlayerObj It is an object of the class CurrentPlayer
-	 * @return
-	 */
+	
 	@Override
+	/**
+	 * This method check validation of reinforcements and do reinforce.
+	 * @param countryName This is n string which specified by user for reinforcement
+	 * @param numberOfArmies This is an integer parameter which specify the number of armies for reinforcement
+	 * @param graphObj This is an object which pass the game graph.
+	 * @param currentPlayerObj This is an object which is current player of the game.
+	 * @return true(if runs successfully and the country is reinforced) or false (in case it fails any validation)
+	 */
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
@@ -210,16 +215,16 @@ public class AggressivePlayer implements IPlayer {
 
 	}
 
+
+	@Override
 	/**
-	 * This method performs the attack function of the game according to the Aggressive Player strategy.
-	 * It performs the attack function until it exhausts all the armies and can not attack anymore.
-	 * @param fromCountry It denotes the name of the country from where armies are to be transferred.
-	 * @param toCountry It denotes the name of the country from where armies are to be transferred.
+	 * This method attacks until no attack is possible using maximum number of dice to attack or defend
+	 * @param fromCountry It is a String and denotes the name of the country from where the armies are to be sent
+	 * @param toCountry It is a String and denotes the name of the country that is to be attacked
 	 * @param graphObj It is an object of the class Graph
 	 * @param currentPlayerObj It is an object of the class CurrentPlayer
-	 * @return true(If attackAllout method runs successfully) or false(If the requirements are not satisfied)
+	 * @return true(if the method executes successfully) or false(if the country entered is invalid or some other validation fails)
 	 */
-	@Override
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
 		Country attackerCountry = strongestCountryFound;
@@ -365,6 +370,7 @@ public class AggressivePlayer implements IPlayer {
 
 	}
 
+
     /**
      * This method defines how the attack takes place.
      * It covers all the steps of the aggressive attack mode.
@@ -405,6 +411,7 @@ public class AggressivePlayer implements IPlayer {
 		randomGenerator = new Random();
 		return randomGenerator.nextInt(maxDice) + 1;
 	}
+
 
     /**
      * This method takes care of the battle between the attackerCountry and the defenderCountry and is responsible for declaring whoever wins the battle

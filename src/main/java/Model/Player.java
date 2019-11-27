@@ -108,11 +108,11 @@ public class Player implements IPlayer {
 
 	/**
 	 * This method check validation of reinforcements and do reinforce.
-	 * @param countryName This is an string which specified by user for reinforcement
+	 * @param countryName This is n string which specified by user for reinforcement
 	 * @param numberOfArmies This is an integer parameter which specify the number of armies for reinforcement
 	 * @param graphObj This is an object which pass the game graph.
 	 * @param currentPlayerObj This is an object which is current player of the game.
-	 * @return true(if runs successfully or false in case it fails any validation)
+	 * @return true(if runs successfully) or false (in case it fails any validation)
 	 */
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
