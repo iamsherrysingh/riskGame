@@ -215,6 +215,14 @@ public class BenevolentPlayer implements IPlayer {
 	}
 
 	@Override
+	/**
+	 *This method allows the user to move their armies to weaker countries
+	 * 	@param fromCname The name of the country from where the armies are to be moved
+	 * 	@param toCountryName The name of the country to which the armies are to be moved
+	 *  @param numberOfArmies The total number of armies to be moved
+	 *  @param gameGraph This is an object of the class Graph
+	 *  @return true(If all the conditions are satisfied and the desired country is fortified) or false(If the countries specified are absent or it does not fulfill the requirements)
+	 */
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 
 		Country fromCountry = null;
