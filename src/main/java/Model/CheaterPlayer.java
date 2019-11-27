@@ -30,7 +30,7 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
-		return PlayerStrategy.cheater; //Done
+		return PlayerStrategy.cheater; // Done
 	}
 
 	@Override
@@ -135,26 +135,87 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
-	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		return false;
+	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
+			CurrentPlayer currentPlayerObj) {
+
+		for (Country country : graphObj.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
+				country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+			}
+
+		}
+
+		GamePlay.getInstance().setCurrentOperation("Reinforcement done by cheater player");
+		return true;
 	}
 
 	@Override
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		return false;
+
+		ArrayList<Country> countriesOwnedbyPlayer = new ArrayList<Country>();
+		for (Country country : graphObj.getAdjList()) {
+			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
+				countriesOwnedbyPlayer.add(country);
+			}
+		}
+
+		for (int i = 0; i < countriesOwnedbyPlayer.size(); i++) {
+
+			ArrayList<Integer> neighboursOfCountry = countriesOwnedbyPlayer.get(i).neighbours;
+
+			for (int j = 0; j < neighboursOfCountry.size(); j++) {
+				Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj.getInstance())
+						.setOwner(currentPlayerObj.currentPlayer.getName());
+			}
+		}
+
+		GamePlay.getInstance().setCurrentOperation("Performing all-out attack by cheater player");
+		return true;
 	}
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		return false;
+
+		boolean neighbourWithDifferentOwner = false;
+
+		for (Country country : gameGraph.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+
+				for (int i = 0; i < country.neighbours.size(); i++) {
+
+					if (!Country.getCountryByNumber(country.neighbours.get(i), gameGraph).getOwner()
+							.equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+
+						neighbourWithDifferentOwner = true;
+						break;
+
+					}
+
+				}
+
+				if (neighbourWithDifferentOwner = true) {
+					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+					neighbourWithDifferentOwner = false;
+				}
+
+			}
+
+		}
+
+		System.out.println("Fortification done in cheater player");
+		return true;
 	}
 
 	@Override
 	/**
 	 * This method returns the total number of countries owned by the players.
+	 * 
 	 * @param playerName The name of the player
-	 * @param gameGraph This is an object of the class Graph
-	 * @return An integer value that is equal to the total number of countries owned by the player
+	 * @param gameGraph  This is an object of the class Graph
+	 * @return An integer value that is equal to the total number of countries owned
+	 *         by the player
 	 */
 	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
 		Integer numberOfCountriesOwned = 0;
@@ -169,11 +230,13 @@ public class CheaterPlayer implements IPlayer {
 		return numberOfCountriesOwned;
 	}
 
-@Override
+	@Override
 	/**
 	 * This method returns the total number of armies owned by the players.
+	 * 
 	 * @param gameGraph It is an object of the class Graph
-	 * @returnAn integer value that is equal to the total number of armies owned by the player
+	 * @returnAn integer value that is equal to the total number of armies owned by
+	 *           the player
 	 */
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		Integer numberOfArmies = 0;
@@ -189,7 +252,8 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
-	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+			CurrentPlayer currentPlayerObj) {
 		return false;
 	}
 
