@@ -1,13 +1,14 @@
 
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * This class creates the graph of the game.
  * This has singleton implementation.
  */
-public class Graph {
+public class Graph implements Serializable {
     static public ArrayList<Country> adjList= new ArrayList<Country>();
     private static Graph gameGraph;
 
