@@ -335,6 +335,42 @@ public class Mapx {
 		return false;
 	}
 
+	public static boolean checkPath(String fromCountryName, String toCountryName, Graph gameGraph){
+		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
+		Country fromCountry = Country.getCountryByName(fromCountryName, gameGraph);
+		System.out.println("To: "+toCountry.getName()+" owner "+toCountry.getOwner());
+		System.out.println("From: "+fromCountry.getName()+" owner "+fromCountry.getOwner());
+		System.out.println("CurrentPlayer: "+GamePlay.getInstance().getCurrentPlayerName());
+		if (fromCountry == null || toCountry == null) {
+			System.out.println("One or both countries do not exist");
+			return false;
+		}
+		else if (!(toCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()) && fromCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()))){
+			System.out.println("Both countries have to belong to current player");
+			return false;
+		}
+		boolean pathExists= false;
+		boolean visited[]=new boolean[gameGraph.getAdjList().size()];
+		Queue<Country> queue= new LinkedList<Country>();
+		visited[fromCountry.getNumber()-1]= true;
+		queue.add(fromCountry);
+
+		while(queue.size()!=0) {
+			Country firstElement = queue.poll();
+			if (firstElement.getName().equalsIgnoreCase(toCountry.getName()))
+				return true;
+			else {
+				for (Integer neighbourNumber : firstElement.getNeighbours()) {
+					Country neighbourCountry = Country.getCountryByNumber(neighbourNumber, gameGraph);
+					visited[neighbourCountry.getNumber()-1]=true;
+					if (neighbourCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+						queue.add(neighbourCountry); //add only if path belongs to current player
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 
 
