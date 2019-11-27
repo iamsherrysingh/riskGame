@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
 import View.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  * This Class maintains the state of the game and current player. The methods of
@@ -126,7 +131,7 @@ public class GamePlay implements ISubject {
 		Iterator<String> itr = tournamentData.iterator();
 		String itrList = itr.next();
 		boolean aggressiveFlag = false, benevolentFlag = false, randomFlag = false, cheaterFlag = false;
-
+	    
 		// Extract all the data related to 4 parts of tournament and check validation of
 		// data.
 		for (int i = 0; i < 4; i++) {
@@ -295,7 +300,12 @@ public class GamePlay implements ISubject {
 		}
 
 		String[][] gameResult = new String[mapList.size()][gameNumber];
-
+	    String[] columns = new String[gameNumber];
+	    
+	    for(int gameHeadercounter=0; gameHeadercounter < gameNumber; gameHeadercounter++) {
+	    	columns[gameHeadercounter]= "Game" + (gameHeadercounter + 1 );
+	    }
+	    
 		// Tournament Game Procedure
 		for (int mapCounter = 0; mapCounter < mapList.size(); mapCounter++) {
 
@@ -322,31 +332,42 @@ public class GamePlay implements ISubject {
 				populateCountries();
 				placeAll();
 				currentPlayerObj.goToFirstPlayer(this.getGraphObj());
+				this.setPlayerStrategy();
 
 				// Playing game with duration for computer players.
 				for (int turnCount = 0; turnCount < gameTurn; turnCount++) {
-
-					setPlayerStrategy();
+				
+					setCurrentState(State.exchangeCards, "Exchange Cards");
+					CardobserverOperations();
 					autoExchangeCards();
 					reinforceArmy();
-					// attack();
-					// fortify;
+					alloutAttack();
+					fortifyArmy();
 
 					if (checkEndGame()) {
 						break;
 					}
 					currentPlayerObj.goToNextPlayer(this.getGraphObj());
+					this.setPlayerStrategy();
 
 				}
 
 				if (Database.playerList.size() == 1) {
-					gameResult[mapCounter][gameCounter] = Database.playerList.get(0).getName();
+					gameResult[mapCounter][gameCounter] = mapList.get(mapCounter) + "  Winner: " + Database.playerList.get(0).getName();
 				} else {
-					gameResult[mapCounter][gameCounter] = "Draw";
+					gameResult[mapCounter][gameCounter] = mapList.get(mapCounter) + "  Winner: Draw";
 				}
 
 			}
 		}
+	    JFrame f = new JFrame("JTable Sample");
+	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    Container content = f.getContentPane();
+	    JTable table = new JTable(gameResult, columns);
+	    JScrollPane scrollPane = new JScrollPane(table);
+	    content.add(scrollPane, BorderLayout.CENTER);
+	    f.setSize(300, 200);
+	    f.setVisible(true);
 
 		setCurrentState(State.gameFinished, "Game Finished");
 		// setCurrentOperation("Adding continent "+ continentName + " with control value
