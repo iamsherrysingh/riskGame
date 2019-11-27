@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MapReadWriteAdaptter extends Mapx{
+public class MapReadWriteAdapter extends Mapx{
 	
 	  Database database = Database.getInstance();
 
@@ -14,7 +14,7 @@ public class MapReadWriteAdaptter extends Mapx{
 	  private ConquestMapFile conquestMap;
 
 	
-	  public MapReadWriteAdaptter(ConquestMapFile conquestMap) {
+	  public MapReadWriteAdapter(ConquestMapFile conquestMap) {
 	    this.conquestMap = conquestMap;
 	    }
 
