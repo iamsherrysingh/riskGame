@@ -95,7 +95,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 					
 				}
 				
-				countries += i+1 + " " + split[0] + " " + continetIndx + " "  + split[1] + " " + split[2] + "\n";
+				countries += i+1 + "," + split[0] + "," + continetIndx + ","  + split[1] + "," + split[2] + "\n";
 				
 				countryName[i] = split[0];
 			}
