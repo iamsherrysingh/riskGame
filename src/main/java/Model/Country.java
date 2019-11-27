@@ -11,6 +11,9 @@ public class Country {
 	String name, owner;
 	ArrayList<Integer> neighbours;
 
+	public Country(){
+		
+	}
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
 			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
 		this.number = number;
@@ -61,7 +64,7 @@ public class Country {
 		return getCoOrdinate2;
 	}
 
-	public void setGetCoOrdinate2(Integer getCoOrdinate2) {
+	public void setCoOrdinate2(Integer getCoOrdinate2) {
 		this.getCoOrdinate2 = getCoOrdinate2;
 	}
 
