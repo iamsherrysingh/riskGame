@@ -55,7 +55,8 @@ public class GamePlay implements ISubject {
 	private CurrentPlayer currentPlayerObj;
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>();
-
+	SaveLoadBuilder saveGameObj;
+	SaveLoadBuilder loadGameObj;
 	private IPlayer player;
 
 	public void setPlayerStrategy() {
@@ -82,6 +83,8 @@ public class GamePlay implements ISubject {
 		observersOfGamePlay = new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
 		this.attachObserver(worldDominationView);
+		saveGameObj = new SaveGame();
+		loadGameObj = new LoadGame();
 	}
 
 	public static GamePlay getInstance() {
