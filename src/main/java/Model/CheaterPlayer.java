@@ -145,6 +145,8 @@ public class CheaterPlayer implements IPlayer {
 			}
 
 		}
+
+		GamePlay.getInstance().setCurrentOperation("Reinforcement done by cheater player");
 		return true;
 	}
 
@@ -168,6 +170,7 @@ public class CheaterPlayer implements IPlayer {
 			}
 		}
 
+		GamePlay.getInstance().setCurrentOperation("Performing all-out attack by cheater player");
 		return true;
 	}
 
@@ -194,13 +197,14 @@ public class CheaterPlayer implements IPlayer {
 
 				if (neighbourWithDifferentOwner = true) {
 					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
-					neighbourWithDifferentOwner=false;
+					neighbourWithDifferentOwner = false;
 				}
 
 			}
 
 		}
 
+		System.out.println("Fortification done in cheater player");
 		return true;
 	}
 
