@@ -30,6 +30,16 @@ public class ConquestMapFile extends DominationMapFile{
 			return territories;
 	}
 	
+	
+	
+	public void setContinents(String continents) {
+		this.continents = continents;
+	}
+
+	public void setTerritories(String territories) {
+		this.territories = territories;
+	}
+
 	/**
 	 * This reads the conquest maps file and stores the country, continent and border details
 	 * in their variables This is used by loadMap(). The variables generated

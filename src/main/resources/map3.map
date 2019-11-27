@@ -7,6 +7,60 @@ crd sample.cards
 prv world.jpg
 
 [continents]
-null
+nullNorth America=5
+South America=3
+Africa=3
+Europe=5
+Asia=8
+Australasia=3
+newcontinit=7
+
 [Territories]
-null
+nullAlaska,70,165,1,Alaska,Northwest Territory,
+Northwest Territory,141,166,1,Alaska,Northwest Territory,Alberta,
+Alberta,139,202,1,Alaska,Northwest Territory,Alberta,
+Greenland,320,115,1,Alaska,Northwest Territory,Alberta,Greenland,
+Ontario,195,206,1,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Quebec,249,205,1,Alaska,Northwest Territory,
+Western United States,151,243,1,Alaska,Northwest Territory,Alberta,Greenland,
+Eastern United States,211,255,1,Alaska,Northwest Territory,Alberta,
+Central America,179,301,1,Alaska,Northwest Territory,
+Hawaii,41,295,1,Alaska,
+Venezuala,256,342,2,Alaska,Northwest Territory,
+Peru,258,388,2,Alaska,Northwest Territory,
+Argentina,255,446,2,Alaska,Northwest Territory,Alberta,
+Brazil,303,380,2,Alaska,Northwest Territory,Alberta,
+Falkland Islands,299,481,2,Alaska,
+North Africa,419,304,3,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Congo,469,357,3,Alaska,Northwest Territory,
+South Africa,477,410,3,Alaska,Northwest Territory,Alberta,
+Madagascar,532,400,3,Alaska,
+East Africa,513,337,3,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Egypt,474,288,3,Alaska,Northwest Territory,Alberta,
+Iceland,374,167,4,Alaska,Northwest Territory,
+Great Britain,413,205,4,Alaska,Northwest Territory,Alberta,
+Western Europe,420,240,4,Alaska,Northwest Territory,Alberta,
+Scandinavia,460,166,4,Alaska,Northwest Territory,Alberta,Greenland,
+Northern Europe,457,213,4,Alaska,Northwest Territory,Alberta,Greenland,
+Southern Europe,467,237,4,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Ukraine,524,196,4,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Svalbard,439,83,4,Alaska,
+Middle East,528,272,5,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Ural,606,175,5,Alaska,Northwest Territory,Alberta,
+Afghanistan,577,232,5,Alaska,Northwest Territory,Alberta,Greenland,
+India,606,290,5,Alaska,Northwest Territory,Alberta,
+Siberia,660,149,5,Alaska,Northwest Territory,Alberta,Greenland,
+China,660,258,5,Alaska,Northwest Territory,Alberta,Greenland,Ontario,
+Siam,665,309,5,Alaska,Northwest Territory,
+Mongolia,701,228,5,Alaska,Northwest Territory,Alberta,Greenland,
+Irkutsk,694,192,5,Alaska,Northwest Territory,Alberta,
+Yatusk,734,159,5,Alaska,Northwest Territory,
+Kamchatka,800,166,5,Alaska,Northwest Territory,Alberta,Greenland,
+Japan,754,262,5,Alaska,Northwest Territory,Alberta,
+Philippines,736,311,5,Alaska,
+Indonesia,689,352,6,Alaska,Northwest Territory,Alberta,
+New Guinea,763,365,6,Alaska,Northwest Territory,
+Western Australia,725,412,6,Alaska,Northwest Territory,
+Eastern Australia,771,420,6,Alaska,Northwest Territory,
+New Zealand,852,462,6,Alaska,
+

@@ -3,6 +3,7 @@ package Model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /** 
  * This is the adapter pattern to handle conquest and domination file.
@@ -53,6 +54,18 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 			  
 			  convertDominateToConquest(gameGraph);
 			  
+				
+			  conquestMap.setContinents(continents);
+		
+			  conquestMap.setTerritories(territories);
+
+			  
+				System.out.println("--------here------");
+				
+				System.out.println(conquestMap.getContinents());
+				System.out.println(conquestMap.getTerritories());
+				
+				
 			  conquestMap.writeMapConquest(mapName, f);
 			  
 			  return true;
@@ -165,20 +178,28 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 		  */
 		  private boolean convertDominateToConquest(Graph gameGraph) {
 	
-				continents = "[Continents]";
-				countries += "\n";
+				continents = null;
 				for (Continent continent : Database.getInstance().getContinentList()) {
 					continents += continent.getName() + "=" +  continent.getControlValue() + "\n";
 				}
 				
 				
-				territories = "[Territories]" + "\n";
+				territories = null;
 				for (Country country : gameGraph.getAdjList()) {
+					
+					ArrayList<Integer> neib = country.getNeighbours();
+
+					
 					territories += country.getName() + "," + 
 				                   country.getCoOrdinate1() + "," + 
 					               country.getCoOrdinate2 + "," +  
-					               country.getInContinent() + "," +
-					               country.getNeighbours() + "\n";
+					               country.getInContinent() + ",";
+					
+					for ( int i=1; i<neib.size(); i++ ) {
+						territories += country.getCountryByNumber(i,gameGraph).getName() + ",";
+					}
+					territories += "\n";
+					
 				}
 				
 				return true;

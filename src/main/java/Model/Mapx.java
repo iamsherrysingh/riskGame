@@ -37,7 +37,7 @@ public class Mapx {
 		try {
 
 			fileType = recognizeFileType(mapFile);
-
+ 
 			System.out.println("file format is: " + fileType);
 			
 			if (fileType=="Domination") {
@@ -232,6 +232,8 @@ public class Mapx {
 				}
 				else if (fileType=="Conquest") {
 					System.out.println("input file is in Conquest format");
+					
+					
 				    ConquestMapFile conquestMap = new ConquestMapFile();
 				    MapReadWriteAdaptter MapFile = new MapReadWriteAdaptter(conquestMap);
 				    MapFile.writeMapFile(gameGraph, mp, f);
