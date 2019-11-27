@@ -349,23 +349,26 @@ public class Mapx {
 			System.out.println("Both countries have to belong to current player");
 			return false;
 		}
+        System.out.println("Good1");
 		boolean pathExists= false;
-		boolean visited[]=new boolean[gameGraph.getAdjList().size()];
+		boolean visited[]=new boolean[gameGraph.getAdjList().size()+1];
 		Queue<Country> queue= new LinkedList<Country>();
-		visited[fromCountry.getNumber()-1]= true;
+		visited[fromCountry.getNumber()]= true;
 		queue.add(fromCountry);
-
+        System.out.println("Good2");
 		while(queue.size()!=0) {
+            System.out.println("Looping with queue size "+queue.size());
 			Country firstElement = queue.poll();
 			if (firstElement.getName().equalsIgnoreCase(toCountry.getName()))
 				return true;
 			else {
 				for (Integer neighbourNumber : firstElement.getNeighbours()) {
 					Country neighbourCountry = Country.getCountryByNumber(neighbourNumber, gameGraph);
-					visited[neighbourCountry.getNumber()-1]=true;
-					if (neighbourCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+
+					if (neighbourCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()) && !visited[neighbourCountry.getNumber()]) {
 						queue.add(neighbourCountry); //add only if path belongs to current player
 					}
+                    visited[neighbourCountry.getNumber()]=true;
 				}
 			}
 		}
