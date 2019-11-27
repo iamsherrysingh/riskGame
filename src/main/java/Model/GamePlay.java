@@ -593,7 +593,7 @@ public class GamePlay implements ISubject {
 			mapxObj.loadMap("src/main/resources/" + fileName, graphObj);
 			setCurrentState(State.editPlayer, "Edit Player");
 		} catch (Exception e) {
-			System.out.println("File not found");
+			System.out.println(e.getMessage());
 			return false;
 		}
 		setCurrentOperation("Loading Game Map " + fileName);
