@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class RandomPlayer implements IPlayer {
 
@@ -12,6 +13,7 @@ public class RandomPlayer implements IPlayer {
     public boolean countryConquered;
     public boolean defenderRemoved;
     static Integer lastDiceSelected = null;
+    Integer randomNumberGenerated;
 
     public RandomPlayer(Integer number, String name, Integer numberOfArmies) {
         this.number = number;
@@ -136,7 +138,59 @@ public class RandomPlayer implements IPlayer {
 
     @Override
     public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
+    	
+    	Integer randomNumberOfArmies = getRandomNumber(currentPlayerObj.getNumReinforceArmies()); 
+    	
+		numberOfArmies = randomNumberOfArmies;
+		Country randomCountry = null;
+
+		ArrayList<Country> countriesOwned = new ArrayList<Country>();
+		
+		for (Country country : graphObj.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
+				
+				countriesOwned.add(country);				
+				
+			}
+		}
+
+		randomCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
+		
+		// check: if target country is not exist, return false
+		Country targetCountry = randomCountry;
+
+		if (targetCountry == null) {
+			System.out.println("This country does not exist.");
+			return false;
+		}
+
+		// check: if country does not belong to the currentPlayer, return false
+		if (targetCountry.getOwner() != null) {
+			if (targetCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName()) == false) {
+				System.out.println("The country is not belong to the current player");
+				return false;
+			}
+		}
+
+		// check: if numberOfArmy is more than allocated army, return false
+		if (numberOfArmies > currentPlayerObj.getNumReinforceArmies()) {
+			System.out.println(
+					"The current player can reinforce just " + currentPlayerObj.getNumReinforceArmies() + "armies");
+			return false;
+		}
+
+		// Reinforce armies in the target country
+		targetCountry.setNumberOfArmies(targetCountry.getNumberOfArmies() + numberOfArmies);
+
+		// increase the number of armies belong to the player
+		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
+		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
+
+		GamePlay.getInstance().setCurrentOperation(
+				"Country " + targetCountry.name + " reinforced with " + numberOfArmies + " armies.");
+		return true;
+		
     }
 
     @Override
@@ -169,6 +223,12 @@ public class RandomPlayer implements IPlayer {
         return numberOfCountriesOwned;
     }
 
+    public static int getRandomNumber(Integer NumberRangeWeHave) {
+		Random randomGenerator;
+		randomGenerator = new Random();
+		return randomGenerator.nextInt(NumberRangeWeHave) + 1;
+	}
+    
     @Override
 
     /**
