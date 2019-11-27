@@ -136,7 +136,15 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		return false;
+	
+		for(Country country : graphObj.getAdjList()) {
+			
+			if(country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
+				country.setNumberOfArmies(country.getNumberOfArmies()*2);
+			}
+			
+		}
+		return true;
 	}
 
 	@Override
