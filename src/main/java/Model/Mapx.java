@@ -154,6 +154,9 @@ public class Mapx {
 //			    DominationMapFile readMapFile = new DominationMapFile();
 //			    readMapFile.readMapIntoVariables(mapFile);
 				readMapIntoVariables(mapFile);
+				System.out.println(continents);
+				System.out.println(countries);
+				System.out.println(borders);
 			}
 			else if (fileType=="Conquest") {
 				System.out.println("The input file is in Conquest format");

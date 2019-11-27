@@ -139,13 +139,19 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 
 
 			System.out.println("=======================");
+			continents="[continents]\n";
 			for(Continent continent: Database.getInstance().getContinentList()){
-				System.out.println(continent.getName() +" "+continent.getControlValue()+" "+continent.getColor());
+				continents+=(continent.getName() +" "+continent.getControlValue()+" "+continent.getColor())+"\n";
 			}
+			continents=continents.trim();
+			countries= countries.trim();
+			borders= borders.trim();
 //			for(String s:countryName){
 //				System.out.println(s);
 //			}
+		  System.out.println(continents);
 		  System.out.println(countries);
+		  System.out.println(borders);
 
 		  return true;
 
