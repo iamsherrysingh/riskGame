@@ -151,8 +151,9 @@ public class Mapx {
 			
 			if (fileType=="Domination") {
 				System.out.println("input file is in Domonation format");
-			    DominationMapFile readMapFile = new DominationMapFile();
-			    readMapFile.readMapIntoVariables(mapFile);
+//			    DominationMapFile readMapFile = new DominationMapFile();
+//			    readMapFile.readMapIntoVariables(mapFile);
+				readMapIntoVariables(mapFile);
 			}
 			else if (fileType=="Conquest") {
 				System.out.println("input file is in Conquest format");
