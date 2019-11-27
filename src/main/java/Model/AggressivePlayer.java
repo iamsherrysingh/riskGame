@@ -208,10 +208,13 @@ public class AggressivePlayer implements IPlayer {
 
 				Integer countryNumber = attackerCountry.neighbours.get(i);
 
-				if (weakestCountryNumber == null) {
+				if ((weakestCountryNumber == null) && (!Country.getCountryByNumber(countryNumber, graphObj).getOwner()
+						.equalsIgnoreCase(attackerCountry.getOwner()))) {
 					weakestCountryNumber = countryNumber;
 				} else if (Country.getCountryByNumber(weakestCountryNumber, graphObj).getNumberOfArmies() > Country
-						.getCountryByNumber(countryNumber, graphObj).getNumberOfArmies()) {
+						.getCountryByNumber(countryNumber, graphObj).getNumberOfArmies()
+						&& (!Country.getCountryByNumber(countryNumber, graphObj).getOwner()
+								.equalsIgnoreCase(attackerCountry.getOwner()))) {
 					weakestCountryNumber = countryNumber;
 				}
 
@@ -321,9 +324,9 @@ public class AggressivePlayer implements IPlayer {
 
 			GamePlay.getInstance().setCurrentOperation(
 					"Performing all-out attack from " + attackerCountry.name + " to " + defenderCountry.name);
-			
+
 			// if defender lost all of his country, attacker will owned all of his cards.
-			if ( getDefenderRemoved() == true) {
+			if (getDefenderRemoved() == true) {
 
 				for (Card itr : defender.getPlayerCards()) {
 					Card tempcard = itr;
@@ -428,25 +431,22 @@ public class AggressivePlayer implements IPlayer {
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		
 
 		Country fromCountry = strongestCountryFound;
 		Country toCountry = null;
-		
+
 		for (Country country : gameGraph.getAdjList()) {
-			
-			if(country.getOwner().equalsIgnoreCase(fromCountry.getOwner())) {
-				if((country != fromCountry)&& (toCountry==null)) {
+
+			if (country.getOwner().equalsIgnoreCase(fromCountry.getOwner())) {
+				if ((country != fromCountry) && (toCountry == null)) {
 					toCountry = country;
-				}else if((country != fromCountry)&& (toCountry.getNumberOfArmies()<country.getNumberOfArmies())) {
-					toCountry=country;
+				} else if ((country != fromCountry) && (toCountry.getNumberOfArmies() < country.getNumberOfArmies())) {
+					toCountry = country;
 				}
 			}
 		}
-		
-		numberOfArmies = (fromCountry.numberOfArmies-1);
-		
-		
+
+		numberOfArmies = (fromCountry.numberOfArmies - 1);
 
 		if (fromCountry == null || toCountry == null) {
 			System.out.println("One or both countries do not exist");
@@ -454,7 +454,7 @@ public class AggressivePlayer implements IPlayer {
 		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromCountry.getOwner()))) {
 			System.out.println("A player has to own both the countries");
 			return false;
-		} else if (!(Mapx.checkPath(toCountry.name,fromCountry.name, gameGraph))) {
+		} else if (!(Mapx.checkPath(toCountry.name, fromCountry.name, gameGraph))) {
 			System.out.println("There should be the two countries.\n Current Player should own the path.");
 			return false;
 		} else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
@@ -473,50 +473,55 @@ public class AggressivePlayer implements IPlayer {
 
 	}
 
-    @Override
-    /**
-     * This method returns the total number of countries owned by the players.
-     * @param playerName The name of the player
-     * @param gameGraph This is an object of the class Graph
-     * @return An integer value that is equal to the total number of countries owned by the player
-     */
-    public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-        Integer numberOfCountriesOwned = 0;
+	@Override
+	/**
+	 * This method returns the total number of countries owned by the players.
+	 * 
+	 * @param playerName The name of the player
+	 * @param gameGraph  This is an object of the class Graph
+	 * @return An integer value that is equal to the total number of countries owned
+	 *         by the player
+	 */
+	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+		Integer numberOfCountriesOwned = 0;
 
-        if (Database.getPlayerByName(playerName) == null)
-            return -1;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.owner.equalsIgnoreCase(playerName)) {
-                numberOfCountriesOwned += 1;
-            }
-        }
-        return numberOfCountriesOwned;
-    }
+		if (Database.getPlayerByName(playerName) == null)
+			return -1;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.owner.equalsIgnoreCase(playerName)) {
+				numberOfCountriesOwned += 1;
+			}
+		}
+		return numberOfCountriesOwned;
+	}
 
-    @Override
+	@Override
 
-    /**
-     * This method returns the total number of armies owned by the players.
-     * @param gameGraph It is an object of the class Graph
-     * @returnAn integer value that is equal to the total number of armies owned by the player
-     */
-    public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-        Integer numberOfArmies = 0;
+	/**
+	 * This method returns the total number of armies owned by the players.
+	 * 
+	 * @param gameGraph It is an object of the class Graph
+	 * @returnAn integer value that is equal to the total number of armies owned by
+	 *           the player
+	 */
+	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
+		Integer numberOfArmies = 0;
 
-        if (Database.getPlayerByName(this.name) == null)
-            return -1;
-        for (Country country : gameGraph.getAdjList()) {
-            if (country.owner.equalsIgnoreCase(this.name)) {
-                numberOfArmies += country.numberOfArmies;
-            }
-        }
-        return numberOfArmies;
-    }
+		if (Database.getPlayerByName(this.name) == null)
+			return -1;
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.owner.equalsIgnoreCase(this.name)) {
+				numberOfArmies += country.numberOfArmies;
+			}
+		}
+		return numberOfArmies;
+	}
 
-    @Override
-    public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
-        return false;
-    }
+	@Override
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+			CurrentPlayer currentPlayerObj) {
+		return false;
+	}
 
 	public static Integer getLastDiceSelected() {
 		return lastDiceSelected;
