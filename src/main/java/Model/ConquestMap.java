@@ -23,26 +23,22 @@ public class ConquestMap{
 		  return true;
 	  }
 
-	  
 	  public boolean writeMapFile(Graph gameGraph, File f) throws IOException{
 		  
 		  convertDominateToConquest(gameGraph);
 
 		  FileWriter writer = new FileWriter(f);
-		  writer.write("name " + "ConquestMap" + System.getProperty("line.separator"));
+writer.write("[Map]\n" +
+		"author=Michael S. Clark\n" +
+		"image=world+.bmp\n" +
+		"wrap=yes\n" +
+		"scroll=horizontal\n" +
+		"warn=yes");
 		  writer.write(System.getProperty("line.separator"));
-		  writer.write("[files]" + System.getProperty("line.separator"));
-		  writer.write("pic sample.jpg" + System.getProperty("line.separator"));
-		  writer.write("map sample.gif" + System.getProperty("line.separator"));
-		  writer.write("crd sample.cards" + System.getProperty("line.separator"));
-		  writer.write("prv world.jpg" + System.getProperty("line.separator"));
 		  writer.write(System.getProperty("line.separator"));
-
-		  writer.write("[continents]" + System.getProperty("line.separator"));
 		  writer.write(continents + System.getProperty("line.separator"));
 
-		  writer.write("[Territories]" + System.getProperty("line.separator"));
-		  writer.write(territories + System.getProperty("line.separator"));
+		  writer.write(territories );
 
 		  writer.close();
 		  return true;
@@ -169,7 +165,7 @@ public class ConquestMap{
 	  
 	  private boolean convertDominateToConquest(Graph gameGraph) {
 
-			continents = "[Continents]";
+			continents = "[Continents]\n";
 			countries += "\n";
 			for (Continent continent : Database.getInstance().getContinentList()) {
 				continents += continent.getName() + "=" +  continent.getControlValue() + "\n";
@@ -181,8 +177,13 @@ public class ConquestMap{
 				territories += country.getName() + "," + 
 			                   country.getCoOrdinate1() + "," + 
 				               country.getCoOrdinate2 + "," +  
-				               country.getInContinent() + "," +
-				               country.getNeighbours() + "\n";
+				               Continent.getContinentById(country.getInContinent()).getName()  ;
+				ArrayList<Integer> neighbourList=country.getNeighbours();
+				for(Integer neighbourNumber:neighbourList){
+					Country neighbour= Country.getCountryByNumber(neighbourNumber, gameGraph);
+					territories+= ","+neighbour.getName();
+				}
+				territories+="\n";
 			}
 			
 			return true;
