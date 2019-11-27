@@ -699,7 +699,7 @@ public class Controller {
 					case showmap:
 						break;
 					case reinforce:
-						String rnfcNumber = itr.taskData.get(2);	
+						String rnfcNumber = itr.taskData.get(1);	
 						//check if the data related to the number of dice in attack command is numeric
 						for(int i=0; i<rnfcNumber.length(); i++) {
 							if(!Character.isDigit(rnfcNumber.charAt(i))){
