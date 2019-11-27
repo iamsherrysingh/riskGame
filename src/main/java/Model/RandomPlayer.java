@@ -2,6 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements the IPlayer interface and follows the strategy pattern
+ * This is one type of behaviour of the player
+ */
 public class RandomPlayer implements IPlayer {
 
     private String name;
@@ -12,6 +16,8 @@ public class RandomPlayer implements IPlayer {
     public boolean countryConquered;
     public boolean defenderRemoved;
     static Integer lastDiceSelected = null;
+
+
 
     public RandomPlayer(Integer number, String name, Integer numberOfArmies) {
         this.number = number;

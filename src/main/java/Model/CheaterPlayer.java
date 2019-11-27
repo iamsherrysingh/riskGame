@@ -2,6 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements the IPlayer interface and follows the strategy pattern
+ * This is one type of behaviour of the player
+ */
 public class CheaterPlayer implements IPlayer {
 
 	private String name;

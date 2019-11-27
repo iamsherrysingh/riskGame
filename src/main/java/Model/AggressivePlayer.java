@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * This class implements the IPlayer interface and follows the strategy pattern
+ * This is one type of behaviour of the player
+ */
 public class AggressivePlayer implements IPlayer {
 
 	private String name;
