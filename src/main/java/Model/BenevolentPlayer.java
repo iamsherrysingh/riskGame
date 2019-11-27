@@ -143,7 +143,7 @@ public class BenevolentPlayer implements IPlayer {
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
-		 numberOfArmies = currentPlayerObj.getNumReinforceArmies();
+		numberOfArmies = currentPlayerObj.getNumReinforceArmies();
 		Country weakestCountry = null;
 
 		for (Country country : graphObj.getAdjList()) {
@@ -197,7 +197,64 @@ public class BenevolentPlayer implements IPlayer {
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		return false;
+
+		Country fromCountry = null;
+		Country toCountry = null;
+
+		ArrayList<Country> CountriesOwnedByCurrentPlayer = new ArrayList<Country>();
+		for (Country country : gameGraph.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+				CountriesOwnedByCurrentPlayer.add(country);
+				if ((toCountry == null)) {
+					toCountry = country;
+				} else if ((toCountry.getNumberOfArmies() > country.getNumberOfArmies())) {
+					toCountry = country; // weakest country
+				}
+			}
+		}
+
+		CountriesOwnedByCurrentPlayer.remove(toCountry);
+
+		for (Country country : gameGraph.getAdjList()) {
+
+			if ((!country.equals(toCountry)) && fromCountry == null
+					&& (Mapx.checkPath(country.name, toCountry.name, gameGraph) == true)) {
+				fromCountry = country;
+			} else if (fromCountry != null) {
+				if ((!country.equals(toCountry)) && (country.getNumberOfArmies() > fromCountry.getNumberOfArmies())
+						&& (Mapx.checkPath(country.name, toCountry.name, gameGraph) == true)) {
+					fromCountry = country;
+				}
+			}
+		}
+
+		Integer AvgNumberOfArmies = (toCountry.getNumberOfArmies() + fromCountry.getNumberOfArmies()) / 2;
+
+		numberOfArmies = AvgNumberOfArmies - toCountry.numberOfArmies;
+
+		if (fromCountry == null || toCountry == null) {
+			System.out.println("One or both countries do not exist");
+			return false;
+		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromCountry.getOwner()))) {
+			System.out.println("A player has to own both the countries");
+			return false;
+		} else if (!(Mapx.checkPath(toCountry.name, fromCountry.name, gameGraph))) {
+			System.out.println("There should be the two countries.\n Current Player should own the path.");
+			return false;
+		} else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
+			System.out.println("You must leave at least 1 army unit behind");
+			return false;
+		}
+
+		ArrayList<Integer> toCountryNeighbours = toCountry.getNeighbours();
+
+		fromCountry.setNumberOfArmies(fromCountry.getNumberOfArmies() - numberOfArmies);
+		toCountry.setNumberOfArmies(toCountry.getNumberOfArmies() + numberOfArmies);
+
+		Country.updatePlayerListAndDeclareWinner(gameGraph);
+
+		return true;
 	}
 
 	@Override
