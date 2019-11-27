@@ -30,7 +30,7 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	public PlayerStrategy getPlayerStrategy() {
-		return PlayerStrategy.cheater; //Done
+		return PlayerStrategy.cheater; // Done
 	}
 
 	@Override
@@ -135,21 +135,40 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
-	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj, CurrentPlayer currentPlayerObj) {
-	
-		for(Country country : graphObj.getAdjList()) {
-			
-			if(country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
-				country.setNumberOfArmies(country.getNumberOfArmies()*2);
+	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
+			CurrentPlayer currentPlayerObj) {
+
+		for (Country country : graphObj.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
+				country.setNumberOfArmies(country.getNumberOfArmies() * 2);
 			}
-			
+
 		}
 		return true;
 	}
 
 	@Override
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
-		return false;
+
+		ArrayList<Country> countriesOwnedbyPlayer = new ArrayList<Country>();
+		for (Country country : graphObj.getAdjList()) {
+			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
+				countriesOwnedbyPlayer.add(country);
+			}
+		}
+
+		for (int i = 0; i < countriesOwnedbyPlayer.size(); i++) {
+
+			ArrayList<Integer> neighboursOfCountry = countriesOwnedbyPlayer.get(i).neighbours;
+
+			for (int j = 0; j < neighboursOfCountry.size(); j++) {
+				Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj.getInstance())
+						.setOwner(currentPlayerObj.currentPlayer.getName());
+			}
+		}
+
+		return true;
 	}
 
 	@Override
@@ -160,9 +179,11 @@ public class CheaterPlayer implements IPlayer {
 	@Override
 	/**
 	 * This method returns the total number of countries owned by the players.
+	 * 
 	 * @param playerName The name of the player
-	 * @param gameGraph This is an object of the class Graph
-	 * @return An integer value that is equal to the total number of countries owned by the player
+	 * @param gameGraph  This is an object of the class Graph
+	 * @return An integer value that is equal to the total number of countries owned
+	 *         by the player
 	 */
 	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
 		Integer numberOfCountriesOwned = 0;
@@ -177,11 +198,13 @@ public class CheaterPlayer implements IPlayer {
 		return numberOfCountriesOwned;
 	}
 
-@Override
+	@Override
 	/**
 	 * This method returns the total number of armies owned by the players.
+	 * 
 	 * @param gameGraph It is an object of the class Graph
-	 * @returnAn integer value that is equal to the total number of armies owned by the player
+	 * @returnAn integer value that is equal to the total number of armies owned by
+	 *           the player
 	 */
 	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
 		Integer numberOfArmies = 0;
@@ -197,7 +220,8 @@ public class CheaterPlayer implements IPlayer {
 	}
 
 	@Override
-	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
+			CurrentPlayer currentPlayerObj) {
 		return false;
 	}
 
