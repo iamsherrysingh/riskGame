@@ -489,7 +489,7 @@ public class GamePlay implements ISubject {
 		saveGameObj.handleContinent();
 		saveGameObj.handleCountry();
 		saveGameObj.handlePlayers();
-		saveGameObj.handleFreeCards();
+//		saveGameObj.handleFreeCards();
 		saveGameObj.handleCurrentState();
 		saveGameObj.handleCurrentPlayer();
 		
