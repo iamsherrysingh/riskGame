@@ -1,7 +1,6 @@
-package Model;
+package GameLogic;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public interface SaveLoadBuilder {
 	

@@ -1,4 +1,4 @@
-package Model;
+package GameLogic;
 
 /**
  * The state of the game in order.

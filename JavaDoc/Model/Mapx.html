@@ -117,7 +117,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">Model</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">GameLogic</a></div>
 <h2 title="Class Mapx" class="title">Class Mapx</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>Model.Mapx</li>
+<li>GameLogic.Mapx</li>
 </ul>
 </li>
 </ul>
@@ -186,8 +186,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadMap(java.lang.String,Model.Graph)">loadMap</a></span>&#8203;(java.lang.String&nbsp;mapFile,
-       <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#loadMap(java.lang.String,GameLogic.Graph)">loadMap</a></span>&#8203;(java.lang.String&nbsp;mapFile,
+       <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">creates gameGraph of the map file provided gameGraph returned by this method
  is the most important variable in the whole game gameGraph is a Graph that
@@ -196,7 +196,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveMap(Model.Graph,java.lang.String)">saveMap</a></span>&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveMap(GameLogic.Graph,java.lang.String)">saveMap</a></span>&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph,
        java.lang.String&nbsp;mp)</code></th>
 <td class="colLast">
 <div class="block">This method operates on the gameGraph variable and converts it to map file.</div>
@@ -204,7 +204,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateMap(Model.Graph)">validateMap</a></span>&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateMap(GameLogic.Graph)">validateMap</a></span>&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">This method checks the gameGraph for graph connectivity</div>
 </td>
@@ -252,14 +252,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="loadMap(java.lang.String,Model.Graph)">
+<a id="loadMap(java.lang.String,GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>loadMap</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;loadMap&#8203;(java.lang.String&nbsp;mapFile,
-                       <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)
+                       <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)
                 throws java.io.IOException</pre>
 <div class="block">creates gameGraph of the map file provided gameGraph returned by this method
  is the most important variable in the whole game gameGraph is a Graph that
@@ -294,13 +294,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="saveMap(Model.Graph,java.lang.String)">
+<a id="saveMap(GameLogic.Graph,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>saveMap</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;saveMap&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph,
+<pre class="methodSignature">public&nbsp;boolean&nbsp;saveMap&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph,
                        java.lang.String&nbsp;mp)
                 throws java.io.IOException</pre>
 <div class="block">This method operates on the gameGraph variable and converts it to map file.</div>
@@ -314,13 +314,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="validateMap(Model.Graph)">
+<a id="validateMap(GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>validateMap</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;validateMap&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</pre>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;validateMap&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</pre>
 <div class="block">This method checks the gameGraph for graph connectivity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

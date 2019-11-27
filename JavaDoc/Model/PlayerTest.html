@@ -117,7 +117,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">Model</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">GameLogic</a></div>
 <h2 title="Class PlayerTest" class="title">Class PlayerTest</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>Model.PlayerTest</li>
+<li>GameLogic.PlayerTest</li>
 </ul>
 </li>
 </ul>
@@ -136,7 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public class <span class="typeNameLabel">PlayerTest</span>
 extends java.lang.Object</pre>
 <div class="block">It contains different Junit tests for the methods defined in
- <a href="Player.html" title="class in Model"><code>Player</code></a></div>
+ <a href="Player.html" title="class in GameLogic"><code>Player</code></a></div>
 <dl>
 <dt><span class="simpleTagLabel">Author:</span></dt>
 <dd>birjotsingh17</dd>
@@ -211,7 +211,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attackAllOut()">attackAllOut</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be true because everything is added according to the
  rules.</div>
 </td>
@@ -221,7 +221,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attackAllOutNonAdjacentCountries()">attackAllOutNonAdjacentCountries</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be false because attacker cannot attack to a
  non-adjacent country.</div>
 </td>
@@ -231,7 +231,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attackAllOutSameOwner()">attackAllOutSameOwner</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be false because attacker cannot attack on his own
  country.</div>
 </td>
@@ -241,7 +241,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attackCountryNonAdjacentCountries()">attackCountryNonAdjacentCountries</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackCountry(java.lang.String,java.lang.String,java.lang.Integer,Model.Graph,Model.CurrentPlayer)"><code>Player.attackCountry(String, String, Integer, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackCountry(java.lang.String,java.lang.String,java.lang.Integer,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackCountry(String, String, Integer, Graph, CurrentPlayer)</code></a>
  attackCountryOutput would be false because attacker cannot attack to a
  non-adjacent country.</div>
 </td>
@@ -251,7 +251,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attackMove()">attackMove</a></span>()</code></th>
 <td class="colLast">
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackMove(Model.Country,Model.Country,java.lang.Integer)"><code>Player.attackMove(Country, Country, Integer)</code></a> This checks if the
+ <a href="Player.html#attackMove(GameLogic.Country,GameLogic.Country,java.lang.Integer)"><code>Player.attackMove(Country, Country, Integer)</code></a> This checks if the
  attackMove is working properly like adds and remove right number of armies.</div>
 </td>
 </tr>
@@ -366,7 +366,7 @@ extends java.lang.Object</pre>
 <h4>attackCountryNonAdjacentCountries</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;attackCountryNonAdjacentCountries()</pre>
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackCountry(java.lang.String,java.lang.String,java.lang.Integer,Model.Graph,Model.CurrentPlayer)"><code>Player.attackCountry(String, String, Integer, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackCountry(java.lang.String,java.lang.String,java.lang.Integer,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackCountry(String, String, Integer, Graph, CurrentPlayer)</code></a>
  attackCountryOutput would be false because attacker cannot attack to a
  non-adjacent country.</div>
 </li>
@@ -379,7 +379,7 @@ extends java.lang.Object</pre>
 <h4>attackAllOutNonAdjacentCountries</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;attackAllOutNonAdjacentCountries()</pre>
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be false because attacker cannot attack to a
  non-adjacent country.</div>
 </li>
@@ -392,7 +392,7 @@ extends java.lang.Object</pre>
 <h4>attackAllOut</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;attackAllOut()</pre>
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be true because everything is added according to the
  rules.</div>
 </li>
@@ -405,7 +405,7 @@ extends java.lang.Object</pre>
 <h4>attackAllOutSameOwner</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;attackAllOutSameOwner()</pre>
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackAllout(java.lang.String,java.lang.String,Model.Graph,Model.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
+ <a href="Player.html#attackAllout(java.lang.String,java.lang.String,GameLogic.Graph,GameLogic.CurrentPlayer)"><code>Player.attackAllout(String, String, Graph, CurrentPlayer)</code></a>
  attackAlloutOutput would be false because attacker cannot attack on his own
  country.</div>
 </li>
@@ -418,7 +418,7 @@ extends java.lang.Object</pre>
 <h4>attackMove</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;attackMove()</pre>
 <div class="block">This is a JUnit test for
- <a href="Player.html#attackMove(Model.Country,Model.Country,java.lang.Integer)"><code>Player.attackMove(Country, Country, Integer)</code></a> This checks if the
+ <a href="Player.html#attackMove(GameLogic.Country,GameLogic.Country,java.lang.Integer)"><code>Player.attackMove(Country, Country, Integer)</code></a> This checks if the
  attackMove is working properly like adds and remove right number of armies.</div>
 </li>
 </ul>

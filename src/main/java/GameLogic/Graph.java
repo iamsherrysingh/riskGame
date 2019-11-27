@@ -1,5 +1,5 @@
 
-package Model;
+package GameLogic;
 
 import java.util.*;
 

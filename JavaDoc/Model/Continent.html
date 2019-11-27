@@ -117,7 +117,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">Model</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">GameLogic</a></div>
 <h2 title="Class Continent" class="title">Class Continent</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>Model.Continent</li>
+<li>GameLogic.Continent</li>
 </ul>
 </li>
 </ul>
@@ -197,9 +197,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#continentBelongToPlayer(java.lang.String,java.lang.String,Model.Graph)">continentBelongToPlayer</a></span>&#8203;(java.lang.String&nbsp;playerName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#continentBelongToPlayer(java.lang.String,java.lang.String,GameLogic.Graph)">continentBelongToPlayer</a></span>&#8203;(java.lang.String&nbsp;playerName,
                        java.lang.String&nbsp;continentName,
-                       <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+                       <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">This method checks if a given continent belongs to a player</div>
 </td>
@@ -210,14 +210,14 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="Continent.html" title="class in Model">Continent</a></code></td>
+<td class="colFirst"><code>static <a href="Continent.html" title="class in GameLogic">Continent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContinentById(java.lang.Integer)">getContinentById</a></span>&#8203;(java.lang.Integer&nbsp;continentNumber)</code></th>
 <td class="colLast">
 <div class="block">This provides with the instance at which a particular continent is present in Database.continentList  using continentNumber</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="Continent.html" title="class in Model">Continent</a></code></td>
+<td class="colFirst"><code>static <a href="Continent.html" title="class in GameLogic">Continent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getContinentByName(java.lang.String)">getContinentByName</a></span>&#8203;(java.lang.String&nbsp;continentName)</code></th>
 <td class="colLast">
 <div class="block">This provides with the instance at which a particular continent is present in Database.continentList using continentName</div>
@@ -229,9 +229,9 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static java.util.ArrayList&lt;<a href="Country.html" title="class in Model">Country</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCountryList(Model.Continent,Model.Graph)">getCountryList</a></span>&#8203;(<a href="Continent.html" title="class in Model">Continent</a>&nbsp;continent,
-              <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+<td class="colFirst"><code>static java.util.ArrayList&lt;<a href="Country.html" title="class in GameLogic">Country</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCountryList(GameLogic.Continent,GameLogic.Graph)">getCountryList</a></span>&#8203;(<a href="Continent.html" title="class in GameLogic">Continent</a>&nbsp;continent,
+              <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">This creates and returns list of countries in a continent</div>
 </td>
@@ -253,8 +253,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeContinent(java.lang.String,Model.Graph)">removeContinent</a></span>&#8203;(java.lang.String&nbsp;continentToRemove,
-               <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeContinent(java.lang.String,GameLogic.Graph)">removeContinent</a></span>&#8203;(java.lang.String&nbsp;continentToRemove,
+               <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">if the entered continent exists, it removes all the countries under that continent and after that removes that continent from the Database.continentList</div>
 </td>
@@ -286,7 +286,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateContinitsOwner(Model.Graph)">updateContinitsOwner</a></span>&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateContinitsOwner(GameLogic.Graph)">updateContinitsOwner</a></span>&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</code></th>
 <td class="colLast">
 <div class="block">This updates the owner of the continent</div>
 </td>
@@ -468,14 +468,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="removeContinent(java.lang.String,Model.Graph)">
+<a id="removeContinent(java.lang.String,GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeContinent</h4>
 <pre class="methodSignature">public static&nbsp;boolean&nbsp;removeContinent&#8203;(java.lang.String&nbsp;continentToRemove,
-                                      <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</pre>
+                                      <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</pre>
 <div class="block">if the entered continent exists, it removes all the countries under that continent and after that removes that continent from the Database.continentList</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -485,14 +485,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getCountryList(Model.Continent,Model.Graph)">
+<a id="getCountryList(GameLogic.Continent,GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCountryList</h4>
-<pre class="methodSignature">public static&nbsp;java.util.ArrayList&lt;<a href="Country.html" title="class in Model">Country</a>&gt;&nbsp;getCountryList&#8203;(<a href="Continent.html" title="class in Model">Continent</a>&nbsp;continent,
-                                                          <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</pre>
+<pre class="methodSignature">public static&nbsp;java.util.ArrayList&lt;<a href="Country.html" title="class in GameLogic">Country</a>&gt;&nbsp;getCountryList&#8203;(<a href="Continent.html" title="class in GameLogic">Continent</a>&nbsp;continent,
+                                                          <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</pre>
 <div class="block">This creates and returns list of countries in a continent</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -509,7 +509,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContinentById</h4>
-<pre class="methodSignature">public static&nbsp;<a href="Continent.html" title="class in Model">Continent</a>&nbsp;getContinentById&#8203;(java.lang.Integer&nbsp;continentNumber)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="Continent.html" title="class in GameLogic">Continent</a>&nbsp;getContinentById&#8203;(java.lang.Integer&nbsp;continentNumber)</pre>
 <div class="block">This provides with the instance at which a particular continent is present in Database.continentList  using continentNumber</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -525,7 +525,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getContinentByName</h4>
-<pre class="methodSignature">public static&nbsp;<a href="Continent.html" title="class in Model">Continent</a>&nbsp;getContinentByName&#8203;(java.lang.String&nbsp;continentName)</pre>
+<pre class="methodSignature">public static&nbsp;<a href="Continent.html" title="class in GameLogic">Continent</a>&nbsp;getContinentByName&#8203;(java.lang.String&nbsp;continentName)</pre>
 <div class="block">This provides with the instance at which a particular continent is present in Database.continentList using continentName</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -535,7 +535,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="continentBelongToPlayer(java.lang.String,java.lang.String,Model.Graph)">
+<a id="continentBelongToPlayer(java.lang.String,java.lang.String,GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -543,7 +543,7 @@ extends java.lang.Object</pre>
 <h4>continentBelongToPlayer</h4>
 <pre class="methodSignature">public static&nbsp;boolean&nbsp;continentBelongToPlayer&#8203;(java.lang.String&nbsp;playerName,
                                               java.lang.String&nbsp;continentName,
-                                              <a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</pre>
+                                              <a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</pre>
 <div class="block">This method checks if a given continent belongs to a player</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -555,13 +555,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="updateContinitsOwner(Model.Graph)">
+<a id="updateContinitsOwner(GameLogic.Graph)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>updateContinitsOwner</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;updateContinitsOwner&#8203;(<a href="Graph.html" title="class in Model">Graph</a>&nbsp;gameGraph)</pre>
+<pre class="methodSignature">public static&nbsp;void&nbsp;updateContinitsOwner&#8203;(<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;gameGraph)</pre>
 <div class="block">This updates the owner of the continent</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

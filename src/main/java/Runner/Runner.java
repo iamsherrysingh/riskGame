@@ -1,9 +1,9 @@
-package Controller;
+package Runner;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
-import Model.*;
+import GameLogic.*;
 
 
 enum tasksEnum {
@@ -41,7 +41,7 @@ enum tasksEnum {
  * This interfaces with the console/terminal and processes the commands.
  * Most of these commands have corresponding methods in Model package.
  */
-public class Controller {
+public class Runner {
 	
 	tasksEnum currentTask;
 	String continentName,countryName,neighborCountryName,mapFile,playerName;
@@ -1019,10 +1019,10 @@ public class Controller {
     public static void main(String[] args) throws IOException {
 		try {
 			
-			Controller controller = new Controller();
-			controller.gamePlayObj = GamePlay.getInstance();
+			Runner runner = new Runner();
+			runner.gamePlayObj = GamePlay.getInstance();
 			
-			if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
+			if( runner.gamePlayObj.getCurrentState() == State.initializeGame ) {
 				System.out.println("Specify your game mode with below commands:\n");
 				System.out.println("_____Single Mode_____    _____Tournament Mode_____");
 				System.out.println("_ editmap                - tournament");
@@ -1031,33 +1031,33 @@ public class Controller {
 				System.out.println("__________________________________________________");
 			}
 			
-			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
+			while( ( runner.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
 				
-				if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				if(runner.gamePlayObj.getCurrentState() == State.gameFinished) {
 					return;
 				}
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
 				
-				if(!controller.getCommand(tasksList))
+				if(!runner.getCommand(tasksList))
 					continue;
-				if(!controller.cmdController(tasksList)) {
+				if(!runner.cmdController(tasksList)) {
 					continue;
 				} 
 				
 				
 			}
 			
-			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+			if(runner.gamePlayObj.getCurrentState() == State.gameFinished) {
 				return;
 			}
 			
-			controller.handleGame();
+			runner.handleGame();
 			
-			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+			if(runner.gamePlayObj.getCurrentState() == State.gameFinished) {
 				System.out.println("===================================");
 				System.out.println("======== THe Game Finished ========");
-				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
+				System.out.println("======== " + runner.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
 				System.out.println("===================================");
 			}
 			

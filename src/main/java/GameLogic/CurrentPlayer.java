@@ -1,4 +1,4 @@
-package Model;
+package GameLogic;
 
 import java.util.ListIterator;
 
@@ -49,8 +49,7 @@ public class CurrentPlayer {
 
 	/**
 	 * Go to next player.
-	 * 
-	 * @param currentState It is an object of the class currentState
+	 *
 	 * @param gameGraph It is an object of the class Graph
 	 */
 	public void goToNextPlayer(Graph gameGraph) {
@@ -70,8 +69,7 @@ public class CurrentPlayer {
 
 	/**
 	 * Reset players turn whenever it comes to the end of the players list.
-	 * 
-	 * @param currentState It is an enumerator parameter of currentState enum.
+	 *
 	 * @param gameGraph It is an object of the class Graph
 	 */
 	public void goToFirstPlayer(Graph gameGraph) {

@@ -1,7 +1,6 @@
 package View;
-import Model.GamePlay;
-import Model.IPlayer;
-import Model.Player;
+import GameLogic.GamePlay;
+import GameLogic.IPlayer;
 
 public interface IObserver {
     public void update(GamePlay gamePlay, IPlayer currentPlayer);

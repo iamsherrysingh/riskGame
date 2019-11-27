@@ -1,4 +1,4 @@
-package Model;
+package GameLogic;
 
 public enum PlayerStrategy {
 	human,

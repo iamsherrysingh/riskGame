@@ -2,8 +2,8 @@
 
 title __CONTROLLER's Class Diagram__\n
 
-  namespace Controller {
-    class Controller.Controller {
+  namespace Runner {
+    class Runner.Runner {
         ~ continentName : String
         ~ countryName : String
         ~ editPlayerFinished : boolean
@@ -18,15 +18,15 @@ title __CONTROLLER's Class Diagram__\n
   }
   
 
-  namespace Controller {
-    class Controller.ExtractedTasks {
+  namespace Runner {
+    class Runner.ExtractedTasks {
         + taskData : ArrayList<String>
         + ExtractedTasks()
     }
   }
   
 
-  namespace Controller {
+  namespace Runner {
     enum tasksEnum {
       addcontinent
       addcountry
@@ -57,9 +57,9 @@ title __CONTROLLER's Class Diagram__\n
   }
   
 
-  Controller.Controller o-- Controller.tasksEnum : currentTask
-  Controller.Controller o-- Model.GamePlay : gamePlayObj
-  Controller.ExtractedTasks o-- Controller.tasksEnum : name
+  Runner.Runner o-- Runner.tasksEnum : currentTask
+  Runner.Runner o-- GameLogic.GamePlay : gamePlayObj
+  Runner.ExtractedTasks o-- Runner.tasksEnum : name
 
 
 right footer

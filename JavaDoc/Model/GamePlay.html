@@ -117,7 +117,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <!-- ======== START OF CLASS DATA ======== -->
 <main role="main">
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">Model</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">GameLogic</a></div>
 <h2 title="Class GamePlay" class="title">Class GamePlay</h2>
 </div>
 <div class="contentContainer">
@@ -125,7 +125,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>Model.GamePlay</li>
+<li>GameLogic.GamePlay</li>
 </ul>
 </li>
 </ul>
@@ -134,15 +134,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="ISubject.html" title="interface in Model">ISubject</a></code></dd>
+<dd><code><a href="ISubject.html" title="interface in GameLogic">ISubject</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">GamePlay</span>
 extends java.lang.Object
-implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
+implements <a href="ISubject.html" title="interface in GameLogic">ISubject</a></pre>
 <div class="block">This Class maintains the state of the game and current player.
- The methods of this class are called by Controller.
- This class has singleton implementation.</div>
+    The methods of this class are called by Runner.
+    This class has singleton implementation.</div>
 </li>
 </ul>
 </div>
@@ -253,27 +253,27 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>Model.CurrentPlayer</code></td>
+<td class="colFirst"><code>GameLogic.CurrentPlayer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentPlayerObj()">getCurrentPlayerObj</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="State.html" title="enum in Model">State</a></code></td>
+<td class="colFirst"><code><a href="State.html" title="enum in GameLogic">State</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentState()">getCurrentState</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="Graph.html" title="class in Model">Graph</a></code></td>
+<td class="colFirst"><code><a href="Graph.html" title="class in GameLogic">Graph</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGraphObj()">getGraphObj</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code>static <a href="GamePlay.html" title="class in Model">GamePlay</a></code></td>
+<td class="colFirst"><code>static <a href="GamePlay.html" title="class in GameLogic">GamePlay</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInstance()">getInstance</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="Mapx.html" title="class in Model">Mapx</a></code></td>
+<td class="colFirst"><code><a href="Mapx.html" title="class in GameLogic">Mapx</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMapxObj()">getMapxObj</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -489,7 +489,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentPlayerObj</h4>
-<pre class="methodSignature">public&nbsp;Model.CurrentPlayer&nbsp;getCurrentPlayerObj()</pre>
+<pre class="methodSignature">public&nbsp;GameLogic.CurrentPlayer&nbsp;getCurrentPlayerObj()</pre>
 </li>
 </ul>
 <a id="getCurrentPlayerName()">
@@ -507,7 +507,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInstance</h4>
-<pre class="methodSignature">public static&nbsp;<a href="GamePlay.html" title="class in Model">GamePlay</a>&nbsp;getInstance()</pre>
+<pre class="methodSignature">public static&nbsp;<a href="GamePlay.html" title="class in GameLogic">GamePlay</a>&nbsp;getInstance()</pre>
 </li>
 </ul>
 <a id="getGraphObj()">
@@ -516,7 +516,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getGraphObj</h4>
-<pre class="methodSignature">public&nbsp;<a href="Graph.html" title="class in Model">Graph</a>&nbsp;getGraphObj()</pre>
+<pre class="methodSignature">public&nbsp;<a href="Graph.html" title="class in GameLogic">Graph</a>&nbsp;getGraphObj()</pre>
 </li>
 </ul>
 <a id="getMapxObj()">
@@ -525,7 +525,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMapxObj</h4>
-<pre class="methodSignature">public&nbsp;<a href="Mapx.html" title="class in Model">Mapx</a>&nbsp;getMapxObj()</pre>
+<pre class="methodSignature">public&nbsp;<a href="Mapx.html" title="class in GameLogic">Mapx</a>&nbsp;getMapxObj()</pre>
 </li>
 </ul>
 <a id="getCurrentState()">
@@ -534,7 +534,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentState</h4>
-<pre class="methodSignature">public&nbsp;<a href="State.html" title="enum in Model">State</a>&nbsp;getCurrentState()</pre>
+<pre class="methodSignature">public&nbsp;<a href="State.html" title="enum in GameLogic">State</a>&nbsp;getCurrentState()</pre>
 </li>
 </ul>
 <a id="addContinent(java.lang.String,java.lang.Integer)">
@@ -960,7 +960,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;notifyObservers()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISubject.html#notifyObservers()">notifyObservers</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in Model">ISubject</a></code></dd>
+<dd><code><a href="ISubject.html#notifyObservers()">notifyObservers</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in GameLogic">ISubject</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -973,7 +973,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;attachObserver&#8203;(<a href="../View/IObserver.html" title="interface in View">IObserver</a>&nbsp;observerObj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISubject.html#attachObserver(View.IObserver)">attachObserver</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in Model">ISubject</a></code></dd>
+<dd><code><a href="ISubject.html#attachObserver(View.IObserver)">attachObserver</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in GameLogic">ISubject</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -986,7 +986,7 @@ implements <a href="ISubject.html" title="interface in Model">ISubject</a></pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;detachObserver&#8203;(<a href="../View/IObserver.html" title="interface in View">IObserver</a>&nbsp;observerObj)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISubject.html#detachObserver(View.IObserver)">detachObserver</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in Model">ISubject</a></code></dd>
+<dd><code><a href="ISubject.html#detachObserver(View.IObserver)">detachObserver</a></code>&nbsp;in interface&nbsp;<code><a href="ISubject.html" title="interface in GameLogic">ISubject</a></code></dd>
 </dl>
 </li>
 </ul>
