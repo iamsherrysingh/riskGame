@@ -18,11 +18,10 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 	    this.conquestMap = conquestMap;
 	    }
 
-
+	  
 	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
 		  
 		  conquestMap.readMapConquest(mapFile);
-		  
 		  
 		  continents  = conquestMap.getContinents();
 		  territories = conquestMap.getTerritories();

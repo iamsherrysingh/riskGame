@@ -36,7 +36,17 @@ public class ConquestMapFile extends DominationMapFile{
 	public void setTerritories(String territories) {
 		this.territories = territories;
 	}
-
+	
+	
+	/**
+	 * This reads the conquest maps file and stores the country, continent and border details
+	 * in their variables This is used by loadMap(). The variables generated
+	 * by this method are used throughout the game.
+	 *
+	 * @param mapFile It is the name of the map file that is to be executed
+	 * @throws FileNotFoundException Throws an exception if the file is not found
+	 * @return true(If the method is executed completely)
+	 */
 	public boolean readMapConquest(String mapFile) throws FileNotFoundException {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
@@ -113,6 +123,15 @@ public class ConquestMapFile extends DominationMapFile{
 	}
 
 	
+	/**
+	 * This method operates on the gameGraph variable and converts it to conquest map file.
+	 *
+	 * @param f the file which used to save map
+	 * @param mapName name of map
+	 * @throws IOException If the Input or Output file is invalid
+	 * @return true(If the method executes and the map is saved) or false(If no map
+	 *         name is entered or is invalid)
+	 */
 	public boolean writeMapConquest(String mapName, File f) throws IOException {
 
 			FileWriter writer = new FileWriter(f);
