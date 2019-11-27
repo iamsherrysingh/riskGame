@@ -424,7 +424,78 @@ public class RandomPlayer implements IPlayer {
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		return false;
+		
+		Country randomCountry = null;
+
+		ArrayList<Country> countriesOwned = new ArrayList<Country>();
+
+		for (Country country : gameGraph.getAdjList()) {
+
+			if (country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+
+				countriesOwned.add(country);
+
+			}
+		}
+		Country fromCountry = countriesOwned.get(getRandomNumber(countriesOwned.size())) ;
+		Country toCountry = null;
+
+		toCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
+		if(fromCountry.equals(toCountry)) {
+			
+			while(fromCountry.equals(toCountry)) {
+				toCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
+			}
+			
+		}
+		
+//		for (Country country : gameGraph.getAdjList()) {
+//			
+//			if(country.getOwner().equalsIgnoreCase(fromCountry.getOwner())) {
+//				
+//				if(country.equals(fromCountry)) {
+//					
+//				}else {
+//					
+//				}
+//				
+//				
+//				
+////				if((country != fromCountry)&& (toCountry==null)) {
+////					toCountry = country;
+////				}else if((country != fromCountry)&& (toCountry.getNumberOfArmies()<country.getNumberOfArmies())) {
+////					toCountry=country;
+////				}
+//			}
+//		}
+		
+		numberOfArmies = getRandomNumber((fromCountry.numberOfArmies-1));
+		
+		
+
+		if (fromCountry == null || toCountry == null) {
+			System.out.println("One or both countries do not exist");
+			return false;
+		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromCountry.getOwner()))) {
+			System.out.println("A player has to own both the countries");
+			return false;
+		} else if (!(Mapx.checkPath(toCountry.name,fromCountry.name, gameGraph))) {
+			System.out.println("There should be the two countries.\n Current Player should own the path.");
+			return false;
+		} else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
+			System.out.println("You must leave at least 1 army unit behind");
+			return false;
+		}
+
+		ArrayList<Integer> toCountryNeighbours = toCountry.getNeighbours();
+
+		fromCountry.setNumberOfArmies(fromCountry.getNumberOfArmies() - numberOfArmies);
+		toCountry.setNumberOfArmies(toCountry.getNumberOfArmies() + numberOfArmies);
+
+		Country.updatePlayerListAndDeclareWinner(gameGraph);
+
+		return true;
+
 	}
 
 	@Override
