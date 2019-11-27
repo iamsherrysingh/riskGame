@@ -158,7 +158,7 @@ public class RandomPlayer implements IPlayer {
 			}
 		}
 
-		randomCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
+		randomCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()) - 1);
 		attackerCountry = randomCountry;
 
 		// check: if target country is not exist, return false
@@ -224,15 +224,26 @@ public class RandomPlayer implements IPlayer {
 						.equalsIgnoreCase(attackerCountry.getOwner()))) {
 
 					tempNeighbourList.add(attackerCountry.neighbours.get(i));
+					System.out.println("size" + tempNeighbourList.size());
 
 				}
 
 			}
 
-			defenderCountry = Country
-					.getCountryByNumber(tempNeighbourList.get(getRandomNumber(tempNeighbourList.size())), graphObj);
+			Integer no;
+			if (tempNeighbourList.isEmpty()) {
+				no = 0;
+			} else {
+				no = getRandomNumber(tempNeighbourList.size());
+			}
+			System.out.println(no);
+			if(no>0) {
+			defenderCountry = Country.getCountryByNumber(tempNeighbourList.get(no - 1), graphObj);
 //					attackerCountry.neighbours.get(getRandomNumber(attackerCountry.neighbours.size())), graphObj);
-
+			}else {
+				System.out.println("All the neighbouring countries are owned by the same player");
+				return false;
+			}
 			String attackerName = attackerCountry.getOwner();
 			String defenderName = defenderCountry.getOwner();
 			IPlayer attacker = Database.getPlayerByName(attackerName);
@@ -424,7 +435,7 @@ public class RandomPlayer implements IPlayer {
 
 	@Override
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
-		
+
 		Country randomCountry = null;
 
 		ArrayList<Country> countriesOwned = new ArrayList<Country>();
@@ -437,18 +448,18 @@ public class RandomPlayer implements IPlayer {
 
 			}
 		}
-		Country fromCountry = countriesOwned.get(getRandomNumber(countriesOwned.size())) ;
+		Country fromCountry = countriesOwned.get(getRandomNumber(countriesOwned.size())-1);
 		Country toCountry = null;
 
-		toCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
-		if(fromCountry.equals(toCountry)) {
-			
-			while(fromCountry.equals(toCountry)) {
+		toCountry = countriesOwned.get(getRandomNumber(countriesOwned.size())-1);
+		if (fromCountry.equals(toCountry)) {
+
+			while (fromCountry.equals(toCountry)) {
 				toCountry = countriesOwned.get(getRandomNumber(countriesOwned.size()));
 			}
-			
+
 		}
-		
+
 //		for (Country country : gameGraph.getAdjList()) {
 //			
 //			if(country.getOwner().equalsIgnoreCase(fromCountry.getOwner())) {
@@ -468,10 +479,11 @@ public class RandomPlayer implements IPlayer {
 ////				}
 //			}
 //		}
-		
-		numberOfArmies = getRandomNumber((fromCountry.numberOfArmies-1));
-		
-		
+
+		if ((fromCountry.numberOfArmies - 1) > 0) {
+			numberOfArmies = getRandomNumber((fromCountry.numberOfArmies - 1));
+		} else {
+		}
 
 		if (fromCountry == null || toCountry == null) {
 			System.out.println("One or both countries do not exist");
@@ -479,7 +491,7 @@ public class RandomPlayer implements IPlayer {
 		} else if (!(toCountry.getOwner().equalsIgnoreCase(fromCountry.getOwner()))) {
 			System.out.println("A player has to own both the countries");
 			return false;
-		} else if (!(Mapx.checkPath(toCountry.name,fromCountry.name, gameGraph))) {
+		} else if (!(Mapx.checkPath(toCountry.name, fromCountry.name, gameGraph))) {
 			System.out.println("There should be the two countries.\n Current Player should own the path.");
 			return false;
 		} else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
@@ -523,7 +535,9 @@ public class RandomPlayer implements IPlayer {
 	public static int getRandomNumber(Integer NumberRangeWeHave) {
 		Random randomGenerator;
 		randomGenerator = new Random();
-		return randomGenerator.nextInt(NumberRangeWeHave) + 1;
+		int rndmNo = randomGenerator.nextInt(NumberRangeWeHave) + 1;
+		System.out.println("rndmG" + rndmNo);
+		return (rndmNo);
 	}
 
 	@Override
