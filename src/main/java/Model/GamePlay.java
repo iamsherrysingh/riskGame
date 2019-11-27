@@ -52,7 +52,7 @@ public class GamePlay implements ISubject {
 	private Graph graphObj;
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
-	String fileType = "";
+	String fileType = "Domination";
 
 	public String getFileType() {
 		return fileType;
@@ -575,7 +575,7 @@ public class GamePlay implements ISubject {
 			System.out.println("IO Exception Occured");
 			return false;
 		}
-		setCurrentOperation("Saving Map to file: \"" + fileName + "\"");
+		setCurrentOperation("Saving Map in "+ fileType+" format to file: \"" + fileName + "\"");
 		return true;
 	}
 

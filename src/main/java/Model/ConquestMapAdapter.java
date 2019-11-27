@@ -19,8 +19,13 @@ public class ConquestMapAdapter implements IMap {
 
     @Override
     public boolean saveMap(Graph gameGraph, String mp) throws IOException {
-        File file=new File("src/main/resources/"+mp);
-        conquestMap.writeMapFile(gameGraph, file);
-        return false;
+
+        try {
+            File file = new File("src/main/resources/" + mp);
+            conquestMap.writeMapFile(gameGraph, file);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }
