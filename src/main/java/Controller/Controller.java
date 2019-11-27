@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.*; 
 import Model.*;
-//import View.CardExchange;
 
 
 enum tasksEnum {
@@ -19,6 +18,9 @@ enum tasksEnum {
 	editmap,
 	validatemap,
 	showmap,
+	tournament,
+	savegame,
+	loadgame,
 	loadmap,
 	addplayer,
 	removeplayer,
@@ -55,7 +57,6 @@ public class Controller {
 	 */
 	boolean getCommand(ArrayList<ExtractedTasks> tasksList) {
 
-		//System.out.println("<== Current State: " +gamePlayObj.getCurrentState()+" ==>");
 		System.out.print("Enter Command: ");
 		Scanner scan = new Scanner(System.in);
 		String instruction = scan.nextLine().trim();
@@ -243,6 +244,90 @@ public class Controller {
 			eTask.name = tasksEnum.showmap;
 			tasksList.add(eTask);
 		}
+		
+		//Command Tournament
+		else if(cmdStr.equalsIgnoreCase("tournament")){
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			ExtractedTasks eTask = new ExtractedTasks();
+			eTask.name = tasksEnum.tournament;	
+			boolean flagM = false, flagP = false, flagG = false, flagD = false;
+			cmdStr = cmdItr.next();
+			
+			// command should start with switch
+			if( cmdStr.charAt(0) != '-') {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			// Check if -M, -P, -G, -D switches exist and there is no duplicate switches.
+			while(true){	
+				
+				if( cmdStr.charAt(0) == '-') {
+					if( cmdStr.equals("-M") ) {
+						if( flagM ){
+							System.out.println("wrong Command");
+							return false;
+						}	
+						flagM = true;
+					}
+					else if( cmdStr.equals("-P") ) {
+						if( flagP ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagP = true;
+					}
+					else if( cmdStr.equals("-G") ) {
+						if( flagG ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagG = true;
+					}
+					else if( cmdStr.equals("-D") ) {
+						if( flagD ){
+							System.out.println("wrong Command");
+							return false;
+						}
+						flagD = true;
+					}
+					else {
+						System.out.println("wrong Command");
+						return false;
+					}
+				}
+				eTask.taskData.add(cmdStr);	
+				if( !cmdItr.hasNext() ) 
+					break;
+				
+				cmdStr = cmdItr.next();
+			}
+			if( flagM == false || flagP == false || flagG == false || flagD == false ) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			tasksList.add(eTask);
+		}
+		
+		//Command loadgame
+		else if(cmdStr.equalsIgnoreCase("loadgame")){
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			ExtractedTasks eTask = new ExtractedTasks();
+			eTask.name = tasksEnum.loadgame;
+			
+			//get data related to loadgame task
+			eTask.taskData.add(cmdItr.next());
+			
+			tasksList.add(eTask);
+		}
+		
 		//Command loadmap
 		else if(cmdStr.equalsIgnoreCase("loadmap")){
 			if(!cmdItr.hasNext()) {
@@ -274,11 +359,13 @@ public class Controller {
 					eTask.name = tasksEnum.addplayer;
 					
 					//get data related to addPlayer task
-					if(!cmdItr.hasNext()) {
-						System.out.println("wrong Command");
-						return false;
+					for(int i=0;i<2;i++) {
+						if(!cmdItr.hasNext()) {
+							System.out.println("wrong Command");
+							return false;
+						}
+						eTask.taskData.add(cmdItr.next());
 					}
-					eTask.taskData.add(cmdItr.next());
 					tasksList.add(eTask);
 				}
 				else if(cmdStr.equals("-remove")) {
@@ -478,11 +565,14 @@ public class Controller {
 		// check commands that are valid in state of startGame
 		if( gamePlayObj.getCurrentState() == State.initializeGame) {
 			for(ExtractedTasks itr:tasksList) {
-				switch (itr.name){	
-				
+				switch (itr.name){		
+					case tournament:
+						break;
 					case editmap:
 						break;
 					case loadmap:
+						break;
+					case loadgame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -499,7 +589,7 @@ public class Controller {
 						//check if control value is numeric
 						for(int i=0; i<controlValueStr.length(); i++) {
 							if(!Character.isDigit(controlValueStr.charAt(i))){
-								System.out.println("Invalid Command: Control Value shoud be digit");
+								System.out.println("Invalid Command: Your input for Control Value is not valid.");
 								return false;
 							}
 						}
@@ -533,11 +623,17 @@ public class Controller {
 				case showmap:
 					break;
 				case addplayer:	
+					if( !itr.taskData.get(1).equalsIgnoreCase("aggressive") && !itr.taskData.get(1).equalsIgnoreCase("benevolent") && !itr.taskData.get(1).equalsIgnoreCase("cheater") && !itr.taskData.get(1).equalsIgnoreCase("human") && !itr.taskData.get(1).equalsIgnoreCase("random") ) {
+						System.out.println(itr.taskData.get(1)+" Strategy is not valid.");
+						return false;
+					}
 					break;
 				case removeplayer:
 					break;
 				case populatecountries:
-					break;		
+					break;	
+				case savegame:
+					break;
 				default:
 					System.out.println("Invalid command in the current state");
 					return false;		
@@ -554,6 +650,8 @@ public class Controller {
 						break;	
 					case placeall:
 						break;	
+					case savegame:
+						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;
@@ -572,7 +670,7 @@ public class Controller {
 							//check if the data related to the card's numbers in exchange cards command is numeric
 							for(int i=0; i<cardNumber.length(); i++) {
 								if(!Character.isDigit(cardNumber.charAt(i))){
-									System.out.println("Invalid command: Card's Number should be digit");
+									System.out.println("Invalid command: Your Input for Card's Number is not valid.");
 									return false;
 								}
 							}
@@ -584,6 +682,8 @@ public class Controller {
 							System.out.println("Invalid Command: For withdraw of exchanging cards should use \"-none\"");
 							return false;
 						}
+						break;
+					case savegame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -599,7 +699,17 @@ public class Controller {
 					case showmap:
 						break;
 					case reinforce:
-						break;	
+						String rnfcNumber = itr.taskData.get(1);	
+						//check if the data related to the number of dice in attack command is numeric
+						for(int i=0; i<rnfcNumber.length(); i++) {
+							if(!Character.isDigit(rnfcNumber.charAt(i))){
+								System.out.println("Invalid command: Your Input for number is not valid.");
+								return false;
+							}
+						}
+						break;
+					case savegame:
+						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;
@@ -620,12 +730,14 @@ public class Controller {
 						//check if the data related to the number of dice in attack command is numeric
 						for(int i=0; i<numOfDice.length(); i++) {
 							if(!Character.isDigit(numOfDice.charAt(i))){
-								System.out.println("Invalid command: Number of dice should be digit");
+								System.out.println("Invalid command: Your Input for number is not valid.");
 								return false;
 							}
 						}
 						break;
 					case ignoreattack:
+						break;
+					case savegame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -644,7 +756,7 @@ public class Controller {
 						//check if the data related to the number of army in fortify command is numeric
 						for(int i=0; i<numOfFortify.length(); i++) {
 							if(!Character.isDigit(numOfFortify.charAt(i))){
-								System.out.println("Invalid command: Number of army should be digit");
+								System.out.println("Invalid command: Your Input for number is not valid.");
 								return false;
 							}
 						}
@@ -655,6 +767,8 @@ public class Controller {
 							System.out.println("Invalid Command: For withdraw of moving in fortify state should use \"-none\"");
 							return false;
 						}
+						break;
+					case savegame:
 						break;
 					default:
 						System.out.println("Invalid command in the current state");
@@ -723,8 +837,23 @@ public class Controller {
 				}
 				case editmap:{
 					if(!gamePlayObj.editMap(itr.taskData.get(0)))
-					return false;
+						return false;
 					
+					break;
+				}
+				case tournament:{
+					if(!gamePlayObj.tournament(itr.taskData))
+						return false;			
+					break;
+				}
+				case savegame:{
+			//		if(!gamePlayObj.savegame(itr.taskData))
+			//			return false;			
+					break;
+				}
+				case loadgame:{
+			//		if(!gamePlayObj.loadgame(itr.taskData))
+			//			return false;			
 					break;
 				}
 				case validatemap:{
@@ -746,7 +875,7 @@ public class Controller {
 					break;
 				}
 				case addplayer:{
-					if(!gamePlayObj.addPlayer(itr.taskData.get(0)))
+					if(!gamePlayObj.addPlayer(itr.taskData.get(0),itr.taskData.get(1)))
 						return false;
 					
 					break;
@@ -826,31 +955,98 @@ public class Controller {
 		} 	
 		return true;
 	}
+	
+	public void handleGame() {
 		
+		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getGraphObj());
+		//maybe exchanging cards state here and world domination view
+		
+		while(gamePlayObj.getCurrentState() != State.gameFinished) {
+			
+			PlayerStrategy currentPlayerStrategy = gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getPlayerStrategy(); 
+			gamePlayObj.setPlayerStrategy();
+			
+			if( currentPlayerStrategy == PlayerStrategy.human ) {
+				
+				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				gamePlayObj.CardobserverOperations();
+				
+				while( gamePlayObj.getCurrentState() != State.gameFinished ) {
+					
+					ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+					
+					if(!getCommand(tasksList))
+						continue;
+					if(!cmdController(tasksList)) {
+						continue;
+					} 
+				
+				}
+			}
+			else {
+				gamePlayObj.setCurrentState(State.exchangeCards, "Exchange Cards");
+				gamePlayObj.CardobserverOperations();
+				gamePlayObj.autoExchangeCards();
+				gamePlayObj.reinforceArmy();
+				gamePlayObj.alloutAttack();
+				gamePlayObj.fortifyArmy();
+				
+				if( gamePlayObj.checkEndGame())
+					break;
+				
+				gamePlayObj.getCurrentPlayerObj().goToNextPlayer(gamePlayObj.getGraphObj());
+					
+			}
+		}	
+	}
 	
     public static void main(String[] args) throws IOException {
 		try {
+			
 			Controller controller = new Controller();
 			controller.gamePlayObj = GamePlay.getInstance();
-			//controller.gamePlayObj.attachObserver(controller.gamePlayObj.getPhaseView());
-	    	
-			while(controller.gamePlayObj.getCurrentState() != State.gameFinished){
+			
+			if( controller.gamePlayObj.getCurrentState() == State.initializeGame ) {
+				System.out.println("Specify your game mode with below commands:\n");
+				System.out.println("_____Single Mode_____    _____Tournament Mode_____");
+				System.out.println("_ editmap                - tournament");
+				System.out.println("_ loadmap");
+				System.out.println("_ loadgame");
+				System.out.println("__________________________________________________");
+			}
+			
+			while( ( controller.gamePlayObj.getCurrentState() != State.startupPhase ) ) {
+				
+				if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+					return;
+				}
 				
 				ArrayList<ExtractedTasks> tasksList = new ArrayList<ExtractedTasks>();
+				
 				if(!controller.getCommand(tasksList))
 					continue;
 				if(!controller.cmdController(tasksList)) {
 					continue;
 				} 
+				
+				
 			}
+			
+			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
+				return;
+			}
+			
+			controller.handleGame();
+			
 			if(controller.gamePlayObj.getCurrentState() == State.gameFinished) {
 				System.out.println("===================================");
 				System.out.println("======== THe Game Finished ========");
 				System.out.println("======== " + controller.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
 				System.out.println("===================================");
 			}
-		}catch (Exception e)
-		{
+			
+		}
+		catch (Exception e){
 			System.out.println("An error occured: "+e.getMessage());
 		}
     }

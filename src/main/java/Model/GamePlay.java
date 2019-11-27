@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.*;
 import View.CardExchange;
 import View.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  * This Class maintains the state of the game and current player. The methods of
@@ -28,15 +33,6 @@ public class GamePlay implements ISubject {
 	}
 
 	PhaseView phaseView = new PhaseView();
-
-	public WorldDominationView getWorldDominationView() {
-		return worldDominationView;
-	}
-
-	public void setWorldDominationView(WorldDominationView worldDominationView) {
-		this.worldDominationView = worldDominationView;
-	}
-
 	WorldDominationView worldDominationView = new WorldDominationView();
 
 	public String getCurrentOperation() {
@@ -59,6 +55,12 @@ public class GamePlay implements ISubject {
 	private CurrentPlayer currentPlayerObj;
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>();
+
+	private IPlayer player;
+
+	public void setPlayerStrategy() {
+		this.player = currentPlayerObj.currentPlayer;
+	}
 
 	public CurrentPlayer getCurrentPlayerObj() {
 		return currentPlayerObj;
@@ -106,12 +108,271 @@ public class GamePlay implements ISubject {
 	 * @param newState    Object of the class state
 	 * @param newStateStr The new state
 	 */
-	private void setCurrentState(State newState, String newStateStr) {
+	public void setCurrentState(State newState, String newStateStr) {
 
 		this.currentState = newState;
 
-		if (newState == State.exchangeCards)
-			notifyObservers();
+	}
+
+	/**
+	 * Extract data related to tournament and check validation of data This method
+	 * also do the automatic game.
+	 * 
+	 * @param tournamentData maintain a list of data with all the switches.
+	 * @return true if the whole data is valid otherwise return false.
+	 */
+	public boolean tournament(ArrayList<String> tournamentData) {
+
+		ArrayList<String> mapList = new ArrayList<String>();
+		ArrayList<String> StrategyList = new ArrayList<String>();
+		int gameNumber = 0;
+		int gameTurn = 0;
+
+		Iterator<String> itr = tournamentData.iterator();
+		String itrList = itr.next();
+		boolean aggressiveFlag = false, benevolentFlag = false, randomFlag = false, cheaterFlag = false;
+	    
+		// Extract all the data related to 4 parts of tournament and check validation of
+		// data.
+		for (int i = 0; i < 4; i++) {
+
+			if (itrList.equals("-M")) {
+
+				// if there is no data for map list return false.
+				if (!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+
+				// Get all the map list.
+				while (true) {
+					itrList = itr.next();
+					if (itrList.charAt(0) == '-') {
+						if (mapList.size() < 1 || mapList.size() > 5) {
+							System.out.println("Wrong command. The number of map file is out of range.");
+							return false;
+						}
+						break;
+					}
+					mapList.add(itrList);
+				}
+			} else if (itrList.equals("-P")) {
+
+				// if there is no data for Strategy return false.
+				if (!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+
+				// Get all the Strategy list.
+				while (true) {
+					itrList = itr.next();
+					if (itrList.charAt(0) == '-') {
+						if (StrategyList.size() < 2 || StrategyList.size() > 4) {
+							System.out.println("Wrong command. The number of Strategy is out of range.");
+							return false;
+						}
+						break;
+					}
+
+					if (itrList.equalsIgnoreCase("Aggressive")) {
+						if (aggressiveFlag) {
+							System.out.println("Wrong command. Aggresive Strategy cannot be more than one.");
+							return false;
+						}
+						aggressiveFlag = true;
+						StrategyList.add("aggressive");
+					} else if (itrList.equalsIgnoreCase("Benevolent")) {
+						if (benevolentFlag) {
+							System.out.println("Wrong command. Benevolent Strategy cannot be more than one.");
+							return false;
+						}
+						benevolentFlag = true;
+						StrategyList.add("benevolent");
+					} else if (itrList.equalsIgnoreCase("Random")) {
+						if (randomFlag) {
+							System.out.println("Wrong command. Random Strategy cannot be more than one.");
+							return false;
+						}
+						randomFlag = true;
+						StrategyList.add("random");
+					} else if (itrList.equalsIgnoreCase("Cheater")) {
+						if (cheaterFlag) {
+							System.out.println("Wrong command. Cheater Strategy cannot be more than one.");
+							return false;
+						}
+						cheaterFlag = true;
+						StrategyList.add("cheater");
+					} else {
+						System.out.println(
+								"Wrong command. Player Strategies can only be Aggressive, Benevolent, Random or Cheater.");
+						return false;
+					}
+
+				}
+			} else if (itrList.equals("-G")) {
+
+				// if there is no data for number of games return false and this switch is the
+				// last one.
+				if (!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+
+				itrList = itr.next();
+
+				// if there is no data for number of games return false and this switch is not
+				// the last one.
+				if (itrList.charAt(0) == '-') {
+					System.out.println("Wrong command. You should enter a digit for number of games.");
+					return false;
+				} else {
+
+					// Check if the number of games is numeric.
+					for (int j = 0; j < itrList.length(); j++) {
+						if (!Character.isDigit(itrList.charAt(j))) {
+							System.out.println("Wrong command. The input is incorrect for the number of games.");
+							return false;
+						}
+					}
+					gameNumber = Integer.parseInt(itrList);
+
+					// Check if the number of games is out of range.
+					if (gameNumber < 1 || gameNumber > 5) {
+						System.out.println("Wrong command. The number of games can only be between 1 and 5");
+						return false;
+					}
+				}
+
+				// Check if the data related to number of games is more than one.
+				if (itr.hasNext()) {
+					itrList = itr.next();
+					if (itrList.charAt(0) != '-') {
+						System.out.println("Wrong command. The input related to number of games is incorrect.");
+						return false;
+					}
+				}
+
+			} else if (itrList.equals("-D")) {
+
+				// if there is no data for number of turns for each game return false and this
+				// switch is the last one.
+				if (!itr.hasNext()) {
+					System.out.println("wrong Command");
+					return false;
+				}
+
+				itrList = itr.next();
+
+				// if there is no data for number of turns for each game return false and this
+				// switch is not the last one.
+				if (itrList.charAt(0) == '-') {
+					System.out.println("Wrong command. You should enter number of turns for each game.");
+					return false;
+				} else {
+
+					// Check if the number of turns is numeric.
+					for (int j = 0; j < itrList.length(); j++) {
+						if (!Character.isDigit(itrList.charAt(j))) {
+							System.out.println("Wrong command. The input is incorrect for the number turns.");
+							return false;
+						}
+					}
+					gameTurn = Integer.parseInt(itrList);
+
+					// Check if the number of games is out of range.
+					if (gameTurn < 10 || gameTurn > 50) {
+						System.out.println("Wrong command. The number of turns can only be between 10 and 50");
+						return false;
+					}
+				}
+
+				// Check if the data related to number of turns is more than one.
+				if (itr.hasNext()) {
+					itrList = itr.next();
+					if (itrList.charAt(0) != '-') {
+						System.out.println("Wrong command. The input related to number of turns is incorrect.");
+						return false;
+					}
+				}
+
+			}
+		}
+
+		String[][] gameResult = new String[mapList.size()][gameNumber];
+	    String[] columns = new String[gameNumber];
+	    
+	    for(int gameHeadercounter=0; gameHeadercounter < gameNumber; gameHeadercounter++) {
+	    	columns[gameHeadercounter]= "Game" + (gameHeadercounter + 1 );
+	    }
+	    
+		// Tournament Game Procedure
+		for (int mapCounter = 0; mapCounter < mapList.size(); mapCounter++) {
+
+			databaseObj.getContinentList().clear();
+			if (!loadGameMap(mapList.get(mapCounter))) {
+				System.out.println("Your input map does not exist.");
+				return false;
+			}
+
+			for (int gameCounter = 0; gameCounter < gameNumber; gameCounter++) {
+
+				// Reset PlayerList
+				if (Database.playerList.size() != 0) {
+					for (int i = 0; i < Database.playerList.size(); i++) {
+						removePlayer(StrategyList.get(i));
+					}
+				}
+
+				// Add Players to the List
+				for (int i = 0; i < StrategyList.size(); i++) {
+					addPlayer(StrategyList.get(i), StrategyList.get(i));
+				}
+
+				populateCountries();
+				placeAll();
+				currentPlayerObj.goToFirstPlayer(this.getGraphObj());
+				this.setPlayerStrategy();
+
+				// Playing game with duration for computer players.
+				for (int turnCount = 0; turnCount < gameTurn; turnCount++) {
+				
+					setCurrentState(State.exchangeCards, "Exchange Cards");
+					CardobserverOperations();
+					autoExchangeCards();
+					reinforceArmy();
+					alloutAttack();
+					fortifyArmy();
+
+					if (checkEndGame()) {
+						break;
+					}
+					currentPlayerObj.goToNextPlayer(this.getGraphObj());
+					this.setPlayerStrategy();
+
+				}
+
+				if (Database.playerList.size() == 1) {
+					gameResult[mapCounter][gameCounter] = mapList.get(mapCounter) + "  Winner: " + Database.playerList.get(0).getName();
+				} else {
+					gameResult[mapCounter][gameCounter] = mapList.get(mapCounter) + "  Winner: Draw";
+				}
+
+			}
+		}
+	    JFrame f = new JFrame("JTable Sample");
+	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    Container content = f.getContentPane();
+	    JTable table = new JTable(gameResult, columns);
+	    JScrollPane scrollPane = new JScrollPane(table);
+	    content.add(scrollPane, BorderLayout.CENTER);
+	    f.setSize(300, 200);
+	    f.setVisible(true);
+
+		setCurrentState(State.gameFinished, "Game Finished");
+		// setCurrentOperation("Adding continent "+ continentName + " with control value
+		// "+controlValue);
+		return true;
 	}
 
 	/**
@@ -297,32 +558,80 @@ public class GamePlay implements ISubject {
 	}
 
 	/**
-	 * Add Player Function
+	 * This adds a new player in Database.playerlist
 	 * 
 	 * @param playerName The name of the player that is to be added
-	 * @return true(If the player is successfully added) or false (If the player
-	 *         already exists)
+	 * @return true(If the conditions are satisfied and the player is added) or
+	 *         false(If player already exists or if no name of player is entered)
 	 */
-	public boolean addPlayer(String playerName) {
+	public boolean addPlayer(String playerName, String Strategy) {
 
-		if (!Player.addPlayer(playerName, 0))
+		if (Database.playerList.size() >= graphObj.getAdjList().size()) {
+			System.out.println(
+					"Number of players cannot be more than the number of countries.");
 			return false;
-		setCurrentOperation("Adding Player " + playerName + " to the game.");
-		return true;
+		} else {
+			if (Database.getPlayerByName(playerName) != null) {
+				System.out.println("=======> This player exists <========");
+				return false;
+			} else if (playerName.trim().length() == 0) {
+				System.out.println("=======> Please enter a name for the player <========");
+				return false;
+			}
+			Integer id = Database.getInstance().getPlayerList().size() + 1;
+
+			if (Strategy.equalsIgnoreCase("human")) {
+
+				Player player = new Player(id, playerName, 0);
+				Database.playerList.add(player);
+			} else if (Strategy.equalsIgnoreCase("aggressive")) {
+
+				AggressivePlayer aggressivePlayer = new AggressivePlayer(id, playerName, 0);
+				Database.playerList.add(aggressivePlayer);
+			} else if (Strategy.equalsIgnoreCase("benevolent")) {
+
+				BenevolentPlayer benevolentPlayer = new BenevolentPlayer(id, playerName, 0);
+				Database.playerList.add(benevolentPlayer);
+			} else if (Strategy.equalsIgnoreCase("cheater")) {
+
+				CheaterPlayer cheaterPlayer = new CheaterPlayer(id, playerName, 0);
+				Database.playerList.add(cheaterPlayer);
+			} else if (Strategy.equalsIgnoreCase("random")) {
+
+				RandomPlayer randomPlayer = new RandomPlayer(id, playerName, 0);
+				Database.playerList.add(randomPlayer);
+			}
+
+			setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
+			return true;
+		}
+
+		
+		
+
 	}
 
 	/**
-	 * Remove Player Function
+	 * This removes a player from Database.playerlist
 	 * 
-	 * @param playerName The name of the player that is to be removed
-	 * @return true(If the player is removed from the game successfully) or false(If
-	 *         the player name is absent and the method can not perform the desired
-	 *         operation)
+	 * @param playerName The name of the player to be removed
+	 * @return true(If the player is removed successfully) or false(The player is
+	 *         absent)
 	 */
 	public boolean removePlayer(String playerName) {
 
-		if (!Player.removePlayer(playerName))
+		IPlayer player = Database.getPlayerByName(playerName);
+		if (player == null) {
 			return false;
+		}
+		Database.playerList.remove(player);
+
+		Integer playerNumber = 1;
+		for (IPlayer player1 : Database.getInstance().getPlayerList()) {
+			player1.setNumber(playerNumber);
+			playerNumber++;
+		}
+
 		setCurrentOperation("Removing Player " + playerName + " from the game.");
 		return true;
 	}
@@ -358,9 +667,9 @@ public class GamePlay implements ISubject {
 			return false;
 		}
 
-		for (Player iter : Database.playerList) {
-			iter.numberOfArmies = numArmies;
-			iter.numberOfFreeArmies = numArmies;
+		for (IPlayer iter : Database.playerList) {
+			iter.setNumberOfArmies(numArmies);
+			iter.setNumberOfFreeArmies(numArmies);
 		}
 
 		Integer playerNumberToBeAssigned = 1;
@@ -372,7 +681,7 @@ public class GamePlay implements ISubject {
 
 			Country countryToBePopulated = Country.getCountryByNumber(randomCountryNumber, graphObj);
 			if (countryToBePopulated.getOwner() == null) {
-				Player assignedPlayer = Player.getPlayerByNumber(playerNumberToBeAssigned);
+				IPlayer assignedPlayer = Database.getPlayerByNumber(playerNumberToBeAssigned);
 				countryToBePopulated.setOwner(assignedPlayer.getName());
 				assignedPlayer.setMyCountries(countryToBePopulated.getNumber());
 				playerNumberToBeAssigned++;
@@ -390,7 +699,7 @@ public class GamePlay implements ISubject {
 		setCurrentState(State.troopArmies, "Troop Armies");
 
 		// Set current player to the first player
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+		currentPlayerObj.goToFirstPlayer(graphObj);
 
 		setCurrentOperation("Populating all countries");
 		return true;
@@ -415,29 +724,7 @@ public class GamePlay implements ISubject {
 		if (currentPlayerObj.getCurrentPlayer().getNumberOfArmies() <= 0) {
 
 			System.out.println("All armies are placed");
-
-			this.detachObserver(phaseView);
-			this.detachObserver(worldDominationView);
-
-			setCurrentState(State.exchangeCards, "exchangeCards");
-
-			this.attachObserver(phaseView);
-			this.attachObserver(worldDominationView);
-
-			setCurrentOperation("Performing PlaceArmy operations");
-
-			this.attachObserver(cardExchangeView);
-			this.detachObserver(phaseView);
-			this.detachObserver(worldDominationView);
-
-			setCurrentState(State.exchangeCards, "exchangeCards");
-
-//	        this.detachObserver(cardExchangeView);
-			this.attachObserver(phaseView);
-			this.attachObserver(worldDominationView);
-
-			currentPlayerObj.goToFirstPlayer(currentState, graphObj);
-
+			setCurrentState(State.startupPhase, "Startup Phase");
 			return false;
 		}
 
@@ -468,9 +755,9 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean placeAll() {
 		try {
-			while (!Player.allPlayersRemainingArmiesExhausted()) {
+			while (!Database.allPlayersRemainingArmiesExhausted()) {
 				for (Country thisCountry : graphObj.getAdjList()) {
-					Player playerThatOwnsThisCountry = Player.getPlayerByName(thisCountry.getOwner());
+					IPlayer playerThatOwnsThisCountry = Database.getPlayerByName(thisCountry.getOwner());
 					if (playerThatOwnsThisCountry.getNumberOfArmies() > 0) {
 						thisCountry.setNumberOfArmies(thisCountry.getNumberOfArmies() + 1);
 						playerThatOwnsThisCountry
@@ -483,28 +770,82 @@ public class GamePlay implements ISubject {
 			System.out.println("errrroeee: " + e.getMessage());
 		}
 
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
-		setCurrentOperation("Placing armies on all countries");
-
-		this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
-		currentPlayerObj.goToFirstPlayer(currentState, graphObj);
+		setCurrentState(State.startupPhase, "Startup Phase");
+		setCurrentOperation("Performing PlaceAll operations");
 
 		return true;
+	}
+
+	/**
+	 * This method is used to perform the exchange cards function automatically for
+	 * computer players.
+	 */
+	public void autoExchangeCards() {
+
+		IPlayer currentPlayer = currentPlayerObj.getCurrentPlayer();
+
+		if (currentPlayer.getPlayerCards().size() < 3) {
+			System.out.println(currentPlayer.getName() + " does not have enough cards for exchange.");
+			return;
+		}
+
+		while (currentPlayer.getPlayerCards().size() >= 3) {
+
+			Integer currentPlayerCardsListSize = currentPlayer.getPlayerCards().size();
+			int card1 = 0, card2 = card1 + 1, card3 = card1 + 2;
+			boolean findMatchCards = false;
+
+			for (card1 = 0; card1 < currentPlayerCardsListSize - 2; card1++) {
+				for (card2 = card1 + 1; card2 < currentPlayerCardsListSize - 1; card2++) {
+					for (card3 = card2 + 1; card3 < currentPlayerCardsListSize; card3++) {
+						if (cardPlayObj.checkExchangeCardsValidation(currentPlayer.getPlayerCards().get(card1),
+								currentPlayer.getPlayerCards().get(card2), currentPlayer.getPlayerCards().get(card3))) {
+							findMatchCards = true;
+							break;
+						}
+					}
+					if (findMatchCards)
+						break;
+				}
+				if (findMatchCards)
+					break;
+			}
+
+			if (findMatchCards) {
+				Integer exchageArmies = (currentPlayer.getExchangeCardsTimes() + 1) * 5;
+				currentPlayer.setExchangeCardsTimes(currentPlayer.getExchangeCardsTimes() + 1);
+				currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
+				System.out.println(currentPlayer.getName() + " exchanged his cards with " + exchageArmies + " armies.");
+
+				Card[] cardItem = new Card[3];
+
+				cardItem[0] = currentPlayer.getPlayerCards().get(card1);
+				cardItem[1] = currentPlayer.getPlayerCards().get(card2);
+				cardItem[2] = currentPlayer.getPlayerCards().get(card3);
+
+				for (int item = 0; item < 3; item++) {
+					for (int Index = 0; Index < currentPlayer.getPlayerCards().size(); Index++) {
+						if (cardItem[item].getIdCard() == currentPlayer.getPlayerCards().get(Index).getIdCard()) {
+							currentPlayer.getPlayerCards().remove(Index);
+						}
+					}
+				}
+
+				for (int item = 0; item < 3; item++) {
+					cardPlayObj.refundCard(cardItem[item]);
+				}
+			} else {
+				System.out.println("No match cards found.");
+				break;
+			}
+
+		}
+		
+		// Change current state to next state
+		detachObserver(cardExchangeView);
+		setCurrentState(State.reinforcementPhase, "Reinforcement");
+		setCurrentOperation("Exchanging Cards");
+		System.out.println("You have " + currentPlayerObj.getNumReinforceArmies() + " armies for reinforcement");
 	}
 
 	/**
@@ -519,10 +860,9 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean exchangeCards(Integer cardNumber1, Integer cardNumber2, Integer cardNumber3) {
 
-		Player currentPlayer = currentPlayerObj.getCurrentPlayer();
-		Integer currentPlayerCardsListSize = currentPlayer.playerCards.size();
+		IPlayer currentPlayer = currentPlayerObj.getCurrentPlayer();
 
-		if (currentPlayer.playerCards.size() < 3) {
+		if (currentPlayer.getPlayerCards().size() < 3) {
 
 			System.out.println(
 					"You do not have enough cards for exchange. You should choose exchangecards -none to skip this state.");
@@ -531,9 +871,9 @@ public class GamePlay implements ISubject {
 
 		} else {
 
-			if (((cardNumber1 > currentPlayerCardsListSize) || (cardNumber1 < 1))
-					|| ((cardNumber2 > currentPlayerCardsListSize) || (cardNumber2 < 1))
-					|| ((cardNumber3 > currentPlayerCardsListSize) || (cardNumber3 < 1))) {
+			if (((cardNumber1 > currentPlayer.getPlayerCards().size()) || (cardNumber1 < 1))
+					|| ((cardNumber2 > currentPlayer.getPlayerCards().size()) || (cardNumber2 < 1))
+					|| ((cardNumber3 > currentPlayer.getPlayerCards().size()) || (cardNumber3 < 1))) {
 
 				System.out.println("Input Numbers is wrong");
 				return false;
@@ -544,28 +884,29 @@ public class GamePlay implements ISubject {
 				return false;
 			}
 
-			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.playerCards.get(cardNumber1 - 1),
-					currentPlayer.playerCards.get(cardNumber2 - 1), currentPlayer.playerCards.get(cardNumber3 - 1))) {
+			if (!cardPlayObj.checkExchangeCardsValidation(currentPlayer.getPlayerCards().get(cardNumber1 - 1),
+					currentPlayer.getPlayerCards().get(cardNumber2 - 1),
+					currentPlayer.getPlayerCards().get(cardNumber3 - 1))) {
 				System.out.println("These cards do not match for exchanging.");
 				return false;
 			}
 
-			Integer exchageArmies = (currentPlayer.exchangeCardsTimes + 1) * 5;
-			currentPlayer.exchangeCardsTimes++;
+			Integer exchageArmies = (currentPlayer.getExchangeCardsTimes() + 1) * 5;
+			currentPlayer.setExchangeCardsTimes(currentPlayer.getExchangeCardsTimes() + 1);
 			currentPlayerObj.setNumReinforceArmies(currentPlayerObj.getNumReinforceArmies() + exchageArmies);
 
 			System.out.println("You exchanged your cards with " + exchageArmies + " armies.");
 
 			Card[] cardItem = new Card[3];
 
-			cardItem[0] = currentPlayer.playerCards.get(cardNumber1 - 1);
-			cardItem[1] = currentPlayer.playerCards.get(cardNumber2 - 1);
-			cardItem[2] = currentPlayer.playerCards.get(cardNumber3 - 1);
+			cardItem[0] = currentPlayer.getPlayerCards().get(cardNumber1 - 1);
+			cardItem[1] = currentPlayer.getPlayerCards().get(cardNumber2 - 1);
+			cardItem[2] = currentPlayer.getPlayerCards().get(cardNumber3 - 1);
 
 			for (int item = 0; item < 3; item++) {
-				for (int Index = 0; Index < currentPlayer.playerCards.size(); Index++) {
-					if (cardItem[item].getIdCard() == currentPlayer.playerCards.get(Index).getIdCard()) {
-						currentPlayer.playerCards.remove(Index);
+				for (int Index = 0; Index < currentPlayer.getPlayerCards().size(); Index++) {
+					if (cardItem[item].getIdCard() == currentPlayer.getPlayerCards().get(Index).getIdCard()) {
+						currentPlayer.getPlayerCards().remove(Index);
 					}
 				}
 			}
@@ -590,7 +931,7 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean ignoreExchangeCards() {
 
-		if (currentPlayerObj.getCurrentPlayer().playerCards.size() < 5) {
+		if (currentPlayerObj.getCurrentPlayer().getPlayerCards().size() < 5) {
 
 			// Change current state to next state
 			detachObserver(cardExchangeView);
@@ -615,12 +956,13 @@ public class GamePlay implements ISubject {
 	 *         player or if any other validation fails)
 	 */
 	public boolean reinforceArmy(String countryName, Integer numberOfArmies) {
-	    if(numberOfArmies <= 0) {
-            System.out.println("Reinforcement armies should be a positive number");
-            return false;
-        }
 
-		if (!Player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
+		if (numberOfArmies <= 0) {
+			System.out.println("Reinforcement armies should be a positive number");
+			return false;
+		}
+
+		if (!player.reinforcement(countryName, numberOfArmies, graphObj, currentPlayerObj))
 			return false;
 
 		if (currentPlayerObj.getNumReinforceArmies() > 0) {
@@ -634,12 +976,15 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
-	/**
-	 * This method checks if the game reached the gameFinished state
-	 * 
-	 * @return true(if game reached the gameFinished state) or false(if game is in
-	 *         some other state than gameFinished)
-	 */
+	public boolean reinforceArmy() {
+
+		player.reinforcement("",0,graphObj, currentPlayerObj);
+		setCurrentState(State.attackPhase, "Attacking");
+//		setCurrentOperation("Country " + countryName + " reinforced with " + numberOfArmies + " armies.");
+		System.out.println("reinforce is done.");
+		return true;
+	}
+
 	public boolean checkEndGame() {
 		if (Database.playerList.size() == 1) {
 			setCurrentState(State.gameFinished, "game Finished");
@@ -650,9 +995,7 @@ public class GamePlay implements ISubject {
 
 	/**
 	 * when player decided normal attack
-	 * @param originCountry attackerCountry
-	 * @param destinationCountry defenderCountry
-	 * @param numeOfDice Number of armies
+	 * 
 	 * @return true if implemented
 	 */
 	public boolean normalAttack(String originCountry, String destinationCountry, Integer numeOfDice) {
@@ -660,60 +1003,54 @@ public class GamePlay implements ISubject {
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 
-		if (!Player.attackCountry(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
+		if (!player.normalAttack(originCountry, destinationCountry, numeOfDice, graphObj, currentPlayerObj))
 			return false;
 
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (Player.defenderRemoved == true) {
+		if (player.getDefenderRemoved() == true) {
 
-			Player defender = Player.getPlayerByName(defenderName);
-			for (Card itr : defender.playerCards) {
+			IPlayer defender = Database.getPlayerByName(defenderName);
+			for (Card itr : defender.getPlayerCards()) {
 				Card tempcard = itr;
-				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
-				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
+				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().getNumber());
+				currentPlayerObj.getCurrentPlayer().setPlayerCards(tempcard);
 			}
-			Player.removePlayer(defenderName);
+			removePlayer(defenderName);
 
 			boolean checkEndGameStatus = checkEndGame();
 			if (checkEndGameStatus == true) {
 				return true;
 			}
-//			if( Database.playerList.size() == 1) {
-//				setCurrentState(State.gameFinished, "game Finished");
-//				return true;
-//			}
-			Player.defenderRemoved = false;
+			player.setDefenderRemoved(false);
 		}
 
 		setCurrentOperation("Performing normal attack form " + originCountry + " to " + destinationCountry);
 		return true;
 	}
 
-	
 	/**
 	 * when player decided all out attack
-	 * @param originCountry attackerCountry
-	 * @param destinationCountry defenderCountry
-	 * @return  true if implemented
+	 * 
+	 * @return true if implemented
 	 */
 	public boolean alloutAttack(String originCountry, String destinationCountry) {
 
 		Country defenderCountry = Country.getCountryByName(destinationCountry, graphObj);
 		String defenderName = defenderCountry.getOwner();
 
-		if (!Player.attackAllout(originCountry, destinationCountry, graphObj, currentPlayerObj))
+		if (!player.attackAllout(originCountry, destinationCountry, graphObj, currentPlayerObj))
 			return false;
 
 		// if defender lost all of his country, attacker will owned all of his cards.
-		if (Player.defenderRemoved == true) {
+		if (player.getDefenderRemoved() == true) {
 
-			Player defender = Player.getPlayerByName(defenderName);
-			for (Card itr : defender.playerCards) {
+			IPlayer defender = Database.getPlayerByName(defenderName);
+			for (Card itr : defender.getPlayerCards()) {
 				Card tempcard = itr;
-				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().number);
-				currentPlayerObj.getCurrentPlayer().playerCards.add(tempcard);
+				tempcard.setOwner(currentPlayerObj.getCurrentPlayer().getNumber());
+				currentPlayerObj.getCurrentPlayer().setPlayerCards(tempcard);
 			}
-			Player.removePlayer(defenderName);
+			removePlayer(defenderName);
 			boolean checkEndGameStatus = checkEndGame();
 			if (checkEndGameStatus == true) {
 				return true;
@@ -722,10 +1059,27 @@ public class GamePlay implements ISubject {
 //				setCurrentState(State.gameFinished, "game Finished");
 //				return true;
 //			}
-			Player.defenderRemoved = false;
+			player.setDefenderRemoved(false);
 		}
 
 		setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
+		return true;
+	}
+	
+	public boolean alloutAttack() {
+
+		player.attackAllout("", "", graphObj, currentPlayerObj);
+		
+		// handle picking card at turn of each player
+		if (player.getCountryConquered()) {
+			currentPlayerObj.getCurrentPlayer().setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
+			player.setDefenderRemoved(false);
+		}
+		
+		// Change current state to next state
+		setCurrentState(State.fortificationPhase, "Fortification");
+	//	setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
+		System.out.println("alloutattack is done.");
 		return true;
 	}
 
@@ -737,17 +1091,16 @@ public class GamePlay implements ISubject {
 	public boolean ignoreAttack() {
 
 		// handle picking card at turn of each player
-		if (Player.countryConquered) {
-			currentPlayerObj.getCurrentPlayer().playerCards
-					.add(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().number));
-			Player.countryConquered = false;
+		if (player.getCountryConquered()) {
+			currentPlayerObj.getCurrentPlayer().setPlayerCards(cardPlayObj.pickCard(currentPlayerObj.getCurrentPlayer().getNumber()));
+			player.setDefenderRemoved(false);
 		}
 
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
 
-		setCurrentOperation(
-				"Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().name + " decided not to attack");
+		setCurrentOperation("Player " + CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName()
+				+ " decided not to attack");
 		return true;
 	}
 
@@ -762,31 +1115,10 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean fortifyArmy(String sourceCountry, String destinationCountry, Integer numberOfArmy) {
 
-		if (!Player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
+		if (!player.fortify(sourceCountry, destinationCountry, numberOfArmy, getGraphObj()))
 			return false;
 
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
-
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
-		setCurrentOperation("Fortify Army");
-
-		this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
+		setCurrentState(State.exchangeCards, "Exchange Cards");
 		return true;
 	}
 
@@ -797,33 +1129,36 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean ignoreFortifyArmy() {
 
-		// Change current player
-		currentPlayerObj.goToNextPlayer(currentState, graphObj);
+		setCurrentState(State.exchangeCards, "Exchange Cards");
+		return true;
+	}
+	
+	public boolean fortifyArmy() {
 
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
-		setCurrentOperation("Performing Fortify None");
-
-		this.attachObserver(cardExchangeView);
-		this.detachObserver(phaseView);
-		this.detachObserver(worldDominationView);
-
-		setCurrentState(State.exchangeCards, "exchangeCards");
-
-		this.attachObserver(phaseView);
-		this.attachObserver(worldDominationView);
-
+		player.fortify("", "",0, graphObj);
+		
+		// Change current state to next state
+		setCurrentState(State.exchangeCards, "Exchange Cards");
+		System.out.println("fortify is done.");
 		return true;
 	}
 
+	public void CardobserverOperations() {
+
+		this.detachObserver(phaseView);
+		this.detachObserver(worldDominationView);
+		this.attachObserver(cardExchangeView);
+
+		notifyObservers();
+
+		this.detachObserver(cardExchangeView);
+		this.attachObserver(phaseView);
+		this.attachObserver(worldDominationView);
+
+	}
+
 	public double getPercentageOfMapOwnedByPlayer(String playerName) {
-		if (Player.getPlayerByName(playerName) == null)
+		if (Database.getPlayerByName(playerName) == null)
 			return -1.0;
 		return (currentPlayerObj.getCurrentPlayer().getNumberOfCountriesOwned(playerName, getGraphObj()) * 100.00)
 				/ gamePlay.getGraphObj().getAdjList().size();
@@ -832,7 +1167,7 @@ public class GamePlay implements ISubject {
 	public Integer getTotalNumberOfArmies(String playerName) {
 		try {
 //			return Player.getPlayerByName(playerName).getTotalArmiesOwnedByPlayer(gamePlay.getGraphObj()) + 0;
-			return Player.getPlayerByName(playerName).getNumberOfArmies();
+			return Database.getPlayerByName(playerName).getNumberOfArmies();
 		} catch (Exception e) {
 			return -1;
 		}
@@ -842,7 +1177,7 @@ public class GamePlay implements ISubject {
 		String output = "";
 //	    int singleOwnerFound= 0;
 		for (Continent continent : Database.getInstance().getContinentList()) {
-			for (Player player : Database.getInstance().getPlayerList()) {
+			for (IPlayer player : Database.getInstance().getPlayerList()) {
 				if (Continent.continentBelongToPlayer(player.getName(), continent.getName(),
 						gamePlay.getGraphObj()) == true) {
 					output += continent.getName() + " : " + player.getName() + "\n";

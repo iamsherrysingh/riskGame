@@ -19,8 +19,118 @@ public class Mapx {
 	protected String borders;
 	Database database = Database.getInstance();
 
-
 	private String territories;
+
+	/**
+	 * This reads the maps file and stores the country, continent and border details
+	 * in their variables This is used by loadMap(). The variables generated
+	 * by this method are used throughout the game.
+	 *
+	 * @param mapFile It is the name of the map file that is to be executed
+	 * @throws FileNotFoundException Throws an exception if the file is not found
+	 * @return true(If the method is executed completely)
+	 */
+	private boolean readMapIntoVariables(String mapFile) throws FileNotFoundException {
+		// Read Continents
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine().trim();
+			int continentsEncountered = 0;
+			while (line != null) {
+				if (line.equals("[countries]"))
+					break;
+				if (continentsEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				if (line.equals("[continents]")) {
+					continentsEncountered = 1;
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+			}
+			continents = sb.toString();
+			continents = continents.trim();
+			String continentLine[] = continents.split("\n");
+			for (int i = 1; i < continentLine.length; i++) {
+				continentLine[i] = continentLine[i].trim();
+				String split[] = continentLine[i].split(" ");
+				Continent continent = new Continent(Database.getInstance().getContinentList().size() + 1, split[0],Integer.parseInt(split[1]), split[2]);
+				database.getContinentList().add(continent);
+			}
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		}
+		catch(Exception e){
+
+		}
+
+		// Read countries
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			int countriesEncountered = 0;
+			while (line != null) {
+				if (line.equals("[borders]"))
+					break;
+				if (countriesEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				if (line.equals("[countries]")) {
+					countriesEncountered = 1;
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+			}
+			countries = sb.toString();
+			countries = countries.trim();
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		}
+		catch(Exception e){
+
+		}
+
+		// Read Borders
+		try{
+			BufferedReader br = new BufferedReader(new FileReader(mapFile));
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			int bordersEncountered = 0;
+			while (line != null) {
+				if (bordersEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				if (line.equals("[borders]")) {
+					bordersEncountered = 1;
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+			}
+			borders = sb.toString();
+			borders = borders.trim();
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		}
+		catch(Exception e){
+
+		}
+
+		return true;
+	}
+
 
 	
 	/**
@@ -28,12 +138,11 @@ public class Mapx {
 	 * is the most important variable in the whole game gameGraph is a Graph that
 	 * holds an ArrayList of countries
 	 *
-	 * @param mapFile   It is the name of the map file that is to be executed
+	 * @param mapFile It is the name of the map file that is to be executed
 	 * @param gameGraph This is an object of the class Graph
-	 * @throws IOException This throws input-output exception to caller method
 	 * @return true(If after executing, we are able to load the desired map.
 	 */
-	public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {
+	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
 		try {
 
 			String fileType = recognizeFileType(mapFile);
@@ -60,7 +169,11 @@ public class Mapx {
 			return false;
 		}
 
+
 		gameGraph.getAdjList().clear(); // Clearing gameGraph before laoding new map
+
+		gameGraph.getAdjList().clear(); //Clearing gameGraph before laoding new map
+
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
 
@@ -133,8 +246,8 @@ public class Mapx {
 	 * This is a utility method that creates a plain text file
 	 *
 	 * @param mapName Name of the map
-	 * @return file
-	 * @throws IOException If the Input or Output file is invalid
+	 * @return file  
+	 * @throws IOException If the Input or Output file is invalid 
 	 */
 	public static File createFile(String mapName) throws IOException {
 		Scanner sc1 = new Scanner(System.in);
@@ -211,21 +324,28 @@ public class Mapx {
 	 * This method operates on the gameGraph variable and converts it to map file.
 	 *
 	 * @param gameGraph It is the object of the class Graph
-	  * @param mp name of map
 	 * @throws IOException If the Input or Output file is invalid
-	 * @return true(If the method executes and the map is saved) or false(If no map
-	 *         name is entered or is invalid)
+	 * @return true(If the method executes and the map is saved) or false(If no map name is entered or is invalid)
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
+
 		
 		if (validateMap(gameGraph) == false) {
 			return false;
 		}
 
 		if (mp.trim().length() == 0) {
+
+        if(validateMap(gameGraph) == false){
+            return false;
+        }
+        mp=mp.trim();
+        if(mp.length()==0){
+
 			System.out.println("Please enter a name for the map");
-			return false;
+        	return false;
 		}
+
 		
 
 		
@@ -233,6 +353,13 @@ public class Mapx {
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
 		
 
+
+
+		ArrayList<Country> ct = gameGraph.adjList;
+		String[] DefaultMaps = {"map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
+				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map"};
+		Iterator itr = ct.iterator();
+		Scanner scCreate = new Scanner(System.in);
 
 		String mapName = mp.trim();
 		boolean testEmptyString = "".equals(mapName);
@@ -251,7 +378,7 @@ public class Mapx {
 				
 				/*
 				FileWriter writer = new FileWriter(f);
-				writer.write("name " + mp + System.getProperty("line.separator"));
+				writer.write("name "+mp + System.getProperty("line.separator"));
 				writer.write(System.getProperty("line.separator"));
 				writer.write("[files]" + System.getProperty("line.separator"));
 				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
@@ -308,5 +435,86 @@ public class Mapx {
 		}
 
 	}
+
+
+	/**
+	 * This method checks the gameGraph for graph connectivity
+	 *
+	 * @param gameGraph It is an object of the class Graph
+	 * @return true(If the total count equals the total number of countries; Map is validated) or false(If the map is not connected) 
+	 */
+	public static boolean validateMap(Graph gameGraph) {
+		Integer startPosition = 1;
+		int count = 0;
+		boolean visited[] = new boolean[gameGraph.getAdjList().size() + 1];
+		Stack<Integer> stack = new Stack<Integer>();
+		stack.push(startPosition);
+
+		while (stack.empty() == false) {
+			Integer topElement = stack.peek();
+			stack.pop();
+			if (visited[topElement] == false) {
+				count++;
+				visited[topElement] = true;
+			}
+
+			Iterator<Integer> itr = gameGraph.getAdjList().get(topElement - 1).getNeighbours().iterator();
+			while (itr.hasNext()) {
+				Integer next = itr.next();
+				if (visited[next] == false) {
+					stack.push(next);
+				}
+			}
+		}
+		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
+			System.out.println("This map is valid.");
+			return true;
+		}
+		System.out.println("This map is not connected.");
+		return false;
+	}
+
+	public static boolean checkPath(String fromCountryName, String toCountryName, Graph gameGraph){
+		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
+		Country fromCountry = Country.getCountryByName(fromCountryName, gameGraph);
+		System.out.println("To: "+toCountry.getName()+" owner "+toCountry.getOwner());
+		System.out.println("From: "+fromCountry.getName()+" owner "+fromCountry.getOwner());
+		System.out.println("CurrentPlayer: "+GamePlay.getInstance().getCurrentPlayerName());
+		if (fromCountry == null || toCountry == null) {
+			System.out.println("One or both countries do not exist");
+			return false;
+		}
+		else if (!(toCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()) && fromCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()))){
+			System.out.println("Both countries have to belong to current player");
+			return false;
+		}
+        System.out.println("Good1");
+		boolean pathExists= false;
+		boolean visited[]=new boolean[gameGraph.getAdjList().size()+1];
+		Queue<Country> queue= new LinkedList<Country>();
+		visited[fromCountry.getNumber()]= true;
+		queue.add(fromCountry);
+        System.out.println("Good2");
+		while(queue.size()!=0) {
+            System.out.println("Looping with queue size "+queue.size());
+			Country firstElement = queue.poll();
+			if (firstElement.getName().equalsIgnoreCase(toCountry.getName()))
+				return true;
+			else {
+				for (Integer neighbourNumber : firstElement.getNeighbours()) {
+					Country neighbourCountry = Country.getCountryByNumber(neighbourNumber, gameGraph);
+
+					if (neighbourCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()) && !visited[neighbourCountry.getNumber()]) {
+						queue.add(neighbourCountry); //add only if path belongs to current player
+					}
+                    visited[neighbourCountry.getNumber()]=true;
+				}
+			}
+		}
+		return false;
+	}
+
+
+
 
 }

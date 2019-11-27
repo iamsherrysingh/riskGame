@@ -492,7 +492,7 @@ public class Country {
 	 */
 	public static void updatePlayerListAndDeclareWinner(Graph g) {
 
-		for (Player player : Database.getInstance().getPlayerList()) {
+		for (IPlayer player : Database.getInstance().getPlayerList()) {
 			Integer NumberOfCountriesOwned = 0;
 			for (Country country : g.getAdjList()) {
 
@@ -502,7 +502,8 @@ public class Country {
 			}
 
 			if (NumberOfCountriesOwned == 0) {
-				Player.removePlayer(player.getName());
+				GamePlay.getInstance().removePlayer(player.getName());
+				
 			} else if (NumberOfCountriesOwned == g.getAdjList().size()) {
 				System.out.println(player.getName() + "wins the game!");
 			}

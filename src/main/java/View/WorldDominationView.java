@@ -1,13 +1,7 @@
 package View;
 
-import Model.Continent;
-import Model.Database;
-import Model.GamePlay;
-import Model.Player;
+import Model.*;
 
-/**
- * This is a concrete observer that implements WorldDominationView
- */
 public class WorldDominationView implements IObserver{
     String header=          "================================================"  + "\n" +
                             "==============WORLD DOMINATION VIEW=============";
@@ -15,18 +9,12 @@ public class WorldDominationView implements IObserver{
 
 
     String data="";
-
-    /**
-     * This method prints the phase view on console
-     * @param gamePlay is an object of Model.GamePlay
-     * @param playerobj is an object of Model.Player
-     */
     @Override
-    public void update(GamePlay gamePlay, Player playerobj) {
+    public void update(GamePlay gamePlay, IPlayer playerobj) {
 
         try {
             data= "Map Ownership:";
-            for(Player player: Database.getInstance().getPlayerList()) {
+            for(IPlayer player: Database.getInstance().getPlayerList()) {
                 data += "\nPlayer " + player.getName() + " : " + gamePlay.getPercentageOfMapOwnedByPlayer(player.getName()) + "%";
             }
             if(Database.getInstance().getPlayerList().size() ==0)
@@ -42,7 +30,7 @@ public class WorldDominationView implements IObserver{
 
         try {
             data+="\nArmies on map:";
-            for(Player player: Database.getInstance().getPlayerList()) {
+            for(IPlayer player: Database.getInstance().getPlayerList()) {
                 data += "\nPlayer " + player.getName() + " has " + gamePlay.getTotalNumberOfArmies(player.getName()) + " armies on map";
             }
             if(Database.getInstance().getPlayerList().size() ==0)

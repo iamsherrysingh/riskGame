@@ -1,13 +1,6 @@
 package View;
-import Model.Card;
-import Model.GamePlay;
-import Model.Player;
+import Model.*;
 
-/**
- * Card exchange is a concrete observer that implements card exchange view.
- * @author jaskaransodhi
- *
- */
 public class CardExchange implements IObserver {
 	
     String header =          "=============================================="  + "\n" +
@@ -16,13 +9,13 @@ public class CardExchange implements IObserver {
     
 
 	@Override
-	public void update(GamePlay gameplay, Player player) {
+	public void update(GamePlay gameplay, IPlayer player) {
 
-		if( player.playerCards.size() > 0 ) {
+		if( player.getPlayerCards().size() > 0 ) {
 			
 			int counter = 0;
 			System.out.println(header + "\n");
-			for(Card itr:player.playerCards) {
+			for(Card itr:player.getPlayerCards()) {
 				counter++;
 				System.out.println(counter + "." + itr.getCardType());
 			}

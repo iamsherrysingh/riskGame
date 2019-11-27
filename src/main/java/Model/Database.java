@@ -22,14 +22,88 @@ public class Database {
 	}
 
 	static ArrayList<Continent> continentList= new ArrayList<Continent>();
-	static ArrayList<Player> playerList= new ArrayList<Player>();
+	static ArrayList<IPlayer> playerList= new ArrayList<IPlayer>();
 
-	public ArrayList<Player> getPlayerList() {
+	public ArrayList<IPlayer> getPlayerList() {
 		return playerList;
 	}
 
-	public void setPlayerList(ArrayList<Player> playerList) {
+	public void setPlayerList(ArrayList<IPlayer> playerList) {
 		Database.playerList = playerList;
+	}
+	
+	/**
+	 * This returns the instance of the player where a player is saved in
+	 * Database.playerlist using player's name
+	 * 
+	 * @param playerName The name of the player
+	 * @return instance of the player
+	 */
+	public static IPlayer getPlayerByName(String playerName) {
+		for (IPlayer player : playerList) {
+			if (player.getName().equalsIgnoreCase(playerName)) {
+				return player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * This returns the instance of the player where a player is saved in
+	 * Database.playerlist using player's number
+	 * 
+	 * @param playerNumber The integer number of the player
+	 * @return instance of the player
+	 */
+	public static IPlayer getPlayerByNumber(Integer playerNumber) {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			if (player.getNumber() == playerNumber) {
+				return player;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * check if the number of remaining armies that can be placed is equal to zero
+	 * for every player
+	 * 
+	 * @return true(If there are no more armies present) or false(If the number of armies to be placed are still not zero)
+	 */
+	public static boolean allPlayersRemainingArmiesExhausted() {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			if (player.getNumberOfFreeArmies() > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * This prints all the details for each and every player in Database.playerlist
+	 */
+	public static void printAllPlayers() {
+		for (IPlayer player : getInstance().getPlayerList()) {
+			System.out.println(player.getNumber() + " " + player.getName() + " " + player.getNumberOfArmies());
+		}
+		System.out.println();
+	}
+	
+	/**
+	 * this provides the list of countries owned by a particular player
+	 * 
+	 * @param playerName The name of the player
+	 * @param gameGraph This the object of the class Graph
+	 * @return list of countries owned by a player
+	 */
+	public static ArrayList<Country> getOwnedCountryList(String playerName, Graph gameGraph) {
+		ArrayList<Country> countryList = new ArrayList<Country>();
+		for (Country country : gameGraph.getAdjList()) {
+			if (country.getOwner().equalsIgnoreCase(playerName)) {
+				countryList.add(country);
+			}
+		}
+		return countryList;
 	}
 
 	public ArrayList<Continent> getContinentList() {
