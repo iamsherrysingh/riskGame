@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 
-public class ConquestMapFile extends DominationMapFile{
+public class ConquestMapFile extends Mapx{
 
 	public String continents;
 	public String territories;
