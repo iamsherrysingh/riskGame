@@ -189,6 +189,8 @@ public class AggressivePlayer implements IPlayer {
 		currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
 		currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
 
+		GamePlay.getInstance().setCurrentOperation(
+				"Country " + targetCountry.name + " reinforced with " + numberOfArmies + " armies.");
 		return true;
 
 	}
@@ -317,6 +319,8 @@ public class AggressivePlayer implements IPlayer {
 				return false;
 			}
 
+			GamePlay.getInstance().setCurrentOperation(
+					"Performing all-out attack from " + attackerCountry.name + " to " + defenderCountry.name);
 			return true;
 		} else {
 			System.out.println("All the neighbouring countries are owned by the current player");

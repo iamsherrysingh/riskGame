@@ -71,6 +71,7 @@ public class BenevolentPlayer implements IPlayer {
         currentPlayerObj.increaseCurrentPlayerArmies(numberOfArmies);
         currentPlayerObj.decreaseReinforceentArmies(numberOfArmies);
 
+        GamePlay.getInstance().setCurrentOperation("Country " + targetCountry.name + " reinforced with " + numberOfArmies + " armies.");
         return true;
     }
 
@@ -189,6 +190,7 @@ public class BenevolentPlayer implements IPlayer {
     @Override
     public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
         //Do nothing
+    	GamePlay.getInstance().setCurrentOperation("Benevolent player doesnot perform any attack");
         return true;
     }
 
