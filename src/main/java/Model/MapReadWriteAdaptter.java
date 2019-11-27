@@ -26,7 +26,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 		  
 		  continents  = conquestMap.getContinents();
 		  territories = conquestMap.getTerritories();
-			
+
 		  convertConquestToDominate();
 		  
 		  return true;
@@ -135,9 +135,21 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 				
 				borders += "\n";
 			
-			}		
+			}
 
-			return true;
+
+			System.out.println("=======================");
+			for(Continent continent: Database.getInstance().getContinentList()){
+				System.out.println(continent.getName());
+			}
+			for(String s:countryName){
+				System.out.println(s);
+			}
+
+		  return true;
+
+
+
 		}
   
 	  

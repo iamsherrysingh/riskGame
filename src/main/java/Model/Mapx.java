@@ -150,13 +150,13 @@ public class Mapx {
 			System.out.println("file format is: " + fileType);
 			
 			if (fileType=="Domination") {
-				System.out.println("input file is in Domonation format");
+				System.out.println("The input file is in Domination format");
 //			    DominationMapFile readMapFile = new DominationMapFile();
 //			    readMapFile.readMapIntoVariables(mapFile);
 				readMapIntoVariables(mapFile);
 			}
 			else if (fileType=="Conquest") {
-				System.out.println("input file is in Conquest format");
+				System.out.println("The input file is in Conquest format");
 			    ConquestMapFile conquestMap = new ConquestMapFile();
 			    MapReadWriteAdaptter readMapFile = new MapReadWriteAdaptter(conquestMap);
 			    readMapFile.readMapIntoVariables(mapFile);
@@ -170,11 +170,7 @@ public class Mapx {
 			return false;
 		}
 
-
-		gameGraph.getAdjList().clear(); // Clearing gameGraph before laoding new map
-
 		gameGraph.getAdjList().clear(); //Clearing gameGraph before laoding new map
-
 		Scanner countryScanner = new Scanner(this.countries);
 		countryScanner.nextLine(); // Ignoring first line of this.countries
 
