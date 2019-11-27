@@ -346,6 +346,18 @@ public class RandomPlayer implements IPlayer {
 
 			GamePlay.getInstance().setCurrentOperation(
 					"Performing all-out attack from " + attackerCountry.name + " to " + defenderCountry.name);
+			
+			// if defender lost all of his country, attacker will owned all of his cards.
+			if ( getDefenderRemoved() == true) {
+
+				for (Card itr : defender.getPlayerCards()) {
+					Card tempcard = itr;
+					tempcard.setOwner(currentPlayerObj.getCurrentPlayer().getNumber());
+					currentPlayerObj.getCurrentPlayer().setPlayerCards(tempcard);
+				}
+				Database.removePlayer(defenderName);
+				setDefenderRemoved(false);
+			}
 			return true;
 		} else {
 			System.out.println("All the neighbouring countries are owned by the current player");
