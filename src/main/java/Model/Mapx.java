@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * This file holds most of the logic of the game
  */
-public class Mapx {
+public class Mapx implements IMap{
 	private String continents;
 	protected String countries;
 	protected String borders;
@@ -23,7 +23,7 @@ public class Mapx {
 
 	/**
 	 * This reads the maps file and stores the country, continent and border details
-	 * in their variables This is used by loadMap(). The variables generated
+	 * in their variables This is used by loadConquestMap(). The variables generated
 	 * by this method are used throughout the game.
 	 *
 	 * @param mapFile It is the name of the map file that is to be executed
@@ -143,40 +143,8 @@ public class Mapx {
 	 * @return true(If after executing, we are able to load the desired map.
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
-		String fileType;
 		try {
-
-			fileType = recognizeFileType(mapFile);
-
-			System.out.println("file format is: " + fileType);
-			
-			if (fileType=="Domination") {
-				System.out.println("The input file is in Domination format");
-//			    DominationMapFile readMapFile = new DominationMapFile();
-//			    readMapFile.readMapIntoVariables(mapFile);
 				readMapIntoVariables(mapFile);
-//				System.out.println(continents);
-//				System.out.println(countries);
-//				System.out.println(borders);
-			}
-			else if (fileType=="Conquest") {
-				System.out.println("The input file is in Conquest format");
-			    ConquestMapFile conquestMap = new ConquestMapFile();
-			    MapReadWriteAdaptter readMapFile = new MapReadWriteAdaptter(conquestMap);
-			    readMapFile.readMapIntoVariables(mapFile);
-
-//			    System.out.println(readMapFile.continents);
-//				System.out.println(readMapFile.countries);
-//				System.out.println(readMapFile.borders);
-
-				continents=readMapFile.continents;
-				countries=readMapFile.countries;
-				borders=readMapFile.borders;
-			}
-			
-			System.out.println("read file finished");
-	
-			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 			return false;
@@ -190,12 +158,8 @@ public class Mapx {
 			String lineCountry = countryScanner.nextLine();
 			lineCountry = lineCountry.trim();
 			String countryLineSubstrings[]=null ;
-			if (fileType=="Domination") {
 				countryLineSubstrings = lineCountry.split(" ");
-			}
-			else if(fileType=="Conquest"){
-				countryLineSubstrings = lineCountry.split(",");
-			}
+
 			ArrayList<Integer> neighbours = new ArrayList<Integer>();
 			Scanner borderScanner = new Scanner(this.borders);
 			borderScanner.nextLine(); // Ignoring first line of this.borders
@@ -224,36 +188,7 @@ public class Mapx {
 		return true;
 	}
 
-	private String recognizeFileType(String mapFile) {
-		
-		String fileType = null;
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 
-			String line = br.readLine().trim();
-
-			while (line != null) {
-
-				line = br.readLine();
-				
-				if (line.equals("[countries]")) {
-					return fileType = "Domination";
-				}
-				else if(line.equals("[Territories]")){
-					return fileType = "Conquest";
-				}
-
-			}
-			
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (Exception e) {
-
-		}
-		return fileType;
-        
-	}
 	
 
 	/**
@@ -300,61 +235,83 @@ public class Mapx {
 	 * This method operates on the gameGraph variable and converts it to map file.
 	 *
 	 * @param gameGraph It is the object of the class Graph
+	 * @param mp name of map
 	 * @throws IOException If the Input or Output file is invalid
-	 * @return true(If the method executes and the map is saved) or false(If no map name is entered or is invalid)
+	 * @return true(If the method executes and the map is saved) or false(If no map
+	 *         name is entered or is invalid)
 	 */
 	public boolean saveMap(Graph gameGraph, String mp) throws IOException {
-
-		
 		if (validateMap(gameGraph) == false) {
 			return false;
 		}
-
-		if (mp.trim().length() == 0) {
+		mp = mp.trim();
+		if (mp.length() == 0) {
+			System.out.println("Please enter a name for the map");
 			return false;
 		}
-
-        if(validateMap(gameGraph) == false){
-            return false;
-        }
-        mp=mp.trim();
-        if(mp.length()==0){
-
-			System.out.println("Please enter a name for the map");
-        	return false;
-		}
-
+		ArrayList<Country> ct = gameGraph.adjList;
 		String[] DefaultMaps = { "map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
-				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
-		
+				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" };
+		Iterator itr = ct.iterator();
+		Scanner scCreate = new Scanner(System.in);
 		String mapName = mp.trim();
 		boolean testEmptyString = "".equals(mapName);
-		
 		if (testEmptyString == false) {
 
 			if (Arrays.asList(DefaultMaps).contains(mapName)) {
 				System.out.println("you cannot edit a default map");
 				return false;
 			} else {
-				
+				// Create the file
 				File f = createFile(mapName);
-				
-				String fileType = "Domination";
-				
-				if (fileType=="Domination") {
+				FileWriter writer = new FileWriter(f);
+				writer.write("name " + mp + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[files]" + System.getProperty("line.separator"));
+				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+				writer.write("map sample.gif" + System.getProperty("line.separator"));
+				writer.write("crd sample.cards" + System.getProperty("line.separator"));
+				writer.write("prv world.jpg" + System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[continents]" + System.getProperty("line.separator"));
+				for (int i = 0; i < database.getContinentList().size(); i++) {
+					Continent continent = database.getContinentList().get(i);
+					writer.write(continent.getName() + " " + continent.getControlValue() + " " + continent.getColor());
+					if (i < database.getContinentList().size() - 1) {
+						writer.write(System.getProperty("line.separator"));
+					}
+				}
+				writer.write(System.getProperty("line.separator"));
+				writer.write(System.getProperty("line.separator"));
+				writer.write("[countries]" + System.getProperty("line.separator"));
+				Integer countitr = 0;
+				while (itr.hasNext()) {
+					Country country = (Country) itr.next();
+					countitr++;
+					String CountryName = country.name;
+					Integer ContiNumber = country.inContinent;
+					Integer coordinateOne = country.coOrdinate1;
+					Integer coordinateTwo = country.getCoOrdinate2;
+					writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " "
+							+ coordinateTwo + System.getProperty("line.separator"));
+				}
+				writer.write(System.getProperty("line.separator"));
+				itr = ct.iterator();
+				writer.write("[borders]" + System.getProperty("line.separator"));
 
-				    DominationMapFile MapFile = new DominationMapFile();
-				    MapFile.writeMapFile(gameGraph, mp, f);
+				Integer countIterator = 0;
+				while (itr.hasNext()) {
+					countIterator++;
+					Country country = (Country) itr.next();
+					ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
+					NeighbourList = country.neighbours;
+					String borderString = "";
+					for (int i = 0; i < NeighbourList.size(); i++) {
+						borderString = borderString + " " + NeighbourList.get(i);
+					}
+					writer.write(countIterator + borderString + System.getProperty("line.separator"));
 				}
-				else if (fileType=="Conquest") {
-					System.out.println("input file is in Conquest format");
-				    ConquestMapFile conquestMap = new ConquestMapFile();
-				    MapReadWriteAdaptter MapFile = new MapReadWriteAdaptter(conquestMap);
-				    MapFile.writeMapFile(gameGraph, mp, f);
-				}
-				
-				
-				
+				writer.close();
 				return true;
 			}
 		} else {
