@@ -21,6 +21,13 @@ public class RandomPlayer implements IPlayer {
 	Integer randomNumberGenerated;
 	Country attackerCountry;
 
+	/**
+	 * This is a constructor of the class RandomPlayer.
+	 * It implements the game using the RandomPlayer stratedy.
+	 * @param number Integer number denoting the number given to the player
+	 * @param name String name of the player
+	 * @param numberOfArmies The total number of armies in integer form
+	 */
 	public RandomPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
 		this.name = name;
@@ -143,6 +150,14 @@ public class RandomPlayer implements IPlayer {
 	}
 
 	@Override
+	/**
+	 * This method reinforces any random country.
+	 * @param countryName This is n string which specified by user for reinforcement
+	 * @param numberOfArmies This is an integer parameter which specify the number of armies for reinforcement
+	 * @param graphObj This is an object which pass the game graph.
+	 * @param currentPlayerObj This is an object which is current player of the game.
+	 * @return true(if runs successfully and the country is reinforced) or false (in case it fails any validation)
+	 */
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
@@ -202,6 +217,15 @@ public class RandomPlayer implements IPlayer {
 	}
 
 	@Override
+	/**
+	 * This methodcovers the functionality of the game in which any random country attacks any other random country
+	 * random number of times.
+	 * @param fromCountry      AttackerCountry
+	 * @param toCountry        DefenderCountry
+	 * @param graphObj         its graphs instance
+	 * @param currentPlayerObj its current player's instance
+	 * @return true(if runs successfully) or false(in case it fails any validation)
+	 */
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
 		Country defenderCountry = null;
@@ -358,6 +382,14 @@ public class RandomPlayer implements IPlayer {
 
 	}
 
+	/**
+	 * This handles the attackMove command to move the right number of armies from
+	 * attacker country to defender country when attacker wins the defender country
+	 * @param attackerCountry The country attacking
+	 * @param defenderCountry The country that is being attacked
+	 * @param numberOfArmiesToMove The total number of armies that are moved in integer form
+	 * @return true(If the attack took place) or false(If the attack was unsuccessful or the number of armies is incorrect)
+	 */
 	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
 
 		if (defenderCountry.getNumberOfArmies() == 0) {
@@ -380,6 +412,17 @@ public class RandomPlayer implements IPlayer {
 		return true;
 	}
 
+	/**
+	 * This method manages the battle between attackerCountry and defenderCountry and declares whoever wins the battle.
+	 *
+	 * @param attackerCountry object of the country that attacks the other country.
+	 * @param defenderCountry object of the country that is attacked.
+	 * @param attackerArmies Integer value, number of armies selected by attacker to attack.
+	 * @param defenderArmies Integer value, number of armies selected by defender to defend.
+	 * @param attacker  Object of IPlayer
+	 * @param defender Object of  IPlayer
+	 * @return true(if a battle is played between the attacker and defender)
+	 */
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies, IPlayer attacker, IPlayer defender) {
 
@@ -438,6 +481,14 @@ public class RandomPlayer implements IPlayer {
 	}
 
 	@Override
+	/**
+	 *This method fortifies the countries by placing 2 times the army to the country that have another player's country as their neighbour.
+	 * @param fromCname The name of the country from where the armies are to be moved
+	 * @param toCountryName The name of the country to which the armies are to be moved
+	 * @param numberOfArmies The total number of armies to be moved
+	 * @param gameGraph This is an object of the class Graph
+	 * @return true(If all the conditions are satisfied and the countries are fortified) or false(If the countries specified are absent or it does not fulfill the requirements)
+	 */
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 
 		Country randomCountry = null;
@@ -536,6 +587,11 @@ public class RandomPlayer implements IPlayer {
 		return numberOfCountriesOwned;
 	}
 
+	/**
+	 * This gives a random number whenever dice is rolled within a range we have.
+	 * @param NumberRangeWeHave its an integer value range within which we want a number.
+	 * @return a random number
+	 */
 	public static int getRandomNumber(Integer NumberRangeWeHave) {
 		Random randomGenerator;
 		randomGenerator = new Random();

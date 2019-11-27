@@ -216,7 +216,7 @@ public class BenevolentPlayer implements IPlayer {
 
 	@Override
 	/**
-	 *This method allows the user to move their armies to a neighbouring entry without violating the rules of the game
+	 *This method allows the user to move their armies to weaker countries
 	 * 	@param fromCname The name of the country from where the armies are to be moved
 	 * 	@param toCountryName The name of the country to which the armies are to be moved
 	 *  @param numberOfArmies The total number of armies to be moved
