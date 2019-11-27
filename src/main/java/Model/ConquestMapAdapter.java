@@ -3,8 +3,7 @@ package Model;
 import java.io.IOException;
 
 public class ConquestMapAdapter implements IMap {
-    ConquestMapFile conquestMapFile=new ConquestMapFile();
-    MapReadWriteAdapter mapReadWriteAdapter = new MapReadWriteAdapter(conquestMapFile);
+    ConquestMap conquestMap = new ConquestMap();
 
     @Override
     public boolean loadMap(String mapFile, Graph gameGraph) throws IOException {

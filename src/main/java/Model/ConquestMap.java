@@ -1,31 +1,19 @@
 package Model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
-public class MapReadWriteAdapter extends Mapx{
+public class ConquestMap extends Mapx{
 	
 	  Database database = Database.getInstance();
 
 	  public  String continents;
 	  private String territories;
-	 
-	  private ConquestMapFile conquestMap;
-
-	
-	  public MapReadWriteAdapter(ConquestMapFile conquestMap) {
-	    this.conquestMap = conquestMap;
-	    }
 
 
 	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
 		  
-		  conquestMap.readMapConquest(mapFile);
-		  
-		  
-		  continents  = conquestMap.getContinents();
-		  territories = conquestMap.getTerritories();
+		  readMapConquest(mapFile);
+
 
 		  convertConquestToDominate();
 		  
@@ -37,7 +25,7 @@ public class MapReadWriteAdapter extends Mapx{
 		  
 		  convertDominateToConquest(gameGraph);
 		  
-		  conquestMap.writeMapConquest(mapName, f);
+		  writeMapConquest(mapName, f);
 		  
 		  return true;
 	  }
@@ -180,5 +168,101 @@ public class MapReadWriteAdapter extends Mapx{
 			
 			return true;
 		}
-			
+		public boolean readMapConquest(String mapFile) throws FileNotFoundException {
+
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+
+			String line = br.readLine().trim();
+
+			int continentsEncountered = 0;
+			while (line != null) {
+
+				line = br.readLine();
+
+				if (line.equals("[Continents]")) {
+					continentsEncountered = 1;
+				}
+				else if(line.equals("[Territories]")){
+					break;
+				}
+
+
+				if (continentsEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				continents = sb.toString().trim();
+
+			}
+
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+
+
+		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
+			StringBuilder sb = new StringBuilder();
+
+			String line = br.readLine();
+
+			int countriesEncountered = 0;
+			while (line != null) {
+
+				if (line.equals("[Territories]")) {
+					countriesEncountered = 1;
+				}
+				line = br.readLine();
+
+
+				if (countriesEncountered == 1 && line!=null) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+
+			}
+
+			territories = sb.toString();
+			territories = territories.trim();
+
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+
+
+		return true;
+	}
+
+	public boolean writeMapConquest(String mapName, File f) throws IOException {
+
+		FileWriter writer = new FileWriter(f);
+		writer.write("name " + mapName + System.getProperty("line.separator"));
+		writer.write(System.getProperty("line.separator"));
+		writer.write("[files]" + System.getProperty("line.separator"));
+		writer.write("pic sample.jpg" + System.getProperty("line.separator"));
+		writer.write("map sample.gif" + System.getProperty("line.separator"));
+		writer.write("crd sample.cards" + System.getProperty("line.separator"));
+		writer.write("prv world.jpg" + System.getProperty("line.separator"));
+		writer.write(System.getProperty("line.separator"));
+
+		writer.write("[continents]" + System.getProperty("line.separator"));
+		writer.write(continents + System.getProperty("line.separator"));
+
+		writer.write("[Territories]" + System.getProperty("line.separator"));
+		writer.write(territories + System.getProperty("line.separator"));
+
+		writer.close();
+		return true;
+
+	}
 	}
