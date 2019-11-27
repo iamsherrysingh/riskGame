@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class MapReadWriteAdaptter extends DominationMapFile{
+public class MapReadWriteAdaptter extends Mapx{
 	
 	  Database database = Database.getInstance();
 
