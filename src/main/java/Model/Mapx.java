@@ -161,8 +161,7 @@ public class Mapx implements IMap{
 			}
 			else if (fileType=="Conquest") {
 				System.out.println("The input file is in Conquest format");
-			    ConquestMapFile conquestMap = new ConquestMapFile();
-			    MapReadWriteAdapter readMapFile = new MapReadWriteAdapter(conquestMap);
+			    ConquestMap readMapFile = new ConquestMap();
 			    readMapFile.readMapIntoVariables(mapFile);
 
 //			    System.out.println(readMapFile.continents);
