@@ -230,6 +230,64 @@ public class LoadGame implements SaveLoadBuilder{
 	@Override
 	public void handleCurrentState() {
 		
+		// Read currentState
+			try {
+				GamePlay gamePlayObj = GamePlay.getInstance();	
+				String currentState;
+				StringBuilder sb = new StringBuilder();
+				String line = bufferedReader.readLine().trim();
+				int currentStateEncountered = 0;
+					
+				while (line != null) {
+						
+					if (line.equals("[CurrentPlayer]"))
+					 break;	
+					if (currentStateEncountered  == 1) {
+						sb.append(line);
+						sb.append(System.lineSeparator());
+					}
+					if (line.equals("[CurrentState]")) {
+						currentStateEncountered = 1;
+						sb.append(line);
+						sb.append(System.lineSeparator());
+					}
+					
+					line = bufferedReader.readLine();
+						
+				}
+					
+				currentState = sb.toString();
+				currentState = currentState.trim();
+				Scanner currentStateScanner = new Scanner(currentState);
+				currentStateScanner.nextLine(); // Ignoring first line of currentState
+					
+				String currentStateLine[] = currentState.split("\n");
+				State state = State.initializeGame;;
+				
+				if ( currentStateLine[0].equalsIgnoreCase("initializeGame") )
+					state = State.initializeGame;
+				else if ( currentStateLine[0].equalsIgnoreCase("mapEditor") )
+					state = State.mapEditor;
+				else if( currentStateLine[0].equalsIgnoreCase("startupPhase") )
+					state = State.startupPhase;
+				else if( currentStateLine[0].equalsIgnoreCase("editPlayer") )
+					state = State.editPlayer;
+				else if( currentStateLine[0].equalsIgnoreCase("troopArmies") )
+					state = State.troopArmies;
+				else if( currentStateLine[0].equalsIgnoreCase("exchangeCards") )
+					state = State.exchangeCards;
+				else if( currentStateLine[0].equalsIgnoreCase("attackPhase") )
+					state = State.attackPhase;
+				else if( currentStateLine[0].equalsIgnoreCase("fortificationPhase") )
+					state = State.fortificationPhase;
+				else if( currentStateLine[0].equalsIgnoreCase("gameFinished") )
+					state = State.gameFinished;
+				gamePlayObj.setCurrentState(state, currentStateLine[0]);	
+				} 
+				catch (IOException e) {
+
+				}
+		
 	}
 	
 	@Override

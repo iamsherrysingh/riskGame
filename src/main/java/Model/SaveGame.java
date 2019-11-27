@@ -75,7 +75,7 @@ public class SaveGame implements SaveLoadBuilder {
 				for(IPlayer itr : Database.playerList){
 					
 					this.gameFileWriter.write(itr.getName() + "," + itr.getPlayerStrategy() + "," + itr.getNumber() + "," + itr.getNumberOfArmies() + "," + itr.getNumberOfFreeArmies() + "," + itr.getMyCountries() + "," + itr.getExchangeCardsTimes() + "," + itr.getCountryConquered() + "," + itr.getDefenderRemoved() + "," + null );
-					this.gameFileWriter.write(" [Cards]" + ",");
+					this.gameFileWriter.write("[Cards]" + ",");
 					for(Card itrC: itr.getPlayerCards()) {
 						this.gameFileWriter.write(itrC.getCardType() + "," + itrC.getIdCard() + "," + itrC.getOwner());
 					}
