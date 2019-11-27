@@ -95,7 +95,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 					
 				}
 				
-				countries += i+1 + " " + split[0] + "," + continetIndx + ","  + split[1] + "," + split[2] + "\n";
+				countries += i+1 + " " + split[0] + " " + continetIndx + " "  + split[1] + " " + split[2] + "\n";
 				
 				countryName[i] = split[0];
 			}
@@ -140,11 +140,12 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 
 			System.out.println("=======================");
 			for(Continent continent: Database.getInstance().getContinentList()){
-				System.out.println(continent.getName());
+				System.out.println(continent.getName() +" "+continent.getControlValue()+" "+continent.getColor());
 			}
-			for(String s:countryName){
-				System.out.println(s);
-			}
+//			for(String s:countryName){
+//				System.out.println(s);
+//			}
+		  System.out.println(countries);
 
 		  return true;
 
