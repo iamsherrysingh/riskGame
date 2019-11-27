@@ -17,6 +17,7 @@ public class Mapx {
 	private String continents;
 	protected String countries;
 	protected String borders;
+	protected String fileType;
 	Database database = Database.getInstance();
 
 	private String territories;
@@ -32,7 +33,7 @@ public class Mapx {
 	 * @return true(If after executing, we are able to load the desired map.
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
-		String fileType;
+		
 		try {
 
 			fileType = recognizeFileType(mapFile);
@@ -222,7 +223,7 @@ public class Mapx {
 				
 				File f = createFile(mapName);
 				
-				String fileType = "Domination";
+				//String fileType = "Domination";
 				
 				if (fileType=="Domination") {
 

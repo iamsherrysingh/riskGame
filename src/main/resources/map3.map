@@ -1,0 +1,12 @@
+name map3.map
+
+[files]
+pic sample.jpg
+map sample.gif
+crd sample.cards
+prv world.jpg
+
+[continents]
+null
+[Territories]
+null

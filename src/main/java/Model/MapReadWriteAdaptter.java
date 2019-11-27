@@ -10,12 +10,12 @@ import java.io.IOException;
 public class MapReadWriteAdaptter extends DominationMapFile{
 	
 	     Database database = Database.getInstance();
-	     public  String continents;
-	     private String territories;
+	     protected String continents;
+	     protected String territories;
+	     
 	     private ConquestMapFile conquestMap;
 
-	
-	     public MapReadWriteAdaptter(ConquestMapFile conquestMap) {
+		 public MapReadWriteAdaptter(ConquestMapFile conquestMap) {
 	     this.conquestMap = conquestMap;
 	     }
 
@@ -31,7 +31,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 
 		  conquestMap.readMapConquest(mapFile);
 		  
-		  continents  = conquestMap.getContinents();
+		  continents = conquestMap.getContinents();
 		  territories = conquestMap.getTerritories();
 
 		  convertConquestToDominate();
@@ -81,12 +81,11 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 					
 				}
 	
-				countries = "[countries]";
-				countries += "\n";
-				
+				countries = "[countries]" + "\n";
+
 				int sizeOfContinents = database.getContinentList().size();
-				
-				String territoriesLine[] = territories.split("\n");
+				 
+				String[] territoriesLine = territories.split("\n");
 				String[] countryName= new String[territoriesLine.length];
 				for (int i = 0; i < territoriesLine.length; i++) {
 	                

@@ -16,8 +16,8 @@ import java.util.Scanner;
  */
 public class ConquestMapFile extends DominationMapFile{
 
-	public String continents;
-	public String territories;
+	private String continents;
+	private String territories;
 		
 	
 	public ConquestMapFile() {}
@@ -29,16 +29,6 @@ public class ConquestMapFile extends DominationMapFile{
 	public String getTerritories() {
 			return territories;
 	}
-
-	
-	public void setContinents(String continents) {
-		this.continents = continents;
-	}
-
-	public void setTerritories(String territories) {
-		this.territories = territories;
-	}
-	
 	
 	/**
 	 * This reads the conquest maps file and stores the country, continent and border details
