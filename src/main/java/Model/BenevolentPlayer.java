@@ -2,6 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * This class implements the Benevolant player strategy.
+ * The functionality of this class includes protecting the weakest countries, does not attack and fortification by moving armiers to the weakest countries
+ */
 public class BenevolentPlayer implements IPlayer {
 
 	private String name;
@@ -17,6 +21,12 @@ public class BenevolentPlayer implements IPlayer {
 		this.myCountries = myCountries;
 	}
 
+	/**
+	 * This is the constructor of the class Benevolant player
+	 * @param number It is an integer number corresponding the number of the player
+	 * @param name It is a String containing the name of the player
+	 * @param numberOfArmies It is the integer number of the armies
+	 */
 	public BenevolentPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
 		this.name = name;
@@ -140,6 +150,14 @@ public class BenevolentPlayer implements IPlayer {
 	}
 
 	@Override
+    /**
+     * This method is responsible to check validations of reinforcement and perform tasks associated with it
+     * @param countryName This is n string which specified by user for reinforcement
+     * @param numberOfArmies This is an integer parameter which specify the number of armies for reinforcement
+     * @param graphObj This is an object which pass the game graph.
+     * @param currentPlayerObj This is an object which is current player of the game.
+     * @return true(if the method executes succesffully) or false(if the country entered does not exist or does not belong to the current player)
+     */
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
@@ -189,6 +207,7 @@ public class BenevolentPlayer implements IPlayer {
 	}
 
 	@Override
+
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
 		// Do nothing
 		GamePlay.getInstance().setCurrentOperation("Benevolent player doesnot perform any attack");
