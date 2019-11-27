@@ -312,6 +312,22 @@ public class Controller {
 			tasksList.add(eTask);
 		}
 		
+		//Command savegame
+		else if(cmdStr.equalsIgnoreCase("savegame")){
+			if(!cmdItr.hasNext()) {
+				System.out.println("wrong Command");
+				return false;
+			}
+			
+			ExtractedTasks eTask = new ExtractedTasks();
+			eTask.name = tasksEnum.savegame;
+			
+			//get data related to savegame task
+			eTask.taskData.add(cmdItr.next());
+			
+			tasksList.add(eTask);
+		}
+		
 		//Command loadgame
 		else if(cmdStr.equalsIgnoreCase("loadgame")){
 			if(!cmdItr.hasNext()) {
@@ -847,8 +863,8 @@ public class Controller {
 					break;
 				}
 				case savegame:{
-			//		if(!gamePlayObj.savegame(itr.taskData))
-			//			return false;			
+					if(!gamePlayObj.SaveGame(itr.taskData.get(0)))
+						return false;			
 					break;
 				}
 				case loadgame:{

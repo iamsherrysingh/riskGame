@@ -9,7 +9,6 @@ public enum State {
 	startupPhase,
 	editPlayer,
 	troopArmies,
-	newTurn,
 	exchangeCards,
 	reinforcementPhase,
 	attackPhase,

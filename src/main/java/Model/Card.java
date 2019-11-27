@@ -65,7 +65,7 @@ public class Card {
 class CardPlay{
 	
 	private static CardPlay cardPlayObj = null;
-	private ArrayList<Card> cardsList;
+	private static ArrayList<Card> cardsList;
 	
 	/** 
 	 * Constructor of the CardPlay Class.
@@ -80,6 +80,11 @@ class CardPlay{
         	cardPlayObj = new CardPlay();
         return cardPlayObj;
     }
+    
+	public static ArrayList<Card> getCardsList(){
+		return cardsList;
+	}
+	
   
 	/** 
 	 * This method Initialize all the cards in the game: 

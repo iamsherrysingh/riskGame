@@ -478,9 +478,13 @@ public class GamePlay implements ISubject {
 	 * @return true if file successfully saved.
 	 * @throws IOException 
 	 */
-	public boolean SaveGame(String fileName) throws IOException {
+	public boolean SaveGame(String fileName) {
 		
-		saveGameObj.setFile(fileName);
+		try {
+			saveGameObj.setFile(fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		saveGameObj.handleContinent();
 		saveGameObj.handleCountry();
