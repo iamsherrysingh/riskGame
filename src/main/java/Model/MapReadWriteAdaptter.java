@@ -8,7 +8,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 	
 	  Database database = Database.getInstance();
 
-	  private String continents;
+	  public  String continents;
 	  private String territories;
 	 
 	  private ConquestMapFile conquestMap;
@@ -149,10 +149,10 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 //			for(String s:countryName){
 //				System.out.println(s);
 //			}
-		  System.out.println(continents);
+		/*  System.out.println(continents);
 		  System.out.println(countries);
 		  System.out.println(borders);
-
+*/
 		  return true;
 
 

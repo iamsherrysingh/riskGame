@@ -14,8 +14,8 @@ import java.util.Scanner;
 
 public class ConquestMapFile extends DominationMapFile{
 
-	private String continents;
-	private String territories;
+	public String continents;
+	public String territories;
 		
 	
 	public ConquestMapFile() {}
