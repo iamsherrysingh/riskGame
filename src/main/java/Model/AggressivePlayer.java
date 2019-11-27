@@ -16,6 +16,13 @@ public class AggressivePlayer implements IPlayer {
 	static Integer lastDiceSelected = null;
 	Country strongestCountryFound = null;
 
+	/**
+	 * This is a constructor of the class AggressivePlayer
+	 * This method playing strategy focuses on attack mode of the game
+ 	 * @param number This a variable of the type int and denotes the player's number
+	 * @param name It is a String type variable and denotes the name of the player
+	 * @param numberOfArmies It is an integer number that denotes the number of armies a player has
+	 */
 	public AggressivePlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
 		this.name = name;
@@ -137,6 +144,14 @@ public class AggressivePlayer implements IPlayer {
 		this.defenderRemoved = defenderRemoved;
 	}
 
+	/**
+	 * This method is used to reinforce a players country
+	 * @param countryName This is the name of the country to be reinforced and is of the type String
+	 * @param numberOfArmies This denotes the integer of armies
+	 * @param graphObj It is an object of the class Graph
+	 * @param currentPlayerObj It is an object of the class CurrentPlayer
+	 * @return
+	 */
 	@Override
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
@@ -195,6 +210,15 @@ public class AggressivePlayer implements IPlayer {
 
 	}
 
+	/**
+	 * This method performs the attack function of the game according to the Aggressive Player strategy.
+	 * It performs the attack function until it exhausts all the armies and can not attack anymore.
+	 * @param fromCountry It denotes the name of the country from where armies are to be transferred.
+	 * @param toCountry It denotes the name of the country from where armies are to be transferred.
+	 * @param graphObj It is an object of the class Graph
+	 * @param currentPlayerObj It is an object of the class CurrentPlayer
+	 * @return true(If attackAllout method runs successfully) or false(If the requirements are not satisfied)
+	 */
 	@Override
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
