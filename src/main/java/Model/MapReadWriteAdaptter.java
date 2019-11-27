@@ -32,9 +32,7 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 		  return true;
 	  }
 
-  
-
-
+	  
 	  public boolean writeMapFile(Graph gameGraph, String mapName, File f) throws IOException{
 		  
 		  convertDominateToConquest(gameGraph);
@@ -142,7 +140,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 			return true;
 		}
   
-	  
 	  
 	  private boolean convertDominateToConquest(Graph gameGraph) {
 
