@@ -44,7 +44,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 
   
 	  private boolean convertConquestToDominate() {
-			System.out.println(" convertConquestToDominate started-----");
 
 			String continentLine[] = continents.split("\n");
 			for (int i = 1; i < continentLine.length; i++) {
@@ -60,12 +59,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 				
 			}
 
-			/*
-			System.out.println("========start of territories========" );
-			System.out.println(database.getContinentList());
-			System.out.println("========end of territories========" );
-			*/
-
 			countries = "[countries]";
 			countries += "\n";
 			
@@ -77,7 +70,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
                 
 				territoriesLine[i] = territoriesLine[i].trim();
 
-				// hamid
 				if(territoriesLine[i].equalsIgnoreCase(" ")) {
 					continue;
 				}
@@ -99,13 +91,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 				
 				countryName[i] = split[0];
 			}
-
-			/*
-			System.out.println("========start of countries========" );
-			System.out.println(countries);
-			System.out.println("========end of countries========" );
-			*/
-		
 
 			int numOfCountries = territoriesLine.length;
 
@@ -138,7 +123,6 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 			}
 
 
-			System.out.println("=======================");
 			continents="[continents]\n";
 			for(Continent continent: Database.getInstance().getContinentList()){
 				continents+=(continent.getName() +" "+continent.getControlValue()+" "+continent.getColor())+"\n";
@@ -146,16 +130,8 @@ public class MapReadWriteAdaptter extends DominationMapFile{
 			continents=continents.trim();
 			countries= countries.trim();
 			borders= borders.trim();
-//			for(String s:countryName){
-//				System.out.println(s);
-//			}
-		/*  System.out.println(continents);
-		  System.out.println(countries);
-		  System.out.println(borders);
-*/
+
 		  return true;
-
-
 
 		}
   

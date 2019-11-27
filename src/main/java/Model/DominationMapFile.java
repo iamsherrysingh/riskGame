@@ -16,7 +16,7 @@
 
 public class DominationMapFile {
 
-		private String continents;
+	    protected String continents;
 		protected String countries;
 		protected String borders;
 		Database database = Database.getInstance();
