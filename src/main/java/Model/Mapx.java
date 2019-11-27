@@ -23,7 +23,7 @@ public class Mapx implements IMap{
 
 	/**
 	 * This reads the maps file and stores the country, continent and border details
-	 * in their variables This is used by loadMap(). The variables generated
+	 * in their variables This is used by loadConquestMap(). The variables generated
 	 * by this method are used throughout the game.
 	 *
 	 * @param mapFile It is the name of the map file that is to be executed
@@ -143,39 +143,8 @@ public class Mapx implements IMap{
 	 * @return true(If after executing, we are able to load the desired map.
 	 */
 	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
-		String fileType;
 		try {
-
-			fileType = recognizeFileType(mapFile);
-
-			System.out.println("file format is: " + fileType);
-			
-			if (fileType=="Domination") {
-				System.out.println("The input file is in Domination format");
-//			    DominationMapFile readMapFile = new DominationMapFile();
-//			    readMapFile.readMapIntoVariables(mapFile);
 				readMapIntoVariables(mapFile);
-//				System.out.println(continents);
-//				System.out.println(countries);
-//				System.out.println(borders);
-			}
-			else if (fileType=="Conquest") {
-				System.out.println("The input file is in Conquest format");
-			    ConquestMap readMapFile = new ConquestMap();
-			    readMapFile.readMapIntoVariables(mapFile);
-
-//			    System.out.println(readMapFile.continents);
-//				System.out.println(readMapFile.countries);
-//				System.out.println(readMapFile.borders);
-
-				continents=readMapFile.continents;
-				countries=readMapFile.countries;
-				borders=readMapFile.borders;
-			}
-			
-			System.out.println("read file finished");
-	
-			
 		} catch (FileNotFoundException f) {
 			System.out.println(f.getMessage());
 			return false;
@@ -189,12 +158,8 @@ public class Mapx implements IMap{
 			String lineCountry = countryScanner.nextLine();
 			lineCountry = lineCountry.trim();
 			String countryLineSubstrings[]=null ;
-			if (fileType=="Domination") {
 				countryLineSubstrings = lineCountry.split(" ");
-			}
-			else if(fileType=="Conquest"){
-				countryLineSubstrings = lineCountry.split(",");
-			}
+
 			ArrayList<Integer> neighbours = new ArrayList<Integer>();
 			Scanner borderScanner = new Scanner(this.borders);
 			borderScanner.nextLine(); // Ignoring first line of this.borders
@@ -223,36 +188,7 @@ public class Mapx implements IMap{
 		return true;
 	}
 
-	private String recognizeFileType(String mapFile) {
-		
-		String fileType = null;
-		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
 
-			String line = br.readLine().trim();
-
-			while (line != null) {
-
-				line = br.readLine();
-				
-				if (line.equals("[countries]")) {
-					return fileType = "Domination";
-				}
-				else if(line.equals("[Territories]")){
-					return fileType = "Conquest";
-				}
-
-			}
-			
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (Exception e) {
-
-		}
-		return fileType;
-        
-	}
 	
 
 	/**

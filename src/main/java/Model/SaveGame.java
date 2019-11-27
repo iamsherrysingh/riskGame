@@ -25,10 +25,13 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Continent itr : Database.continentList){
 				
-				this.gameFileWriter.write(itr.name + " " + itr.color + " " + itr.number + " " + itr.controlValue + " " + itr.owner + System.getProperty("line.separator"));
+				if (itr.owner == null ) {
+					itr.owner = null;
+				}
+				this.gameFileWriter.write(itr.name + "," + itr.color + "," + itr.number + "," + itr.controlValue + "," + itr.owner + System.getProperty("line.separator"));
 			}
 			
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+		//	this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -43,19 +46,21 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Country itr : Graph.adjList){
 				
-				this.gameFileWriter.write(itr.number + " " + itr.coOrdinate1 + " " + itr.getCoOrdinate2 + " " + itr.inContinent + " " + itr.numberOfArmies + " " + itr.name + " " + itr.owner);
-				this.gameFileWriter.write(" [borders]" + " ");
+				if (itr.owner == null ) {
+					itr.owner = null;
+				}
+				this.gameFileWriter.write(itr.number + "," + itr.coOrdinate1 + "," + itr.getCoOrdinate2 + "," + itr.inContinent + "," + itr.numberOfArmies + "," + itr.name + "," + itr.owner);
+				this.gameFileWriter.write(",[borders]" + ",");
 				for(Integer itrb: itr.neighbours) {
-					this.gameFileWriter.write(itrb + " ");
+					this.gameFileWriter.write(itrb + ",");
 				}
 				this.gameFileWriter.write(System.getProperty("line.separator"));
 			}
 			
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+		//	this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -65,16 +70,23 @@ public class SaveGame implements SaveLoadBuilder {
 		try {
 			this.gameFileWriter.write("[Players]" + System.getProperty("line.separator"));
 			
-			for(IPlayer itr : Database.playerList){
+			if( Database.playerList.size() >= 1) {
 				
-				this.gameFileWriter.write(itr.getName() + " " + itr.getPlayerStrategy() + " " + itr.getNumber() + " " + itr.getNumberOfArmies() + " " + itr.getNumberOfFreeArmies() + " " + itr.getMyCountries() + " " + itr.getExchangeCardsTimes() + " " + itr.getCountryConquered() + " " + itr.getDefenderRemoved() + " " + null );
-				this.gameFileWriter.write(" [Cards]" + " ");
-				for(Card itrC: itr.getPlayerCards()) {
-					this.gameFileWriter.write(itrC.getCardType() + " " + itrC.getIdCard() + " " + itrC.getOwner());
+				for(IPlayer itr : Database.playerList){
+					
+					this.gameFileWriter.write(itr.getName() + "," + itr.getPlayerStrategy() + "," + itr.getNumber() + "," + itr.getNumberOfArmies() + "," + itr.getNumberOfFreeArmies() + "," + itr.getMyCountries() + "," + itr.getExchangeCardsTimes() + "," + itr.getCountryConquered() + "," + itr.getDefenderRemoved() + "," + null );
+					this.gameFileWriter.write("[Cards]" + ",");
+					for(Card itrC: itr.getPlayerCards()) {
+						this.gameFileWriter.write(itrC.getCardType() + "," + itrC.getIdCard() + "," + itrC.getOwner());
+					}
+					this.gameFileWriter.write(System.getProperty("line.separator"));
 				}
-				this.gameFileWriter.write(System.getProperty("line.separator"));
+			
 			}
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+			else {
+				this.gameFileWriter.write("No-Player" + System.getProperty("line.separator"));
+			}
+	//		this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -90,7 +102,7 @@ public class SaveGame implements SaveLoadBuilder {
 				
 				this.gameFileWriter.write(itr.getCardType() + " " + itr.getIdCard() + " " + itr.getOwner() + System.getProperty("line.separator"));
 			}
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+	//		this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -123,7 +135,7 @@ public class SaveGame implements SaveLoadBuilder {
 				state = "gameFinished";
 			
 			this.gameFileWriter.write(state + System.getProperty("line.separator"));
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+//			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -134,8 +146,10 @@ public class SaveGame implements SaveLoadBuilder {
 		try {
 			GamePlay gamePlayObj = GamePlay.getInstance();
 			this.gameFileWriter.write("[CurrentPlayer]" + System.getProperty("line.separator"));
-			this.gameFileWriter.write( gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getName() + gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getNumber() + System.getProperty("line.separator"));
-			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+			
+			if( gamePlayObj.getCurrentState() == State.exchangeCards || gamePlayObj.getCurrentState() == State.attackPhase || gamePlayObj.getCurrentState() == State.fortificationPhase || gamePlayObj.getCurrentState() == State.gameFinished )
+				this.gameFileWriter.write( gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getName() + gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getNumber() + System.getProperty("line.separator"));
+	//		this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			gameFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
