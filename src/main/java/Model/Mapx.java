@@ -280,45 +280,7 @@ public class Mapx {
 	}
 
 
-	/**
-	 * This method checks the gameGraph for graph connectivity
-	 *
-	 * @param gameGraph It is an object of the class Graph
-	 * @return true(If the total count equals the total number of countries; Map is
-	 *         validated) or false(If the map is not connected)
-	 */
-	public static boolean validateMap(Graph gameGraph) {
-		Integer startPosition = 1;
-		int count = 0;
-		boolean visited[] = new boolean[gameGraph.getAdjList().size() + 1];
-		Stack<Integer> stack = new Stack<Integer>();
-		stack.push(startPosition);
 
-		while (stack.empty() == false) {
-			Integer topElement = stack.peek();
-			stack.pop();
-			if (visited[topElement] == false) {
-				count++;
-				visited[topElement] = true;
-			}
-
-			Iterator<Integer> itr = gameGraph.getAdjList().get(topElement - 1).getNeighbours().iterator();
-			while (itr.hasNext()) {
-				Integer next = itr.next();
-				if (visited[next] == false) {
-					stack.push(next);
-				}
-			}
-		}
-		if (count == gameGraph.getAdjList().size()) {// if count==no. of countries return true;
-			System.out.println("This map is valid.");
-			return true;
-		}
-		System.out.println("This map is not connected.");
-		return false;
-	}
-
-	
 
 	/**
 	 * This method operates on the gameGraph variable and converts it to map file.
@@ -335,6 +297,8 @@ public class Mapx {
 		}
 
 		if (mp.trim().length() == 0) {
+			return false;
+		}
 
         if(validateMap(gameGraph) == false){
             return false;
@@ -353,12 +317,6 @@ public class Mapx {
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
 		
 
-
-
-		ArrayList<Country> ct = gameGraph.adjList;
-		String[] DefaultMaps = {"map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
-				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map"};
-		Iterator itr = ct.iterator();
 		Scanner scCreate = new Scanner(System.in);
 
 		String mapName = mp.trim();
@@ -375,57 +333,6 @@ public class Mapx {
 				
 				DominationMapFile dominationMapFile = new DominationMapFile();
 				dominationMapFile.writeMapFile(gameGraph, mp, f);
-				
-				/*
-				FileWriter writer = new FileWriter(f);
-				writer.write("name "+mp + System.getProperty("line.separator"));
-				writer.write(System.getProperty("line.separator"));
-				writer.write("[files]" + System.getProperty("line.separator"));
-				writer.write("pic sample.jpg" + System.getProperty("line.separator"));
-				writer.write("map sample.gif" + System.getProperty("line.separator"));
-				writer.write("crd sample.cards" + System.getProperty("line.separator"));
-				writer.write("prv world.jpg" + System.getProperty("line.separator"));
-				writer.write(System.getProperty("line.separator"));
-				writer.write("[continents]" + System.getProperty("line.separator"));
-				for (int i = 0; i < database.getContinentList().size(); i++) {
-					Continent continent = database.getContinentList().get(i);
-					writer.write(continent.getName() + " " + continent.getControlValue() + " " + continent.getColor());
-					if (i < database.getContinentList().size() - 1) {
-						writer.write(System.getProperty("line.separator"));
-					}
-				}
-				writer.write(System.getProperty("line.separator"));
-				writer.write(System.getProperty("line.separator"));
-				writer.write("[countries]" + System.getProperty("line.separator"));
-				Integer countitr = 0;
-				while (itr.hasNext()) {
-					Country country = (Country) itr.next();
-					countitr++;
-					String CountryName = country.name;
-					Integer ContiNumber = country.inContinent;
-					Integer coordinateOne = country.coOrdinate1;
-					Integer coordinateTwo = country.getCoOrdinate2;
-					writer.write(countitr + " " + CountryName + " " + ContiNumber + " " + coordinateOne + " "
-							+ coordinateTwo + System.getProperty("line.separator"));
-				}
-				writer.write(System.getProperty("line.separator"));
-				itr = ct.iterator();
-				writer.write("[borders]" + System.getProperty("line.separator"));
-
-				Integer countIterator = 0;
-				while (itr.hasNext()) {
-					countIterator++;
-					Country country = (Country) itr.next();
-					ArrayList<Integer> NeighbourList = new ArrayList<Integer>();
-					NeighbourList = country.neighbours;
-					String borderString = "";
-					for (int i = 0; i < NeighbourList.size(); i++) {
-						borderString = borderString + " " + NeighbourList.get(i);
-					}
-					writer.write(countIterator + borderString + System.getProperty("line.separator"));
-				}
-				writer.close();				
-				*/
 				
 				return true;
 			}
