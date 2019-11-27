@@ -375,6 +375,7 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
+	
 	/**
 	 * Add Continent Function
 	 * 
@@ -467,6 +468,24 @@ public class GamePlay implements ISubject {
 		return true;
 	}
 
+	/**
+	 * Save Game Function
+	 * 
+	 * @param fileName The name of the Game file that is to be saved
+	 * @return true if file successfully saved.
+	 */
+	public boolean SaveGame(String fileName) {
+		try {
+			if (!mapxObj.saveMap(graphObj, fileName))
+				return false;
+		} catch (IOException io) {
+			System.out.println("IO Exception Occured");
+			return false;
+		}
+		setCurrentOperation("Saving Game to file: \"" + fileName + "\"");
+		return true;
+	}
+	
 	/**
 	 * Show map Function
 	 * 
@@ -605,10 +624,6 @@ public class GamePlay implements ISubject {
 			setCurrentOperation("Adding Player "+playerName+" with Strategy "+Strategy.toUpperCase()+" to the game.");
 			return true;
 		}
-
-		
-		
-
 	}
 
 	/**
@@ -620,17 +635,8 @@ public class GamePlay implements ISubject {
 	 */
 	public boolean removePlayer(String playerName) {
 
-		IPlayer player = Database.getPlayerByName(playerName);
-		if (player == null) {
+		if (!Database.removePlayer(playerName))
 			return false;
-		}
-		Database.playerList.remove(player);
-
-		Integer playerNumber = 1;
-		for (IPlayer player1 : Database.getInstance().getPlayerList()) {
-			player1.setNumber(playerNumber);
-			playerNumber++;
-		}
 
 		setCurrentOperation("Removing Player " + playerName + " from the game.");
 		return true;
@@ -1078,7 +1084,6 @@ public class GamePlay implements ISubject {
 		
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
-	//	setCurrentOperation("Performing all-out attack form " + originCountry + " to " + destinationCountry);
 		System.out.println("alloutattack is done.");
 		return true;
 	}

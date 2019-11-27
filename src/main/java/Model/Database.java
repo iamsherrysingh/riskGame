@@ -90,6 +90,29 @@ public class Database {
 	}
 	
 	/**
+	 * This removes a player from Database.playerlist
+	 * 
+	 * @param playerName The name of the player to be removed
+	 * @return true(If the player is removed successfully) or false(The player is
+	 *         absent)
+	 */
+	public static boolean removePlayer(String playerName) {
+
+		IPlayer player = getPlayerByName(playerName);
+		if (player == null) {
+			return false;
+		}
+		playerList.remove(player);
+
+		Integer playerNumber = 1;
+		for (IPlayer player1 : getInstance().getPlayerList()) {
+			player1.setNumber(playerNumber);
+			playerNumber++;
+		}
+		return true;
+	}
+	
+	/**
 	 * this provides the list of countries owned by a particular player
 	 * 
 	 * @param playerName The name of the player

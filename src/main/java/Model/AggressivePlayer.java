@@ -321,6 +321,18 @@ public class AggressivePlayer implements IPlayer {
 
 			GamePlay.getInstance().setCurrentOperation(
 					"Performing all-out attack from " + attackerCountry.name + " to " + defenderCountry.name);
+			
+			// if defender lost all of his country, attacker will owned all of his cards.
+			if ( getDefenderRemoved() == true) {
+
+				for (Card itr : defender.getPlayerCards()) {
+					Card tempcard = itr;
+					tempcard.setOwner(currentPlayerObj.getCurrentPlayer().getNumber());
+					currentPlayerObj.getCurrentPlayer().setPlayerCards(tempcard);
+				}
+				Database.removePlayer(defenderName);
+				setDefenderRemoved(false);
+			}
 			return true;
 		} else {
 			System.out.println("All the neighbouring countries are owned by the current player");
@@ -419,21 +431,50 @@ public class AggressivePlayer implements IPlayer {
 		return false;
 	}
 
-	@Override
-	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-		return null;
-	}
+    @Override
+    /**
+     * This method returns the total number of countries owned by the players.
+     * @param playerName The name of the player
+     * @param gameGraph This is an object of the class Graph
+     * @return An integer value that is equal to the total number of countries owned by the player
+     */
+    public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
+        Integer numberOfCountriesOwned = 0;
 
-	@Override
-	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-		return null;
-	}
+        if (Database.getPlayerByName(playerName) == null)
+            return -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.owner.equalsIgnoreCase(playerName)) {
+                numberOfCountriesOwned += 1;
+            }
+        }
+        return numberOfCountriesOwned;
+    }
 
-	@Override
-	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
-			CurrentPlayer currentPlayerObj) {
-		return false;
-	}
+    @Override
+
+    /**
+     * This method returns the total number of armies owned by the players.
+     * @param gameGraph It is an object of the class Graph
+     * @returnAn integer value that is equal to the total number of armies owned by the player
+     */
+    public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
+        Integer numberOfArmies = 0;
+
+        if (Database.getPlayerByName(this.name) == null)
+            return -1;
+        for (Country country : gameGraph.getAdjList()) {
+            if (country.owner.equalsIgnoreCase(this.name)) {
+                numberOfArmies += country.numberOfArmies;
+            }
+        }
+        return numberOfArmies;
+    }
+
+    @Override
+    public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj, CurrentPlayer currentPlayerObj) {
+        return false;
+    }
 
 	public static Integer getLastDiceSelected() {
 		return lastDiceSelected;
