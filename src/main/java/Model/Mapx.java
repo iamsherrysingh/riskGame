@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * This file holds most of the logic of the game
  */
-public class Mapx {
+public class Mapx implements IMap{
 	private String continents;
 	protected String countries;
 	protected String borders;
