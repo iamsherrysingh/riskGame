@@ -310,15 +310,9 @@ public class Mapx {
         	return false;
 		}
 
-		
-
-		
 		String[] DefaultMaps = { "map.map", "ameroki.map", "eurasien.map", "geospace.map", "lotr.map", "luca.map",
 				"risk.map", "RiskEurope.map", "sersom.map", "teg.map", "tube.map", "uk.map", "world.map" , "conquestmap.map" };
 		
-
-		Scanner scCreate = new Scanner(System.in);
-
 		String mapName = mp.trim();
 		boolean testEmptyString = "".equals(mapName);
 		
@@ -331,8 +325,21 @@ public class Mapx {
 				
 				File f = createFile(mapName);
 				
-				DominationMapFile dominationMapFile = new DominationMapFile();
-				dominationMapFile.writeMapFile(gameGraph, mp, f);
+				String fileType = "Domination";
+				
+				if (fileType=="Domination") {
+
+				    DominationMapFile MapFile = new DominationMapFile();
+				    MapFile.writeMapFile(gameGraph, mp, f);
+				}
+				else if (fileType=="Conquest") {
+					System.out.println("input file is in Conquest format");
+				    ConquestMapFile conquestMap = new ConquestMapFile();
+				    MapReadWriteAdaptter MapFile = new MapReadWriteAdaptter(conquestMap);
+				    MapFile.writeMapFile(gameGraph, mp, f);
+				}
+				
+				
 				
 				return true;
 			}
