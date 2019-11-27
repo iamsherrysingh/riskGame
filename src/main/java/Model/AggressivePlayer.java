@@ -365,6 +365,14 @@ public class AggressivePlayer implements IPlayer {
 
 	}
 
+    /**
+     * This method defines how the attack takes place.
+     * It covers all the steps of the aggressive attack mode.
+     * @param attackerCountry It is an object of the class Country and gives the attacking country
+     * @param defenderCountry It is an object of the class Country and gives the defending country
+     * @param numberOfArmiesToMove It is an integer value of the total number of armies that attack the defending country
+     * @return true(If the method executes and the the attack move executes successfully) or false(If the number of armies entered is invalid or any other validation fails)
+     */
 	public static boolean attackMove(Country attackerCountry, Country defenderCountry, Integer numberOfArmiesToMove) {
 
 		if (defenderCountry.getNumberOfArmies() == 0) {
@@ -387,12 +395,27 @@ public class AggressivePlayer implements IPlayer {
 		return true;
 	}
 
+	/**
+	 * This method performs a dice roll and generates a random number ranging till maxDice.
+	 * @param maxDice its an integer value defining the upper value of the number to be generated
+	 * @return a random number
+	 */
 	public static int getRandomNumber(Integer maxDice) {
 		Random randomGenerator;
 		randomGenerator = new Random();
 		return randomGenerator.nextInt(maxDice) + 1;
 	}
 
+    /**
+     * This method takes care of the battle between the attackerCountry and the defenderCountry and is responsible for declaring whoever wins the battle
+     * @param attackerCountry object of the country that attacks another country
+     * @param defenderCountry object of the country that defends itself in the turn
+     * @param attackerArmies Integer number of armies that are to be used for attack
+     * @param defenderArmies Integer number of armies that are to be used for defend
+     * @param attacker Object of the class IPlayer
+     * @param defender Object of the class IPlayer
+     * @return true(If the method executes and battle is executed successfully)
+     */
 	public static boolean battle(Country attackerCountry, Country defenderCountry, Integer attackerArmies,
 			Integer defenderArmies, IPlayer attacker, IPlayer defender) {
 
@@ -451,6 +474,16 @@ public class AggressivePlayer implements IPlayer {
 	}
 
 	@Override
+	/**
+	 *This method adds the functionality for the player to send their armies from a neighbouring country
+	 * to the weaker country
+	 *  @param fromCname The name of the country from where the armies are to be moved
+	 * 	@param toCountryName The name of the country to which the armies are to be moved
+	 *  @param numberOfArmies The total number of armies to be moved
+	 *  @param gameGraph This is an object of the class Graph
+	 *  @return true(If all the conditions are satisfied and the desired country is fortified) or false(If the countries specified are absent or it does not fulfill the requirements)
+	 *
+	 */
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 		
 
