@@ -1,7 +1,6 @@
 package Model;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import View.CardExchange;
 import View.*;
@@ -49,9 +48,20 @@ public class GamePlay implements ISubject {
 	private static GamePlay gamePlay = null;
 	private State currentState;
 	private Mapx mapxObj;
+	ConquestMapAdapter conquestMapAdapter= new ConquestMapAdapter();
 	private Graph graphObj;
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
+	String fileType = "Domination";
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
 	private CurrentPlayer currentPlayerObj;
 	CardExchange cardExchangeView;
 	ArrayList<IObserver> observerList = new ArrayList<IObserver>();
@@ -112,8 +122,30 @@ public class GamePlay implements ISubject {
 	 * @param newStateStr The new state
 	 */
 	public void setCurrentState(State newState, String newStateStr) {
-
 		this.currentState = newState;
+
+	}
+
+	private String recognizeFileType(String mapFile) {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + mapFile))) {
+			String line = br.readLine().trim();
+			while (line != null) {
+				line = br.readLine();
+				if (line.equals("[countries]")) {
+					return fileType = "Domination";
+				}
+				else if(line.equals("[Territories]")){
+					return fileType = "Conquest";
+				}
+			}
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {
+
+		} catch (Exception e) {
+
+		}
+		return fileType;
 
 	}
 
@@ -529,16 +561,21 @@ public class GamePlay implements ISubject {
 	 * @return true if file successfully saved and IO Exception does not occur.
 	 */
 	public boolean saveMap(String fileName) {
-
 		try {
-			if (!mapxObj.saveMap(graphObj, fileName))
-				return false;
+			if(fileType.equalsIgnoreCase("Domination")) {
+				if (!mapxObj.saveMap(graphObj, fileName))
+					return false;
+			}else if (fileType.equalsIgnoreCase("Conquest")){
+				if (!conquestMapAdapter.saveMap(graphObj, fileName))
+					return false;
+			}
+
 			setCurrentState(State.editPlayer, "Edit Player");
 		} catch (IOException io) {
 			System.out.println("IO Exception Occured");
 			return false;
 		}
-		setCurrentOperation("Saving Map to file: \"" + fileName + "\"");
+		setCurrentOperation("Saving Map in "+ fileType+" format to file: \"" + fileName + "\"");
 		return true;
 	}
 
@@ -552,7 +589,12 @@ public class GamePlay implements ISubject {
 		try {
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
-				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				fileType=recognizeFileType(mapName);
+				if(fileType.equalsIgnoreCase("Domination")) {
+					mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				}else if (fileType.equalsIgnoreCase("Conquest")){
+					conquestMapAdapter.loadMap("src/main/resources/" + mapName,graphObj);
+				}
 				setCurrentOperation("Map: " + mapName + " found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();
@@ -589,14 +631,19 @@ public class GamePlay implements ISubject {
 	 * @return true if file exist
 	 */
 	public boolean loadGameMap(String fileName) {
+		fileType= recognizeFileType(fileName);
 		try {
-			mapxObj.loadMap("src/main/resources/" + fileName, graphObj);
+			if(fileType.equalsIgnoreCase("Domination")) {
+				mapxObj.loadMap("src/main/resources/" + fileName, graphObj);
+			}else if (fileType.equalsIgnoreCase("Conquest")){
+				conquestMapAdapter.loadMap("src/main/resources/" + fileName,graphObj);
+			}
 			setCurrentState(State.editPlayer, "Edit Player");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;
 		}
-		setCurrentOperation("Loading Game Map " + fileName);
+		setCurrentOperation("Loading "+fileType+" Game Map " + fileName);
 		return true;
 	}
 
