@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ConquestMap extends Mapx{
+public class ConquestMap{
 	
 	  Database database = Database.getInstance();
 
 	  public  String continents;
 	  private String territories;
+	  String countries="", borders = "";
 
 
 	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
@@ -293,7 +294,7 @@ public class ConquestMap extends Mapx{
 	 * @param gameGraph This is an object of the class Graph
 	 * @return true(If after executing, we are able to load the desired map.
 	 */
-	public boolean loadMap(String mapFile, Graph gameGraph)throws IOException {
+	public boolean loadConquestMap(String mapFile, Graph gameGraph)throws IOException {
 		try {
 
 			readMapIntoVariables(mapFile);

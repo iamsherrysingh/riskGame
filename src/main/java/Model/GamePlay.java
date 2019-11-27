@@ -561,10 +561,15 @@ public class GamePlay implements ISubject {
 	 * @return true if file successfully saved and IO Exception does not occur.
 	 */
 	public boolean saveMap(String fileName) {
-
 		try {
-			if (!mapxObj.saveMap(graphObj, fileName))
-				return false;
+			if(fileType.equalsIgnoreCase("Domination")) {
+				if (!mapxObj.saveMap(graphObj, fileName))
+					return false;
+			}else if (fileType.equalsIgnoreCase("Conquest")){
+				if (!conquestMapAdapter.saveMap(graphObj, fileName))
+					return false;
+			}
+
 			setCurrentState(State.editPlayer, "Edit Player");
 		} catch (IOException io) {
 			System.out.println("IO Exception Occured");
@@ -584,7 +589,12 @@ public class GamePlay implements ISubject {
 		try {
 			File file = new File("src/main/resources/" + mapName);
 			if (file.exists()) {
-				mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				fileType=recognizeFileType(mapName);
+				if(fileType.equalsIgnoreCase("Domination")) {
+					mapxObj.loadMap("src/main/resources/" + mapName, graphObj);
+				}else if (fileType.equalsIgnoreCase("Conquest")){
+					conquestMapAdapter.loadMap("src/main/resources/" + mapName,graphObj);
+				}
 				setCurrentOperation("Map: " + mapName + " found. Loaded for editing.");
 			} else {
 				graphObj = Graph.getInstance();

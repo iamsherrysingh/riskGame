@@ -23,7 +23,7 @@ public class Mapx implements IMap{
 
 	/**
 	 * This reads the maps file and stores the country, continent and border details
-	 * in their variables This is used by loadMap(). The variables generated
+	 * in their variables This is used by loadConquestMap(). The variables generated
 	 * by this method are used throughout the game.
 	 *
 	 * @param mapFile It is the name of the map file that is to be executed
