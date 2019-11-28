@@ -2,103 +2,103 @@
 
 title __RISK's Class Diagram__\n
 
-  namespace Controller {
-    class Controller.Controller {
+  namespace Runner {
+    class Runner.Runner {
     }
   }
   
 
-  namespace Controller {
-    class Controller.ExtractedTasks {
+  namespace Runner {
+    class Runner.ExtractedTasks {
     }
   }
   
 
-  namespace Controller {
+  namespace Runner {
     enum tasksEnum {
     }
   }
   
 
-  namespace Model {
-    class Model.Card {
+  namespace GameLogic {
+    class GameLogic.Card {
     }
   }
   
 
-  namespace Model {
-    class Model.CardPlay {
+  namespace GameLogic {
+    class GameLogic.CardPlay {
     }
   }
   
 
-  namespace Model {
-    class Model.Continent {
+  namespace GameLogic {
+    class GameLogic.Continent {
     }
   }
   
 
-  namespace Model {
-    class Model.Country {
+  namespace GameLogic {
+    class GameLogic.Country {
     }
   }
   
 
-  namespace Model {
-    class Model.CurrentPlayer {
+  namespace GameLogic {
+    class GameLogic.CurrentPlayer {
     }
   }
   
 
-  namespace Model {
-    class Model.Database {
+  namespace GameLogic {
+    class GameLogic.Database {
     }
   }
   
 
-  namespace Model {
-    class Model.GamePlay {
+  namespace GameLogic {
+    class GameLogic.GamePlay {
     }
   }
   
 
-  namespace Model {
-    class Model.GameSubject {
+  namespace GameLogic {
+    class GameLogic.GameSubject {
     }
   }
   
 
-  namespace Model {
-    class Model.Graph {
+  namespace GameLogic {
+    class GameLogic.Graph {
     }
   }
   
 
-  namespace Model {
-    interface Model.ISubject {
+  namespace GameLogic {
+    interface GameLogic.ISubject {
     }
   }
   
 
-  namespace Model {
-    class Model.Mapx {
+  namespace GameLogic {
+    class GameLogic.Mapx {
     }
   }
   
 
-  namespace Model {
-    class Model.Player {
+  namespace GameLogic {
+    class GameLogic.Player {
     }
   }
   
 
-  namespace Model {
+  namespace GameLogic {
     enum State {
     }
   }
   
 
-  namespace Model {
+  namespace GameLogic {
     enum cardType {
     }
   }
@@ -128,23 +128,23 @@ title __RISK's Class Diagram__\n
   }
   
 
-  Controller.Controller o-- Controller.tasksEnum : currentTask
-  Controller.Controller o-- Model.GamePlay : gamePlayObj
-  Controller.ExtractedTasks o-- Controller.tasksEnum : name
-  Model.Card o-- Model.cardType : cType
-  Model.CurrentPlayer o-- Model.CardPlay : cardPlayObj
-  Model.CurrentPlayer o-- Model.Player : currentPlayer
-  Model.GamePlay o-- View.CardExchange : cardExchangeView
-  Model.GamePlay o-- Model.GameSubject : gameSubjectObj
-  Model.GamePlay o-- Model.CardPlay : cardPlayObj
-  Model.GamePlay o-- Model.CurrentPlayer : currentPlayerObj
-  Model.GamePlay o-- Model.State : currentState
-  Model.GamePlay o-- Model.Database : databaseObj
-  Model.GamePlay o-- Model.Graph : graphObj
-  Model.GamePlay o-- Model.Mapx : mapxObj
-  Model.GameSubject .up.|> Model.ISubject
-  Model.GameSubject o-- Model.State : currentState
-  Model.Mapx o-- Model.Database : database
+  Runner.Runner o-- Runner.tasksEnum : currentTask
+  Runner.Runner o-- GameLogic.GamePlay : gamePlayObj
+  Runner.ExtractedTasks o-- Runner.tasksEnum : name
+  GameLogic.Card o-- GameLogic.cardType : cType
+  GameLogic.CurrentPlayer o-- GameLogic.CardPlay : cardPlayObj
+  GameLogic.CurrentPlayer o-- GameLogic.Player : currentPlayer
+  GameLogic.GamePlay o-- View.CardExchange : cardExchangeView
+  GameLogic.GamePlay o-- GameLogic.GameSubject : gameSubjectObj
+  GameLogic.GamePlay o-- GameLogic.CardPlay : cardPlayObj
+  GameLogic.GamePlay o-- GameLogic.CurrentPlayer : currentPlayerObj
+  GameLogic.GamePlay o-- GameLogic.State : currentState
+  GameLogic.GamePlay o-- GameLogic.Database : databaseObj
+  GameLogic.GamePlay o-- GameLogic.Graph : graphObj
+  GameLogic.GamePlay o-- GameLogic.Mapx : mapxObj
+  GameLogic.GameSubject .up.|> GameLogic.ISubject
+  GameLogic.GameSubject o-- GameLogic.State : currentState
+  GameLogic.Mapx o-- GameLogic.Database : database
   View.CardExchange .up.|> View.IObserver
   View.PhaseView .up.|> View.IObserver
 

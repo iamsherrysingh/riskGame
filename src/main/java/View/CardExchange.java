@@ -1,5 +1,5 @@
 package View;
-import Model.*;
+import GameLogic.*;
 
 public class CardExchange implements IObserver {
 	

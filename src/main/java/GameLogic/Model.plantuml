@@ -1,0 +1,318 @@
+@startuml
+
+title __MODEL's Class Diagram__\n
+
+  namespace GameLogic {
+    class GameLogic.Card {
+        - idCard : Integer
+        - owner : Integer
+        + Card()
+        + getCardType()
+        + getIdCard()
+        + getOwner()
+        + setCardType()
+        + setIdCard()
+        + setOwner()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.CardPlay {
+        {static} - cardPlayObj : CardPlay
+        - cardsList : ArrayList<Card>
+        + checkExchangeCardsValidation()
+        {static} + getInstance()
+        + pickCard()
+        + refundCard()
+        - CardPlay()
+        - initilizaGamecards()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Continent {
+        ~ color : String
+        ~ controlValue : Integer
+        ~ name : String
+        ~ number : Integer
+        ~ owner : String
+        + Continent()
+        {static} + addContinent()
+        {static} + checkExistenceOfContinent()
+        {static} + continentBelongToPlayer()
+        + getColor()
+        {static} + getContinentById()
+        {static} + getContinentByName()
+        + getControlValue()
+        {static} + getCountryList()
+        + getName()
+        + getNumber()
+        + getOwner()
+        {static} + removeContinent()
+        + setColor()
+        + setControlValue()
+        + setName()
+        + setNumber()
+        + setOwner()
+        {static} + updateContinitsOwner()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Country {
+        ~ coOrdinate1 : Integer
+        ~ getCoOrdinate2 : Integer
+        ~ inContinent : Integer
+        ~ name : String
+        ~ neighbours : ArrayList<Integer>
+        ~ number : Integer
+        ~ numberOfArmies : Integer
+        ~ owner : String
+        + Country()
+        {static} + addArmiesToCountry()
+        {static} + addCountry()
+        {static} + addNeighbour()
+        {static} + allCountriesPopulated()
+        {static} + assignOwner()
+        {static} + changeOwner()
+        {static} + checkExistenceOfCountry()
+        + getCoOrdinate1()
+        {static} + getCountryByName()
+        {static} + getCountryByNumber()
+        + getGetCoOrdinate2()
+        + getInContinent()
+        + getName()
+        + getNeighbours()
+        + getNumber()
+        + getNumberOfArmies()
+        + getOwner()
+        {static} + removeArmiesFromCountry()
+        {static} + removeCountry()
+        {static} + removeNeighbour()
+        + setCoOrdinate1()
+        + setGetCoOrdinate2()
+        + setInContinent()
+        + setName()
+        + setNeighbours()
+        + setNumber()
+        + setNumberOfArmies()
+        + setOwner()
+        {static} + updatePlayerListAndDeclareWinner()
+        ~ addNeighbour()
+        ~ removeNeighbour()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.CurrentPlayer {
+        - currentPlayerItr : ListIterator<Player>
+        {static} - currentPlayerObj : CurrentPlayer
+        - numReinforceArmies : Integer
+        + calculateReinforceentArmies()
+        + decreaseReinforceentArmies()
+        + getCurrentPlayer()
+        {static} + getCurrentPlayerObj()
+        {static} + getInstance()
+        + getNumReinforceArmies()
+        + goToFirstPlayer()
+        + goToNextPlayer()
+        + increaseCurrentPlayerArmies()
+        + setNumReinforceArmies()
+        - CurrentPlayer()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Database {
+        {static} ~ continentList : ArrayList<Continent>
+        {static} ~ playerList : ArrayList<Player>
+        {static} - dbobj : Database
+        + getContinentList()
+        {static} + getInstance()
+        + getPlayerList()
+        + printContinentList()
+        + setContinentList()
+        + setPlayerList()
+        - Database()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.GamePlay {
+        ~ lastDiceSelected : Integer
+        {static} - gamePlay : GamePlay
+        + addContinent()
+        + addCountry()
+        + addNeighbor()
+        + addPlayer()
+        + alloutAttack()
+        + attackAllout()
+        + attackCountry()
+        + attackMove()
+        + attackMoveCommand()
+        + battle()
+        + defenderArmiesSelectionForAllout()
+        + defenderCommandInput()
+        + editMap()
+        + exchangeCards()
+        + fortifyArmy()
+        + getCurrentPlayerObj()
+        + getCurrentState()
+        + getGraphObj()
+        {static} + getInstance()
+        + getMapxObj()
+        {static} + getRandomNumber()
+        + ignoreAttack()
+        + ignoreExchangeCards()
+        + ignoreFortifyArmy()
+        + loadGameMap()
+        + normalAttack()
+        + placeAll()
+        + placeArmy()
+        + populateCountries()
+        + reinforceArmy()
+        + removeContinent()
+        + removeCountry()
+        + removeNeighbor()
+        + removePlayer()
+        + saveMap()
+        + showMap()
+        + validateMap()
+        - GamePlay()
+        - setCurrentState()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.GameSubject {
+        ~ observerList : ArrayList<IObserver>
+        + attachObserver()
+        + detachObserver()
+        + notifyObservers()
+        + stateChanged()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Graph {
+        {static} + adjList : ArrayList<Country>
+        {static} - gameGraph : Graph
+        + getAdjList()
+        {static} + getInstance()
+        {static} + showMap()
+        - Graph()
+    }
+  }
+  
+
+  namespace GameLogic {
+    interface GameLogic.ISubject {
+        {abstract} + attachObserver()
+        {abstract} + detachObserver()
+        {abstract} + notifyObservers()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Mapx {
+        - borders : String
+        - continents : String
+        - countries : String
+        {static} + createFile()
+        + loadMap()
+        + saveMap()
+        {static} + validateMap()
+        - readMapIntoVariables()
+    }
+  }
+  
+
+  namespace GameLogic {
+    class GameLogic.Player {
+        ~ countryConquered : boolean
+        ~ exchangeCardsTimes : Integer
+        ~ myCountries : ArrayList<Integer>
+        ~ name : String
+        ~ number : Integer
+        ~ numberOfArmies : Integer
+        ~ playerCards : ArrayList<Card>
+        {static} + addPlayer()
+        {static} + allPlayersRemainingArmiesExhausted()
+        {static} + fortify()
+        + getMyCountries()
+        + getName()
+        + getNumber()
+        + getNumberOfArmies()
+        {static} + getOwnedCountryList()
+        {static} + getPlayerByName()
+        {static} + getPlayerByNumber()
+        {static} + printAllPlayers()
+        {static} + reinforcement()
+        {static} + removePlayer()
+        + setMyCountries()
+        + setName()
+        + setNumberOfArmies()
+        - Player()
+    }
+  }
+  
+
+  namespace GameLogic {
+    enum State {
+      attackPhase
+      editPlayer
+      exchangeCards
+      fortificationPhase
+      gameFinished
+      initializeGame
+      mapEditor
+      reinforcementPhase
+      startupPhase
+      troopArmies
+    }
+  }
+  
+
+  namespace GameLogic {
+    enum cardType {
+      Artillery
+      Cavalry
+      Infantry
+      Wild
+    }
+  }
+  
+
+  GameLogic.Card o-- GameLogic.cardType : cType
+  GameLogic.CurrentPlayer o-- GameLogic.CardPlay : cardPlayObj
+  GameLogic.CurrentPlayer o-- GameLogic.Player : currentPlayer
+  GameLogic.GamePlay o-- View.CardExchange : cardExchangeView
+  GameLogic.GamePlay o-- GameLogic.GameSubject : gameSubjectObj
+  GameLogic.GamePlay o-- GameLogic.CardPlay : cardPlayObj
+  GameLogic.GamePlay o-- GameLogic.CurrentPlayer : currentPlayerObj
+  GameLogic.GamePlay o-- GameLogic.State : currentState
+  GameLogic.GamePlay o-- GameLogic.Database : databaseObj
+  GameLogic.GamePlay o-- GameLogic.Graph : graphObj
+  GameLogic.GamePlay o-- GameLogic.Mapx : mapxObj
+  GameLogic.GameSubject .up.|> GameLogic.ISubject
+  GameLogic.GameSubject o-- GameLogic.State : currentState
+  GameLogic.Mapx o-- GameLogic.Database : database
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -1,6 +1,6 @@
 package View;
 
-import Model.*;
+import GameLogic.*;
 
 public class WorldDominationView implements IObserver{
     String header=          "================================================"  + "\n" +

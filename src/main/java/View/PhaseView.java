@@ -1,6 +1,6 @@
 package View;
 
-import Model.*;
+import GameLogic.*;
 
 public class PhaseView implements IObserver{
     String header=          "================================================"  + "\n" +
