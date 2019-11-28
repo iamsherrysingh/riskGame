@@ -9,8 +9,7 @@ import java.io.*;
 
 /**
  * It contains different Junit tests for the methods defined in {@link GameLogic.Mapx}
- * 
- * @see Mapx.java
+ *
  * @author birjotsingh17
  */
 

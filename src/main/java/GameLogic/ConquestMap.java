@@ -188,6 +188,13 @@ writer.write("[Map]\n" +
 			
 			return true;
 		}
+
+	/**
+	 * This method is used to read a map file In conquest format
+	 * @param mapFile Name of the map file of the type String
+	 * @return true(If the map is read successfully)
+	 * @throws FileNotFoundException - If the map file is not found
+	 */
 		public boolean readMapConquest(String mapFile) throws FileNotFoundException {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
@@ -263,6 +270,12 @@ writer.write("[Map]\n" +
 		return true;
 	}
 
+	/**
+	 * This method saves the converted conquest map as a map file.
+	 * @param f it is an object of File and is used to fetch the map file
+	 * @return true(If the file is saved successfully)
+	 * @throws IOException - If the file cannot be saved
+	 */
 	public boolean writeMapConquest( File f) throws IOException {
 
 		FileWriter writer = new FileWriter(f);
