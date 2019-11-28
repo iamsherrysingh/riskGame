@@ -25,6 +25,7 @@ public class ConquestMapAdapter implements IMap {
             conquestMap.writeMapFile(gameGraph, file);
             return true;
         }catch (Exception e){
+            System.out.println("Error loading ConquestMap");
             return false;
         }
     }
