@@ -11,12 +11,12 @@ import java.util.Scanner;
  */
 public class Player implements IPlayer {
 
-    public String name;
-	public Integer number, numberOfArmies, numberOfFreeArmies;
-	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	public Integer exchangeCardsTimes;
+    private String name;
+    private Integer number, numberOfArmies, numberOfFreeArmies;
+	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
+	private Integer exchangeCardsTimes;
 	public ArrayList<Card> playerCards;
-	public boolean countryConquered;
+	public boolean   ;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
@@ -29,10 +29,7 @@ public class Player implements IPlayer {
 		countryConquered = false;
 		defenderRemoved = false;
 	}
-
-	public Player() {
-	}
-
+	
 	public PlayerStrategy getPlayerStrategy() {
 		return PlayerStrategy.human;
 	}
