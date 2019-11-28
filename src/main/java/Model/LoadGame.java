@@ -58,20 +58,15 @@ public class LoadGame implements SaveLoadBuilder{
 				continentLine[i] = continentLine[i].trim();
 				String split[] = continentLine[i].split(",");
 				Continent continent = new Continent(Integer.parseInt(split[2]), split[0],Integer.parseInt(split[3]), split[1]);
-				Database.getInstance().getContinentList().add(continent);
 				
-				if( split.length == 5 ) {
+				if( !split[4].equals("null") ) {
 					continent.setOwner(split[4]);
 				}
-				else {
-					continent.setOwner("");
-				}
+				
+				Database.getInstance().getContinentList().add(continent);
+				
 				
 			}
-			
-		/*	for(Continent itr: Database.getInstance().getContinentList()){
-				System.out.println(itr.color + " " + itr.name + " " + itr.owner);
-			} */
 			
 		} 
 		catch (IOException e) {
@@ -137,7 +132,7 @@ public class LoadGame implements SaveLoadBuilder{
 				country.setCoOrdinate1(Integer.parseInt(split[1]));
 				country.setCoOrdinate2(Integer.parseInt(split[2]));
 				
-				if( split[6] != null ) {
+				if( !split[6].equals("null") ) {
 					country.setOwner(split[6]);
 				}
 				
@@ -185,21 +180,30 @@ public class LoadGame implements SaveLoadBuilder{
 			
 			String playerLine[] = players.split("\n");
 			
-	/*		for (int i = 1; i < playerLine.length; i++) {
+			for (int i = 1; i < playerLine.length; i++) {
 				
 				playerLine[i] = playerLine[i].trim();
 				String split[] = playerLine[i].split(",");
 				
-				//IPlayer player = new IPlayer();
-				int foundIndex = 0;
-				for(int j = 0; j < split.length; j++) {	
-					if( split[j].equals("[borders]") ) {
-						foundIndex = j + 1;
-					}			
+				IPlayer playerObj;
+				
+				String playerStrategy = split[1];
+				if(playerStrategy.equals("human")) {
+					playerObj = new Player();
 				}
-				for(int k = foundIndex; k < split.length; k++) {
-					country.addNeighbour(Integer.parseInt(split[k]));
+				else if(playerStrategy.equals("random")) {
+					playerObj = new RandomPlayer();
 				}
+				else if(playerStrategy.equals("aggressive")) {
+					playerObj = new AggressivePlayer();
+				}
+				else if(playerStrategy.equals("benevolent")) {
+					playerObj = new BenevolentPlayer();
+				}
+				else if(playerStrategy.equals("cheater")) {
+					playerObj = new CheaterPlayer();
+				}
+				
 				
 				country.setNumber(Integer.parseInt(split[0]));
 				country.setName(split[5]);
@@ -214,7 +218,7 @@ public class LoadGame implements SaveLoadBuilder{
 				
 				Graph.adjList.add(country);
 				
-			} */
+			}
 		} 
 		catch (IOException e) {
 
@@ -292,6 +296,76 @@ public class LoadGame implements SaveLoadBuilder{
 	
 	@Override
 	public void handleCurrentPlayer() {
+		
+		try {
+			
+			String currentPlayer;
+			StringBuilder sb = new StringBuilder();
+			String line = bufferedReader.readLine().trim();
+			int currentPlayerEncountered = 0;
+			
+			while (line != null) {
+				if (line.equals("***"))
+					break;
+				if (currentPlayerEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				if (line.equals("[CurrentPlayer]")) {
+					currentPlayerEncountered = 1;
+					
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = bufferedReader.readLine();
+			}
+			currentPlayer = sb.toString();
+			currentPlayer = currentPlayer.trim();
+			Scanner currentPlayerScanner = new Scanner(currentPlayer);
+			currentPlayerScanner.nextLine(); // Ignoring first line of currentPlayer
+			
+			String currentPlayerLine[] = currentPlayer.split("\n");
+			CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
+			
+			for (int i = 1; i < currentPlayerLine.length; i++) {
+				
+				currentPlayerLine[i] = currentPlayerLine[i].trim();
+				String split[] = currentPlayerLine[i].split(",");
+		//		currentPlayerObj.currentPlayer = Database.getPlayerByNumber(split[2]);
+					
+				if( split[0].equalsIgnoreCase("human") ) {
+					
+				}
+				else if ( split[0].equalsIgnoreCase("aggressive") ) {
+					
+				}
+				else if ( split[0].equalsIgnoreCase("benevolent") ) {
+					
+				}
+				else if ( split[0].equalsIgnoreCase("random") ) {
+					
+				}
+				else if ( split[0].equalsIgnoreCase("cheater") ) {
+	
+				}
+				
+				Continent continent = new Continent(Integer.parseInt(split[2]), split[0],Integer.parseInt(split[3]), split[1]);
+				Database.getInstance().getContinentList().add(continent);
+				
+				if( split.length == 5 ) {
+					continent.setOwner(split[4]);
+				}
+				else {
+					continent.setOwner("");
+				}
+				
+			}
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

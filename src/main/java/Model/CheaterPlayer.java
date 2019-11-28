@@ -12,6 +12,10 @@ public class CheaterPlayer implements IPlayer {
 	public boolean countryConquered;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
+	
+	public CheaterPlayer() {
+		
+	}
 
 	public CheaterPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;

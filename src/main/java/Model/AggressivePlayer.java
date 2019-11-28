@@ -16,6 +16,10 @@ public class AggressivePlayer implements IPlayer {
 	static Integer lastDiceSelected = null;
 	Country strongestCountryFound = null;
 
+	public AggressivePlayer() {
+		
+	}
+	
 	/**
 	 * This is a constructor of the class AggressivePlayer
 	 * This method playing strategy focuses on attack mode of the game

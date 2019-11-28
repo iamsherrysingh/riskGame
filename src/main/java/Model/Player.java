@@ -19,6 +19,10 @@ public class Player implements IPlayer {
 	public boolean countryConquered;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
+	
+	public Player() {
+		
+	}
 
 	public Player(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;

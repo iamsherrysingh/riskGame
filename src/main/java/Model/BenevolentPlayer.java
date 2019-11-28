@@ -17,6 +17,10 @@ public class BenevolentPlayer implements IPlayer {
 		this.myCountries = myCountries;
 	}
 
+	public BenevolentPlayer() {
+		
+	}
+	
 	public BenevolentPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
 		this.name = name;

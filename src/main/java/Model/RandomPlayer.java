@@ -16,6 +16,10 @@ public class RandomPlayer implements IPlayer {
 	static Integer lastDiceSelected = null;
 	Integer randomNumberGenerated;
 	Country attackerCountry;
+	
+	public RandomPlayer() {
+		
+	}
 
 	public RandomPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
