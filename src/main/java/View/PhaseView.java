@@ -8,7 +8,7 @@ public class PhaseView implements IObserver{
     String footer=          "________________________________________________";
 
 
-    String data;
+    public  String data;
     @Override
     public void update(GamePlay gamePlay, IPlayer player) {
         data= "Current State is :  "+gamePlay.getCurrentState().toString();
