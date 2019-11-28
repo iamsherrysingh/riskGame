@@ -11,10 +11,13 @@ import java.util.Scanner;
  */
 public class Player implements IPlayer {
 
-    private String name;
-    private Integer number, numberOfArmies, numberOfFreeArmies;
-	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	private Integer exchangeCardsTimes;
+	public Player() {
+	}
+
+	public String name;
+	public Integer number, numberOfArmies, numberOfFreeArmies;
+	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
+	public Integer exchangeCardsTimes;
 	public ArrayList<Card> playerCards;
 	public boolean  countryConquered;
 	public boolean defenderRemoved;
