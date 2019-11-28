@@ -177,7 +177,7 @@ public class AggressivePlayer extends Player implements IPlayer {
                         Integer DefenderArmiesSelected = null;
 
                         if (attackerCountry.getNumberOfArmies() > 3) {
-                            // armies selected 3
+                            // armies selected
                             AttackerArmiesSelected = 3;
                         } else if (attackerCountry.getNumberOfArmies() == 3) {
                             // armies selected 2
