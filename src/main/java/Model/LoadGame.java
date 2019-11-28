@@ -157,7 +157,7 @@ public class LoadGame implements SaveLoadBuilder{
 			
 			while (line != null) {
 				
-				if (line.equals("[CurrentState]"))
+				if (line.equals("[FreeCards]"))
 					break;
 				if (playersEncountered  == 1) {
 					sb.append(line);
@@ -358,25 +358,25 @@ public class LoadGame implements SaveLoadBuilder{
 				String currentStateLine[] = currentState.split("\n");
 				State state = State.initializeGame;
 				
-				if ( currentStateLine[0].equalsIgnoreCase("initializeGame") )
+				if ( currentStateLine[1].equalsIgnoreCase("initializeGame") )
 					state = State.initializeGame;
-				else if ( currentStateLine[0].equalsIgnoreCase("mapEditor") )
+				else if ( currentStateLine[1].equalsIgnoreCase("mapEditor") )
 					state = State.mapEditor;
-				else if( currentStateLine[0].equalsIgnoreCase("startupPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("startupPhase") )
 					state = State.startupPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("editPlayer") )
+				else if( currentStateLine[1].equalsIgnoreCase("editPlayer") )
 					state = State.editPlayer;
-				else if( currentStateLine[0].equalsIgnoreCase("troopArmies") )
+				else if( currentStateLine[1].equalsIgnoreCase("troopArmies") )
 					state = State.troopArmies;
-				else if( currentStateLine[0].equalsIgnoreCase("exchangeCards") )
+				else if( currentStateLine[1].equalsIgnoreCase("exchangeCards") )
 					state = State.exchangeCards;
-				else if( currentStateLine[0].equalsIgnoreCase("attackPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("attackPhase") )
 					state = State.attackPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("fortificationPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("fortificationPhase") )
 					state = State.fortificationPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("gameFinished") )
+				else if( currentStateLine[1].equalsIgnoreCase("gameFinished") )
 					state = State.gameFinished;
-				gamePlayObj.setCurrentState(state, currentStateLine[0]);	
+				gamePlayObj.setCurrentState(state, currentStateLine[1]);	
 				} 
 				catch (IOException e) {
 
@@ -418,8 +418,8 @@ public class LoadGame implements SaveLoadBuilder{
 			String currentPlayerLine[] = currentPlayer.split("\n");
 			CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
 			
-			currentPlayerLine[0] = currentPlayerLine[0].trim();
-			String split[] = currentPlayerLine[0].split(",");
+			currentPlayerLine[1] = currentPlayerLine[1].trim();
+			String split[] = currentPlayerLine[1].split(",");
 			
 			ListIterator<IPlayer> playerItr = Database.playerList.listIterator();
 			while(playerItr.hasNext()) {
