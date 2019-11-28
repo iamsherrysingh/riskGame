@@ -1017,7 +1017,7 @@ public class Runner {
 	}
 	
     public static void main(String[] args) throws IOException {
-		try {
+
 			
 			Runner runner = new Runner();
 			runner.gamePlayObj = GamePlay.getInstance();
@@ -1062,10 +1062,8 @@ public class Runner {
 			}
 			
 		}
-		catch (Exception e){
-			System.out.println("An error occured: "+e.getMessage());
-		}
-    }
+
+
     
 }
 
