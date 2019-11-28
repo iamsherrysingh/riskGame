@@ -798,8 +798,8 @@ public class Controller {
 	
 	/**
 	 * Invokes the corresponding function according to the command 
-	 * @param tasksList
-	 * @return
+	 * @param tasksList It is an ArrayList of the type ExtractedTasks
+	 * @return true(If the corresponding command is executed) or false(If the command is not found)
 	 */
 	boolean cmdController(ArrayList<ExtractedTasks> tasksList){	
 		if(!checkValidityOfTasksList(tasksList))
@@ -971,7 +971,10 @@ public class Controller {
 		} 	
 		return true;
 	}
-	
+
+	/**
+	 * This method is responsible to handle the states of the game
+	 */
 	public void handleGame() {
 		
 		gamePlayObj.getCurrentPlayerObj().goToFirstPlayer(gamePlayObj.getGraphObj());

@@ -2,6 +2,9 @@ package Model;
 
 import java.io.*;
 
+/**
+ * This class is responsible to perform operatiuons on a map of the format Conquest Map.
+ */
 public class ConquestMap extends Mapx{
 	
 	  Database database = Database.getInstance();
@@ -9,7 +12,12 @@ public class ConquestMap extends Mapx{
 	  public  String continents;
 	  private String territories;
 
-
+	/**
+	 * This method is responsible to read a map file and store the data in different variables.
+	 * @param mapFile The name of the map file as a string
+	 * @return true(If the map is successfully read and stored)
+	 * @throws FileNotFoundException - If the map file is not found
+	 */
 	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
 		  
 		  readMapConquest(mapFile);
@@ -20,7 +28,14 @@ public class ConquestMap extends Mapx{
 		  return true;
 	  }
 
-	  
+	/**
+	 * This method is responsible to read the gameGraph variables and convert them to a map file.
+	 * @param gameGraph Object of the class Graph
+	 * @param mapName Name of the map as a String
+	 * @param f Object of File
+	 * @return true(If the map is successfully converted)
+	 * @throws IOException - If the method is unable to write the map into the file
+	 */
 	  public boolean writeMapFile(Graph gameGraph, String mapName, File f) throws IOException{
 		  
 		  convertDominateToConquest(gameGraph);
@@ -30,8 +45,11 @@ public class ConquestMap extends Mapx{
 		  return true;
 	  }
 
-  
-	  private boolean convertConquestToDominate() {
+	/**
+	 * This method is used to convert the Conquest map into the format of Dominate Map.
+	 * @return true(If the map is successfully converted)
+	 */
+	private boolean convertConquestToDominate() {
 			System.out.println(" convertConquestToDominate started-----");
 
 			String continentLine[] = continents.split("\n");
@@ -146,9 +164,13 @@ public class ConquestMap extends Mapx{
 
 
 		}
-  
-	  
-	  private boolean convertDominateToConquest(Graph gameGraph) {
+
+	/**
+	 * This method is used to convert the Dominate map into the format of Conquest Map.
+	 * @param gameGraph It is an object of the class Graph
+	 * @return true(If the map is successfully converted)
+	 */
+	private boolean convertDominateToConquest(Graph gameGraph) {
 
 			continents = "[Continents]";
 			countries += "\n";
@@ -168,6 +190,13 @@ public class ConquestMap extends Mapx{
 			
 			return true;
 		}
+
+	/**
+	 *
+	 * @param mapFile
+	 * @return
+	 * @throws FileNotFoundException
+	 */
 		public boolean readMapConquest(String mapFile) throws FileNotFoundException {
 
 		try (BufferedReader br = new BufferedReader(new FileReader(mapFile))) {
@@ -242,6 +271,7 @@ public class ConquestMap extends Mapx{
 
 		return true;
 	}
+
 
 	public boolean writeMapConquest(String mapName, File f) throws IOException {
 

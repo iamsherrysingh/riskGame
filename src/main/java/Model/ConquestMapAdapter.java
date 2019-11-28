@@ -2,6 +2,9 @@ package Model;
 
 import java.io.IOException;
 
+/**
+ * This class carries out the implementation of Adapter pattern on the class ConquestMap.
+ */
 public class ConquestMapAdapter implements IMap {
     ConquestMap conquestMap = new ConquestMap();
 
