@@ -16,7 +16,7 @@ public class Player implements IPlayer {
 	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
 	private Integer exchangeCardsTimes;
 	public ArrayList<Card> playerCards;
-	public boolean   ;
+	public boolean  countryConquered;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
 
