@@ -14,7 +14,7 @@ public class CheaterPlayer implements IPlayer {
 	static Integer lastDiceSelected = null;
 	
 	public CheaterPlayer() {
-		
+		playerCards = new ArrayList<Card>();
 	}
 
 	public CheaterPlayer(Integer number, String name, Integer numberOfArmies) {

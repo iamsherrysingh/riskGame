@@ -18,7 +18,7 @@ public class RandomPlayer implements IPlayer {
 	Country attackerCountry;
 	
 	public RandomPlayer() {
-		
+		playerCards = new ArrayList<Card>();
 	}
 
 	public RandomPlayer(Integer number, String name, Integer numberOfArmies) {

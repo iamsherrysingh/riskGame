@@ -868,8 +868,8 @@ public class Controller {
 					break;
 				}
 				case loadgame:{
-			//		if(!gamePlayObj.loadgame(itr.taskData))
-			//			return false;			
+					if(!gamePlayObj.LoadGame(itr.taskData.get(0)))
+						return false;			
 					break;
 				}
 				case validatemap:{
@@ -1017,7 +1017,6 @@ public class Controller {
 	}
 	
     public static void main(String[] args) throws IOException {
-		try {
 			
 			Controller controller = new Controller();
 			controller.gamePlayObj = GamePlay.getInstance();
@@ -1061,10 +1060,7 @@ public class Controller {
 				System.out.println("===================================");
 			}
 			
-		}
-		catch (Exception e){
-			System.out.println("An error occured: "+e.getMessage());
-		}
+
     }
     
 }

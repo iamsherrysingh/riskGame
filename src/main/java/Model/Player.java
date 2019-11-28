@@ -21,7 +21,7 @@ public class Player implements IPlayer {
 	static Integer lastDiceSelected = null;
 	
 	public Player() {
-		
+		playerCards = new ArrayList<Card>();
 	}
 
 	public Player(Integer number, String name, Integer numberOfArmies) {

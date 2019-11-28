@@ -18,7 +18,7 @@ public class BenevolentPlayer implements IPlayer {
 	}
 
 	public BenevolentPlayer() {
-		
+		playerCards = new ArrayList<Card>();
 	}
 	
 	public BenevolentPlayer(Integer number, String name, Integer numberOfArmies) {

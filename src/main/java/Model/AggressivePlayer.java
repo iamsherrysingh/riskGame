@@ -17,7 +17,7 @@ public class AggressivePlayer implements IPlayer {
 	Country strongestCountryFound = null;
 
 	public AggressivePlayer() {
-		
+		playerCards = new ArrayList<Card>();
 	}
 	
 	/**

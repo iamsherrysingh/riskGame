@@ -9,7 +9,7 @@ public class CurrentPlayer {
 
 	private static CurrentPlayer currentPlayerObj = null;
 	
-	private ListIterator<IPlayer> currentPlayerItr;
+	public ListIterator<IPlayer> currentPlayerItr;
 	public IPlayer currentPlayer;
 	private Integer numReinforceArmies;
 	CardPlay cardPlayObj;
