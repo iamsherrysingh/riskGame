@@ -1145,7 +1145,7 @@ public class GamePlay implements ISubject {
 	
 	public boolean alloutAttack() {
 
-		player.attackAllout("", "", graphObj, currentPlayerObj);
+		boolean attackOutcome=player.attackAllout("", "", graphObj, currentPlayerObj);
 		
 		// handle picking card at turn of each player
 		if (player.getCountryConquered()) {
@@ -1155,7 +1155,11 @@ public class GamePlay implements ISubject {
 		
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
-		System.out.println("alloutattack is done.");
+		if(attackOutcome){
+		System.out.println("alloutattack is done.");}
+		else{
+			
+		}
 		return true;
 	}
 

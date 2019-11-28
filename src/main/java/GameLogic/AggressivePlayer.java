@@ -121,7 +121,7 @@ public class AggressivePlayer extends Player implements IPlayer {
 
         if (attackerCountry.neighbours.size() != 0) {
 
-            for (int i = 0; i < attackerCountry.neighbours.size(); i++) {
+/*            for (int i = 0; i < attackerCountry.neighbours.size(); i++) {
 
                 Integer countryNumber = attackerCountry.neighbours.get(i);
 
@@ -132,15 +132,36 @@ public class AggressivePlayer extends Player implements IPlayer {
                     weakestCountryNumber = countryNumber;
                 }
 
+            }*/
+
+            ArrayList<Integer> nlist= attackerCountry.neighbours;
+
+            for(Integer nnumbr:nlist) {
+                Country neighbour= Country.getCountryByNumber(nnumbr, GamePlay.getInstance().getGraphObj());
+                if(!(neighbour.getOwner().equalsIgnoreCase(attackerCountry.getOwner())))
+                    continue;
+                if (defenderCountry == null) {
+                    defenderCountry = neighbour;
+                    // countryName=country.getName();
+                } else if(neighbour.getNumberOfArmies() < defenderCountry.getNumberOfArmies()) {
+                    defenderCountry=neighbour;
+                }
+            }
+            if(defenderCountry == null){ //All neighbours conquered
+                System.out.println(attackerCountry.owner+" owns all countries around"+attackerCountry.getName());
+                return false;
             }
 
-            defenderCountry = Country.getCountryByNumber(weakestCountryNumber, graphObj);
+
+
+            //defenderCountry = Country.getCountryByNumber(weakestCountryNumber, graphObj);
             System.out.println("Attacking "+defenderCountry.getName());
             String attackerName = attackerCountry.getOwner();
             String defenderName = defenderCountry.getOwner();
             IPlayer attacker = Database.getPlayerByName(attackerName);
             IPlayer defender = Database.getPlayerByName(defenderName);
-
+            System.out.println("Defender Country player "+defenderCountry.getOwner()
+            +"\n"+ "attacker country player"+attackerCountry.getOwner());
             if (attackerCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
 
                 if (defenderCountry.getOwner().equalsIgnoreCase(currentPlayerObj.getCurrentPlayer().getName())) {
@@ -401,9 +422,9 @@ public class AggressivePlayer extends Player implements IPlayer {
         for (Country country : gameGraph.getAdjList()) {
 
             if(country.getOwner().equalsIgnoreCase(fromCountry.getOwner())) {
-                if((country != fromCountry)&& (toCountry==null)) {
+                if((country.getNumber()!= fromCountry.getNumber())&& (toCountry==null)) {
                     toCountry = country;
-                }else if((country != fromCountry)&& (toCountry.getNumberOfArmies()<country.getNumberOfArmies())) {
+                }else if((country.getNumber()!= fromCountry.getNumber())&& (toCountry.getNumberOfArmies()<country.getNumberOfArmies())) {
                     toCountry=country;
                 }
             }
@@ -420,13 +441,13 @@ public class AggressivePlayer extends Player implements IPlayer {
             System.out.println("A player has to own both the countries");
             return false;
         } else if (!(Mapx.checkPath(toCountry.name,fromCountry.name, gameGraph))) {
-            System.out.println("There should be the two countries.\n Current Player should own the path.");
+            System.out.println("There should be path between two countries to fortify");
             return false;
-        } else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
+        } else if ((fromCountry.getNumberOfArmies() - numberOfArmies < 1)) {
             System.out.println("You must leave at least 1 army unit behind");
             return false;
         }
-
+        System.out.println(">>>>Aggressive fortiying "+fromCountry.name+fromCountry.getNumberOfArmies()+">>"+toCountry.name+toCountry.getNumberOfArmies());
         ArrayList<Integer> toCountryNeighbours = toCountry.getNeighbours();
 
         fromCountry.setNumberOfArmies(fromCountry.getNumberOfArmies() - numberOfArmies);
