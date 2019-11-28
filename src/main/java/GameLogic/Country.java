@@ -12,10 +12,10 @@ public class Country {
 	ArrayList<Integer> neighbours;
 
 	public Country(){
-		
+		neighbours = new ArrayList<Integer>();
 	}
 	public Country(Integer number, String name, Integer inContinent, String owner, Integer numberOfArmies,
-			Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
+		Integer coOrdinate1, Integer getCoOrdinate2, ArrayList<Integer> neighbours) {
 		this.number = number;
 		this.coOrdinate1 = coOrdinate1;
 		this.getCoOrdinate2 = getCoOrdinate2;

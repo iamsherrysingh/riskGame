@@ -868,8 +868,8 @@ public class Runner {
 					break;
 				}
 				case loadgame:{
-			//		if(!gamePlayObj.loadgame(itr.taskData))
-			//			return false;			
+					if(!gamePlayObj.LoadGame(itr.taskData.get(0)))
+						return false;			
 					break;
 				}
 				case validatemap:{
@@ -1017,7 +1017,6 @@ public class Runner {
 	}
 	
     public static void main(String[] args) throws IOException {
-
 			
 			Runner runner = new Runner();
 			runner.gamePlayObj = GamePlay.getInstance();
@@ -1060,10 +1059,7 @@ public class Runner {
 				System.out.println("======== " + runner.gamePlayObj.getCurrentPlayerName() + " is the WINNER ========");
 				System.out.println("===================================");
 			}
-			
-		}
-
-
+	}
     
 }
 

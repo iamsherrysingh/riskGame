@@ -2,6 +2,7 @@ package GameLogic;
 import java.util.*;
 
 public class BenevolentPlayer  extends Player implements IPlayer {
+	
     /**
      * This is the constructor of the class Benevolant player
      * @param number It is an integer number corresponding the number of the player
@@ -17,6 +18,9 @@ public class BenevolentPlayer  extends Player implements IPlayer {
         countryConquered = false;
         defenderRemoved = false;
     }
+    
+	public BenevolentPlayer() { playerCards = new ArrayList<Card>(); }
+	
     public PlayerStrategy getPlayerStrategy() {
         return PlayerStrategy.benevolent;
     }

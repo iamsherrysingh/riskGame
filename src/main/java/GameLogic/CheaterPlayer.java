@@ -1,7 +1,9 @@
 package GameLogic;
 import java.util.*;
 
+
 public class CheaterPlayer  extends Player implements IPlayer{
+	
     /**
      * This is a constructor of the class CheaterPlayer.
      * It implements the CheaterPlayer strategy when given command.
@@ -19,6 +21,10 @@ public class CheaterPlayer  extends Player implements IPlayer{
         defenderRemoved = false;
     }
 
+	public CheaterPlayer() {
+		playerCards = new ArrayList<Card>();
+	}
+	
     public PlayerStrategy getPlayerStrategy() {
         return PlayerStrategy.cheater;
     }

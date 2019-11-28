@@ -4,27 +4,27 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class LoadGame implements SaveLoadBuilder{
 
-	private File gameFile;
-	private BufferedReader bufferedReader; 
-	
+	private FileReader gameFileReader;
+	public String fileName;
 	public void setFile(String fileName) throws IOException{
-			
-		gameFile = new File("src/main/resources/" + fileName);
-		bufferedReader =  new BufferedReader(new FileReader(gameFile));
+			this.fileName=fileName;
+		gameFileReader = new FileReader("src/main/resources/" + fileName);
 	}
 	
 	@Override
 	public void handleContinent(){
 		
-		try {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
 			
 			String continents;
 			StringBuilder sb = new StringBuilder();
-			String line = bufferedReader.readLine().trim();
+			String line = br.readLine().trim();
 			int continentsEncountered = 0;
 			
 			while (line != null) {
@@ -41,7 +41,7 @@ public class LoadGame implements SaveLoadBuilder{
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
-				line = bufferedReader.readLine();
+				line = br.readLine();
 			}
 			continents = sb.toString();
 			continents = continents.trim();
@@ -55,20 +55,15 @@ public class LoadGame implements SaveLoadBuilder{
 				continentLine[i] = continentLine[i].trim();
 				String split[] = continentLine[i].split(",");
 				Continent continent = new Continent(Integer.parseInt(split[2]), split[0],Integer.parseInt(split[3]), split[1]);
-				Database.getInstance().getContinentList().add(continent);
 				
-				if( split.length == 5 ) {
+				if( !split[4].equals("null") ) {
 					continent.setOwner(split[4]);
 				}
-				else {
-					continent.setOwner("");
-				}
+				
+				Database.getInstance().getContinentList().add(continent);
+				
 				
 			}
-			
-		/*	for(Continent itr: Database.getInstance().getContinentList()){
-				System.out.println(itr.color + " " + itr.name + " " + itr.owner);
-			} */
 			
 		} 
 		catch (IOException e) {
@@ -78,13 +73,12 @@ public class LoadGame implements SaveLoadBuilder{
 	
 	@Override
 	public void handleCountry() {
-		
 		// Read countries
-		try {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
 			
 			String countries;
 			StringBuilder sb = new StringBuilder();
-			String line = bufferedReader.readLine().trim();
+			String line = br.readLine().trim();
 			int countriesEncountered = 0;
 			
 			while (line != null) {
@@ -100,14 +94,15 @@ public class LoadGame implements SaveLoadBuilder{
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
-				line = bufferedReader.readLine();
+				line = br.readLine();
 				
 			}
 			
 			countries = sb.toString();
 			countries = countries.trim();	
+			System.out.println(countries);
 			Scanner countryScanner = new Scanner(countries);
-			countryScanner.nextLine(); // Ignoring first line of continents
+			countryScanner.nextLine(); // Ignoring first line of countries
 			
 			String countryLine[] = countries.split("\n");
 			
@@ -134,7 +129,7 @@ public class LoadGame implements SaveLoadBuilder{
 				country.setCoOrdinate1(Integer.parseInt(split[1]));
 				country.setCoOrdinate2(Integer.parseInt(split[2]));
 				
-				if( split[6] != null ) {
+				if( !split[6].equals("null") ) {
 					country.setOwner(split[6]);
 				}
 				
@@ -151,16 +146,16 @@ public class LoadGame implements SaveLoadBuilder{
 	public void handlePlayers() {
 		
 		// Read Players
-		try {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
 			
 			String players;
 			StringBuilder sb = new StringBuilder();
-			String line = bufferedReader.readLine().trim();
+			String line = br.readLine().trim();
 			int playersEncountered = 0;
 			
 			while (line != null) {
 				
-				if (line.equals("[CurrentState]"))
+				if (line.equals("[FreeCards]"))
 					break;
 				if (playersEncountered  == 1) {
 					sb.append(line);
@@ -171,7 +166,7 @@ public class LoadGame implements SaveLoadBuilder{
 					sb.append(line);
 					sb.append(System.lineSeparator());
 				}
-				line = bufferedReader.readLine();
+				line = br.readLine();
 				
 			}
 			
@@ -182,36 +177,80 @@ public class LoadGame implements SaveLoadBuilder{
 			
 			String playerLine[] = players.split("\n");
 			
-	/*		for (int i = 1; i < playerLine.length; i++) {
+			for (int i = 1; i < playerLine.length; i++) {
 				
 				playerLine[i] = playerLine[i].trim();
 				String split[] = playerLine[i].split(",");
 				
-				//IPlayer player = new IPlayer();
-				int foundIndex = 0;
-				for(int j = 0; j < split.length; j++) {	
-					if( split[j].equals("[borders]") ) {
-						foundIndex = j + 1;
-					}			
-				}
-				for(int k = foundIndex; k < split.length; k++) {
-					country.addNeighbour(Integer.parseInt(split[k]));
-				}
+				IPlayer playerObj = null;
 				
-				country.setNumber(Integer.parseInt(split[0]));
-				country.setName(split[5]);
-				country.setInContinent(Integer.parseInt(split[3]));
-				country.setNumberOfArmies(Integer.parseInt(split[4]));
-				country.setCoOrdinate1(Integer.parseInt(split[1]));
-				country.setCoOrdinate2(Integer.parseInt(split[2]));
-				
-				if( split[6] != null ) {
-					country.setOwner(split[6]);
+				String playerStrategy = split[1];
+				if(playerStrategy.equals("human")) {
+					playerObj = new Player();
+				}
+				else if(playerStrategy.equals("random")) {
+					playerObj = new RandomPlayer();
+				}
+				else if(playerStrategy.equals("aggressive")) {
+					playerObj = new AggressivePlayer();
+				}
+				else if(playerStrategy.equals("benevolent")) {
+					playerObj = new BenevolentPlayer();
+				}
+				else if(playerStrategy.equals("cheater")) {
+					playerObj = new CheaterPlayer();
 				}
 				
-				Graph.adjList.add(country);
+								
+				playerObj.setName(split[0]);
+				playerObj.setNumber(Integer.parseInt(split[2]));
+				playerObj.setNumberOfArmies(Integer.parseInt(split[3]));
+				playerObj.setNumberOfFreeArmies(Integer.parseInt(split[4]));
 				
-			} */
+				String splitCountries[] = split[5].split(":");
+				for(int j = 0; j < splitCountries.length; j++) {
+					playerObj.getMyCountries().add(Integer.parseInt(splitCountries[j]));
+				}
+				
+				playerObj.setExchangeCardsTimes(Integer.parseInt(split[6]));
+				if(split[7].equals("false")){
+					playerObj.setCountryConquered(false);
+				}
+				else
+					playerObj.setCountryConquered(true);
+				
+				if(split[8].equals("false")){
+					playerObj.setDefenderRemoved(false);
+				}
+				else
+					playerObj.setDefenderRemoved(true);
+				
+				if(!split[10].equals("noCards")) {
+					String splitCards[] = split[7].split(":");
+					for(int j = 0; j < splitCards.length; j++) {
+						
+						String cardParts[] = splitCards[j].split("-");
+						Card tmpCard = new Card();
+						
+						tmpCard.setIdCard(Integer.parseInt(cardParts[0]));
+						tmpCard.setOwner(Integer.parseInt(cardParts[1]));
+						if(cardParts[3].equals("Infantry"))
+							tmpCard.setCardType(cardType.Infantry);
+						else if(cardParts[3].equals("Cavalry"))
+							tmpCard.setCardType(cardType.Cavalry);
+						else if(cardParts[3].equals("Artillery"))
+							tmpCard.setCardType(cardType.Artillery);
+						else if(cardParts[3].equals("Wild"))
+							tmpCard.setCardType(cardType.Wild);
+						
+						playerObj.getPlayerCards().add(tmpCard);
+					}
+
+				}
+								
+				Database.playerList.add(playerObj);
+				
+			}
 		} 
 		catch (IOException e) {
 
@@ -221,18 +260,74 @@ public class LoadGame implements SaveLoadBuilder{
 	
 	@Override
 	public void handleFreeCards() {
-		
+
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
+			
+			String freeCards;
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine().trim();
+			int freeCardsEncountered = 0;
+			
+			while (line != null) {
+				if (line.equals("[CurrentState]"))
+					break;
+				if (freeCardsEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				if (line.equals("[FreeCards]")) {
+					freeCardsEncountered = 1;
+					
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+			}
+			freeCards = sb.toString();
+			freeCards = freeCards.trim();
+			Scanner freeCardsScanner = new Scanner(freeCards);
+			freeCardsScanner.nextLine(); // Ignoring first line of freeCards
+			
+			String freeCardsLine[] = freeCards.split("\n");
+			
+			for (int i = 1; i < freeCardsLine.length; i++) {
+				
+				freeCardsLine[i] = freeCardsLine[i].trim();
+				
+				String cardParts[] = freeCardsLine[i].split("-");
+				Card tmpCard = new Card();
+				
+				if(cardParts[0].equals("Infantry"))
+					tmpCard.setCardType(cardType.Infantry);
+				else if(cardParts[0].equals("Cavalry"))
+					tmpCard.setCardType(cardType.Cavalry);
+				else if(cardParts[0].equals("Artillery"))
+					tmpCard.setCardType(cardType.Artillery);
+				else if(cardParts[0].equals("Wild"))
+					tmpCard.setCardType(cardType.Wild);
+				tmpCard.setIdCard(Integer.parseInt(cardParts[1]));
+				tmpCard.setOwner(Integer.parseInt(cardParts[2]));
+				
+				CardPlay.getCardsList().add(tmpCard);
+				
+			}
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
 	public void handleCurrentState() {
 		
 		// Read currentState
-			try {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
 				GamePlay gamePlayObj = GamePlay.getInstance();	
 				String currentState;
 				StringBuilder sb = new StringBuilder();
-				String line = bufferedReader.readLine().trim();
+				String line = br.readLine().trim();
 				int currentStateEncountered = 0;
 					
 				while (line != null) {
@@ -249,7 +344,7 @@ public class LoadGame implements SaveLoadBuilder{
 						sb.append(System.lineSeparator());
 					}
 					
-					line = bufferedReader.readLine();
+					line = br.readLine();
 						
 				}
 					
@@ -259,27 +354,27 @@ public class LoadGame implements SaveLoadBuilder{
 				currentStateScanner.nextLine(); // Ignoring first line of currentState
 					
 				String currentStateLine[] = currentState.split("\n");
-				State state = State.initializeGame;;
+				State state = State.initializeGame;
 				
-				if ( currentStateLine[0].equalsIgnoreCase("initializeGame") )
+				if ( currentStateLine[1].equalsIgnoreCase("initializeGame") )
 					state = State.initializeGame;
-				else if ( currentStateLine[0].equalsIgnoreCase("mapEditor") )
+				else if ( currentStateLine[1].equalsIgnoreCase("mapEditor") )
 					state = State.mapEditor;
-				else if( currentStateLine[0].equalsIgnoreCase("startupPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("startupPhase") )
 					state = State.startupPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("editPlayer") )
+				else if( currentStateLine[1].equalsIgnoreCase("editPlayer") )
 					state = State.editPlayer;
-				else if( currentStateLine[0].equalsIgnoreCase("troopArmies") )
+				else if( currentStateLine[1].equalsIgnoreCase("troopArmies") )
 					state = State.troopArmies;
-				else if( currentStateLine[0].equalsIgnoreCase("exchangeCards") )
+				else if( currentStateLine[1].equalsIgnoreCase("exchangeCards") )
 					state = State.exchangeCards;
-				else if( currentStateLine[0].equalsIgnoreCase("attackPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("attackPhase") )
 					state = State.attackPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("fortificationPhase") )
+				else if( currentStateLine[1].equalsIgnoreCase("fortificationPhase") )
 					state = State.fortificationPhase;
-				else if( currentStateLine[0].equalsIgnoreCase("gameFinished") )
+				else if( currentStateLine[1].equalsIgnoreCase("gameFinished") )
 					state = State.gameFinished;
-				gamePlayObj.setCurrentState(state, currentStateLine[0]);	
+				gamePlayObj.setCurrentState(state, currentStateLine[1]);	
 				} 
 				catch (IOException e) {
 
@@ -289,6 +384,57 @@ public class LoadGame implements SaveLoadBuilder{
 	
 	@Override
 	public void handleCurrentPlayer() {
+		
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + fileName))){
+			
+			String currentPlayer;
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine().trim();
+			int currentPlayerEncountered = 0;
+			
+			while (line != null) {
+				if (line.equals("***"))
+					break;
+				if (currentPlayerEncountered == 1) {
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+
+				if (line.equals("[CurrentPlayer]")) {
+					currentPlayerEncountered = 1;
+					
+					sb.append(line);
+					sb.append(System.lineSeparator());
+				}
+				line = br.readLine();
+			}
+			currentPlayer = sb.toString();
+			currentPlayer = currentPlayer.trim();
+			Scanner currentPlayerScanner = new Scanner(currentPlayer);
+			currentPlayerScanner.nextLine(); // Ignoring first line of currentPlayer
+			
+			String currentPlayerLine[] = currentPlayer.split("\n");
+			CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
+			
+			currentPlayerLine[1] = currentPlayerLine[1].trim();
+			String split[] = currentPlayerLine[1].split(",");
+			
+			ListIterator<IPlayer> playerItr = Database.playerList.listIterator();
+			while(playerItr.hasNext()) {
+				IPlayer tmpPlayer = playerItr.next();
+				if(tmpPlayer.getNumber() == Integer.parseInt(split[0])) {
+					currentPlayerObj.currentPlayerItr = playerItr;
+					currentPlayerObj.currentPlayer = tmpPlayer;
+					break;
+				}
+			}
+			
+			currentPlayerObj.setNumReinforceArmies(Integer.parseInt(split[1]));
+			
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

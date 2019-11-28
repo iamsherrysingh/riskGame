@@ -4,6 +4,7 @@ import java.util.*;
 public class RandomPlayer extends Player implements IPlayer {
     Integer randomNumberGenerated;
     Country attackerCountry;
+    
     /**
      * This is a constructor of the class RandomPlayer.
      * It implements the game using the RandomPlayer stratedy.
@@ -21,6 +22,10 @@ public class RandomPlayer extends Player implements IPlayer {
         defenderRemoved = false;
     }
 
+	public RandomPlayer() {
+		playerCards = new ArrayList<Card>();
+	}
+	
     public PlayerStrategy getPlayerStrategy() {
         return PlayerStrategy.random;
     }

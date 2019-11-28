@@ -19,6 +19,10 @@ public class Card {
 	private Integer idCard;
 	private Integer owner;
 	
+	public Card() {
+		
+	}
+	
 	/** 
 	 * Constructor of the Card Class.
 	 * @param cType is the type for each card

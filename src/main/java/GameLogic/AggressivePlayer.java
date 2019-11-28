@@ -1,7 +1,9 @@
 package GameLogic;
 import java.util.*;
 
+
 public class AggressivePlayer extends Player implements IPlayer {
+	
     //Country strongestCountryFound;
     /**
      * This is a constructor of the class AggressivePlayer
@@ -20,6 +22,10 @@ public class AggressivePlayer extends Player implements IPlayer {
         defenderRemoved = false;
     }
 
+	public AggressivePlayer() {
+		playerCards = new ArrayList<Card>();
+	}
+	
     public PlayerStrategy getPlayerStrategy() {
         return PlayerStrategy.aggressive;
     }

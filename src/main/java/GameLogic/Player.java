@@ -11,9 +11,6 @@ import java.util.Scanner;
  */
 public class Player implements IPlayer {
 
-	public Player() {
-	}
-
 	public String name;
 	public Integer number, numberOfArmies, numberOfFreeArmies;
 	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
@@ -22,6 +19,10 @@ public class Player implements IPlayer {
 	public boolean  countryConquered;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
+	
+	public Player() {
+		playerCards = new ArrayList<Card>();
+	}
 
 	public Player(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;

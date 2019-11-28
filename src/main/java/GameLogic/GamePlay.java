@@ -525,12 +525,19 @@ public class GamePlay implements ISubject {
 		saveGameObj.handleCurrentState();
 		saveGameObj.handleCurrentPlayer();
 		
+		setCurrentOperation("Game saved Successfully");
+		System.exit(0);
+		
 		return true;
 	}
 	
-	public boolean LoadGame(String fileName) throws IOException {
+	public boolean LoadGame(String fileName){
 		
-		loadGameObj.setFile(fileName);
+		try {
+			loadGameObj.setFile(fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		loadGameObj.handleContinent();
 		loadGameObj.handleCountry();
@@ -538,6 +545,8 @@ public class GamePlay implements ISubject {
 		loadGameObj.handleFreeCards();
 		loadGameObj.handleCurrentState();
 		loadGameObj.handleCurrentPlayer();
+		
+		setCurrentOperation("Gameloaded Successfully");
 		
 		return true;
 	}

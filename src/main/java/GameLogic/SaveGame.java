@@ -23,8 +23,8 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Continent itr : Database.continentList){
 				
-				if (itr.owner == null ) {
-					itr.owner = null;
+				if (itr.getOwner().isEmpty() ) {
+					itr.owner = "null";
 				}
 				this.gameFileWriter.write(itr.name + "," + itr.color + "," + itr.number + "," + itr.controlValue + "," + itr.owner + System.getProperty("line.separator"));
 			}
@@ -44,8 +44,8 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Country itr : Graph.adjList){
 				
-				if (itr.owner == null ) {
-					itr.owner = null;
+				if (itr.owner.isEmpty()) {
+					itr.owner = "null";
 				}
 				this.gameFileWriter.write(itr.number + "," + itr.coOrdinate1 + "," + itr.getCoOrdinate2 + "," + itr.inContinent + "," + itr.numberOfArmies + "," + itr.name + "," + itr.owner);
 				this.gameFileWriter.write(",[borders]" + ",");
@@ -72,11 +72,23 @@ public class SaveGame implements SaveLoadBuilder {
 				
 				for(IPlayer itr : Database.playerList){
 					
-					this.gameFileWriter.write(itr.getName() + "," + itr.getPlayerStrategy() + "," + itr.getNumber() + "," + itr.getNumberOfArmies() + "," + itr.getNumberOfFreeArmies() + "," + itr.getMyCountries() + "," + itr.getExchangeCardsTimes() + "," + itr.getCountryConquered() + "," + itr.getDefenderRemoved() + "," + null );
-					this.gameFileWriter.write("[Cards]" + ",");
-					for(Card itrC: itr.getPlayerCards()) {
-						this.gameFileWriter.write(itrC.getCardType() + "," + itrC.getIdCard() + "," + itrC.getOwner());
+					this.gameFileWriter.write(itr.getName() + "," + itr.getPlayerStrategy() + "," + itr.getNumber() + "," + itr.getNumberOfArmies() + "," + itr.getNumberOfFreeArmies() + ",");
+					//this.gameFileWriter.write("MyCountries" + ":");
+					for(Integer myCountriesItr : itr.getMyCountries()) {
+						this.gameFileWriter.write(myCountriesItr + ":");
 					}
+					//this.gameFileWriter.write("EndMyCountries" + ",");
+					this.gameFileWriter.write(",");
+					this.gameFileWriter.write(itr.getExchangeCardsTimes() + ","+ itr.getCountryConquered() + "," + itr.getDefenderRemoved() + "," + Player.lastDiceSelected + ",");
+					//this.gameFileWriter.write("MyCards" + ":");
+					
+					if(itr.getPlayerCards().size() == 0) {
+						this.gameFileWriter.write("noCards");
+					}
+					for(Card itrC: itr.getPlayerCards()) {
+						this.gameFileWriter.write(itrC.getIdCard() + "-" + itrC.getOwner() + "-" + itrC.getCardType()  + ":");
+					}
+					//this.gameFileWriter.write("EndMyCards");
 					this.gameFileWriter.write(System.getProperty("line.separator"));
 				}
 			
@@ -98,7 +110,7 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Card itr : CardPlay.getCardsList()){
 				
-				this.gameFileWriter.write(itr.getCardType() + " " + itr.getIdCard() + " " + itr.getOwner() + System.getProperty("line.separator"));
+				this.gameFileWriter.write(itr.getCardType() + "-" + itr.getIdCard() + "-" + itr.getOwner() + System.getProperty("line.separator"));
 			}
 	//		this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			
@@ -142,12 +154,14 @@ public class SaveGame implements SaveLoadBuilder {
 	@Override
 	public void handleCurrentPlayer() {
 		try {
+			CurrentPlayer currentPlayerObj = CurrentPlayer.getInstance();
 			GamePlay gamePlayObj = GamePlay.getInstance();
+			
 			this.gameFileWriter.write("[CurrentPlayer]" + System.getProperty("line.separator"));
 			
 			if( gamePlayObj.getCurrentState() == State.exchangeCards || gamePlayObj.getCurrentState() == State.attackPhase || gamePlayObj.getCurrentState() == State.fortificationPhase || gamePlayObj.getCurrentState() == State.gameFinished )
-				this.gameFileWriter.write( gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getName() + gamePlayObj.getCurrentPlayerObj().getCurrentPlayer().getNumber() + System.getProperty("line.separator"));
-	//		this.gameFileWriter.write("***" + System.getProperty("line.separator"));
+				this.gameFileWriter.write( currentPlayerObj.getCurrentPlayer().getNumber()+ "," + currentPlayerObj.getNumReinforceArmies() + System.getProperty("line.separator"));
+			this.gameFileWriter.write("***" + System.getProperty("line.separator"));
 			gameFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
