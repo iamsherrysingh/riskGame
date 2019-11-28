@@ -1158,7 +1158,7 @@ public class GamePlay implements ISubject {
 		if(attackOutcome){
 		System.out.println("alloutattack is done.");}
 		else{
-			
+
 		}
 		return true;
 	}

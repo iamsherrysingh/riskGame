@@ -149,7 +149,8 @@ public class AggressivePlayer extends Player implements IPlayer {
             }
             if(defenderCountry == null){ //All neighbours conquered
                 System.out.println(attackerCountry.owner+" owns all countries around"+attackerCountry.getName());
-                return false;
+                return true;
+//                attackAllout("","",graphObj,currentPlayerObj);
             }
 
 
