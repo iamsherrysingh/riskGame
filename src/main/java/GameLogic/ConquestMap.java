@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class is responsible to perform operations on a map of the format Conquest Map.
+ */
 public class ConquestMap{
 	
 	  Database database = Database.getInstance();
@@ -13,6 +16,12 @@ public class ConquestMap{
 	  String countries="", borders = "";
 
 
+    /**
+     * This method is responsible to read a map file and store the data in different variables.
+     * @param mapFile The name of the map file as a string
+     * @return true(If the map is successfully read and stored)
+     * @throws FileNotFoundException - If the map file is not found
+     */
 	  public boolean readMapIntoVariables(String mapFile) throws FileNotFoundException{
 		  
 		  readMapConquest(mapFile);
@@ -23,6 +32,13 @@ public class ConquestMap{
 		  return true;
 	  }
 
+    /**
+     * This method is responsible to read the gameGraph variables and convert them to a map file.
+     * @param gameGraph Object of the class Graph
+     * @param f Object of File
+     * @return true(If the map is successfully converted)
+     * @throws IOException - If the method is unable to write the map into the file
+     */
 	  public boolean writeMapFile(Graph gameGraph, File f) throws IOException{
 		  
 		  convertDominateToConquest(gameGraph);
@@ -45,7 +61,10 @@ writer.write("[Map]\n" +
 
 	  }
 
-  
+    /**
+     * This method is used to convert the Conquest map into the format of Dominate Map.
+     * @return true(If the map is successfully converted)
+     */
 	  private boolean convertConquestToDominate() {
 			System.out.println(" convertConquestToDominate started-----");
 
@@ -161,8 +180,12 @@ writer.write("[Map]\n" +
 
 
 		}
-  
-	  
+
+    /**
+     * This method is used to convert the Dominate map into the format of Conquest Map.
+     * @param gameGraph It is an object of the class Graph
+     * @return true(If the map is successfully converted)
+     */
 	  private boolean convertDominateToConquest(Graph gameGraph) {
 
 			continents = "[Continents]\n";
