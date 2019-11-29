@@ -53,6 +53,7 @@ public class GamePlay implements ISubject {
 	private Database databaseObj;
 	private CardPlay cardPlayObj;
 	String fileType = "Domination";
+	Director directorObj;
 
 	public String getFileType() {
 		return fileType;
@@ -93,6 +94,7 @@ public class GamePlay implements ISubject {
 		observersOfGamePlay = new ArrayList<IObserver>();
 		this.attachObserver(phaseView);
 		this.attachObserver(worldDominationView);
+		directorObj = new Director();
 		saveGameObj = new SaveGame();
 		loadGameObj = new LoadGame();
 	}
@@ -508,44 +510,27 @@ public class GamePlay implements ISubject {
 	 * 
 	 * @param fileName The name of the Game file that is to be saved
 	 * @return true if file successfully saved.
-	 * @throws IOException 
 	 */
 	public boolean SaveGame(String fileName) {
 		
-		try {
-			saveGameObj.setFile(fileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		saveGameObj.handleContinent();
-		saveGameObj.handleCountry();
-		saveGameObj.handlePlayers();
-		saveGameObj.handleFreeCards();
-		saveGameObj.handleCurrentState();
-		saveGameObj.handleCurrentPlayer();
-		
+		directorObj.setBuilder(saveGameObj, fileName);
+		directorObj.constructBuilder();
 		setCurrentOperation("Game saved Successfully");
 		System.exit(0);
 		
 		return true;
 	}
 	
+	/**
+	 * LOad Game Function
+	 * 
+	 * @param fileName The name of the Game file that is to be loaded
+	 * @return true if file successfully load.
+	 */
 	public boolean LoadGame(String fileName){
 		
-		try {
-			loadGameObj.setFile(fileName);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		loadGameObj.handleContinent();
-		loadGameObj.handleCountry();
-		loadGameObj.handlePlayers();
-		loadGameObj.handleFreeCards();
-		loadGameObj.handleCurrentState();
-		loadGameObj.handleCurrentPlayer();
-		
+		directorObj.setBuilder(loadGameObj, fileName);	
+		directorObj.constructBuilder();
 		setCurrentOperation("Gameloaded Successfully");
 		
 		return true;
@@ -1153,8 +1138,6 @@ public class GamePlay implements ISubject {
 	}
 	
 	public boolean alloutAttack() {
-
-		boolean attackOutcome=player.attackAllout("", "", graphObj, currentPlayerObj);
 		
 		// handle picking card at turn of each player
 		if (player.getCountryConquered()) {
@@ -1162,13 +1145,13 @@ public class GamePlay implements ISubject {
 			player.setDefenderRemoved(false);
 		}
 		
+		boolean checkEndGameStatus = checkEndGame();
+		
+		if (checkEndGameStatus == true) {
+			return true;
+		}
 		// Change current state to next state
 		setCurrentState(State.fortificationPhase, "Fortification");
-		if(attackOutcome){
-		System.out.println("alloutattack is done.");}
-		else{
-
-		}
 		return true;
 	}
 

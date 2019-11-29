@@ -100,7 +100,6 @@ public class LoadGame implements SaveLoadBuilder{
 			
 			countries = sb.toString();
 			countries = countries.trim();	
-			System.out.println(countries);
 			Scanner countryScanner = new Scanner(countries);
 			countryScanner.nextLine(); // Ignoring first line of countries
 			
@@ -431,6 +430,7 @@ public class LoadGame implements SaveLoadBuilder{
 			
 			currentPlayerObj.setNumReinforceArmies(Integer.parseInt(split[1]));
 			
+			GamePlay.getInstance().setPlayerStrategy();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
