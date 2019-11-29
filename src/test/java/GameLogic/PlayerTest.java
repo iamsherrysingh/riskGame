@@ -65,11 +65,27 @@ public class PlayerTest {
 	}
 
 	/**
-	 * This is a jUnit test for {@link GameLogic.Player#addPlayer(String, String)}
+	 * This is a jUnit test for {@link GameLogic.GamePlay#addPlayer(String, String)}
 	 */
 	@Test
 	public void addPlayer2() {
 		assertFalse(gamePlay.addPlayer(" ", "human"));
+	}
+	/**
+	 *This is a Junit test for {@link GameLogic.GamePlay#removePlayer(String)}
+	 */
+	@Test
+	public void validRemovePlayer() {
+		gamePlay.addPlayer("birjot", "human");
+		gamePlay.addPlayer("sehaj", "human");
+		Integer number = Database.playerList.size();
+		gamePlay.removePlayer("sehaj");
+		Integer numberAfter = Database.playerList.size();
+		if(numberAfter<number){
+			assertTrue(true);
+		}else {
+			assertTrue(false);
+		}
 	}
 
 	/**
@@ -78,6 +94,23 @@ public class PlayerTest {
 	@Test
 	public void addPlayer3() {
 		assertTrue(gamePlay.addPlayer("birjot", ""));
+	}
+
+	/**
+	*This is a Junit test for {@link GameLogic.GamePlay#removePlayer(String)}
+	 */
+	@Test
+	public void InvalidRemovePlayer() {
+		gamePlay.addPlayer("birjot", "human");
+		gamePlay.addPlayer("sehaj", "human");
+		Integer number = Database.playerList.size();
+		gamePlay.removePlayer("sehaj");
+		Integer numberAfter = Database.playerList.size();
+		if(numberAfter>=number){
+			assertTrue(false);
+		}else {
+			assertTrue(true);
+		}
 	}
 
 	/**

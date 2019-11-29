@@ -66,4 +66,49 @@ public class CheaterPlayerTest {
             assertTrue(true);}
     }
 
+
+    @Test
+    public void ValidAllout(){
+        Integer countryFound = 0;
+        Integer countryFoundAfter = 0;
+        for(Country country : gamePlay.getGraphObj().getAdjList()){
+            if(country.getOwner().equalsIgnoreCase("sd")){
+                countryFound++;
+            }
+        }
+         Database.getPlayerByName("sd").attackAllout("","",gamePlay.getGraphObj(), gamePlay.getCurrentPlayerObj());
+
+        for(Country country : gamePlay.getGraphObj().getAdjList()){
+            if(country.getOwner().equalsIgnoreCase("sd")){
+                countryFoundAfter++;
+            }
+        }
+        if(countryFound>countryFoundAfter){
+            assertTrue(false);
+        }else{
+            assertTrue(true);}
+    }
+
+
+    @Test
+    public void InvalidAllout(){
+        Integer countryFound = 0;
+        Integer countryFoundAfter = 0;
+        for(Country country : gamePlay.getGraphObj().getAdjList()){
+            if(country.getOwner().equalsIgnoreCase("sd")){
+                countryFound++;
+            }
+        }
+        Database.getPlayerByName("sd").attackAllout("","",gamePlay.getGraphObj(), gamePlay.getCurrentPlayerObj());
+
+        for(Country country : gamePlay.getGraphObj().getAdjList()){
+            if(country.getOwner().equalsIgnoreCase("sd")){
+                countryFoundAfter++;
+            }
+        }
+        if(countryFound<countryFoundAfter){
+            assertTrue(true);
+        }else{
+            assertTrue(false);}
+    }
 }
