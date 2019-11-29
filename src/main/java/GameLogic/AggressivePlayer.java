@@ -1,5 +1,7 @@
 package GameLogic;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class AggressivePlayer extends Player implements IPlayer {
@@ -168,8 +170,7 @@ public class AggressivePlayer extends Player implements IPlayer {
             battle(strongestCountry, weakestNeighbourEnemy, AttackerArmiesSelected, DefenderArmiesSelected,
                     Database.getPlayerByName(strongestCountry.owner), Database.getPlayerByName(weakestNeighbourEnemy.owner));
             System.out.println("battle Executed");
-            Scanner sc=new Scanner((System.in));
-            sc.nextLine();
+            //try{TimeUnit.SECONDS.sleep(1);}catch (InterruptedException e){}
             if (weakestNeighbourEnemy.getNumberOfArmies() == 0) {
                 System.out.println("Attacker won the country " + weakestNeighbourEnemy.name);
                 Database.getPlayerByName(strongestCountry.owner).setMyCountries(weakestNeighbourEnemy.getNumber());
@@ -196,7 +197,25 @@ public class AggressivePlayer extends Player implements IPlayer {
     }
 
     private void fortifyStrongestNeighbour(Country strongestCountry) {
-
+        ArrayList<Country> neighbourList= Graph.getInstance().getNeighbourListAsCountries(strongestCountry);
+        System.out.println("in fortifyStrongestNeighbour");
+//        try{TimeUnit.SECONDS.sleep(1);}catch (InterruptedException e){}
+        Country strongestNeighbour=null;
+        for(Country country:neighbourList){
+            if(country.owner.equalsIgnoreCase(strongestCountry.owner)){
+                if(strongestNeighbour==null)
+                    strongestNeighbour=country;
+                else if(country.getNumberOfArmies()>strongestNeighbour.getNumberOfArmies()) {
+                    strongestNeighbour = country;
+                    if(getWeakestNeighbourEnemy(strongestNeighbour)==null){
+                        fortifyStrongestNeighbour(strongestNeighbour);
+                    }
+                    else{
+                        return;
+                    }
+                }
+            }
+        }
     }
 
 
