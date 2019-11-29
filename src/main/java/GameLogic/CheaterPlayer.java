@@ -2,9 +2,6 @@ package GameLogic;
 
 import java.util.*;
 
-/**
- * This is a type of behavior of player used with Strategy Pattern
- */
 public class CheaterPlayer extends Player implements IPlayer {
 
 	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
@@ -12,7 +9,7 @@ public class CheaterPlayer extends Player implements IPlayer {
 	/**
 	 * This is a constructor of the class CheaterPlayer. It implements the
 	 * CheaterPlayer strategy when given command.
-	 *
+	 * 
 	 * @param number         It is the number of the player as an integer
 	 * @param name           It is the name of the player as a String
 	 * @param numberOfArmies It is the integer number denoting the total number of
@@ -31,7 +28,7 @@ public class CheaterPlayer extends Player implements IPlayer {
 	public CheaterPlayer() {
 		playerCards = new ArrayList<Card>();
 	}
-
+	
 	public PlayerStrategy getPlayerStrategy() {
 		return PlayerStrategy.cheater;
 	}
@@ -40,7 +37,7 @@ public class CheaterPlayer extends Player implements IPlayer {
 	/**
 	 * This method implements using the CheaterPlayer strategy. While reinforcing,
 	 * this method doubles the number of armies on all its countries.
-	 *
+	 * 
 	 * @param countryName      The name of the country to be reinforced
 	 * @param numberOfArmies   The total number of armies in integer form
 	 * @param graphObj         Object of the class Graph
@@ -59,12 +56,9 @@ public class CheaterPlayer extends Player implements IPlayer {
 
 
 				if (country.getNumberOfArmies() > 0) {
-					System.out.println("Number of Armies before reinforcement: " + country.getNumberOfArmies());
 					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
 					GamePlay.getInstance().getCurrentPlayerObj().getCurrentPlayer()
 							.setNumberOfArmies(doubleNumberOfArmies);
-
-					System.out.println("Number of Armies after reinforcement: " + country.getNumberOfArmies());
 
 				} else {
 					System.out.println("0Armies during reinforcement");
@@ -81,7 +75,7 @@ public class CheaterPlayer extends Player implements IPlayer {
 	/**
 	 * This method attacks in a form that it conquers all the neighbours of all the
 	 * countries in a single move
-	 *
+	 * 
 	 * @param fromCountry      It is a String and denotes the name of the country
 	 *                         from where the armies are to be sent
 	 * @param toCountry        It is a String and denotes the name of the country
@@ -150,7 +144,7 @@ public class CheaterPlayer extends Player implements IPlayer {
 	/**
 	 * This method doubles the number of armies of the countries whose neighbours
 	 * are owned by other players.
-	 *
+	 * 
 	 * @param fromCname      The name of the country from where the armies are to be
 	 *                       moved
 	 * @param toCountryName  The name of the country to which the armies are to be

@@ -1,4 +1,4 @@
-package GameLogic;
+ package GameLogic;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class Continent {
 	
     String name, color;
     Integer number,controlValue;
-    String owner;
+    String owner = "";
    
    /**
     *  

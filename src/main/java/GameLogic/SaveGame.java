@@ -23,7 +23,7 @@ public class SaveGame implements SaveLoadBuilder {
 			
 			for(Continent itr : Database.continentList){
 				
-				if (itr.getOwner().isEmpty() ) {
+				if (itr.getOwner().isEmpty()) {
 					itr.owner = "null";
 				}
 				this.gameFileWriter.write(itr.name + "," + itr.color + "," + itr.number + "," + itr.controlValue + "," + itr.owner + System.getProperty("line.separator"));
