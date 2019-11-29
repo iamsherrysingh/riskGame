@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import java.util.Scanner;
 
 /**
+<<<<<<< HEAD
  * This class is our loader which implement from saveloadBuilder interface.
  */
 public class LoadGame implements SaveLoadBuilder{

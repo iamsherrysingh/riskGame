@@ -1,6 +1,9 @@
 package GameLogic;
 import java.util.*;
 
+/**
+ * This is a type of behavior of player used with Strategy Pattern
+ */
 public class RandomPlayer extends Player implements IPlayer {
     Integer randomNumberGenerated;
     Country attackerCountry;
