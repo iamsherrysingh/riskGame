@@ -634,7 +634,7 @@ public class GamePlay implements ISubject {
 			}
 			setCurrentState(State.editPlayer, "Edit Player");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Invalid Map");
 			return false;
 		}
 		setCurrentOperation("Loading "+fileType+" Game Map " + fileName);
