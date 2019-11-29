@@ -9,6 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This is a JUnit test for {@link GameLogic.ConquestMapAdapter}
+ */
 public class ConquestMapTest {
 	
     static GamePlay gamePlay;

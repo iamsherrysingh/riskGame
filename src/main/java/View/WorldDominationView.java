@@ -2,6 +2,9 @@ package View;
 
 import GameLogic.*;
 
+/**
+ * This class prints the current map in console for every state change
+ */
 public class WorldDominationView implements IObserver{
     String header=          "================================================"  + "\n" +
                             "==============WORLD DOMINATION VIEW=============";
