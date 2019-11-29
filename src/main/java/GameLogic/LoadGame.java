@@ -8,6 +8,9 @@ import java.io.Reader;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+/**
+ * This class is our loader which implement from saveloadBuilder interface.
+ */
 public class LoadGame implements SaveLoadBuilder{
 
 	private FileReader gameFileReader;
@@ -17,6 +20,9 @@ public class LoadGame implements SaveLoadBuilder{
 		gameFileReader = new FileReader("src/main/resources/" + fileName);
 	}
 	
+	/**
+	 * This method save the extracted continents from the files into variables.
+	 */
 	@Override
 	public void handleContinent(){
 		
@@ -71,6 +77,9 @@ public class LoadGame implements SaveLoadBuilder{
 		}
 	}
 	
+	/**
+	 * This method save the extracted countries from the files into variables.
+	 */
 	@Override
 	public void handleCountry() {
 		// Read countries
@@ -141,6 +150,9 @@ public class LoadGame implements SaveLoadBuilder{
 		}
 	}
 	
+	/**
+	 * This method save the extracted players from the files into variables.
+	 */
 	@Override
 	public void handlePlayers() {
 		
@@ -257,6 +269,9 @@ public class LoadGame implements SaveLoadBuilder{
 		
 	}
 	
+	/**
+	 * This method save the extracted free cards from the files into variables.
+	 */
 	@Override
 	public void handleFreeCards() {
 
@@ -318,6 +333,9 @@ public class LoadGame implements SaveLoadBuilder{
 		}
 	}
 	
+	/**
+	 * This method save the extracted cuurent state from the files into variables.
+	 */
 	@Override
 	public void handleCurrentState() {
 		
@@ -381,6 +399,9 @@ public class LoadGame implements SaveLoadBuilder{
 		
 	}
 	
+	/**
+	 * This method save the extracted current players from the files into variables.
+	 */
 	@Override
 	public void handleCurrentPlayer() {
 		

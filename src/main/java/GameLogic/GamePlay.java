@@ -516,6 +516,7 @@ public class GamePlay implements ISubject {
 		directorObj.setBuilder(saveGameObj, fileName);
 		directorObj.constructBuilder();
 		setCurrentOperation("Game saved Successfully");
+		System.out.println("Your game is saved successfully.");
 		System.exit(0);
 		
 		return true;

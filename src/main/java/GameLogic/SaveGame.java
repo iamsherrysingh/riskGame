@@ -4,11 +4,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class is our save loader which implement from saveloadBuilder interface.
+ */
+
 public class SaveGame implements SaveLoadBuilder {
 
 	private File gameFile;
 	private FileWriter gameFileWriter;
 	
+	
+	/**
+	 * This method set our file for load or save purposing.
+	 * 
+	 * @param fileName This is the file name which is string.
+	 */
 	public void setFile(String fileName) throws IOException{
 		
 		gameFile = new File("src/main/resources/" + fileName);
@@ -16,6 +26,9 @@ public class SaveGame implements SaveLoadBuilder {
 		gameFileWriter = new FileWriter(gameFile);	
 	}
 	
+	/**
+	 * This method extract the continents and save them into files.
+	 */
 	@Override
 	public void handleContinent(){
 		try {
@@ -37,6 +50,9 @@ public class SaveGame implements SaveLoadBuilder {
 		}
 	}
 	
+	/**
+	 * This method extract the countries and save them into files.
+	 */
 	@Override
 	public void handleCountry() {
 		try {
@@ -63,6 +79,9 @@ public class SaveGame implements SaveLoadBuilder {
 		}	
 	}
 	
+	/**
+	 * This method extract the players and save them into files.
+	 */
 	@Override
 	public void handlePlayers() {
 		try {
@@ -103,6 +122,9 @@ public class SaveGame implements SaveLoadBuilder {
 		}
 	}
 	
+	/**
+	 * This method extract free cards and save them into files.
+	 */
 	@Override
 	public void handleFreeCards() {
 		try {
@@ -119,6 +141,9 @@ public class SaveGame implements SaveLoadBuilder {
 		}
 	}
 	
+	/**
+	 * This method extract the current state and save them into files.
+	 */
 	@Override
 	public void handleCurrentState() {
 		try {
@@ -151,6 +176,9 @@ public class SaveGame implements SaveLoadBuilder {
 		}
 	}
 	
+	/**
+	 * This method extract the current player and save them into files.
+	 */
 	@Override
 	public void handleCurrentPlayer() {
 		try {
@@ -168,33 +196,3 @@ public class SaveGame implements SaveLoadBuilder {
 		}
 	}
 }
-
-/*
-import java.io.FileWriter;
-
-public class SaveGame {
-    public static void main(String[] args)throws Exception {
-        GamePlay.getInstance().loadGameMap("map.map");
-        saveGame("game.save");
-    }
-
-    public static boolean saveGame(String saveFile)throws Exception
-    {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/SavedGames/"+saveFile));
-        writer.write("[CurrentState]\ninitializationState\n");
-
-        writer.write("\n[Players]\n");
-        for(IPlayer player:Database.getInstance().getPlayerList()){
-            writer.write(player.getNumber()+" "+player.getName()+" "+player.getNumberOfArmies());
-        }
-
-        writer.write("\n[GameGraph]\n");
-        for(Country country: GamePlay.getInstance().getGraphObj().getAdjList()) {
-            writer.write(country.getNumber() + " " + country.getName() + " " + country.getInContinent() + " " + country.getOwner() + " " + country.getNumberOfArmies() + " " + country.getCoOrdinate1() + " " + country.getGetCoOrdinate2() + " " + country.getNeighbours().toString()+"\n");
-        }
-
-        writer.close();
-        return true;
-    }
-}
-*/
