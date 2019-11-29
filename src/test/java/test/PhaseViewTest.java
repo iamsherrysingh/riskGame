@@ -42,11 +42,12 @@ public class PhaseViewTest {
 
     /**
      * This test link to
-     *
+     *jn
      */
     @Test
     public void phaseViewTest(){
-        String expectedOutput= "Current State is :  initializeGame\n" +
+        String expectedOutput= "Current State is :  gameFinished\n" +
+                "Current Player is: seha\n" +
                 "Operation: New Game Graph created";
         assertEquals(expectedOutput, gamePlay.getPhaseView().data);
     }

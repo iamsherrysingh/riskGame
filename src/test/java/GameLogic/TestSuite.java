@@ -9,6 +9,6 @@ import org.junit.runners.Suite;
  * @author birjotsingh17
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ContinentTest.class, CountryTest.class, MapxTest.class, GamePlayTest.class})
+@Suite.SuiteClasses({PlayerTest.class,ContinentTest.class, CountryTest.class, MapxTest.class, GamePlayTest.class})
 public class TestSuite {
 }
