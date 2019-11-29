@@ -3,6 +3,9 @@ import java.io.File;
 
 import java.io.IOException;
 
+/**
+ * Thia class writes conquest map
+ */
 public class ConquestMapAdapter implements IMap {
     ConquestMap conquestMap = new ConquestMap();
 

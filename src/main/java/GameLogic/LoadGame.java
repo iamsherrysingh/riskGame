@@ -8,6 +8,9 @@ import java.io.Reader;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+/**
+ * This class will load game from savedGame file
+ */
 public class LoadGame implements SaveLoadBuilder{
 
 	private FileReader gameFileReader;

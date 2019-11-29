@@ -3,9 +3,11 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * This is a type of behavior of player used with Strategy Pattern
+ */
 public class AggressivePlayer extends Player implements IPlayer {
-	
+	public boolean fortifiedAlready=false;
     //Country strongestCountryFound;
     /**
      * This is a constructor of the class AggressivePlayer
@@ -118,6 +120,8 @@ public class AggressivePlayer extends Player implements IPlayer {
 
     public Country getWeakestNeighbourEnemy(Country attackerCountry){
         ArrayList<Integer> nlist= attackerCountry.neighbours;
+        if(nlist.size()==0)
+            return null;
         Country weakestNeighbourEnemy=null;
         for(Integer nnumbr:nlist) {
             Country neighbour= Country.getCountryByNumber(nnumbr, GamePlay.getInstance().getGraphObj());
@@ -138,6 +142,7 @@ public class AggressivePlayer extends Player implements IPlayer {
         if(weakestNeighbourEnemy==null){//All neighbours conquered
                                         //fortify armies to strongest neighbour with 1 or more enemy
             fortifyStrongestNeighbour(strongestCountry);
+            fortifiedAlready=true;
             return true;
         }
         System.out.println(">>>>"+strongestCountry.name+" attacking "+weakestNeighbourEnemy.name);

@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class reads conquestMap
+ */
 public class ConquestMap{
 	
 	  Database database = Database.getInstance();
