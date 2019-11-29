@@ -630,7 +630,7 @@ public class Player implements IPlayer {
 			System.out.println("A player has to own both the countries");
 			return false;
 		} else if (!(Mapx.checkPath(toCountryName,fromCname, gameGraph))) {
-			System.out.println("There should be the two countries.\n Current Player should own the path.");
+			System.out.println("weakestNeighbourEnemyd be the two countries.\n Current Player should own the path.");
 			return false;
 		} else if (!(fromcountry.getNumberOfArmies() - numberOfArmies > 0)) {
 			System.out.println("You must leave at least 1 army unit behind");

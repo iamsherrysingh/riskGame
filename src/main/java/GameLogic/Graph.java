@@ -48,4 +48,15 @@ public class Graph {
             System.out.println(" Armies: "+country.getNumberOfArmies());
         }
     }
+
+    public ArrayList<Country> getNeighbourListAsCountries(Country country) {
+        ArrayList<Integer> neighbourList = country.getNeighbours();
+        ArrayList<Country> neighbourListAsCountry= new ArrayList<Country>();
+        for (Integer neighbourNumber : neighbourList) {
+            Country neighbour = Country.getCountryByNumber(neighbourNumber, gameGraph);
+            neighbourListAsCountry.add(neighbour);
+        }
+        return neighbourListAsCountry;
+    }
+
 }
