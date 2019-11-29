@@ -427,7 +427,7 @@ public class RandomPlayer extends Player implements IPlayer {
             System.out.println("A player has to own both the countries");
             return false;
         } else if (!(Mapx.checkPath(toCountry.name, fromCountry.name, gameGraph))) {
-            System.out.println("There should be the two countries.\n Current Player should own the path.");
+            System.out.println("weakestNeighbourEnemyd be the two countries.\n Current Player should own the path.");
             return false;
         } else if (!(fromCountry.getNumberOfArmies() - numberOfArmies > 0)) {
             System.out.println("You must leave at least 1 army unit behind");
