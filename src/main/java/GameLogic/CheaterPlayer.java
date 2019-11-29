@@ -56,12 +56,9 @@ public class CheaterPlayer extends Player implements IPlayer {
 
 
 				if (country.getNumberOfArmies() > 0) {
-					System.out.println("Number of Armies before reinforcement: " + country.getNumberOfArmies());
 					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
 					GamePlay.getInstance().getCurrentPlayerObj().getCurrentPlayer()
 							.setNumberOfArmies(doubleNumberOfArmies);
-					
-					System.out.println("Number of Armies after reinforcement: " + country.getNumberOfArmies());
 
 				} else {
 					System.out.println("0Armies during reinforcement");

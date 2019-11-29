@@ -648,8 +648,6 @@ public class Runner {
 					break;
 				case populatecountries:
 					break;	
-				case savegame:
-					break;
 				default:
 					System.out.println("Invalid command in the current state");
 					return false;		
@@ -666,8 +664,6 @@ public class Runner {
 						break;	
 					case placeall:
 						break;	
-					case savegame:
-						break;
 					default:
 						System.out.println("Invalid command in the current state");
 						return false;

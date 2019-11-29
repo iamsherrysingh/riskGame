@@ -8,7 +8,8 @@ import java.util.*;
  */
 public class Country {
 	Integer number, coOrdinate1, getCoOrdinate2, inContinent, numberOfArmies;
-	String name, owner;
+	String name;
+	String owner = "";
 	ArrayList<Integer> neighbours;
 
 	public Country(){
@@ -139,7 +140,7 @@ public class Country {
 		}
 		
 		
-		Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, null, null, 0, 0,
+		Country country = new Country(gameGraph.getAdjList().size() + 1, newCountry, continentNumber, "", null, 0, 0,
 				new ArrayList<Integer>());
 		gameGraph.getAdjList().add(country);
 		System.out.println(newCountry+ " added.");
