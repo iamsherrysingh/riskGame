@@ -11,14 +11,18 @@ import java.util.Scanner;
  */
 public class Player implements IPlayer {
 
-    private String name;
-    private Integer number, numberOfArmies, numberOfFreeArmies;
-	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	private Integer exchangeCardsTimes;
+	public String name;
+	public Integer number, numberOfArmies, numberOfFreeArmies;
+	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
+	public Integer exchangeCardsTimes;
 	public ArrayList<Card> playerCards;
-	public boolean countryConquered;
+	public boolean  countryConquered;
 	public boolean defenderRemoved;
 	static Integer lastDiceSelected = null;
+	
+	public Player() {
+		playerCards = new ArrayList<Card>();
+	}
 
 	public Player(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
@@ -626,7 +630,7 @@ public class Player implements IPlayer {
 			System.out.println("A player has to own both the countries");
 			return false;
 		} else if (!(Mapx.checkPath(toCountryName,fromCname, gameGraph))) {
-			System.out.println("There should be the two countries.\n Current Player should own the path.");
+			System.out.println("weakestNeighbourEnemyd be the two countries.\n Current Player should own the path.");
 			return false;
 		} else if (!(fromcountry.getNumberOfArmies() - numberOfArmies > 0)) {
 			System.out.println("You must leave at least 1 army unit behind");

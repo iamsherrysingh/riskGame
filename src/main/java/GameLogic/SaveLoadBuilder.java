@@ -2,6 +2,9 @@ package GameLogic;
 
 import java.io.IOException;
 
+/*
+This is an interface to implement Builder pattern
+ */
 public interface SaveLoadBuilder {
 	
 	public void  handleContinent();

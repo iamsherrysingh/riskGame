@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
  * It contains different Junit tests for the methods defined in
  * {@link GameLogic.Country}
  * 
- * @see Country.java
+ * @see Country
  * @author birjotsingh17
  */
 
@@ -58,6 +58,15 @@ public class CountryTest {
 	}
 
 	/**
+	 * This Junit test for {@link GameLogic.Country#getCountryByName(String, Graph)};
+	 */
+	@Test
+	public void InvalidGetCountryByIdTest(){
+		Country CountryFound= Country.getCountryByNumber(1,gamePlay.getGraphObj());
+		assertNotEquals(CountryFound.name,"India");
+	}
+
+	/**
 	 * This is a jUnit test for {@link GameLogic.Country#removeCountry(String, Graph)}
 	 */
 	@Test
@@ -86,6 +95,15 @@ public class CountryTest {
 	@Test
 	public void removeNeighbour2() {
 		assertFalse(Country.removeNeighbour("EgyPT", "Alaska", gamePlay.getGraphObj()));
+	}
+
+	/**
+	 * This Junit test for {@link GameLogic.Country#getCountryByName(String, Graph)};
+	 */
+	@Test
+	public void getCountryByIdTest(){
+		Country CountryFound=Country.getCountryByNumber(1,gamePlay.getGraphObj());
+		assertEquals(CountryFound.name,"Alaska");
 	}
 
 	/**

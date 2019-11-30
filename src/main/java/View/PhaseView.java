@@ -2,13 +2,16 @@ package View;
 
 import GameLogic.*;
 
+/**
+ * This implements Observer Pattern and runs all the update methods
+ */
 public class PhaseView implements IObserver{
     String header=          "================================================"  + "\n" +
                             "===================PHASE VIEW===================";
     String footer=          "________________________________________________";
 
 
-    String data;
+    public  String data;
     @Override
     public void update(GamePlay gamePlay, IPlayer player) {
         data= "Current State is :  "+gamePlay.getCurrentState().toString();

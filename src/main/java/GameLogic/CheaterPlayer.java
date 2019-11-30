@@ -1,28 +1,19 @@
 package GameLogic;
 
-import java.util.ArrayList;
+import java.util.*;
 
-/**
- * This class implements the IPlayer interface and follows the strategy pattern
- * This is one type of behaviour of the player
- */
-public class CheaterPlayer implements IPlayer {
+public class CheaterPlayer extends Player implements IPlayer {
 
-	private String name;
-	private Integer number, numberOfArmies, numberOfFreeArmies;
-	private ArrayList<Integer> myCountries = new ArrayList<Integer>();
-	private Integer exchangeCardsTimes;
-	public ArrayList<Card> playerCards;
-	public boolean countryConquered;
-	public boolean defenderRemoved;
-	static Integer lastDiceSelected = null;
+	public ArrayList<Integer> myCountries = new ArrayList<Integer>();
 
 	/**
-	 * This is a constructor of the class CheaterPlayer.
-	 * It implements the CheaterPlayer strategy when given command.
-	 * @param number It is the number of the player as an integer
-	 * @param name It is the name of the player as a String
-	 * @param numberOfArmies It is the integer number denoting the total number of armies of the player
+	 * This is a constructor of the class CheaterPlayer. It implements the
+	 * CheaterPlayer strategy when given command.
+	 * 
+	 * @param number         It is the number of the player as an integer
+	 * @param name           It is the name of the player as a String
+	 * @param numberOfArmies It is the integer number denoting the total number of
+	 *                       armies of the player
 	 */
 	public CheaterPlayer(Integer number, String name, Integer numberOfArmies) {
 		this.number = number;
@@ -34,134 +25,44 @@ public class CheaterPlayer implements IPlayer {
 		defenderRemoved = false;
 	}
 
-	@Override
-	public String getName() {
-		return name;
+	public CheaterPlayer() {
+		playerCards = new ArrayList<Card>();
 	}
-
-	@Override
+	
 	public PlayerStrategy getPlayerStrategy() {
-		return PlayerStrategy.cheater; // Done
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public Integer getNumber() {
-		return number;
-	}
-
-	@Override
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
-
-	@Override
-	public Integer getNumberOfArmies() {
-		return numberOfArmies;
-	}
-
-	@Override
-	public void setNumberOfArmies(Integer numberOfArmies) {
-		this.numberOfArmies = numberOfArmies;
-	}
-
-	@Override
-	public Integer getNumberOfFreeArmies() {
-		return numberOfFreeArmies;
-	}
-
-	@Override
-	public void setMyCountries(Integer number) {
-		myCountries.add(number);
-	}
-
-	@Override
-	public void setNumberOfFreeArmies(Integer numberOfFreeArmies) {
-		this.numberOfFreeArmies = numberOfFreeArmies;
-	}
-
-	@Override
-	public ArrayList<Integer> getMyCountries() {
-		return myCountries;
-	}
-
-	public void setMyCountries(ArrayList<Integer> myCountries) {
-		this.myCountries = myCountries;
-	}
-
-	@Override
-	public Integer getExchangeCardsTimes() {
-		return exchangeCardsTimes;
-	}
-
-	@Override
-	public void setExchangeCardsTimes(Integer exchangeCardsTimes) {
-		this.exchangeCardsTimes = exchangeCardsTimes;
-	}
-
-	@Override
-	public ArrayList<Card> getPlayerCards() {
-		return playerCards;
-	}
-
-	@Override
-	public void setPlayerCards(Card card) {
-		playerCards.add(card);
-	}
-
-	@Override
-	public boolean getCountryConquered() {
-		return false;
-	}
-
-	public void setPlayerCards(ArrayList<Card> playerCards) {
-		this.playerCards = playerCards;
-	}
-
-	public boolean isCountryConquered() {
-		return countryConquered;
-	}
-
-	@Override
-	public void setCountryConquered(boolean countryConquered) {
-		this.countryConquered = countryConquered;
-	}
-
-	@Override
-	public boolean getDefenderRemoved() {
-		return false;
-	}
-
-	public boolean isDefenderRemoved() {
-		return defenderRemoved;
-	}
-
-	@Override
-	public void setDefenderRemoved(boolean defenderRemoved) {
-		this.defenderRemoved = defenderRemoved;
+		return PlayerStrategy.cheater;
 	}
 
 	@Override
 	/**
-	 * This method implements using the CheaterPlayer strategy.
-	 * While reinforcing, this method doubles the number of armies on all its countries.
-	 * @param countryName The name of the country to be reinforced
-	 * @param numberOfArmies The total number of armies in integer form
-	 * @param graphObj Object of the class Graph
-	 * @param currentPlayerObj Object of the class CurrentPlayer and fetches the state of the current player
+	 * This method implements using the CheaterPlayer strategy. While reinforcing,
+	 * this method doubles the number of armies on all its countries.
+	 * 
+	 * @param countryName      The name of the country to be reinforced
+	 * @param numberOfArmies   The total number of armies in integer form
+	 * @param graphObj         Object of the class Graph
+	 * @param currentPlayerObj Object of the class CurrentPlayer and fetches the
+	 *                         state of the current player
 	 * @return true(If the method executes and reinforcement is doubled)
 	 */
 	public boolean reinforcement(String countryName, Integer numberOfArmies, Graph graphObj,
 			CurrentPlayer currentPlayerObj) {
 
+		Integer doubleNumberOfArmies = GamePlay.getInstance().getCurrentPlayerObj().getCurrentPlayer()
+				.getNumberOfArmies() * 2;
 		for (Country country : graphObj.getAdjList()) {
 
-			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
-				country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+			if (country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+
+
+				if (country.getNumberOfArmies() > 0) {
+					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+					GamePlay.getInstance().getCurrentPlayerObj().getCurrentPlayer()
+							.setNumberOfArmies(doubleNumberOfArmies);
+
+				} else {
+					System.out.println("0Armies during reinforcement");
+				}
 			}
 
 		}
@@ -172,59 +73,104 @@ public class CheaterPlayer implements IPlayer {
 
 	@Override
 	/**
-	 * This method attacks in a form that it conquers all the neighbours of all the countries in a single move
-	 * @param fromCountry It is a String and denotes the name of the country from where the armies are to be sent
-	 * @param toCountry It is a String and denotes the name of the country that is to be attacked
-	 * @param graphObj It is an object of the class Graph
+	 * This method attacks in a form that it conquers all the neighbours of all the
+	 * countries in a single move
+	 * 
+	 * @param fromCountry      It is a String and denotes the name of the country
+	 *                         from where the armies are to be sent
+	 * @param toCountry        It is a String and denotes the name of the country
+	 *                         that is to be attacked
+	 * @param graphObj         It is an object of the class Graph
 	 * @param currentPlayerObj It is an object of the class CurrentPlayer
-	 * @return true(if the method executes successfully) or false(if the country entered is invalid or some other validation fails)
+	 * @return true(if the method executes successfully) or false(if the country
+	 *         entered is invalid or some other validation fails)
 	 */
 	public boolean attackAllout(String fromCountry, String toCountry, Graph graphObj, CurrentPlayer currentPlayerObj) {
 
-		ArrayList<Country> countriesOwnedbyPlayer = new ArrayList<Country>();
+		boolean isThereAnyEnemy = false;
+
 		for (Country country : graphObj.getAdjList()) {
-			if (country.getOwner().equalsIgnoreCase(currentPlayerObj.currentPlayer.getName())) {
-				countriesOwnedbyPlayer.add(country);
+			if (!country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+				isThereAnyEnemy = true;
+				break;
+			} else {
+				isThereAnyEnemy = false;
 			}
 		}
 
-		for (int i = 0; i < countriesOwnedbyPlayer.size(); i++) {
-
-			ArrayList<Integer> neighboursOfCountry = countriesOwnedbyPlayer.get(i).neighbours;
-
-			for (int j = 0; j < neighboursOfCountry.size(); j++) {
-				Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj.getInstance())
-						.setOwner(currentPlayerObj.currentPlayer.getName());
+		if (isThereAnyEnemy) {
+			ArrayList<Country> countriesOwnedbyPlayer = new ArrayList<Country>();
+			for (Country country : graphObj.getAdjList()) {
+				if (country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+					countriesOwnedbyPlayer.add(country);
+				}
 			}
-		}
 
-		GamePlay.getInstance().setCurrentOperation("Performing all-out attack by cheater player");
-		return true;
+			for (int i = 0; i < countriesOwnedbyPlayer.size(); i++) {
+
+				ArrayList<Integer> neighboursOfCountry = countriesOwnedbyPlayer.get(i).neighbours;
+
+				for (int j = 0; j < neighboursOfCountry.size(); j++) {
+
+					if (!Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj).getOwner()
+							.equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+						System.out.println("owner of country before attack :"
+								+ Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj).owner);
+						Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj)
+								.setOwner(GamePlay.getInstance().getCurrentPlayerName());
+						countryConquered = true;
+						System.out.println("owner of country after attack :"
+								+ Country.getCountryByNumber(neighboursOfCountry.get(j), graphObj).owner);
+
+					}
+
+					for (IPlayer ip : Database.playerList) {
+						if (ip.getMyCountries().size() == 0) {
+							Database.playerList.remove(ip);
+							defenderRemoved = true;
+						}
+					}
+				}
+			}
+			GamePlay.getInstance().setCurrentOperation("all-out attack done by cheater player");
+			return true;
+		} else {
+			System.out.println("All the countries in the map belongs to the same player");
+			return false;
+		}
 	}
 
 	@Override
 	/**
-	 *This method doubles the number of armies of the countries whose neighbours are owned by other players.
-	 * 	@param fromCname The name of the country from where the armies are to be moved
-	 * 	@param toCountryName The name of the country to which the armies are to be moved
-	 *  @param numberOfArmies The total number of armies to be moved
-	 *  @param gameGraph This is an object of the class Graph
-	 *  @return true(If all the conditions are satisfied and the desired country is fortified) or false(If the countries specified are absent or it does not fulfill the requirements
+	 * This method doubles the number of armies of the countries whose neighbours
+	 * are owned by other players.
+	 * 
+	 * @param fromCname      The name of the country from where the armies are to be
+	 *                       moved
+	 * @param toCountryName  The name of the country to which the armies are to be
+	 *                       moved
+	 * @param numberOfArmies The total number of armies to be moved
+	 * @param gameGraph      This is an object of the class Graph
+	 * @return true(If all the conditions are satisfied and the desired country is
+	 *         fortified) or false(If the countries specified are absent or it does
+	 *         not fulfill the requirements
 	 */
 	public boolean fortify(String fromCname, String toCountryName, Integer numberOfArmies, Graph gameGraph) {
 
+		int itr = 0;
 		boolean neighbourWithDifferentOwner = false;
 
 		for (Country country : gameGraph.getAdjList()) {
 
-			if (country.getOwner().equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+			if (country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
 
 				for (int i = 0; i < country.neighbours.size(); i++) {
 
 					if (!Country.getCountryByNumber(country.neighbours.get(i), gameGraph).getOwner()
-							.equalsIgnoreCase(CurrentPlayer.getCurrentPlayerObj().getCurrentPlayer().getName())) {
+							.equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
 
 						neighbourWithDifferentOwner = true;
+						itr++;
 						break;
 
 					}
@@ -232,72 +178,42 @@ public class CheaterPlayer implements IPlayer {
 				}
 
 				if (neighbourWithDifferentOwner = true) {
-					country.setNumberOfArmies(country.getNumberOfArmies() * 2);
-					neighbourWithDifferentOwner = false;
+
+					if (country.getNumberOfArmies() > 0) {
+						System.out.println("Armies in country before fortify " + country.getNumberOfArmies());
+						country.setNumberOfArmies(country.getNumberOfArmies() * 2);
+						System.out.println("Armies in country after fortify " + country.getNumberOfArmies());
+						neighbourWithDifferentOwner = false;
+					} else {
+						System.out.println("0armies in fortify");
+					}
 				}
 
 			}
 
 		}
+		boolean DiffOwner = false;
+		for (Country country : Graph.getInstance().getAdjList()) {
 
-		System.out.println("Fortification done in cheater player");
-		return true;
-	}
-
-	@Override
-	/**
-	 * This method returns the total number of countries owned by the players.
-	 * 
-	 * @param playerName The name of the player
-	 * @param gameGraph  This is an object of the class Graph
-	 * @return An integer value that is equal to the total number of countries owned
-	 *         by the player
-	 */
-	public Integer getNumberOfCountriesOwned(String playerName, Graph gameGraph) {
-		Integer numberOfCountriesOwned = 0;
-
-		if (Database.getPlayerByName(playerName) == null)
-			return -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.owner.equalsIgnoreCase(playerName)) {
-				numberOfCountriesOwned += 1;
+			if (!country.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName())) {
+				DiffOwner = true;
+				break;
 			}
+
 		}
-		return numberOfCountriesOwned;
-	}
+		if (DiffOwner) {
 
-	@Override
-	/**
-	 * This method returns the total number of armies owned by the players.
-	 * 
-	 * @param gameGraph It is an object of the class Graph
-	 * @returnAn integer value that is equal to the total number of armies owned by
-	 *           the player
-	 */
-	public Integer getTotalArmiesOwnedByPlayer(Graph gameGraph) {
-		Integer numberOfArmies = 0;
-
-		if (Database.getPlayerByName(this.name) == null)
-			return -1;
-		for (Country country : gameGraph.getAdjList()) {
-			if (country.owner.equalsIgnoreCase(this.name)) {
-				numberOfArmies += country.numberOfArmies;
-			}
+		} else {
+			System.out.println("Game should stop as player won the whole map");
 		}
-		return numberOfArmies;
-	}
 
-	@Override
-	public boolean normalAttack(String fromCountry, String toCountry, Integer numDice, Graph graphObj,
-			CurrentPlayer currentPlayerObj) {
-		return false;
-	}
+		if (itr > 0) {
+			System.out.println("Fortification done in cheater player");
+			return true;
+		} else {
+			System.out.println("All countries belongs to same player");
+			return false;
+		}
 
-	public static Integer getLastDiceSelected() {
-		return lastDiceSelected;
-	}
-
-	public static void setLastDiceSelected(Integer lastDiceSelected) {
-		CheaterPlayer.lastDiceSelected = lastDiceSelected;
 	}
 }

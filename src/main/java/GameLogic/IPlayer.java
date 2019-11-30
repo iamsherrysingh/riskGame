@@ -2,6 +2,9 @@ package GameLogic;
 
 import java.util.ArrayList;
 
+/**
+ * This is an interface used to implement strategy pattern
+ */
 public interface IPlayer {
 
 	public PlayerStrategy getPlayerStrategy();

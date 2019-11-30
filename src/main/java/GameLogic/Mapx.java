@@ -352,15 +352,15 @@ public class Mapx implements IMap{
 	public static boolean checkPath(String fromCountryName, String toCountryName, Graph gameGraph){
 		Country toCountry = Country.getCountryByName(toCountryName, gameGraph);
 		Country fromCountry = Country.getCountryByName(fromCountryName, gameGraph);
-		System.out.println("To: "+toCountry.getName()+" owner "+toCountry.getOwner());
-		System.out.println("From: "+fromCountry.getName()+" owner "+fromCountry.getOwner());
-		System.out.println("CurrentPlayer: "+GamePlay.getInstance().getCurrentPlayerName());
+		//System.out.println("To: "+toCountry.getName()+" owner "+toCountry.getOwner());
+		//System.out.println("From: "+fromCountry.getName()+" owner "+fromCountry.getOwner());
+		//System.out.println("CurrentPlayer: "+GamePlay.getInstance().getCurrentPlayerName());
 		if (fromCountry == null || toCountry == null) {
-			System.out.println("One or both countries do not exist");
+			//System.out.println("One or both countries do not exist");
 			return false;
 		}
 		else if (!(toCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()) && fromCountry.getOwner().equalsIgnoreCase(GamePlay.getInstance().getCurrentPlayerName()))){
-			System.out.println("Both countries have to belong to current player");
+			//System.out.println("Both countries have to belong to current player");
 			return false;
 		}
       boolean pathExists= false;

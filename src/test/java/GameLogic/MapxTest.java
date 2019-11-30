@@ -10,7 +10,7 @@ import java.io.*;
 /**
  * It contains different Junit tests for the methods defined in {@link GameLogic.Mapx}
  * 
- * @see Mapx.java
+ * @see Mapx
  * @author birjotsingh17
  */
 
@@ -77,6 +77,28 @@ public class MapxTest {
         gamePlay.loadGameMap("map.map");
         boolean validmap= mapx.validateMap(gamePlay.getGraphObj());
         assertTrue(validmap == true);
+    }
+
+    /**
+     *  This is a jUnit test for {@link GameLogic.Mapx#loadMap(String, Graph)}
+     * @throws IOException
+     */
+    @Test
+    public void readInvalidMap() throws IOException {
+        //test if mapName is null
+        boolean output=gamePlay.loadGameMap("nonexistent.map");
+        assertTrue(output);
+    }
+
+    /**
+     *  This is a jUnit test for {@link GameLogic.Mapx#loadMap(String, Graph)}
+     * @throws IOException
+     */
+    @Test
+    public void readValidMap() throws IOException {
+        //test if mapName is null
+        boolean output=gamePlay.loadGameMap("map.map");
+        assertTrue(output);
     }
 
     /**
